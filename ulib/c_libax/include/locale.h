@@ -1,0 +1,1 @@
+#define LC_COLLATE 3

@@ -1,11 +1,11 @@
 # Arguments
-ARCH ?= riscv64
+ARCH ?= aarch64
 SMP ?= 1
 MODE ?= release
-LOG ?= warn
+LOG ?= info
 
-APP ?= helloworld
-APP_LANG ?= rust
+APP ?= redis
+APP_LANG ?= c
 APP_FEATURES ?=
 
 FS ?= off

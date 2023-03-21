@@ -7,8 +7,10 @@
 typedef uintptr_t size_t;
 typedef intptr_t ssize_t;
 
-typedef int pid_t;
+typedef long ptrdiff_t;
 
+typedef int pid_t;
+// typedef unsigned long size_t;
 #define NULL ((void *)0)
 
 #endif // __STDDEF_H__

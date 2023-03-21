@@ -33,6 +33,8 @@ endif
 src_dir := src
 obj_dir := build_$(ARCH)
 inc_dir := include
+hdr_dir := $(app_path)/deps/hdr_histogram
+lua_dir := $(app_path)/deps/lua/src
 c_lib := $(obj_dir)/libc.a
 
 all_src := $(wildcard $(src_dir)/*.c)
@@ -42,7 +44,7 @@ CC := $(CROSS_COMPILE)gcc
 LD := $(CROSS_COMPILE)ld
 AR := $(CROSS_COMPILE)ar
 RANLIB := $(CROSS_COMPILE)ranlib
-CFLAGS := -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall -I$(inc_dir) -I$(rust_lib_name)
+CFLAGS := -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall -I$(inc_dir) -I$(rust_lib_name) -I$(hdr_dir) -I$(lua_dir)
 LDFLAGS := -nostdlib -T../../modules/axhal/linker_$(ARCH).lds
 
 ifeq ($(MODE), release)
@@ -61,12 +63,12 @@ endif
 
 # Variables for app
 app_package := arceos-$(APP)
-app_src := $(app_path)/main.c
+app_src := $(app_path)/src/server.c
 app_obj := $(rust_build_path)/$(app_package).o
 app_elf := $(rust_build_path)/$(app_package)
 
 # Build commands
-all: rust_lib c_lib app
+all: clean rust_lib c_lib app
 
 rust_lib:
 	@echo

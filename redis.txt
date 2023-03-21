@@ -1,0 +1,1065 @@
+Arch: aarch64, Platform: qemu-virt-aarch64, Language: c
+make[1]: Entering directory '/home/yanjuguang/OS/arceos/ulib/c_libax'
+rm -rf build_*
+cargo clean -p libax_bindings
+
+Building rust static library libax_bindings ...
+cargo build --no-default-features --features "libax/platform-qemu-virt-aarch64 libax/log-level-info" --target aarch64-unknown-none-softfloat -Zbuild-std=core,alloc -Zbuild-std-features=compiler-builtins-mem --release -p libax_bindings
+warning: function `init_secondary` is never used
+  --> modules/axhal/src/platform/qemu_virt_aarch64/generic_timer.rs:47:15
+   |
+47 | pub(super) fn init_secondary() {
+   |               ^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: constant `PSCI_CPU_ON` is never used
+ --> modules/axhal/src/platform/qemu_virt_aarch64/psci.rs:5:7
+  |
+5 | const PSCI_CPU_ON: u32 = 0x8400_0003;
+  |       ^^^^^^^^^^^
+
+warning: function `cpu_on` is never used
+  --> modules/axhal/src/platform/qemu_virt_aarch64/psci.rs:28:8
+   |
+28 | pub fn cpu_on(id: usize, entry: usize, arg: usize) {
+   |        ^^^^^^
+
+warning: function `start_secondary_cpu` is never used
+ --> modules/axhal/src/platform/qemu_virt_aarch64/mp.rs:3:8
+  |
+3 | pub fn start_secondary_cpu(cpu_id: usize, entry: PhysAddr, args: PhysAddr) {
+  |        ^^^^^^^^^^^^^^^^^^^
+
+warning: `axhal` (lib) generated 4 warnings
+    Finished release [optimized] target(s) in 0.05s
+
+Building C static library build_aarch64/libc.a ...
+mkdir -p build_aarch64
+aarch64-linux-musl-gcc -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall -Iinclude -Ilibax_bindings -I../../apps/c/redis/deps/hdr_histogram -I../../apps/c/redis/deps/lua/src -O3 -mgeneral-regs-only -c -o build_aarch64/assert.o src/assert.c
+aarch64-linux-musl-gcc -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall -Iinclude -Ilibax_bindings -I../../apps/c/redis/deps/hdr_histogram -I../../apps/c/redis/deps/lua/src -O3 -mgeneral-regs-only -c -o build_aarch64/stdio.o src/stdio.c
+aarch64-linux-musl-gcc -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall -Iinclude -Ilibax_bindings -I../../apps/c/redis/deps/hdr_histogram -I../../apps/c/redis/deps/lua/src -O3 -mgeneral-regs-only -c -o build_aarch64/stdlib.o src/stdlib.c
+aarch64-linux-musl-gcc -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall -Iinclude -Ilibax_bindings -I../../apps/c/redis/deps/hdr_histogram -I../../apps/c/redis/deps/lua/src -O3 -mgeneral-regs-only -c -o build_aarch64/string.o src/string.c
+rm -f build_aarch64/libc.a
+aarch64-linux-musl-ar rc build_aarch64/libc.a build_aarch64/assert.o build_aarch64/stdio.o build_aarch64/stdlib.o build_aarch64/string.o
+aarch64-linux-musl-ranlib build_aarch64/libc.a
+aarch64-linux-musl-gcc -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall -Iinclude -Ilibax_bindings -I../../apps/c/redis/deps/hdr_histogram -I../../apps/c/redis/deps/lua/src -O3 -mgeneral-regs-only -c -o ../../target/aarch64-unknown-none-softfloat/release/arceos-redis.o ../../apps/c/redis/src/server.c
+In file included from ../../apps/c/redis/src/rio.h:38,
+                 from ../../apps/c/redis/src/server.h:36,
+                 from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/connection.h:97:57: warning: ‘struct iovec’ declared inside parameter list will not be visible outside of this definition or declaration
+   97 |     int (*writev)(struct connection *conn, const struct iovec *iov, int iovcnt);
+      |                                                         ^~~~~
+../../apps/c/redis/src/connection.h:205:61: warning: ‘struct iovec’ declared inside parameter list will not be visible outside of this definition or declaration
+  205 | static inline int connWritev(connection *conn, const struct iovec *iov, int iovcnt) {
+      |                                                             ^~~~~
+../../apps/c/redis/src/connection.h: In function ‘connWritev’:
+../../apps/c/redis/src/connection.h:206:37: warning: passing argument 2 of ‘conn->type->writev’ from incompatible pointer type [-Wincompatible-pointer-types]
+  206 |     return conn->type->writev(conn, iov, iovcnt);
+      |                                     ^~~
+      |                                     |
+      |                                     const struct iovec *
+../../apps/c/redis/src/connection.h:206:37: note: expected ‘const struct iovec *’ but argument is of type ‘const struct iovec *’
+In file included from include/bits/types.h:27,
+                 from include/bits/types/struct_tm.h:4,
+                 from include/time.h:21,
+                 from ../../apps/c/redis/src/server.h:44,
+                 from ../../apps/c/redis/src/server.c:30:
+include/bits/wordsize.h: At top level:
+include/bits/wordsize.h:6: warning: "__WORDSIZE" redefined
+    6 | # define __WORDSIZE     32
+      | 
+In file included from ../../apps/c/redis/src/rio.h:36,
+                 from ../../apps/c/redis/src/server.h:36,
+                 from ../../apps/c/redis/src/server.c:30:
+include/stdint.h:19: note: this is the location of the previous definition
+   19 | #define __WORDSIZE      64
+      | 
+In file included from ../../apps/c/redis/src/server.h:45,
+                 from ../../apps/c/redis/src/server.c:30:
+include/limits.h:1: warning: "__INT_MAX__" redefined
+    1 | #define __INT_MAX__ 2147483647
+      | 
+<built-in>: note: this is the location of the previous definition
+In file included from ../../apps/c/redis/src/server.c:42:
+include/signal.h:141:5: error: conflicting types for ‘siginfo_t’; have ‘struct <anonymous>’
+  141 |   } siginfo_t __SI_ALIGNMENT;
+      |     ^~~~~~~~~
+In file included from ../../apps/c/redis/src/server.h:54,
+                 from ../../apps/c/redis/src/server.c:30:
+include/signal.h:141:5: note: previous declaration of ‘siginfo_t’ with type ‘siginfo_t’
+  141 |   } siginfo_t __SI_ALIGNMENT;
+      |     ^~~~~~~~~
+In file included from ../../apps/c/redis/src/server.c:42:
+include/signal.h:164:3: error: conflicting types for ‘__sigset_t’; have ‘struct <anonymous>’
+  164 | } __sigset_t;
+      |   ^~~~~~~~~~
+In file included from ../../apps/c/redis/src/server.h:54,
+                 from ../../apps/c/redis/src/server.c:30:
+include/signal.h:164:3: note: previous declaration of ‘__sigset_t’ with type ‘__sigset_t’
+  164 | } __sigset_t;
+      |   ^~~~~~~~~~
+In file included from ../../apps/c/redis/src/server.c:42:
+include/signal.h:168:8: error: redefinition of ‘struct sigaction’
+  168 | struct sigaction
+      |        ^~~~~~~~~
+In file included from ../../apps/c/redis/src/server.h:54,
+                 from ../../apps/c/redis/src/server.c:30:
+include/signal.h:168:8: note: originally defined here
+  168 | struct sigaction
+      |        ^~~~~~~~~
+../../apps/c/redis/src/server.c: In function ‘serverLogRaw’:
+../../apps/c/redis/src/server.c:116:33: warning: pointer/integer type mismatch in conditional expression
+  116 |     fp = log_to_stdout ? stdout : fopen(server.logfile,"a");
+      |                                 ^
+../../apps/c/redis/src/server.c:120:17: warning: passing argument 1 of ‘fprintf’ makes integer from pointer without a cast [-Wint-conversion]
+  120 |         fprintf(fp,"%s",msg);
+      |                 ^~
+      |                 |
+      |                 FILE * {aka struct _IO_FILE *}
+In file included from ../../apps/c/redis/src/rio.h:35,
+                 from ../../apps/c/redis/src/server.h:36,
+                 from ../../apps/c/redis/src/server.c:30:
+include/stdio.h:25:18: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   25 | void fprintf(int f, const char *fmt, ...);
+      |              ~~~~^
+../../apps/c/redis/src/server.c:125:21: warning: implicit declaration of function ‘getpid’ [-Wimplicit-function-declaration]
+  125 |         pid_t pid = getpid();
+      |                     ^~~~~~
+../../apps/c/redis/src/server.c:127:9: warning: implicit declaration of function ‘gettimeofday’ [-Wimplicit-function-declaration]
+  127 |         gettimeofday(&tv,NULL);
+      |         ^~~~~~~~~~~~
+../../apps/c/redis/src/server.c:130:15: warning: implicit declaration of function ‘strftime’ [-Wimplicit-function-declaration]
+  130 |         off = strftime(buf,sizeof(buf),"%d %b %Y %H:%M:%S.",&tm);
+      |               ^~~~~~~~
+../../apps/c/redis/src/server.c:139:17: warning: passing argument 1 of ‘fprintf’ makes integer from pointer without a cast [-Wint-conversion]
+  139 |         fprintf(fp,"%d:%c %s %c %s\n",
+      |                 ^~
+      |                 |
+      |                 FILE * {aka struct _IO_FILE *}
+In file included from ../../apps/c/redis/src/rio.h:35,
+                 from ../../apps/c/redis/src/server.h:36,
+                 from ../../apps/c/redis/src/server.c:30:
+include/stdio.h:25:18: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   25 | void fprintf(int f, const char *fmt, ...);
+      |              ~~~~^
+../../apps/c/redis/src/server.c:142:12: warning: passing argument 1 of ‘fflush’ makes integer from pointer without a cast [-Wint-conversion]
+  142 |     fflush(fp);
+      |            ^~
+      |            |
+      |            FILE * {aka struct _IO_FILE *}
+In file included from ../../apps/c/redis/src/rio.h:35,
+                 from ../../apps/c/redis/src/server.h:36,
+                 from ../../apps/c/redis/src/server.c:30:
+include/stdio.h:27:12: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   27 | int fflush(int);
+      |            ^~~
+../../apps/c/redis/src/server.c:144:25: warning: implicit declaration of function ‘fclose’; did you mean ‘false’? [-Wimplicit-function-declaration]
+  144 |     if (!log_to_stdout) fclose(fp);
+      |                         ^~~~~~
+      |                         false
+../../apps/c/redis/src/server.c:145:32: warning: implicit declaration of function ‘syslog’ [-Wimplicit-function-declaration]
+  145 |     if (server.syslog_enabled) syslog(syslogLevelMap[level], "%s", msg);
+      |                                ^~~~~~
+../../apps/c/redis/src/server.c: In function ‘_serverLog’:
+../../apps/c/redis/src/server.c:156:5: warning: implicit declaration of function ‘vsnprintf’; did you mean ‘snprintf’? [-Wimplicit-function-declaration]
+  156 |     vsnprintf(msg, sizeof(msg), fmt, ap);
+      |     ^~~~~~~~~
+      |     snprintf
+../../apps/c/redis/src/server.c: In function ‘serverLogFromHandler’:
+../../apps/c/redis/src/server.c:176:26: warning: implicit declaration of function ‘open’; did you mean ‘fopen’? [-Wimplicit-function-declaration]
+  176 |                          open(server.logfile, O_APPEND|O_CREAT|O_WRONLY, 0644);
+      |                          ^~~~
+      |                          fopen
+../../apps/c/redis/src/server.c:179:9: warning: implicit declaration of function ‘write’ [-Wimplicit-function-declaration]
+  179 |     if (write(fd,buf,strlen(buf)) == -1) goto err;
+      |         ^~~~~
+../../apps/c/redis/src/server.c:181:31: warning: implicit declaration of function ‘time’; did you mean ‘mstime’? [-Wimplicit-function-declaration]
+  181 |     ll2string(buf,sizeof(buf),time(NULL));
+      |                               ^~~~
+      |                               mstime
+../../apps/c/redis/src/server.c:187:25: warning: implicit declaration of function ‘close’ [-Wimplicit-function-declaration]
+  187 |     if (!log_to_stdout) close(fd);
+      |                         ^~~~~
+../../apps/c/redis/src/server.c: In function ‘exitFromChild’:
+../../apps/c/redis/src/server.c:236:5: warning: implicit declaration of function ‘_exit’ [-Wimplicit-function-declaration]
+  236 |     _exit(retcode);
+      |     ^~~~~
+../../apps/c/redis/src/server.c: In function ‘dictSdsKeyCaseCompare’:
+../../apps/c/redis/src/server.c:276:12: warning: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Wimplicit-function-declaration]
+  276 |     return strcasecmp(key1, key2) == 0;
+      |            ^~~~~~~~~~
+      |            strncmp
+../../apps/c/redis/src/server.c: In function ‘updateCachedTimeWithUs’:
+../../apps/c/redis/src/server.c:1116:9: warning: implicit declaration of function ‘localtime_r’ [-Wimplicit-function-declaration]
+ 1116 |         localtime_r(&ut,&tm);
+      |         ^~~~~~~~~~~
+../../apps/c/redis/src/server.c: In function ‘checkChildrenDone’:
+../../apps/c/redis/src/server.c:1140:16: warning: implicit declaration of function ‘waitpid’ [-Wimplicit-function-declaration]
+ 1140 |     if ((pid = waitpid(-1, &statloc, WNOHANG)) != 0) {
+      |                ^~~~~~~
+../../apps/c/redis/src/server.c:1141:24: warning: implicit declaration of function ‘WIFEXITED’ [-Wimplicit-function-declaration]
+ 1141 |         int exitcode = WIFEXITED(statloc) ? WEXITSTATUS(statloc) : -1;
+      |                        ^~~~~~~~~
+../../apps/c/redis/src/server.c:1141:45: warning: implicit declaration of function ‘WEXITSTATUS’ [-Wimplicit-function-declaration]
+ 1141 |         int exitcode = WIFEXITED(statloc) ? WEXITSTATUS(statloc) : -1;
+      |                                             ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:1144:13: warning: implicit declaration of function ‘WIFSIGNALED’ [-Wimplicit-function-declaration]
+ 1144 |         if (WIFSIGNALED(statloc)) bysignal = WTERMSIG(statloc);
+      |             ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:1144:46: warning: implicit declaration of function ‘WTERMSIG’ [-Wimplicit-function-declaration]
+ 1144 |         if (WIFSIGNALED(statloc)) bysignal = WTERMSIG(statloc);
+      |                                              ^~~~~~~~
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:1158:17: warning: implicit declaration of function ‘strerror’ [-Wimplicit-function-declaration]
+ 1158 |                 strerror(errno),
+      |                 ^~~~~~~~
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:1156:34: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 1156 |             serverLog(LL_WARNING,"waitpid() returned an error: %s. "
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 1157 |                 "child_type: %s, child_pid = %d",
+ 1158 |                 strerror(errno),
+      |                 ~~~~~~~~~~~~~~~   
+      |                 |
+      |                 int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:1156:65: note: format string is defined here
+ 1156 |             serverLog(LL_WARNING,"waitpid() returned an error: %s. "
+      |                                                                ~^
+      |                                                                 |
+      |                                                                 char *
+      |                                                                %d
+../../apps/c/redis/src/server.c:1170:17: warning: implicit declaration of function ‘exit’ [-Wimplicit-function-declaration]
+ 1170 |                 exit(1);
+      |                 ^~~~
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c: In function ‘serverCron’:
+../../apps/c/redis/src/server.c:1341:17: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 5 has type ‘long long unsigned int’ [-Wformat=]
+ 1341 |                 "%lu clients connected (%lu replicas), %zu bytes in use",
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+......
+ 1344 |                 zmalloc_used_memory());
+      |                 ~~~~~~~~~~~~~~~~~~~~~
+      |                 |
+      |                 long long unsigned int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:1341:58: note: format string is defined here
+ 1341 |                 "%lu clients connected (%lu replicas), %zu bytes in use",
+      |                                                        ~~^
+      |                                                          |
+      |                                                          long unsigned int
+      |                                                        %llu
+../../apps/c/redis/src/server.c: In function ‘initServerConfig’:
+../../apps/c/redis/src/server.c:2012:24: warning: implicit declaration of function ‘sysconf’ [-Wimplicit-function-declaration]
+ 2012 |     server.page_size = sysconf(_SC_PAGESIZE);
+      |                        ^~~~~~~
+../../apps/c/redis/src/server.c: In function ‘restartServer’:
+../../apps/c/redis/src/server.c:2102:9: warning: implicit declaration of function ‘access’ [-Wimplicit-function-declaration]
+ 2102 |     if (access(server.executable,X_OK) == -1) {
+      |         ^~~~~~
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:2113:30: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 2113 |         serverLog(LL_WARNING,"Can't restart: configuration rewrite process "
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2114 |                              "failed: %s", strerror(errno));
+      |                                            ~~~~~~~~~~~~~~~
+      |                                            |
+      |                                            int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:2131:13: warning: implicit declaration of function ‘fcntl’ [-Wimplicit-function-declaration]
+ 2131 |         if (fcntl(j,F_GETFD) != -1) close(j);
+      |             ^~~~~
+../../apps/c/redis/src/server.c:2135:16: warning: implicit declaration of function ‘usleep’ [-Wimplicit-function-declaration]
+ 2135 |     if (delay) usleep(delay*1000);
+      |                ^~~~~~
+../../apps/c/redis/src/server.c:2138:5: warning: implicit declaration of function ‘execve’ [-Wimplicit-function-declaration]
+ 2138 |     execve(server.executable,server.exec_argv,environ);
+      |     ^~~~~~
+../../apps/c/redis/src/server.c: In function ‘setOOMScoreAdj’:
+../../apps/c/redis/src/server.c:2178:27: warning: implicit declaration of function ‘read’ [-Wimplicit-function-declaration]
+ 2178 |             if (fd < 0 || read(fd, buf, sizeof(buf)) < 0) {
+      |                           ^~~~
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:2179:39: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 2179 |                 serverLog(LL_WARNING, "Unable to read oom_score_adj: %s", strerror(errno));
+      |                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~~
+      |                                                                           |
+      |                                                                           int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:2179:71: note: format string is defined here
+ 2179 |                 serverLog(LL_WARNING, "Unable to read oom_score_adj: %s", strerror(errno));
+      |                                                                      ~^
+      |                                                                       |
+      |                                                                       char *
+      |                                                                      %d
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:2204:31: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 2204 |         serverLog(LL_WARNING, "Unable to write oom_score_adj: %s", strerror(errno));
+      |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~~
+      |                                                                    |
+      |                                                                    int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:2204:64: note: format string is defined here
+ 2204 |         serverLog(LL_WARNING, "Unable to write oom_score_adj: %s", strerror(errno));
+      |                                                               ~^
+      |                                                                |
+      |                                                                char *
+      |                                                               %d
+../../apps/c/redis/src/server.c: In function ‘adjustOpenFilesLimit’:
+../../apps/c/redis/src/server.c:2229:9: warning: implicit declaration of function ‘getrlimit’ [-Wimplicit-function-declaration]
+ 2229 |     if (getrlimit(RLIMIT_NOFILE,&limit) == -1) {
+      |         ^~~~~~~~~
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:2230:30: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 2230 |         serverLog(LL_WARNING,"Unable to obtain the current NOFILE limit (%s), assuming 1024 and setting the max clients configuration accordingly.",
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2231 |             strerror(errno));
+      |             ~~~~~~~~~~~~~~~   
+      |             |
+      |             int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:2230:75: note: format string is defined here
+ 2230 |         serverLog(LL_WARNING,"Unable to obtain the current NOFILE limit (%s), assuming 1024 and setting the max clients configuration accordingly.",
+      |                                                                          ~^
+      |                                                                           |
+      |                                                                           char *
+      |                                                                          %d
+../../apps/c/redis/src/server.c:2250:21: warning: implicit declaration of function ‘setrlimit’ [-Wimplicit-function-declaration]
+ 2250 |                 if (setrlimit(RLIMIT_NOFILE,&limit) != -1) break;
+      |                     ^~~~~~~~~
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:2285:38: warning: format ‘%s’ expects argument of type ‘char *’, but argument 4 has type ‘int’ [-Wformat=]
+ 2285 |                 serverLog(LL_WARNING,"Server can't set maximum open files "
+      |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2286 |                     "to %llu because of OS error: %s.",
+ 2287 |                     (unsigned long long) maxfiles, strerror(setrlimit_error));
+      |                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                                    |
+      |                                                    int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c: In function ‘checkTcpBacklogSettings’:
+../../apps/c/redis/src/server.c:2310:9: warning: implicit declaration of function ‘fgets’ [-Wimplicit-function-declaration]
+ 2310 |     if (fgets(buf,sizeof(buf),fp) != NULL) {
+      |         ^~~~~
+../../apps/c/redis/src/server.c:2310:35: warning: comparison between pointer and integer
+ 2310 |     if (fgets(buf,sizeof(buf),fp) != NULL) {
+      |                                   ^~
+../../apps/c/redis/src/server.c: In function ‘makeThreadKillable’:
+../../apps/c/redis/src/server.c:2502:5: warning: implicit declaration of function ‘pthread_setcancelstate’ [-Wimplicit-function-declaration]
+ 2502 |     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+../../apps/c/redis/src/server.c:2502:28: error: ‘PTHREAD_CANCEL_ENABLE’ undeclared (first use in this function)
+ 2502 |     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+      |                            ^~~~~~~~~~~~~~~~~~~~~
+../../apps/c/redis/src/server.c:2502:28: note: each undeclared identifier is reported only once for each function it appears in
+../../apps/c/redis/src/server.c:2503:5: warning: implicit declaration of function ‘pthread_setcanceltype’ [-Wimplicit-function-declaration]
+ 2503 |     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+      |     ^~~~~~~~~~~~~~~~~~~~~
+../../apps/c/redis/src/server.c:2503:27: error: ‘PTHREAD_CANCEL_ASYNCHRONOUS’ undeclared (first use in this function)
+ 2503 |     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../apps/c/redis/src/server.c: In function ‘initServer’:
+../../apps/c/redis/src/server.c:2509:5: warning: implicit declaration of function ‘signal’ [-Wimplicit-function-declaration]
+ 2509 |     signal(SIGHUP, SIG_IGN);
+      |     ^~~~~~
+../../apps/c/redis/src/server.c:2515:9: warning: implicit declaration of function ‘openlog’ [-Wimplicit-function-declaration]
+ 2515 |         openlog(server.syslog_ident, LOG_PID | LOG_NDELAY | LOG_NOWAIT,
+      |         ^~~~~~~
+../../apps/c/redis/src/server.c:2525:29: warning: implicit declaration of function ‘pthread_self’ [-Wimplicit-function-declaration]
+ 2525 |     server.main_thread_id = pthread_self();
+      |                             ^~~~~~~~~~~~
+../../apps/c/redis/src/server.c:2560:9: warning: implicit declaration of function ‘setlocale’ [-Wimplicit-function-declaration]
+ 2560 |     if (setlocale(LC_COLLATE,server.locale_collate) == NULL) {
+      |         ^~~~~~~~~
+../../apps/c/redis/src/server.c:2560:53: warning: comparison between pointer and integer
+ 2560 |     if (setlocale(LC_COLLATE,server.locale_collate) == NULL) {
+      |                                                     ^~
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:2572:13: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 2572 |             "Failed creating the event loop. Error message: '%s'",
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 2573 |             strerror(errno));
+      |             ~~~~~~~~~~~~~~~
+      |             |
+      |             int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:2572:63: note: format string is defined here
+ 2572 |             "Failed creating the event loop. Error message: '%s'",
+      |                                                              ~^
+      |                                                               |
+      |                                                               char *
+      |                                                              %d
+../../apps/c/redis/src/server.c: In function ‘closeListeningSockets’:
+../../apps/c/redis/src/server.c:4157:13: warning: implicit declaration of function ‘unlink’; did you mean ‘bg_unlink’? [-Wimplicit-function-declaration]
+ 4157 |         if (unlink(server.unixsocket) != 0)
+      |             ^~~~~~
+      |             bg_unlink
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:4158:34: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 4158 |             serverLog(LL_WARNING,"Error removing the unix socket file: %s",strerror(errno));
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~~~~~~~~~~~~~~
+      |                                                                            |
+      |                                                                            int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:4158:73: note: format string is defined here
+ 4158 |             serverLog(LL_WARNING,"Error removing the unix socket file: %s",strerror(errno));
+      |                                                                        ~^
+      |                                                                         |
+      |                                                                         char *
+      |                                                                        %d
+In file included from ../../apps/c/redis/src/server.h:34,
+                 from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c: In function ‘finishShutdown’:
+../../apps/c/redis/src/config.h:113:25: warning: implicit declaration of function ‘fdatasync’ [-Wimplicit-function-declaration]
+  113 | #define redis_fsync(fd) fdatasync(fd)
+      |                         ^~~~~~~~~
+../../apps/c/redis/src/server.c:4347:13: note: in expansion of macro ‘redis_fsync’
+ 4347 |         if (redis_fsync(server.aof_fd) == -1) {
+      |             ^~~~~~~~~~~
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:4348:34: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 4348 |             serverLog(LL_WARNING,"Fail to fsync the AOF file: %s.",
+      |                                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 4349 |                                  strerror(errno));
+      |                                  ~~~~~~~~~~~~~~~
+      |                                  |
+      |                                  int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:4348:64: note: format string is defined here
+ 4348 |             serverLog(LL_WARNING,"Fail to fsync the AOF file: %s.",
+      |                                                               ~^
+      |                                                                |
+      |                                                                char *
+      |                                                               %d
+../../apps/c/redis/src/server.c:4401:9: warning: implicit declaration of function ‘flock’ [-Wimplicit-function-declaration]
+ 4401 |         flock(server.cluster_config_file_lock_fd, LOCK_UN|LOCK_NB);
+      |         ^~~~~
+../../apps/c/redis/src/server.c: In function ‘genRedisInfoString’:
+../../apps/c/redis/src/server.c:5497:13: warning: implicit declaration of function ‘strtol’ [-Wimplicit-function-declaration]
+ 5497 |             strtol(redisGitDirty(),NULL,10) > 0,
+      |             ^~~~~~
+../../apps/c/redis/src/server.c:5543:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 6 has type ‘long long unsigned int’ [-Wformat=]
+ 5543 |             "# Clients\r\n"
+      |             ^~~~~~~~~~~~~~~
+......
+ 5557 |             maxin, maxout,
+      |             ~~~~~
+      |             |
+      |             long long unsigned int
+../../apps/c/redis/src/server.c:5547:47: note: format string is defined here
+ 5547 |             "client_recent_max_input_buffer:%zu\r\n"
+      |                                             ~~^
+      |                                               |
+      |                                               long unsigned int
+      |                                             %llu
+../../apps/c/redis/src/server.c:5543:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 7 has type ‘long long unsigned int’ [-Wformat=]
+ 5543 |             "# Clients\r\n"
+      |             ^~~~~~~~~~~~~~~
+......
+ 5557 |             maxin, maxout,
+      |                    ~~~~~~
+      |                    |
+      |                    long long unsigned int
+../../apps/c/redis/src/server.c:5548:48: note: format string is defined here
+ 5548 |             "client_recent_max_output_buffer:%zu\r\n"
+      |                                              ~~^
+      |                                                |
+      |                                                long unsigned int
+      |                                              %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 3 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5652 |             zmalloc_used,
+      |             ~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+../../apps/c/redis/src/server.c:5601:28: note: format string is defined here
+ 5601 |             "used_memory:%zu\r\n"
+      |                          ~~^
+      |                            |
+      |                            long unsigned int
+      |                          %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 5 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5654 |             server.cron_malloc_stats.process_rss,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                     |
+      |                                     long long unsigned int
+../../apps/c/redis/src/server.c:5603:32: note: format string is defined here
+ 5603 |             "used_memory_rss:%zu\r\n"
+      |                              ~~^
+      |                                |
+      |                                long unsigned int
+      |                              %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 7 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5656 |             server.stat_peak_memory,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5605:33: note: format string is defined here
+ 5605 |             "used_memory_peak:%zu\r\n"
+      |                               ~~^
+      |                                 |
+      |                                 long unsigned int
+      |                               %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 10 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5659 |             mh->overhead_total,
+      |             ~~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+../../apps/c/redis/src/server.c:5608:37: note: format string is defined here
+ 5608 |             "used_memory_overhead:%zu\r\n"
+      |                                   ~~^
+      |                                     |
+      |                                     long unsigned int
+      |                                   %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 11 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5660 |             mh->startup_allocated,
+      |             ~~~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+../../apps/c/redis/src/server.c:5609:36: note: format string is defined here
+ 5609 |             "used_memory_startup:%zu\r\n"
+      |                                  ~~^
+      |                                    |
+      |                                    long unsigned int
+      |                                  %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 12 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5661 |             mh->dataset,
+      |             ~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+../../apps/c/redis/src/server.c:5610:36: note: format string is defined here
+ 5610 |             "used_memory_dataset:%zu\r\n"
+      |                                  ~~^
+      |                                    |
+      |                                    long unsigned int
+      |                                  %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 14 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5663 |             server.cron_malloc_stats.allocator_allocated,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                     |
+      |                                     long long unsigned int
+../../apps/c/redis/src/server.c:5612:36: note: format string is defined here
+ 5612 |             "allocator_allocated:%zu\r\n"
+      |                                  ~~^
+      |                                    |
+      |                                    long unsigned int
+      |                                  %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 15 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5664 |             server.cron_malloc_stats.allocator_active,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                     |
+      |                                     long long unsigned int
+../../apps/c/redis/src/server.c:5613:33: note: format string is defined here
+ 5613 |             "allocator_active:%zu\r\n"
+      |                               ~~^
+      |                                 |
+      |                                 long unsigned int
+      |                               %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 16 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5665 |             server.cron_malloc_stats.allocator_resident,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                     |
+      |                                     long long unsigned int
+../../apps/c/redis/src/server.c:5614:35: note: format string is defined here
+ 5614 |             "allocator_resident:%zu\r\n"
+      |                                 ~~^
+      |                                   |
+      |                                   long unsigned int
+      |                                 %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 36 has type ‘ssize_t’ {aka ‘long long int’} [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5685 |             mh->allocator_frag_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               ssize_t {aka long long int}
+../../apps/c/redis/src/server.c:5634:37: note: format string is defined here
+ 5634 |             "allocator_frag_bytes:%zu\r\n"
+      |                                   ~~^
+      |                                     |
+      |                                     long unsigned int
+      |                                   %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zd’ expects argument of type ‘signed size_t’, but argument 38 has type ‘ssize_t’ {aka ‘long long int’} [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5687 |             mh->allocator_rss_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               ssize_t {aka long long int}
+../../apps/c/redis/src/server.c:5636:36: note: format string is defined here
+ 5636 |             "allocator_rss_bytes:%zd\r\n"
+      |                                  ~~^
+      |                                    |
+      |                                    long int
+      |                                  %lld
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zd’ expects argument of type ‘signed size_t’, but argument 40 has type ‘size_t’ {aka ‘long long unsigned int’} [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5689 |             mh->rss_extra_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               size_t {aka long long unsigned int}
+../../apps/c/redis/src/server.c:5638:35: note: format string is defined here
+ 5638 |             "rss_overhead_bytes:%zd\r\n"
+      |                                 ~~^
+      |                                   |
+      |                                   long int
+      |                                 %lld
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zd’ expects argument of type ‘signed size_t’, but argument 42 has type ‘ssize_t’ {aka ‘long long int’} [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5694 |             mh->total_frag_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               ssize_t {aka long long int}
+../../apps/c/redis/src/server.c:5640:40: note: format string is defined here
+ 5640 |             "mem_fragmentation_bytes:%zd\r\n"
+      |                                      ~~^
+      |                                        |
+      |                                        long int
+      |                                      %lld
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 43 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5695 |             freeMemoryGetNotCountedMemory(),
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+../../apps/c/redis/src/server.c:5641:42: note: format string is defined here
+ 5641 |             "mem_not_counted_for_evict:%zu\r\n"
+      |                                        ~~^
+      |                                          |
+      |                                          long unsigned int
+      |                                        %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 44 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5696 |             mh->repl_backlog,
+      |             ~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+../../apps/c/redis/src/server.c:5642:40: note: format string is defined here
+ 5642 |             "mem_replication_backlog:%zu\r\n"
+      |                                      ~~^
+      |                                        |
+      |                                        long unsigned int
+      |                                      %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 45 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5697 |             server.repl_buffer_mem,
+      |             ~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5643:46: note: format string is defined here
+ 5643 |             "mem_total_replication_buffers:%zu\r\n"
+      |                                            ~~^
+      |                                              |
+      |                                              long unsigned int
+      |                                            %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 46 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5698 |             mh->clients_slaves,
+      |             ~~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+../../apps/c/redis/src/server.c:5644:35: note: format string is defined here
+ 5644 |             "mem_clients_slaves:%zu\r\n"
+      |                                 ~~^
+      |                                   |
+      |                                   long unsigned int
+      |                                 %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 47 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5699 |             mh->clients_normal,
+      |             ~~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+../../apps/c/redis/src/server.c:5645:35: note: format string is defined here
+ 5645 |             "mem_clients_normal:%zu\r\n"
+      |                                 ~~^
+      |                                   |
+      |                                   long unsigned int
+      |                                 %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 48 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5700 |             mh->cluster_links,
+      |             ~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+../../apps/c/redis/src/server.c:5646:34: note: format string is defined here
+ 5646 |             "mem_cluster_links:%zu\r\n"
+      |                                ~~^
+      |                                  |
+      |                                  long unsigned int
+      |                                %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 49 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5701 |             mh->aof_buffer,
+      |             ~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+../../apps/c/redis/src/server.c:5647:31: note: format string is defined here
+ 5647 |             "mem_aof_buffer:%zu\r\n"
+      |                             ~~^
+      |                               |
+      |                               long unsigned int
+      |                             %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 52 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5704 |             lazyfreeGetPendingObjectsCount(),
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+../../apps/c/redis/src/server.c:5650:41: note: format string is defined here
+ 5650 |             "lazyfree_pending_objects:%zu\r\n"
+      |                                       ~~^
+      |                                         |
+      |                                         long unsigned int
+      |                                       %llu
+../../apps/c/redis/src/server.c:5600:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 53 has type ‘long long unsigned int’ [-Wformat=]
+ 5600 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5705 |             lazyfreeGetFreedObjectsCount()
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+../../apps/c/redis/src/server.c:5651:34: note: format string is defined here
+ 5651 |             "lazyfreed_objects:%zu\r\n",
+      |                                ~~^
+      |                                  |
+      |                                  long unsigned int
+      |                                %llu
+../../apps/c/redis/src/server.c:5723:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 5 has type ‘long long unsigned int’ [-Wformat=]
+ 5723 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5756 |             server.stat_current_cow_peak,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5726:33: note: format string is defined here
+ 5726 |             "current_cow_peak:%zu\r\n"
+      |                               ~~^
+      |                                 |
+      |                                 long unsigned int
+      |                               %llu
+../../apps/c/redis/src/server.c:5723:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 6 has type ‘long long unsigned int’ [-Wformat=]
+ 5723 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5757 |             server.stat_current_cow_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5727:33: note: format string is defined here
+ 5727 |             "current_cow_size:%zu\r\n"
+      |                               ~~^
+      |                                 |
+      |                                 long unsigned int
+      |                               %llu
+../../apps/c/redis/src/server.c:5723:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 9 has type ‘long long unsigned int’ [-Wformat=]
+ 5723 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5760 |             server.stat_current_save_keys_processed,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5730:44: note: format string is defined here
+ 5730 |             "current_save_keys_processed:%zu\r\n"
+      |                                          ~~^
+      |                                            |
+      |                                            long unsigned int
+      |                                          %llu
+../../apps/c/redis/src/server.c:5723:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 10 has type ‘long long unsigned int’ [-Wformat=]
+ 5723 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5761 |             server.stat_current_save_keys_total,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5731:40: note: format string is defined here
+ 5731 |             "current_save_keys_total:%zu\r\n"
+      |                                      ~~^
+      |                                        |
+      |                                        long unsigned int
+      |                                      %llu
+../../apps/c/redis/src/server.c:5723:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 18 has type ‘long long unsigned int’ [-Wformat=]
+ 5723 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5770 |             server.stat_rdb_cow_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5739:34: note: format string is defined here
+ 5739 |             "rdb_last_cow_size:%zu\r\n"
+      |                                ~~^
+      |                                  |
+      |                                  long unsigned int
+      |                                %llu
+../../apps/c/redis/src/server.c:5723:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 30 has type ‘long long unsigned int’ [-Wformat=]
+ 5723 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5784 |             server.stat_aof_cow_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5751:34: note: format string is defined here
+ 5751 |             "aof_last_cow_size:%zu\r\n"
+      |                                ~~^
+      |                                  |
+      |                                  long unsigned int
+      |                                %llu
+../../apps/c/redis/src/server.c:5723:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 32 has type ‘long long unsigned int’ [-Wformat=]
+ 5723 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5786 |             server.stat_module_cow_bytes);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+../../apps/c/redis/src/server.c:5753:42: note: format string is defined here
+ 5753 |             "module_fork_last_cow_size:%zu\r\n",
+      |                                        ~~^
+      |                                          |
+      |                                          long unsigned int
+      |                                        %llu
+../../apps/c/redis/src/server.c:5790:17: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 6 has type ‘long long unsigned int’ [-Wformat=]
+ 5790 |                 "aof_current_size:%lld\r\n"
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+......
+ 5799 |                 sdslen(server.aof_buf),
+      |                 ~~~~~~~~~~~~~~~~~~~~~~
+      |                 |
+      |                 long long unsigned int
+../../apps/c/redis/src/server.c:5793:38: note: format string is defined here
+ 5793 |                 "aof_buffer_length:%zu\r\n"
+      |                                    ~~^
+      |                                      |
+      |                                      long unsigned int
+      |                                    %llu
+../../apps/c/redis/src/server.c:5863:13: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 34 has type ‘long long unsigned int’ [-Wformat=]
+ 5863 |             "# Stats\r\n"
+      |             ^~~~~~~~~~~~~
+......
+ 5945 |             getSlaveKeyWithExpireCount(),
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+../../apps/c/redis/src/server.c:5895:43: note: format string is defined here
+ 5895 |             "slave_expires_tracked_keys:%zu\r\n"
+      |                                         ~~^
+      |                                           |
+      |                                           long unsigned int
+      |                                         %llu
+../../apps/c/redis/src/server.c:6108:9: warning: implicit declaration of function ‘getrusage’ [-Wimplicit-function-declaration]
+ 6108 |         getrusage(RUSAGE_SELF, &self_ru);
+      |         ^~~~~~~~~
+../../apps/c/redis/src/server.c:6108:19: error: ‘RUSAGE_SELF’ undeclared (first use in this function)
+ 6108 |         getrusage(RUSAGE_SELF, &self_ru);
+      |                   ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:6109:19: error: ‘RUSAGE_CHILDREN’ undeclared (first use in this function)
+ 6109 |         getrusage(RUSAGE_CHILDREN, &c_ru);
+      |                   ^~~~~~~~~~~~~~~
+../../apps/c/redis/src/server.c: In function ‘createPidFile’:
+../../apps/c/redis/src/server.c:6309:17: warning: passing argument 1 of ‘fprintf’ makes integer from pointer without a cast [-Wint-conversion]
+ 6309 |         fprintf(fp,"%d\n",(int)getpid());
+      |                 ^~
+      |                 |
+      |                 FILE * {aka struct _IO_FILE *}
+In file included from ../../apps/c/redis/src/rio.h:35,
+                 from ../../apps/c/redis/src/server.h:36,
+                 from ../../apps/c/redis/src/server.c:30:
+include/stdio.h:25:18: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   25 | void fprintf(int f, const char *fmt, ...);
+      |              ~~~~^
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:6312:31: warning: format ‘%s’ expects argument of type ‘char *’, but argument 3 has type ‘int’ [-Wformat=]
+ 6312 |         serverLog(LL_WARNING, "Failed to write PID file: %s", strerror(errno));
+      |                               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  ~~~~~~~~~~~~~~~
+      |                                                               |
+      |                                                               int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:6312:59: note: format string is defined here
+ 6312 |         serverLog(LL_WARNING, "Failed to write PID file: %s", strerror(errno));
+      |                                                          ~^
+      |                                                           |
+      |                                                           char *
+      |                                                          %d
+../../apps/c/redis/src/server.c: In function ‘daemonize’:
+../../apps/c/redis/src/server.c:6319:9: warning: implicit declaration of function ‘fork’ [-Wimplicit-function-declaration]
+ 6319 |     if (fork() != 0) exit(0); /* parent exits */
+      |         ^~~~
+../../apps/c/redis/src/server.c:6320:5: warning: implicit declaration of function ‘setsid’ [-Wimplicit-function-declaration]
+ 6320 |     setsid(); /* create a new session */
+      |     ^~~~~~
+../../apps/c/redis/src/server.c:6326:9: warning: implicit declaration of function ‘dup2’ [-Wimplicit-function-declaration]
+ 6326 |         dup2(fd, STDIN_FILENO);
+      |         ^~~~
+../../apps/c/redis/src/server.c: In function ‘redisAsciiArt’:
+../../apps/c/redis/src/server.c:6379:23: warning: implicit declaration of function ‘isatty’ [-Wimplicit-function-declaration]
+ 6379 |                       isatty(fileno(stdout))) ||
+      |                       ^~~~~~
+../../apps/c/redis/src/server.c:6379:30: warning: implicit declaration of function ‘fileno’ [-Wimplicit-function-declaration]
+ 6379 |                       isatty(fileno(stdout))) ||
+      |                              ^~~~~~
+../../apps/c/redis/src/server.c: In function ‘setupSignalHandlers’:
+../../apps/c/redis/src/server.c:6474:5: warning: implicit declaration of function ‘sigemptyset’ [-Wimplicit-function-declaration]
+ 6474 |     sigemptyset(&act.sa_mask);
+      |     ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:6477:5: warning: implicit declaration of function ‘sigaction’ [-Wimplicit-function-declaration]
+ 6477 |     sigaction(SIGTERM, &act, NULL);
+      |     ^~~~~~~~~
+../../apps/c/redis/src/server.c:6482:8: error: ‘struct sigaction’ has no member named ‘sa_sigaction’
+ 6482 |     act.sa_sigaction = sigsegvHandler;
+      |        ^
+../../apps/c/redis/src/server.c: In function ‘redisFork’:
+../../apps/c/redis/src/server.c:6546:19: error: lvalue required as left operand of assignment
+ 6546 |             errno = EEXIST;
+      |                   ^
+../../apps/c/redis/src/server.c:6578:19: error: lvalue required as left operand of assignment
+ 6578 |             errno = fork_errno;
+      |                   ^
+../../apps/c/redis/src/server.c: In function ‘loadDataFromDisk’:
+../../apps/c/redis/src/server.c:6726:15: error: lvalue required as left operand of assignment
+ 6726 |         errno = 0; /* Prevent a stale value from affecting error checking */
+      |               ^
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c: In function ‘redisOutOfMemoryHandler’:
+../../apps/c/redis/src/server.c:6786:26: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 3 has type ‘long long unsigned int’ [-Wformat=]
+ 6786 |     serverLog(LL_WARNING,"Out Of Memory allocating %zu bytes!",
+      |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 6787 |         allocation_size);
+      |         ~~~~~~~~~~~~~~~   
+      |         |
+      |         long long unsigned int
+../../apps/c/redis/src/server.h:3710:27: note: in definition of macro ‘serverLog’
+ 3710 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:6786:54: note: format string is defined here
+ 6786 |     serverLog(LL_WARNING,"Out Of Memory allocating %zu bytes!",
+      |                                                    ~~^
+      |                                                      |
+      |                                                      long unsigned int
+      |                                                    %llu
+In file included from ../../apps/c/redis/src/server.c:30:
+../../apps/c/redis/src/server.c:6788:17: warning: format ‘%zu’ expects argument of type ‘size_t’, but argument 4 has type ‘long long unsigned int’ [-Wformat=]
+ 6788 |     serverPanic("Redis aborting for OUT OF MEMORY. Allocating %zu bytes!",
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 6789 |         allocation_size);
+      |         ~~~~~~~~~~~~~~~
+      |         |
+      |         long long unsigned int
+../../apps/c/redis/src/server.h:663:57: note: in definition of macro ‘serverPanic’
+  663 | #define serverPanic(...) _serverPanic(__FILE__,__LINE__,__VA_ARGS__),redis_unreachable()
+      |                                                         ^~~~~~~~~~~
+../../apps/c/redis/src/server.c:6788:65: note: format string is defined here
+ 6788 |     serverPanic("Redis aborting for OUT OF MEMORY. Allocating %zu bytes!",
+      |                                                               ~~^
+      |                                                                 |
+      |                                                                 long unsigned int
+      |                                                               %llu
+../../apps/c/redis/src/server.c: In function ‘redisSupervisedUpstart’:
+../../apps/c/redis/src/server.c:6883:31: warning: implicit declaration of function ‘getenv’ [-Wimplicit-function-declaration]
+ 6883 |     const char *upstart_job = getenv("UPSTART_JOB");
+      |                               ^~~~~~
+../../apps/c/redis/src/server.c:6883:31: warning: initialization of ‘const char *’ from ‘int’ makes pointer from integer without a cast [-Wint-conversion]
+../../apps/c/redis/src/server.c:6892:5: warning: implicit declaration of function ‘raise’; did you mean ‘raxSize’? [-Wimplicit-function-declaration]
+ 6892 |     raise(SIGSTOP);
+      |     ^~~~~
+      |     raxSize
+../../apps/c/redis/src/server.c:6893:5: warning: implicit declaration of function ‘unsetenv’; did you mean ‘lua_setfenv’? [-Wimplicit-function-declaration]
+ 6893 |     unsetenv("UPSTART_JOB");
+      |     ^~~~~~~~
+      |     lua_setfenv
+../../apps/c/redis/src/server.c: In function ‘main’:
+../../apps/c/redis/src/server.c:7037:5: warning: implicit declaration of function ‘tzset’ [-Wimplicit-function-declaration]
+ 7037 |     tzset(); /* Populates 'timezone' global. */
+      |     ^~~~~
+../../apps/c/redis/src/server.c:7044:5: warning: implicit declaration of function ‘srandom’; did you mean ‘srand’? [-Wimplicit-function-declaration]
+ 7044 |     srandom(time(NULL)^getpid()^tv.tv_usec);
+      |     ^~~~~~~
+      |     srand
+../../apps/c/redis/src/server.c:7052:5: warning: implicit declaration of function ‘umask’ [-Wimplicit-function-declaration]
+ 7052 |     umask(server.umask = umask(0777));
+      |     ^~~~~
+../../apps/c/redis/src/server.c: In function ‘dictExpandAllowed’:
+../../apps/c/redis/src/server.c:387:5: error: ‘-mgeneral-regs-only’ is incompatible with the use of floating-point types
+  387 | int dictExpandAllowed(size_t moreMem, double usedRatio) {
+      |     ^~~~~~~~~~~~~~~~~
+make[1]: *** [Makefile:97: ../../target/aarch64-unknown-none-softfloat/release/arceos-redis.o] Error 1
+make[1]: Leaving directory '/home/yanjuguang/OS/arceos/ulib/c_libax'
+make: *** [Makefile:115: kernel_elf] Error 2

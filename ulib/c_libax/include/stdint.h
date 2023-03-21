@@ -8,8 +8,24 @@ typedef short int16_t;
 typedef unsigned short uint16_t;
 typedef int int32_t;
 typedef unsigned int uint32_t;
+typedef unsigned int __uint32_t;
 typedef long long int64_t;
 typedef unsigned long long uint64_t;
+typedef long intmax_t;
+
+# define UINT64_MAX		(__UINT64_C(18446744073709551615))
+
+
+#define __WORDSIZE	64
+# if __WORDSIZE == 64
+#  define INTPTR_MIN		(-9223372036854775807L-1)
+#  define INTPTR_MAX		(9223372036854775807L)
+#  define UINTPTR_MAX		(18446744073709551615UL)
+# else
+#  define INTPTR_MIN		(-2147483647-1)
+#  define INTPTR_MAX		(2147483647)
+#  define UINTPTR_MAX		(4294967295U)
+# endif
 
 /* *
  * Pointers and addresses are 32 bits long.
