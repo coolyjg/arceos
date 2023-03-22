@@ -1,0 +1,418 @@
+undefined reference to ......
+---------------------------------
+  1: ACLCheckAllPerm                                   1
+  2: ACLGetCommandCategoryFlagByName                   2
+  3: ACLGetCommandID                                   3
+  4: ACLInit                                           1
+  5: ACLLoadUsersAtStartup                             1
+  6: ACLUpdateDefaultUserPassword                      1
+  7: ModuleForkDoneHandler                             1
+  8: ProcessingEventsWhileBlocked                      5
+  9: TerminateModuleForkChild                          1
+ 10: WEXITSTATUS                                       1
+ 11: WIFEXITED                                         1
+ 12: WIFSIGNALED                                       2
+ 13: WTERMSIG                                          2
+ 14: __errno_location                                  15
+ 15: _exit                                             3
+ 16: _serverAssert                                     18
+ 17: _serverAssertWithInfo                             1
+ 18: _serverPanic                                      15
+ 19: access                                            1
+ 20: activeDefragCycle                                 3
+ 21: activeExpireCycle                                 2
+ 22: addACLLogEntry                                    1
+ 23: addReply                                          4
+ 24: addReplyArrayLen                                  14
+ 25: addReplyBulk                                      4
+ 26: addReplyBulkCBuffer                               10
+ 27: addReplyBulkCString                               64
+ 28: addReplyBulkLongLong                              2
+ 29: addReplyCommandCategories                         1
+ 30: addReplyDeferredLen                               3
+ 31: addReplyError                                     5
+ 32: addReplyErrorArity                                1
+ 33: addReplyErrorObject                               4
+ 34: addReplyErrorSds                                  4
+ 35: addReplyHelp                                      1
+ 36: addReplyLongLong                                  13
+ 37: addReplyMapLen                                    19
+ 38: addReplyNull                                      1
+ 39: addReplySetLen                                    17
+ 40: addReplyStatus                                    9
+ 41: addReplyVerbatim                                  1
+ 42: aeCreateEventLoop                                 2
+ 43: aeCreateFileEvent                                 4
+ 44: aeCreateTimeEvent                                 1
+ 45: aeDeleteEventLoop                                 1
+ 46: aeDeleteFileEvent                                 6
+ 47: aeGetApiName                                      1
+ 48: aeMain                                            1
+ 49: aeSetAfterSleepProc                               1
+ 50: aeSetBeforeSleepProc                              1
+ 51: aeSetDontWait                                     1
+ 52: allowProtectedAction                              2
+ 53: anetCloexec                                       1
+ 54: anetNonBlock                                      1
+ 55: anetSetSockMarkId                                 1
+ 56: anetTcp6Server                                    1
+ 57: anetTcpServer                                     1
+ 58: aofDelHistoryFiles                                1
+ 59: aofLoadManifestFromDisk                           1
+ 60: aofManifestFree                                   1
+ 61: aofOpenIfNeededOnServerStart                      1
+ 62: aofRewriteLimited                                 2
+ 63: appendServerSaveParams                            3
+ 64: applyWatchdogPeriod                               1
+ 65: authRequired                                      1
+ 66: backgroundRewriteDoneHandler                      1
+ 67: backgroundSaveDoneHandler                         1
+ 68: bioInit                                           1
+ 69: bioPendingJobsOfType                              1
+ 70: blockPostponeClient                               1
+ 71: changeReplicationId                               1
+ 72: checkGoodReplicasStatus                           1
+ 73: checkLinuxMadvFreeForkBug                         1
+ 74: checkOvercommit                                   1
+ 75: checkTHPEnabled                                   2
+ 76: checkXenClocksource                               1
+ 77: clearReplicationId2                               1
+ 78: clientBufferLimitsDefaults                        2
+ 79: clientsCronHandleTimeout                          1
+ 80: close                                             20
+ 81: closeChildInfoPipe                                4
+ 82: closeClientOnOutputBufferLimitReached             1
+ 83: clusterBeforeSleep                                1
+ 84: clusterCron                                       1
+ 85: clusterInit                                       1
+ 86: clusterInitListeners                              1
+ 87: clusterRedirectClient                             1
+ 88: configOOMScoreAdjValuesDefaults                   2
+ 89: connTypeHasPendingData                            1
+ 90: connTypeInitialize                                1
+ 91: connTypeProcessPendingData                        2
+ 92: connectionByType                                  3
+ 93: connectionIndexByType                             4
+ 94: connectionTypeTls                                 1
+ 95: crc64_init                                        1
+ 96: createObject                                      43
+ 97: createReplicationBacklog                          1
+ 98: createStringObject                                5
+ 99: dbTotalServerKeyCount                             1
+100: debugCommand                                      3
+101: decrRefCount                                      5
+102: dictAdd                                           8
+103: dictCreate                                        15
+104: dictExpand                                        2
+105: dictFetchValue                                    17
+106: dictFind                                          31
+107: dictGenCaseHashFunction                           5
+108: dictGenHashFunction                               12
+109: dictGetIterator                                   5
+110: dictGetSafeIterator                               15
+111: dictGetVal                                        20
+112: dictNext                                          33
+113: dictRehashMilliseconds                            2
+114: dictRelease                                       2
+115: dictReleaseIterator                               19
+116: dictResize                                        2
+117: dictSetHashFunctionSeed                           1
+118: dictSetResizeEnabled                              16
+119: discardCommand                                    4
+120: discardTransaction                                1
+121: dismissObject                                     1
+122: dismissSds                                        1
+123: doesCommandHaveKeys                               2
+124: dup2                                              3
+125: environ                                           2
+126: evalCommand                                       4
+127: evalGetCommandFlags                               2
+128: evalMemory                                        2
+129: evalRoCommand                                     6
+130: evalScriptsDict                                   2
+131: evalShaCommand                                    4
+132: evalShaRoCommand                                  6
+133: evictClients                                      2
+134: evictPolicyToString                               1
+135: evictionPoolAlloc                                 1
+136: execCommand                                       33
+137: execCommandAbort                                  7
+138: execve                                            1
+139: exit                                              20
+140: expireSlaveKeys                                   1
+141: fcallCommand                                      4
+142: fcallGetCommandFlags                              2
+143: fcallroCommand                                    6
+144: fclose                                            4
+145: fcntl                                             1
+146: fdatasync                                         1
+147: feedAppendOnlyFile                                1
+148: fgets                                             1
+149: fileno                                            1
+150: firePostExecutionUnitJobs                         3
+151: flagTransaction                                   16
+152: flock                                             1
+153: flushAppendOnlyFile                               5
+154: flushSlavesOutputBuffers                          1
+155: fopen                                             4
+156: fork                                              3
+157: freeClientOriginalArgv                            2
+158: freeClientsInAsyncFreeQueue                       3
+159: freeMemoryGetNotCountedMemory                     1
+160: freeMemoryOverheadData                            1
+161: freeReplicationBacklog                            1
+162: functionsInit                                     1
+163: functionsLibNum                                   1
+164: functionsMemory                                   1
+165: functionsNum                                      1
+166: genModulesInfoString                              3
+167: getAbsolutePath                                   2
+168: getAclErrorMessage                                1
+169: getClientMemoryUsage                              3
+170: getClientOutputBufferMemoryUsage                  2
+171: getClientType                                     5
+172: getClusterConnectionsCount                        1
+173: getDecodedObject                                  2
+174: getFailoverStateString                            1
+175: getKeysFreeResult                                 1
+176: getKeysFromCommandWithSpecs                       1
+177: getLRUClock                                       2
+178: getListensInfoString                              1
+179: getMemoryOverheadData                             1
+180: getMonotonicUs                                    10
+181: getNodeByQuery                                    1
+182: getRandomBytes                                    1
+183: getRandomHexChars                                 1
+184: getSlaveKeyWithExpireCount                        1
+185: getTimeZone                                       1
+186: getenv                                            3
+187: getpid                                            17
+188: getrlimit                                         1
+189: getrusage                                         4
+190: gettimeofday                                      31
+191: handleBlockedClientsTimeout                       1
+192: handleClientsBlockedOnKeys                        2
+193: handleClientsWithPendingReadsUsingThreads         2
+194: handleClientsWithPendingWrites                    1
+195: handleClientsWithPendingWritesUsingThreads        2
+196: hdr_close                                         9
+197: hdr_init                                          2
+198: hdr_record_value                                  3
+199: hdr_value_at_percentile                           1
+200: incrRefCount                                      1
+201: incrementalTrimReplicationBacklog                 1
+202: initConfigValues                                  1
+203: initSentinel                                      1
+204: initSentinelConfig                                1
+205: initThreadedIO                                    1
+206: init_genrand64                                    1
+207: io_threads_op                                     2
+208: isPausedActions                                   4
+209: isPausedActionsWithUpdate                         1
+210: isatty                                            1
+211: killAppendOnlyChild                               2
+212: killRDBChild                                      1
+213: latencyAddSample                                  4
+214: latencyMonitorInit                                1
+215: lazyfreeGetFreedObjectsCount                      1
+216: lazyfreeGetPendingObjectsCount                    1
+217: lazyfreeResetStats                                1
+218: ldbKillForkedSessions                             1
+219: ldbPendingChildren                                1
+220: ldbRemoveChild                                    1
+221: listAddNodeTail                                   2
+222: listCreate                                        14
+223: listDelNode                                       3
+224: listNext                                          8
+225: listRelease                                       2
+226: listRewind                                        6
+227: listRotateTailToHead                              1
+228: ll2string                                         8
+229: loadAppendOnlyFiles                               1
+230: loadSentinelConfigFromQueue                       1
+231: loadServerConfig                                  1
+232: localtime_r                                       3
+233: makeObjectShared                                  2
+234: memmapchars                                       4
+235: mempbrk                                           6
+236: memtest                                           1
+237: migrateCloseTimedoutSockets                       1
+238: moduleAcquireGIL                                  1
+239: moduleCallCommandFilters                          1
+240: moduleCommand                                     2
+241: moduleCount                                       5
+242: moduleFireServerEvent                             8
+243: moduleGetHandleByName                             2
+244: moduleHandleBlockedClients                        1
+245: moduleInitModulesSystem                           1
+246: moduleInitModulesSystemLast                       1
+247: moduleIsModuleCommand                             2
+248: moduleLoadFromQueue                               1
+249: moduleNameFromCommand                             1
+250: modulePipeReadable                                2
+251: modulePostExecutionUnitOperations                 3
+252: moduleReleaseGIL                                  1
+253: modulesCollectInfo                                1
+254: modulesCron                                       1
+255: monotonicGetType                                  2
+256: monotonicInfoString                               1
+257: monotonicInit                                     1
+258: multiCommand                                      2
+259: nolocks_localtime                                 2
+260: open                                              5
+261: openChildInfoPipe                                 1
+262: openlog                                           1
+263: overMaxmemoryAfterAlloc                           1
+264: pauseActions                                      1
+265: performEvictions                                  1
+266: processClientsWaitingReplicas                     1
+267: processUnblockedClients                           1
+268: psubscribeCommand                                 4
+269: pthread_self                                      1
+270: pthread_setcancelstate                            2
+271: pthread_setcanceltype                             2
+272: punsubscribeCommand                               4
+273: queueMultiCommand                                 1
+274: quitCommand                                       8
+275: raise                                             1
+276: raxFind                                           1
+277: raxFreeWithCallback                               1
+278: raxInsert                                         1
+279: raxNew                                            4
+280: raxNext                                           2
+281: raxNotFound                                       2
+282: raxSeek                                           1
+283: raxSize                                           1
+284: raxStart                                          1
+285: raxStop                                           1
+286: rdbLoad                                           2
+287: rdbPopulateSaveInfo                               3
+288: rdbRemoveTempFile                                 2
+289: rdbSave                                           1
+290: rdbSaveBackground                                 2
+291: read                                              1
+292: rebaseReplicationBuffer                           1
+293: receiveChildInfo                                  2
+294: redisBuildId                                      1
+295: redisBuildIdString                                1
+296: redisCommandTable                                 2
+297: redisGitDirty                                     4
+298: redisGitSHA1                                      4
+299: redis_check_aof_main                              1
+300: redis_check_rdb_main                              1
+301: replicationCacheMasterUsingMyself                 1
+302: replicationCron                                   1
+303: replicationFeedMonitors                           1
+304: replicationFeedSlaves                             3
+305: replicationGetSlaveName                           1
+306: replicationStartPendingFork                       1
+307: replyToClientsBlockedOnShutdown                   2
+308: reqresAppendRequest                               1
+309: resetCommand                                      8
+310: resetReplicationBuffer                            1
+311: resetServerSaveParams                             1
+312: rewriteAppendOnlyFileBackground                   3
+313: rewriteConfig                                     1
+314: scriptIsEval                                      1
+315: scriptIsRunning                                   1
+316: scriptIsTimedout                                  4
+317: scriptingInit                                     1
+318: sdsRemoveFreeSpace                                1
+319: sdsResize                                         1
+320: sdsZmallocSize                                    2
+321: sdscat                                            25
+322: sdscatfmt                                         7
+323: sdscatlen                                         1
+324: sdscatprintf                                      53
+325: sdscatrepr                                        1
+326: sdscatvprintf                                     1
+327: sdsdup                                            5
+328: sdsempty                                          19
+329: sdsfree                                           25
+330: sdsfreesplitres                                   4
+331: sdsmapchars                                       2
+332: sdsnew                                            58
+333: sdssplitargs                                      2
+334: sdssplitlen                                       1
+335: sdssubstr                                         1
+336: sdstemplate                                       5
+337: sdstoupper                                        1
+338: sdstrim                                           3
+339: securityWarningCommand                            1
+340: selectDb                                          1
+341: sendChildInfoGeneric                              2
+342: sentinelCheckConfigFile                           1
+343: sentinelInfoCommand                               1
+344: sentinelIsRunning                                 1
+345: sentinelTimer                                     1
+346: setDeferredArrayLen                               2
+347: setDeferredMapLen                                 1
+348: set_jemalloc_bg_thread                            1
+349: setcpuaffinity                                    2
+350: setlocale                                         1
+351: setproctitle                                      2
+352: setrlimit                                         1
+353: setsid                                            1
+354: sigaction                                         14
+355: sigemptyset                                       5
+356: signal                                            2
+357: sigsegvHandler                                    2
+358: slotToKeyReplaceEntry                             1
+359: slowlogInit                                       1
+360: slowlogPushEntryIfNeeded                          3
+361: snprintf                                          10
+362: spt_init                                          1
+363: srandom                                           1
+364: ssubscribeCommand                                 4
+365: stopThreadedIOIfNeeded                            2
+366: strcasecmp                                        16
+367: strchr                                            1
+368: strerror                                          12
+369: strftime                                          2
+370: stringmatchlen                                    2
+371: strrchr                                           1
+372: strstr                                            3
+373: strtol                                            3
+374: subscribeCommand                                  4
+375: sunsubscribeCommand                               4
+376: syscheck                                          1
+377: sysconf                                           1
+378: syslog                                            2
+379: time                                              14
+380: totalNumberOfBlockingKeys                         1
+381: trackingBroadcastInvalidationMessages             1
+382: trackingGetTotalItems                             1
+383: trackingGetTotalKeys                              1
+384: trackingGetTotalPrefixes                          1
+385: trackingHandlePendingKeyInvalidations             4
+386: trackingLimitUsedSlots                            2
+387: trackingRememberKeys                              1
+388: trimDoubleString                                  1
+389: tzset                                             1
+390: umask                                             2
+391: uname                                             1
+392: unlink                                            2
+393: unpauseActions                                    2
+394: unsetenv                                          1
+395: unsubscribeCommand                                4
+396: updateFailoverStatus                              1
+397: updatePausedActions                               1
+398: usleep                                            1
+399: verifyClusterConfigWithData                       1
+400: vsnprintf                                         2
+401: waitpid                                           1
+402: watchCommand                                      2
+403: watchdogScheduleSignal                            1
+404: write                                             17
+405: zfree                                             17
+406: zmadvise_dontneed                                 4
+407: zmalloc                                           12
+408: zmalloc_get_allocator_info                        1
+409: zmalloc_get_memory_size                           1
+410: zmalloc_get_rss                                   1
+411: zmalloc_set_oom_handler                           1
+412: zmalloc_size                                      2
+413: zmalloc_usable                                    1
+414: zmalloc_used_memory                               9
+415: zrealloc                                          2
+416: zstrdup                                           6
