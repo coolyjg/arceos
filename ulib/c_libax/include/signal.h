@@ -1,7 +1,8 @@
 #ifndef	_SIGNAL_H
 #define _SIGNAL_H
 
-#include "stdint.h"
+#include <stdint.h>
+
 
 typedef int sig_atomic_t;
 #ifndef __siginfo_t_defined
@@ -153,8 +154,14 @@ typedef struct
 #define SIGUSR1 10
 #define SIGSEGV 11
 #define SIGPIPE 13
+#define	SIGALRM	14	/* Alarm clock.  */
 #define SIGTERM 15
 #define SIGSTOP 19
+
+/* Values for the HOW argument to `sigprocmask'.  */
+#define	SIG_BLOCK     0		 /* Block signals.  */
+#define	SIG_UNBLOCK   1		 /* Unblock signals.  */
+#define	SIG_SETMASK   2		 /* Set the set of blocked signals.  */
 
 typedef void (*__sighandler_t) (int);
 #define	SIG_IGN	 ((__sighandler_t)  1)
@@ -162,12 +169,9 @@ typedef void (*__sighandler_t) (int);
 
 #define _SIGSET_NWORDS (1024 / (8 * sizeof (unsigned long int)))
 
-typedef struct
-{
-  unsigned long int __val[_SIGSET_NWORDS];
-} __sigset_t;
-
 #define __USE_POSIX199309 1
+
+#include <bits/types.h>
 
 struct sigaction
   {

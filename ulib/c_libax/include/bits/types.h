@@ -225,7 +225,12 @@ __STD_TYPE __TIME64_T_TYPE __time64_t;
 
 #undef __STD_TYPE
 
+#define _SIGSET_NWORDS (1024 / (8 * sizeof (unsigned long int)))
+typedef struct
+{
+  unsigned long int __val[_SIGSET_NWORDS];
+} __sigset_t;
 
-
+typedef __sigset_t sigset_t;
 
 #endif /* bits/types.h */

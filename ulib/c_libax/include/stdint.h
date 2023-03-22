@@ -13,8 +13,8 @@ typedef long long int64_t;
 typedef unsigned long long uint64_t;
 typedef long intmax_t;
 
-# define UINT64_MAX		(__UINT64_C(18446744073709551615))
-
+#define UINT64_MAX		(__UINT64_C(18446744073709551615))
+#define SIZE_MAX (18446744073709551615UL)
 
 #define __WORDSIZE	64
 # if __WORDSIZE == 64

@@ -9,6 +9,10 @@
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 
+#define SEEK_SET	0	/* Seek from beginning of file.  */
+#define SEEK_CUR	1	/* Seek from current position.  */
+#define SEEK_END	2	/* Seek from end of file.  */
+
 #ifndef __FILE_defined
 #define __FILE_defined 1
 
