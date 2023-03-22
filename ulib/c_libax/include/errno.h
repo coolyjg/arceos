@@ -23,7 +23,10 @@
 #define EEXIST 17
 #define EINVAL 22
 
-#define errno 1/*todo*/
+// #define errno 1/*todo*/
+
+int *__errno_location(void);
+#define errno (*__errno_location ())
 
 #define ENOPROTOOPT 92
 #define EPROTONOSUPPORT 93

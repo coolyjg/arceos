@@ -1,7 +1,11 @@
+#ifndef	_SIGNAL_H
+#define _SIGNAL_H
+
 #include "stdint.h"
 
 typedef int sig_atomic_t;
-
+#ifndef __siginfo_t_defined
+#define __siginfo_t_defined 1
 #ifndef ____sigval_t_defined
 #define ____sigval_t_defined
 
@@ -140,7 +144,6 @@ typedef struct
       } _sifields;
   } siginfo_t __SI_ALIGNMENT;
 
-
 #define SIGHUP 1
 #define SIGINT 2
 #define SIGILL 4
@@ -158,12 +161,13 @@ typedef void (*__sighandler_t) (int);
 #define	SIG_DFL	 ((__sighandler_t)  0)	/* Default action.  */
 
 #define _SIGSET_NWORDS (1024 / (8 * sizeof (unsigned long int)))
+
 typedef struct
 {
   unsigned long int __val[_SIGSET_NWORDS];
 } __sigset_t;
 
-// #define __USE_POSIX199309
+#define __USE_POSIX199309 1
 
 struct sigaction
   {
@@ -196,3 +200,5 @@ struct sigaction
 #define SA_SIGINFO 4
 #define SA_NODEFER 0x40000000
 #define SA_RESETHAND 0x80000000
+#endif
+#endif

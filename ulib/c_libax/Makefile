@@ -58,7 +58,7 @@ endif
 ifeq ($(ARCH), riscv64)
   CFLAGS += -march=rv64gc -mabi=lp64d -mcmodel=medany
 else ifeq ($(ARCH), aarch64)
-  CFLAGS += -mgeneral-regs-only
+#   CFLAGS += -mgeneral-regs-only
 endif
 
 # Variables for app

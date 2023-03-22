@@ -1,5 +1,4 @@
 
-
 typedef unsigned long rlim_t;
 
 struct rlimit
@@ -91,3 +90,6 @@ enum __rlimit_resource
 #define RLIMIT_NLIMITS __RLIMIT_NLIMITS
 #define RLIM_NLIMITS __RLIM_NLIMITS
 };
+
+#define RUSAGE_SELF 0
+#define RUSAGE_CHILDREN -1
