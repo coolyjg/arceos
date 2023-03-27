@@ -1,22 +1,5 @@
-/* Copyright (C) 1991-2022 Free Software Foundation, Inc.
-   This file is part of the GNU C Library.
-
-   The GNU C Library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License as published by the Free Software Foundation; either
-   version 2.1 of the License, or (at your option) any later version.
-
-   The GNU C Library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with the GNU C Library; if not, see
-   <https://www.gnu.org/licenses/>.  */
-
-#ifndef _SYS_TIME_H
-#define _SYS_TIME_H	1
+#ifndef __SYS_TIME_H__
+#define __SYS_TIME_H__
 
 #include <features.h>
 
@@ -41,5 +24,19 @@ struct itimerval
     /* Time to the next timer expiration.  */
     struct timeval it_value;
   };
+
+struct timeval {
+    long tv_sec;  /* seconds */
+    long tv_usec; /* microseconds */
+};
+
+struct timezone {
+    int tz_minuteswest; /* (minutes west of Greenwich) */
+    int tz_dsttime;     /* (type of DST correction) */
+};
+
+typedef long timezone;
+int gettimeofday(struct timeval *tv, struct timezone *tz);
+int utimes(const char *filename, const struct timeval times[2]);
 
 #endif
