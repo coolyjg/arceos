@@ -28,14 +28,19 @@ int putchar(int);
 int puts(const char *s);
 void fprintf(int f, const char *fmt, ...);
 int snprintf ( char * str, int size, const char * format, ... );
+#include<stdarg.h>
+int vsnprintf(char *__restrict__ __s, unsigned long __maxlen, const char *__restrict__ __format, va_list __arg);
 int fflush(int);
 FILE *fopen(const char *filename, const char *mode);
+int fclose(FILE *__stream);
+char *fgets(char *__restrict__ __s, int __n, FILE *__restrict__ __stream);
 
 #define EOF (-1)
 
 #define printf(...) fprintf(stdout, __VA_ARGS__)
 
-typedef unsigned int __off_t;
+typedef long __off_t;
+
 struct _IO_FILE {
     int _flags; /* High-order word is _IO_MAGIC; rest is flags. */
 

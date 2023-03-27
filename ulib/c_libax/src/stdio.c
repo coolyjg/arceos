@@ -196,3 +196,24 @@ void fprintf(int f, const char *restrict fmt, ...)
     }
     va_end(ap);
 }
+
+// TODO
+int vsnprintf(char *__restrict__ __s, size_t __maxlen, const char *__restrict__ __format, va_list __arg)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+char *fgets(char *__restrict__ __s, int __n, FILE *__restrict__ __stream)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return NULL;
+}
+
+//TODO
+int fclose(FILE *__stream)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

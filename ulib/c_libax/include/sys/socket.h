@@ -288,4 +288,12 @@ enum __socket_type
 #define SOCK_NONBLOCK SOCK_NONBLOCK
 };
 
+int getsockopt(int __fd, int __level, int __optname, void *__restrict__ __optval, socklen_t *__restrict__ __optlen);
+int setsockopt(int __fd, int __level, int __optname, const void *__optval, socklen_t __optlen);
+
+int socket(int __domain, int __type, int __protocol);
+int bind(int __fd, const struct sockaddr * __addr, socklen_t __len);
+int connect(int __fd, const struct sockaddr * __addr, socklen_t __len);
+
+
 #endif

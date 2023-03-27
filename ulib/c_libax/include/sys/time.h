@@ -25,10 +25,10 @@ struct itimerval
     struct timeval it_value;
   };
 
-struct timeval {
-    long tv_sec;  /* seconds */
-    long tv_usec; /* microseconds */
-};
+// struct timeval {
+//     long tv_sec;  /* seconds */
+//     long tv_usec; /* microseconds */
+// };
 
 struct timezone {
     int tz_minuteswest; /* (minutes west of Greenwich) */

@@ -14,11 +14,22 @@ int rand(void)
     return ax_rand_u32();
 }
 
-#ifdef AX_CONFIG_ALLOC
+// #ifdef AX_CONFIG_ALLOC
 
 void *malloc(size_t size)
 {
     return ax_malloc(size);
+}
+
+//TODO
+void *calloc(size_t nmemb, size_t size)
+{
+    void *mem = ax_malloc(nmemb * size);
+
+    for (int i = 0; i< nmemb * size; i++)
+        mem[i] = 0;
+    
+    return mem;
 }
 
 void *realloc(void *memblock, size_t size)
@@ -39,7 +50,7 @@ void free(void *addr)
     return ax_free(addr);
 }
 
-#endif
+// #endif
 
 _Noreturn void abort(void)
 {
@@ -57,5 +68,19 @@ char *getenv(const char *name)
 // TODO:
 int __clzdi2(int a)
 {
+    return 0;
+}
+
+//TODO
+long long strtoll(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+long strtol(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }

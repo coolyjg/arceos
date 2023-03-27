@@ -1,3 +1,6 @@
+#ifndef	_POLL_H
+#define	_POLL_H
+
 struct pollfd
   {
     int fd;			/* File descriptor to poll.  */
@@ -12,3 +15,9 @@ struct pollfd
 #define POLLERR		0x008		/* Error condition.  */
 #define POLLHUP		0x010		/* Hung up.  */
 #define POLLNVAL	0x020		/* Invalid polling request.  */
+
+typedef unsigned long nfds_t;
+
+int poll(struct pollfd *__fds, nfds_t __nfds, int __timeout);
+
+#endif

@@ -163,3 +163,15 @@ char *strerror(int n)
 {
     return "";
 }
+
+// TODO
+void *memcpy(void *dest, const void * src, size_t n){
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+// TODO
+void *memmove(void *__dest, const void *__src, size_t __n){
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

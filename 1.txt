@@ -1,0 +1,1412 @@
+cd src && make all
+make[1]: Entering directory '/home/yanjuguang/OS/arceos/apps/c/redis/src'
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MM acl.c adlist.c ae.c anet.c aof.c bio.c bitops.c blocked.c call_reply.c childinfo.c cluster.c commands.c config.c connection.c crc16.c crc64.c crcspeed.c db.c debug.c defrag.c dict.c endianconv.c eval.c evict.c expire.c function_lua.c functions.c geo.c geohash.c geohash_helper.c hyperloglog.c intset.c latency.c lazyfree.c listpack.c localtime.c logreqres.c lolwut.c lolwut5.c lolwut6.c lzf_c.c lzf_d.c memtest.c module.c monotonic.c mt19937-64.c multi.c networking.c notify.c object.c pqsort.c pubsub.c quicklist.c rand.c rax.c rdb.c redis-check-aof.c redis-check-rdb.c release.c replication.c resp_parser.c rio.c script.c script_lua.c sds.c sentinel.c server.c setcpuaffinity.c setproctitle.c sha1.c sha256.c siphash.c slowlog.c socket.c sort.c sparkline.c strl.c syncio.c syscheck.c t_hash.c t_list.c t_set.c t_stream.c t_string.c t_zset.c timeout.c tls.c tracking.c unix.c util.c ziplist.c zipmap.c zmalloc.c > Makefile.dep 2> /dev/null || true
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o adlist.o -c adlist.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o quicklist.o -c quicklist.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o ae.o -c ae.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o anet.o -c anet.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o dict.o -c dict.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o server.o -c server.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o sds.o -c sds.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o zmalloc.o -c zmalloc.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o lzf_c.o -c lzf_c.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o lzf_d.o -c lzf_d.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o pqsort.o -c pqsort.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o zipmap.o -c zipmap.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o sha1.o -c sha1.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o ziplist.o -c ziplist.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o release.o -c release.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o networking.o -c networking.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o util.o -c util.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o object.o -c object.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o db.o -c db.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o replication.o -c replication.c
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o rdb.o -c rdb.c
+anet.c: In function ‘anetCreateSocket’:
+anet.c:283:14: error: implicit declaration of function ‘socket’ [-Werror=implicit-function-declaration]
+  283 |     if ((s = socket(domain, SOCK_STREAM, 0)) == -1) {
+      |              ^~~~~~
+anet.c: In function ‘anetTcpGenericConnect’:
+anet.c:334:21: error: implicit declaration of function ‘bind’ [-Werror=implicit-function-declaration]
+  334 |                 if (bind(s,b->ai_addr,b->ai_addrlen) != -1) {
+      |                     ^~~~
+anet.c:345:13: error: implicit declaration of function ‘connect’ [-Werror=implicit-function-declaration]
+  345 |         if (connect(s,p->ai_addr,p->ai_addrlen) == -1) {
+      |             ^~~~~~~
+sds.c: In function ‘sdstoupper’:
+ziplist.c: In function ‘zipTryEncoding’:
+ziplist.c:531:29: error: ‘INT8_MIN’ undeclared (first use in this function); did you mean ‘INT_MIN’?
+  531 |         } else if (value >= INT8_MIN && value <= INT8_MAX) {
+      |                             ^~~~~~~~
+      |                             INT_MIN
+ziplist.c:531:29: note: each undeclared identifier is reported only once for each function it appears in
+ziplist.c:531:50: error: ‘INT8_MAX’ undeclared (first use in this function)
+  531 |         } else if (value >= INT8_MIN && value <= INT8_MAX) {
+      |                                                  ^~~~~~~~
+ziplist.c:194:1: note: ‘INT8_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+  193 | #include "redisassert.h"
+  +++ |+#include <stdint.h>
+  194 | 
+sds.c:882:38: error: implicit declaration of function ‘toupper’; did you mean ‘sdstoupper’? [-Werror=implicit-function-declaration]
+  882 |     for (j = 0; j < len; j++) s[j] = toupper(s[j]);
+      |                                      ^~~~~~~
+      |                                      sdstoupper
+anet.c: In function ‘anetListen’:
+anet.c:427:9: error: implicit declaration of function ‘listen’ [-Werror=implicit-function-declaration]
+  427 |     if (listen(s, backlog) == -1) {
+      |         ^~~~~~
+ziplist.c:533:29: error: ‘INT16_MIN’ undeclared (first use in this function); did you mean ‘INT24_MIN’?
+  533 |         } else if (value >= INT16_MIN && value <= INT16_MAX) {
+      |                             ^~~~~~~~~
+      |                             INT24_MIN
+ziplist.c:533:51: error: ‘INT16_MAX’ undeclared (first use in this function)
+  533 |         } else if (value >= INT16_MIN && value <= INT16_MAX) {
+      |                                                   ^~~~~~~~~
+ziplist.c:533:51: note: ‘INT16_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o t_string.o -c t_string.c
+ziplist.c:537:29: error: ‘INT32_MIN’ undeclared (first use in this function); did you mean ‘INT24_MIN’?
+  537 |         } else if (value >= INT32_MIN && value <= INT32_MAX) {
+      |                             ^~~~~~~~~
+      |                             INT24_MIN
+util.c: In function ‘memtoull’:
+ziplist.c:537:51: error: ‘INT32_MAX’ undeclared (first use in this function)
+  537 |         } else if (value >= INT32_MIN && value <= INT32_MAX) {
+      |                                                   ^~~~~~~~~
+util.c:239:24: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+  239 |     if (*u == '\0' || !strcasecmp(u,"b")) {
+      |                        ^~~~~~~~~~
+      |                        strncmp
+ziplist.c:537:51: note: ‘INT32_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+sds.c: In function ‘sdscatrepr’:
+sds.c:1001:17: error: implicit declaration of function ‘isprint’; did you mean ‘vsnprintf’? [-Werror=implicit-function-declaration]
+ 1001 |             if (isprint(*p))
+      |                 ^~~~~~~
+      |                 vsnprintf
+anet.c: In function ‘anetUnixServer’:
+util.c:270:11: error: implicit declaration of function ‘strtoull’; did you mean ‘strtoll’? [-Werror=implicit-function-declaration]
+  270 |     val = strtoull(buf,&endptr,10);
+      |           ^~~~~~~~
+      |           strtoll
+anet.c:514:9: error: implicit declaration of function ‘chmod’; did you mean ‘fchmod’? [-Werror=implicit-function-declaration]
+  514 |         chmod(sa.sun_path, perm);
+      |         ^~~~~
+      |         fchmod
+anet.c: In function ‘anetGenericAccept’:
+anet.c:526:14: error: implicit declaration of function ‘accept4’ [-Werror=implicit-function-declaration]
+  526 |         fd = accept4(s, sa, len,  SOCK_NONBLOCK | SOCK_CLOEXEC);
+      |              ^~~~~~~
+In file included from dict.c:46:
+dict.c: In function ‘dictGetRandomKey’:
+dict.h:157:23: error: implicit declaration of function ‘random’; did you mean ‘rand’? [-Werror=implicit-function-declaration]
+  157 | #define randomULong() random()
+      |                       ^~~~~~
+dict.c:995:33: note: in expansion of macro ‘randomULong’
+  995 |             h = d->rehashidx + (randomULong() % (dictSlots(d) - d->rehashidx));
+      |                                 ^~~~~~~~~~~
+anet.c: In function ‘anetTcpAccept’:
+anet.c:561:27: error: implicit declaration of function ‘ntohs’ [-Werror=implicit-function-declaration]
+  561 |         if (port) *port = ntohs(s->sin_port);
+      |                           ^~~~~
+In file included from util.c:36:
+util.c: In function ‘string2l’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:14:20: note: in expansion of macro ‘LONG_MAX’
+   14 | #define LONG_MIN (-LONG_MAX-1)
+      |                    ^~~~~~~~
+util.c:530:17: note: in expansion of macro ‘LONG_MIN’
+  530 |     if (llval < LONG_MIN || llval > LONG_MAX)
+      |                 ^~~~~~~~
+anet.c: In function ‘anetFdToString’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: note: each undeclared identifier is reported only once for each function it appears in
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:14:20: note: in expansion of macro ‘LONG_MAX’
+   14 | #define LONG_MIN (-LONG_MAX-1)
+      |                    ^~~~~~~~
+util.c:530:17: note: in expansion of macro ‘LONG_MIN’
+  530 |     if (llval < LONG_MIN || llval > LONG_MAX)
+      |                 ^~~~~~~~
+In file included from ziplist.c:191:
+ziplist.c: In function ‘ziplistResize’:
+ziplist.c:724:18: error: ‘UINT32_MAX’ undeclared (first use in this function)
+  724 |     assert(len < UINT32_MAX);
+      |                  ^~~~~~~~~~
+config.h:141:39: note: in definition of macro ‘likely’
+  141 | #define likely(x) __builtin_expect(!!(x), 1)
+      |                                       ^
+ziplist.c:724:5: note: in expansion of macro ‘assert’
+  724 |     assert(len < UINT32_MAX);
+      |     ^~~~~~
+ziplist.c:724:18: note: ‘UINT32_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+  724 |     assert(len < UINT32_MAX);
+      |                  ^~~~~~~~~~
+config.h:141:39: note: in definition of macro ‘likely’
+  141 | #define likely(x) __builtin_expect(!!(x), 1)
+      |                                       ^
+ziplist.c:724:5: note: in expansion of macro ‘assert’
+  724 |     assert(len < UINT32_MAX);
+      |     ^~~~~~
+util.c: In function ‘string2ld’:
+util.c:554:13: error: implicit declaration of function ‘strtold’; did you mean ‘strtol’? [-Werror=implicit-function-declaration]
+  554 |     value = strtold(buf, &eptr);
+      |             ^~~~~~~
+      |             strtol
+util.c:558:23: error: ‘HUGE_VAL’ undeclared (first use in this function)
+  558 |             (value == HUGE_VAL || value == -HUGE_VAL || fpclassify(value) == FP_ZERO)) ||
+      |                       ^~~~~~~~
+util.c:558:57: error: implicit declaration of function ‘fpclassify’ [-Werror=implicit-function-declaration]
+  558 |             (value == HUGE_VAL || value == -HUGE_VAL || fpclassify(value) == FP_ZERO)) ||
+      |                                                         ^~~~~~~~~~
+anet.c:587:13: error: implicit declaration of function ‘getpeername’ [-Werror=implicit-function-declaration]
+  587 |         if (getpeername(fd, (struct sockaddr *)&sa, &salen) == -1) goto error;
+      |             ^~~~~~~~~~~
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o t_list.o -c t_list.c
+util.c:558:78: error: ‘FP_ZERO’ undeclared (first use in this function)
+  558 |             (value == HUGE_VAL || value == -HUGE_VAL || fpclassify(value) == FP_ZERO)) ||
+      |                                                                              ^~~~~~~
+In file included from dict.c:43:
+dict.c: In function ‘_dictNextExp’:
+anet.c:589:13: error: implicit declaration of function ‘getsockname’ [-Werror=implicit-function-declaration]
+  589 |         if (getsockname(fd, (struct sockaddr *)&sa, &salen) == -1) goto error;
+      |             ^~~~~~~~~~~
+util.c:560:9: error: implicit declaration of function ‘isnan’ [-Werror=implicit-function-declaration]
+  560 |         isnan(value))
+      |         ^~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+dict.c:1421:17: note: in expansion of macro ‘LONG_MAX’
+ 1421 |     if (size >= LONG_MAX) return (8*sizeof(long)-1);
+      |                 ^~~~~~~~
+util.c: In function ‘string2d’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: note: each undeclared identifier is reported only once for each function it appears in
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+dict.c:1421:17: note: in expansion of macro ‘LONG_MAX’
+ 1421 |     if (size >= LONG_MAX) return (8*sizeof(long)-1);
+      |                 ^~~~~~~~
+util.c:577:11: error: implicit declaration of function ‘strtod’; did you mean ‘strtol’? [-Werror=implicit-function-declaration]
+  577 |     *dp = strtod(s, &eptr);
+      |           ^~~~~~
+      |           strtol
+anet.c: In function ‘anetPipe’:
+anet.c:639:9: error: implicit declaration of function ‘pipe2’ [-Werror=implicit-function-declaration]
+  639 |     if (pipe2(fds, pipe_flags)) {
+      |         ^~~~~
+ziplist.c: In function ‘__ziplistDelete’:
+ziplist.c:266:44: error: ‘UINT16_MAX’ undeclared (first use in this function)
+  266 |     if (intrev16ifbe(ZIPLIST_LENGTH(zl)) < UINT16_MAX) \
+      |                                            ^~~~~~~~~~
+ziplist.c:911:9: note: in expansion of macro ‘ZIPLIST_INCR_LENGTH’
+  911 |         ZIPLIST_INCR_LENGTH(zl,-deleted);
+      |         ^~~~~~~~~~~~~~~~~~~
+ziplist.c:266:44: note: ‘UINT16_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+  266 |     if (intrev16ifbe(ZIPLIST_LENGTH(zl)) < UINT16_MAX) \
+      |                                            ^~~~~~~~~~
+ziplist.c:911:9: note: in expansion of macro ‘ZIPLIST_INCR_LENGTH’
+  911 |         ZIPLIST_INCR_LENGTH(zl,-deleted);
+      |         ^~~~~~~~~~~~~~~~~~~
+anet.c:656:28: error: implicit declaration of function ‘pipe’ [-Werror=implicit-function-declaration]
+  656 |     if (pipe_flags == 0 && pipe(fds))
+      |                            ^~~~
+util.c:582:21: error: ‘HUGE_VAL’ undeclared (first use in this function)
+  582 |             (*dp == HUGE_VAL || *dp == -HUGE_VAL || fpclassify(*dp) == FP_ZERO)) ||
+      |                     ^~~~~~~~
+util.c:582:72: error: ‘FP_ZERO’ undeclared (first use in this function)
+  582 |             (*dp == HUGE_VAL || *dp == -HUGE_VAL || fpclassify(*dp) == FP_ZERO)) ||
+      |                                                                        ^~~~~~~
+util.c: In function ‘double2ll’:
+util.c:590:22: error: unused parameter ‘d’ [-Werror=unused-parameter]
+  590 | int double2ll(double d, long long *out) {
+      |               ~~~~~~~^
+util.c:590:36: error: unused parameter ‘out’ [-Werror=unused-parameter]
+  590 | int double2ll(double d, long long *out) {
+      |                         ~~~~~~~~~~~^~~
+ziplist.c: In function ‘__ziplistInsert’:
+ziplist.c:266:44: error: ‘UINT16_MAX’ undeclared (first use in this function)
+  266 |     if (intrev16ifbe(ZIPLIST_LENGTH(zl)) < UINT16_MAX) \
+      |                                            ^~~~~~~~~~
+ziplist.c:1021:5: note: in expansion of macro ‘ZIPLIST_INCR_LENGTH’
+ 1021 |     ZIPLIST_INCR_LENGTH(zl,1);
+      |     ^~~~~~~~~~~~~~~~~~~
+ziplist.c:266:44: note: ‘UINT16_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+  266 |     if (intrev16ifbe(ZIPLIST_LENGTH(zl)) < UINT16_MAX) \
+      |                                            ^~~~~~~~~~
+ziplist.c:1021:5: note: in expansion of macro ‘ZIPLIST_INCR_LENGTH’
+ 1021 |     ZIPLIST_INCR_LENGTH(zl,1);
+      |     ^~~~~~~~~~~~~~~~~~~
+util.c: In function ‘d2string’:
+util.c:629:16: error: implicit declaration of function ‘isinf’ [-Werror=implicit-function-declaration]
+  629 |     } else if (isinf(value)) {
+      |                ^~~~~
+ziplist.c: In function ‘ziplistMerge’:
+ziplist.c:1083:27: error: ‘UINT16_MAX’ undeclared (first use in this function)
+ 1083 |     zllength = zllength < UINT16_MAX ? zllength : UINT16_MAX;
+      |                           ^~~~~~~~~~
+ziplist.c:1083:27: note: ‘UINT16_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+In file included from ziplist.c:191:
+ziplist.c:1086:22: error: ‘UINT32_MAX’ undeclared (first use in this function)
+ 1086 |     assert(zlbytes < UINT32_MAX);
+      |                      ^~~~~~~~~~
+config.h:141:39: note: in definition of macro ‘likely’
+  141 | #define likely(x) __builtin_expect(!!(x), 1)
+      |                                       ^
+ziplist.c:1086:5: note: in expansion of macro ‘assert’
+ 1086 |     assert(zlbytes < UINT32_MAX);
+      |     ^~~~~~
+aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC= -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3 -g -ggdb -nostdinc -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -Werror -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -nostdinc -MMD -o t_set.o -c t_set.c
+ziplist.c:1086:22: note: ‘UINT32_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+ 1086 |     assert(zlbytes < UINT32_MAX);
+      |                      ^~~~~~~~~~
+config.h:141:39: note: in definition of macro ‘likely’
+  141 | #define likely(x) __builtin_expect(!!(x), 1)
+      |                                       ^
+ziplist.c:1086:5: note: in expansion of macro ‘assert’
+ 1086 |     assert(zlbytes < UINT32_MAX);
+      |     ^~~~~~
+util.c: In function ‘fixedpoint_d2string’:
+util.c:694:24: error: implicit declaration of function ‘llrint’ [-Werror=implicit-function-declaration]
+  694 |     long long svalue = llrint(dvalue * powers_of_ten[fractional_digits]);
+      |                        ^~~~~~
+util.c: In function ‘getRandomBytes’:
+util.c:872:27: error: implicit declaration of function ‘fread’; did you mean ‘read’? [-Werror=implicit-function-declaration]
+  872 |         if (fp == NULL || fread(seed,sizeof(seed),1,fp) != 1) {
+      |                           ^~~~~
+      |                           read
+ziplist.c: In function ‘ziplistLen’:
+util.c: In function ‘getTimeZone’:
+ziplist.c:1412:44: error: ‘UINT16_MAX’ undeclared (first use in this function)
+ 1412 |     if (intrev16ifbe(ZIPLIST_LENGTH(zl)) < UINT16_MAX) {
+      |                                            ^~~~~~~~~~
+ziplist.c:1412:44: note: ‘UINT16_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+util.c:994:12: error: expected expression before ‘timezone’
+  994 |     return timezone;
+      |            ^~~~~~~~
+util.c: In function ‘dirRemove’:
+util.c:1036:5: error: unknown type name ‘DIR’
+ 1036 |     DIR *dir;
+      |     ^~~
+ziplist.c: In function ‘ziplistRepr’:
+ziplist.c:1476:21: error: implicit declaration of function ‘fwrite’ [-Werror=implicit-function-declaration]
+ 1476 |                 if (fwrite(p,40,1,stdout) == 0) perror("fwrite");
+      |                     ^~~~~~
+util.c:1039:20: error: ‘PATH_MAX’ undeclared (first use in this function)
+ 1039 |     char full_path[PATH_MAX + 1];
+      |                    ^~~~~~~~
+cc1: all warnings being treated as errors
+ziplist.c:1476:49: error: implicit declaration of function ‘perror’; did you mean ‘strerror’? [-Werror=implicit-function-declaration]
+ 1476 |                 if (fwrite(p,40,1,stdout) == 0) perror("fwrite");
+      |                                                 ^~~~~~
+      |                                                 strerror
+util.c:1041:16: error: implicit declaration of function ‘opendir’; did you mean ‘open’? [-Werror=implicit-function-declaration]
+ 1041 |     if ((dir = opendir(dname)) == NULL) {
+      |                ^~~~~~~
+      |                open
+util.c:1041:14: error: assignment to ‘int *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+ 1041 |     if ((dir = opendir(dname)) == NULL) {
+      |              ^
+make[1]: *** [Makefile:434: dict.o] Error 1
+make[1]: *** Waiting for unfinished jobs....
+util.c:1045:21: error: implicit declaration of function ‘readdir’ [-Werror=implicit-function-declaration]
+ 1045 |     while ((entry = readdir(dir)) != NULL) {
+      |                     ^~~~~~~
+util.c:1045:19: error: assignment to ‘struct dirent *’ from ‘int’ makes pointer from integer without a cast [-Werror=int-conversion]
+ 1045 |     while ((entry = readdir(dir)) != NULL) {
+      |                   ^
+util.c:1046:26: error: invalid use of undefined type ‘struct dirent’
+ 1046 |         if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
+      |                          ^~
+ziplist.c: In function ‘ziplistValidateIntegrity’:
+util.c:1046:57: error: invalid use of undefined type ‘struct dirent’
+ 1046 |         if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
+      |                                                         ^~
+ziplist.c:1552:25: error: ‘UINT16_MAX’ undeclared (first use in this function)
+ 1552 |     if (header_count != UINT16_MAX && count != header_count)
+      |                         ^~~~~~~~~~
+ziplist.c:1552:25: note: ‘UINT16_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+util.c:1048:69: error: invalid use of undefined type ‘struct dirent’
+ 1048 |         snprintf(full_path, sizeof(full_path), "%s/%s", dname, entry->d_name);
+      |                                                                     ^~
+util.c:1052:13: error: implicit declaration of function ‘closedir’; did you mean ‘close’? [-Werror=implicit-function-declaration]
+ 1052 |             closedir(dir);
+      |             ^~~~~~~~
+      |             close
+ziplist.c: In function ‘ziplistRandomPairs’:
+util.c:1039:10: error: unused variable ‘full_path’ [-Werror=unused-variable]
+ 1039 |     char full_path[PATH_MAX + 1];
+      |          ^~~~~~~~~
+ziplist.c:1622:5: error: implicit declaration of function ‘qsort’ [-Werror=implicit-function-declaration]
+ 1622 |     qsort(picks, count, sizeof(rand_pick), uintCompare);
+      |     ^~~~~
+util.c: In function ‘fsyncFileDir’:
+util.c:1102:24: error: ‘PATH_MAX’ undeclared (first use in this function)
+ 1102 |     char temp_filename[PATH_MAX + 1];
+      |                        ^~~~~~~~
+ziplist.c: In function ‘ziplistRandomPairsUnique’:
+server.c: In function ‘serverLogRaw’:
+ziplist.c:1666:50: error: ‘RAND_MAX’ undeclared (first use in this function)
+ 1666 |         double randomDouble = ((double)rand()) / RAND_MAX;
+      |                                                  ^~~~~~~~
+server.c:116:33: error: pointer/integer type mismatch in conditional expression [-Werror]
+  116 |     fp = log_to_stdout ? stdout : fopen(server.logfile,"a");
+      |                                 ^
+server.c:120:17: error: passing argument 1 of ‘fprintf’ makes integer from pointer without a cast [-Werror=int-conversion]
+  120 |         fprintf(fp,"%s",msg);
+      |                 ^~
+      |                 |
+      |                 FILE * {aka struct _IO_FILE *}
+util.c:1113:13: error: implicit declaration of function ‘dirname’ [-Werror=implicit-function-declaration]
+ 1113 |     dname = dirname(temp_filename);
+      |             ^~~~~~~
+In file included from rio.h:35,
+                 from server.h:36,
+                 from server.c:30:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/stdio.h:29:18: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   29 | void fprintf(int f, const char *fmt, ...);
+      |              ~~~~^
+server.c:139:17: error: passing argument 1 of ‘fprintf’ makes integer from pointer without a cast [-Werror=int-conversion]
+  139 |         fprintf(fp,"%d:%c %s %c %s\n",
+      |                 ^~
+      |                 |
+      |                 FILE * {aka struct _IO_FILE *}
+In file included from rio.h:35,
+                 from server.h:36,
+                 from server.c:30:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/stdio.h:29:18: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   29 | void fprintf(int f, const char *fmt, ...);
+      |              ~~~~^
+server.c:142:12: error: passing argument 1 of ‘fflush’ makes integer from pointer without a cast [-Werror=int-conversion]
+  142 |     fflush(fp);
+      |            ^~
+      |            |
+      |            FILE * {aka struct _IO_FILE *}
+In file included from rio.h:35,
+                 from server.h:36,
+                 from server.c:30:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/stdio.h:33:12: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   33 | int fflush(int);
+      |            ^~~
+In file included from util.c:51:
+config.h:113:25: error: implicit declaration of function ‘fdatasync’ [-Werror=implicit-function-declaration]
+  113 | #define redis_fsync(fd) fdatasync(fd)
+      |                         ^~~~~~~~~
+util.c:1126:9: note: in expansion of macro ‘redis_fsync’
+ 1126 |     if (redis_fsync(dir_fd) == -1 && !(errno == EBADF || errno == EINVAL)) {
+      |         ^~~~~~~~~~~
+util.c:1102:10: error: unused variable ‘temp_filename’ [-Werror=unused-variable]
+ 1102 |     char temp_filename[PATH_MAX + 1];
+      |          ^~~~~~~~~~~~~
+util.c: In function ‘reclaimFilePageCache’:
+server.c:145:32: error: implicit declaration of function ‘syslog’ [-Werror=implicit-function-declaration]
+  145 |     if (server.syslog_enabled) syslog(syslogLevelMap[level], "%s", msg);
+      |                                ^~~~~~
+util.c:1140:15: error: implicit declaration of function ‘posix_fadvise’ [-Werror=implicit-function-declaration]
+ 1140 |     int ret = posix_fadvise(fd, offset, length, POSIX_FADV_DONTNEED);
+      |               ^~~~~~~~~~~~~
+replication.c:38:10: fatal error: memory.h: No such file or directory
+   38 | #include <memory.h>
+      |          ^~~~~~~~~~
+compilation terminated.
+util.c:1140:49: error: ‘POSIX_FADV_DONTNEED’ undeclared (first use in this function)
+ 1140 |     int ret = posix_fadvise(fd, offset, length, POSIX_FADV_DONTNEED);
+      |                                                 ^~~~~~~~~~~~~~~~~~~
+make[1]: *** [Makefile:434: replication.o] Error 1
+server.c: In function ‘exitFromChild’:
+server.c:236:5: error: implicit declaration of function ‘_exit’ [-Werror=implicit-function-declaration]
+  236 |     _exit(retcode);
+      |     ^~~~~
+In file included from server.h:45,
+                 from object.c:31:
+object.c: In function ‘createStringObjectFromLongLongWithOptions’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:14:20: note: in expansion of macro ‘LONG_MAX’
+   14 | #define LONG_MIN (-LONG_MAX-1)
+      |                    ^~~~~~~~
+object.c:164:22: note: in expansion of macro ‘LONG_MIN’
+  164 |         if (value >= LONG_MIN && value <= LONG_MAX) {
+      |                      ^~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: note: each undeclared identifier is reported only once for each function it appears in
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:14:20: note: in expansion of macro ‘LONG_MAX’
+   14 | #define LONG_MIN (-LONG_MAX-1)
+      |                    ^~~~~~~~
+object.c:164:22: note: in expansion of macro ‘LONG_MIN’
+  164 |         if (value >= LONG_MIN && value <= LONG_MAX) {
+      |                      ^~~~~~~~
+util.c: In function ‘getTimeZone’:
+util.c:1003:1: error: control reaches end of non-void function [-Werror=return-type]
+ 1003 | }
+      | ^
+server.c: In function ‘dictSdsKeyCaseCompare’:
+server.c:276:12: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+  276 |     return strcasecmp(key1, key2) == 0;
+      |            ^~~~~~~~~~
+      |            strncmp
+cc1: all warnings being treated as errors
+cc1: all warnings being treated as errors
+make[1]: *** [Makefile:434: ziplist.o] Error 1
+make[1]: *** [Makefile:434: util.o] Error 1
+object.c: In function ‘compareStringObjectsWithFlags’:
+object.c:753:16: error: implicit declaration of function ‘strcoll’; did you mean ‘strtoll’? [-Werror=implicit-function-declaration]
+  753 |         return strcoll(astr,bstr);
+      |                ^~~~~~~
+      |                strtoll
+db.c: In function ‘getFlushCommandFlags’:
+db.c:626:26: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+  626 |     if (c->argc == 2 && !strcasecmp(c->argv[1]->ptr,"sync")) {
+      |                          ^~~~~~~~~~
+      |                          strncmp
+db.c: In function ‘parseScanCursorOrReply’:
+db.c:837:15: error: implicit declaration of function ‘strtoul’; did you mean ‘strtol’? [-Werror=implicit-function-declaration]
+  837 |     *cursor = strtoul(o->ptr, &eptr, 10);
+      |               ^~~~~~~
+      |               strtol
+server.c: In function ‘updateCachedTimeWithUs’:
+server.c:1116:9: error: implicit declaration of function ‘localtime_r’; did you mean ‘localtime’? [-Werror=implicit-function-declaration]
+ 1116 |         localtime_r(&ut,&tm);
+      |         ^~~~~~~~~~~
+      |         localtime
+In file included from server.h:45,
+                 from object.c:31:
+object.c: In function ‘getLongFromObjectOrReply’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:14:20: note: in expansion of macro ‘LONG_MAX’
+   14 | #define LONG_MIN (-LONG_MAX-1)
+      |                    ^~~~~~~~
+object.c:903:17: note: in expansion of macro ‘LONG_MIN’
+  903 |     if (value < LONG_MIN || value > LONG_MAX) {
+      |                 ^~~~~~~~
+server.c: In function ‘checkChildrenDone’:
+db.c: In function ‘shutdownCommand’:
+server.c:1160:16: error: implicit declaration of function ‘waitpid’ [-Werror=implicit-function-declaration]
+ 1160 |     if ((pid = waitpid(-1, &statloc, WNOHANG)) != 0) {
+      |                ^~~~~~~
+db.c:1153:44: error: implicit declaration of function ‘exit’ [-Werror=implicit-function-declaration]
+ 1153 |     if (prepareForShutdown(flags) == C_OK) exit(0);
+      |                                            ^~~~
+object.c: In function ‘getPositiveLongFromObjectOrReply’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+object.c:930:55: note: in expansion of macro ‘LONG_MAX’
+  930 |         return getRangeLongFromObjectOrReply(c, o, 0, LONG_MAX, target, msg);
+      |                                                       ^~~~~~~~
+server.c:1161:24: error: implicit declaration of function ‘WIFEXITED’ [-Werror=implicit-function-declaration]
+ 1161 |         int exitcode = WIFEXITED(statloc) ? WEXITSTATUS(statloc) : -1;
+      |                        ^~~~~~~~~
+t_string.c: In function ‘parseExtendedStringArgumentsOrReply’:
+t_string.c:230:21: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+  230 |         } else if (!strcasecmp(opt, "KEEPTTL") && !(*flags & OBJ_PERSIST) &&
+      |                     ^~~~~~~~~~
+      |                     strncmp
+networking.c: In function ‘freeClientAsync’:
+networking.c:1696:53: error: ‘PTHREAD_MUTEX_INITIALIZER’ undeclared (first use in this function)
+ 1696 |     static pthread_mutex_t async_free_queue_mutex = PTHREAD_MUTEX_INITIALIZER;
+      |                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~
+networking.c:1696:53: note: each undeclared identifier is reported only once for each function it appears in
+server.c:1161:45: error: implicit declaration of function ‘WEXITSTATUS’ [-Werror=implicit-function-declaration]
+ 1161 |         int exitcode = WIFEXITED(statloc) ? WEXITSTATUS(statloc) : -1;
+      |                                             ^~~~~~~~~~~
+object.c: In function ‘objectCommand’:
+object.c:1453:26: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+ 1453 |     if (c->argc == 2 && !strcasecmp(c->argv[1]->ptr,"help")) {
+      |                          ^~~~~~~~~~
+      |                          strncmp
+In file included from server.h:45,
+                 from t_string.c:30:
+t_string.c: In function ‘incrDecrCommand’:
+server.c:1164:13: error: implicit declaration of function ‘WIFSIGNALED’ [-Werror=implicit-function-declaration]
+ 1164 |         if (WIFSIGNALED(statloc)) bysignal = WTERMSIG(statloc);
+      |             ^~~~~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:14:20: note: in expansion of macro ‘LONG_MAX’
+   14 | #define LONG_MIN (-LONG_MAX-1)
+      |                    ^~~~~~~~
+t_string.c:614:18: note: in expansion of macro ‘LONG_MIN’
+  614 |         value >= LONG_MIN && value <= LONG_MAX)
+      |                  ^~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: note: each undeclared identifier is reported only once for each function it appears in
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:14:20: note: in expansion of macro ‘LONG_MAX’
+   14 | #define LONG_MIN (-LONG_MAX-1)
+      |                    ^~~~~~~~
+t_string.c:614:18: note: in expansion of macro ‘LONG_MIN’
+  614 |         value >= LONG_MIN && value <= LONG_MAX)
+      |                  ^~~~~~~~
+t_string.c: In function ‘incrbyfloatCommand’:
+t_string.c:670:9: error: implicit declaration of function ‘isnan’ [-Werror=implicit-function-declaration]
+  670 |     if (isnan(value) || isinf(value)) {
+      |         ^~~~~
+networking.c:1697:5: error: implicit declaration of function ‘pthread_mutex_lock’ [-Werror=implicit-function-declaration]
+ 1697 |     pthread_mutex_lock(&async_free_queue_mutex);
+      |     ^~~~~~~~~~~~~~~~~~
+server.c:1164:46: error: implicit declaration of function ‘WTERMSIG’ [-Werror=implicit-function-declaration]
+ 1164 |         if (WIFSIGNALED(statloc)) bysignal = WTERMSIG(statloc);
+      |                                              ^~~~~~~~
+t_string.c:670:25: error: implicit declaration of function ‘isinf’ [-Werror=implicit-function-declaration]
+  670 |     if (isnan(value) || isinf(value)) {
+      |                         ^~~~~
+t_string.c: In function ‘lcsCommand’:
+t_string.c:786:22: error: ‘UINT32_MAX’ undeclared (first use in this function)
+  786 |     if (sdslen(a) >= UINT32_MAX-1 || sdslen(b) >= UINT32_MAX-1) {
+      |                      ^~~~~~~~~~
+t_string.c:32:1: note: ‘UINT32_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+   31 | #include <math.h> /* isnan(), isinf() */
+  +++ |+#include <stdint.h>
+   32 | 
+server.c:1190:17: error: implicit declaration of function ‘exit’ [-Werror=implicit-function-declaration]
+ 1190 |                 exit(1);
+      |                 ^~~~
+object.c: In function ‘getPositiveLongFromObjectOrReply’:
+object.c:934:1: error: control reaches end of non-void function [-Werror=return-type]
+  934 | }
+      | ^
+rdb.c: In function ‘rdbReportError’:
+rdb.c:102:5: error: implicit declaration of function ‘exit’ [-Werror=implicit-function-declaration]
+  102 |     exit(1);
+      |     ^~~~
+In file included from server.c:30:
+server.c: In function ‘serverCron’:
+rdb.c: In function ‘rdbSaveLen’:
+rdb.c:182:23: error: ‘UINT32_MAX’ undeclared (first use in this function)
+  182 |     } else if (len <= UINT32_MAX) {
+      |                       ^~~~~~~~~~
+rdb.c:49:1: note: ‘UINT32_MAX’ is defined in header ‘<stdint.h>’; did you forget to ‘#include <stdint.h>’?
+   48 | #include <sys/param.h>
+  +++ |+#include <stdint.h>
+   49 | 
+rdb.c:182:23: note: each undeclared identifier is reported only once for each function it appears in
+  182 |     } else if (len <= UINT32_MAX) {
+      |                       ^~~~~~~~~~
+server.c:1361:17: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 5 has type ‘long long unsigned int’ [-Werror=format=]
+ 1361 |                 "%lu clients connected (%lu replicas), %zu bytes in use",
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+......
+ 1364 |                 zmalloc_used_memory());
+      |                 ~~~~~~~~~~~~~~~~~~~~~
+      |                 |
+      |                 long long unsigned int
+server.h:3748:27: note: in definition of macro ‘serverLog’
+ 3748 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+server.c:1361:58: note: format string is defined here
+ 1361 |                 "%lu clients connected (%lu replicas), %zu bytes in use",
+      |                                                        ~~^
+      |                                                          |
+      |                                                          long unsigned int
+      |                                                        %llu
+rdb.c:186:26: error: implicit declaration of function ‘htonl’ [-Werror=implicit-function-declaration]
+  186 |         uint32_t len32 = htonl(len);
+      |                          ^~~~~
+cc1: all warnings being treated as errors
+networking.c:1699:5: error: implicit declaration of function ‘pthread_mutex_unlock’ [-Werror=implicit-function-declaration]
+ 1699 |     pthread_mutex_unlock(&async_free_queue_mutex);
+      |     ^~~~~~~~~~~~~~~~~~~~
+rdb.c: In function ‘rdbLoadLenByRef’:
+rdb.c:232:19: error: implicit declaration of function ‘ntohl’ [-Werror=implicit-function-declaration]
+  232 |         *lenptr = ntohl(len);
+      |                   ^~~~~
+cc1: all warnings being treated as errors
+make[1]: *** [Makefile:434: object.o] Error 1
+make[1]: *** [Makefile:434: t_string.o] Error 1
+networking.c: In function ‘_writevToClient’:
+networking.c:1782:22: error: ‘IOV_MAX’ undeclared (first use in this function); did you mean ‘INT_MAX’?
+ 1782 |     struct iovec iov[IOV_MAX];
+      |                      ^~~~~~~
+      |                      INT_MAX
+networking.c:1782:18: error: unused variable ‘iov’ [-Werror=unused-variable]
+ 1782 |     struct iovec iov[IOV_MAX];
+      |                  ^~~
+rdb.c: In function ‘rdbSaveDoubleValue’:
+rdb.c:585:9: error: implicit declaration of function ‘isnan’ [-Werror=implicit-function-declaration]
+  585 |     if (isnan(val)) {
+      |         ^~~~~
+server.c: In function ‘restartServer’:
+server.c:2155:16: error: implicit declaration of function ‘usleep’; did you mean ‘sleep’? [-Werror=implicit-function-declaration]
+ 2155 |     if (delay) usleep(delay*1000);
+      |                ^~~~~~
+      |                sleep
+rdb.c:588:17: error: implicit declaration of function ‘isfinite’ [-Werror=implicit-function-declaration]
+  588 |     } else if (!isfinite(val)) {
+      |                 ^~~~~~~~
+rdb.c: In function ‘rdbLoadDoubleValue’:
+server.c:2158:5: error: implicit declaration of function ‘execve’ [-Werror=implicit-function-declaration]
+ 2158 |     execve(server.executable,server.exec_argv,environ);
+      |     ^~~~~~
+rdb.c:619:13: error: implicit declaration of function ‘sscanf’; did you mean ‘sysconf’? [-Werror=implicit-function-declaration]
+  619 |         if (sscanf(buf, "%lg", val)!=1) return -1;
+      |             ^~~~~~
+      |             sysconf
+networking.c: In function ‘setProtocolError’:
+networking.c:2201:18: error: implicit declaration of function ‘isprint’; did you mean ‘sprintf’? [-Werror=implicit-function-declaration]
+ 2201 |             if (!isprint(*p)) *p = '.';
+      |                  ^~~~~~~
+      |                  sprintf
+server.c: In function ‘adjustOpenFilesLimit’:
+server.c:2249:9: error: implicit declaration of function ‘getrlimit’ [-Werror=implicit-function-declaration]
+ 2249 |     if (getrlimit(RLIMIT_NOFILE,&limit) == -1) {
+      |         ^~~~~~~~~
+t_list.c: In function ‘linsertCommand’:
+t_list.c:542:9: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+  542 |     if (strcasecmp(c->argv[2]->ptr,"after") == 0) {
+      |         ^~~~~~~~~~
+      |         strncmp
+server.c:2270:21: error: implicit declaration of function ‘setrlimit’ [-Werror=implicit-function-declaration]
+ 2270 |                 if (setrlimit(RLIMIT_NOFILE,&limit) != -1) break;
+      |                     ^~~~~~~~~
+In file included from server.h:45,
+                 from t_set.c:30:
+t_set.c: In function ‘srandmemberWithCountCommand’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+t_set.c:987:53: note: in expansion of macro ‘LONG_MAX’
+  987 |     if (getRangeLongFromObjectOrReply(c,c->argv[2],-LONG_MAX,LONG_MAX,&l,NULL) != C_OK) return;
+      |                                                     ^~~~~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: note: each undeclared identifier is reported only once for each function it appears in
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+t_set.c:987:53: note: in expansion of macro ‘LONG_MAX’
+  987 |     if (getRangeLongFromObjectOrReply(c,c->argv[2],-LONG_MAX,LONG_MAX,&l,NULL) != C_OK) return;
+      |                                                     ^~~~~~~~
+In file included from server.h:45,
+                 from t_list.c:30:
+t_list.c: In function ‘lmpopGenericCommand’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+t_list.c:1340:67: note: in expansion of macro ‘LONG_MAX’
+ 1340 |     if (getRangeLongFromObjectOrReply(c, c->argv[numkeys_idx], 1, LONG_MAX,
+      |                                                                   ^~~~~~~~
+t_set.c: In function ‘sinterGenericCommand’:
+t_set.c:1279:5: error: implicit declaration of function ‘qsort’ [-Werror=implicit-function-declaration]
+ 1279 |     qsort(sets,setnum,sizeof(robj*),qsortCompareSetsByCardinality);
+      |     ^~~~~
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: note: each undeclared identifier is reported only once for each function it appears in
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+t_list.c:1340:67: note: in expansion of macro ‘LONG_MAX’
+ 1340 |     if (getRangeLongFromObjectOrReply(c, c->argv[numkeys_idx], 1, LONG_MAX,
+      |                                                                   ^~~~~~~~
+rdb.c: In function ‘rdbSave’:
+rdb.c:1443:14: error: ‘MAXPATHLEN’ undeclared (first use in this function)
+ 1443 |     char cwd[MAXPATHLEN]; /* Current working dir path for error messages. */
+      |              ^~~~~~~~~~
+rdb.c:1478:16: error: passing argument 1 of ‘fflush’ makes integer from pointer without a cast [-Werror=int-conversion]
+ 1478 |     if (fflush(fp)) { err_op = "fflush"; goto werr; }
+      |                ^~
+      |                |
+      |                FILE * {aka struct _IO_FILE *}
+In file included from rio.h:35,
+                 from server.h:36,
+                 from rdb.c:30:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/stdio.h:33:12: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   33 | int fflush(int);
+      |            ^~~
+networking.c: In function ‘clientSetinfoCommand’:
+networking.c:2907:10: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+ 2907 |     if (!strcasecmp(attr,"lib-name")) {
+      |          ^~~~~~~~~~
+      |          strncmp
+rdb.c:1479:15: error: implicit declaration of function ‘fileno’ [-Werror=implicit-function-declaration]
+ 1479 |     if (fsync(fileno(fp))) { err_op = "fsync"; goto werr; }
+      |               ^~~~~~
+In file included from server.h:45,
+                 from t_set.c:30:
+t_set.c: In function ‘sinterCardCommand’:
+server.c: In function ‘makeThreadKillable’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+t_set.c:1404:57: note: in expansion of macro ‘LONG_MAX’
+ 1404 |     if (getRangeLongFromObjectOrReply(c, c->argv[1], 1, LONG_MAX,
+      |                                                         ^~~~~~~~
+server.c:2522:5: error: implicit declaration of function ‘pthread_setcancelstate’ [-Werror=implicit-function-declaration]
+ 2522 |     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+rdb.c:1488:9: error: implicit declaration of function ‘rename’ [-Werror=implicit-function-declaration]
+ 1488 |     if (rename(tmpfile,filename) == -1) {
+      |         ^~~~~~
+rdb.c:1443:10: error: unused variable ‘cwd’ [-Werror=unused-variable]
+ 1443 |     char cwd[MAXPATHLEN]; /* Current working dir path for error messages. */
+      |          ^~~
+cc1: all warnings being treated as errors
+make[1]: *** [Makefile:434: t_list.o] Error 1
+t_set.c:1416:14: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+ 1416 |         if (!strcasecmp(opt, "LIMIT") && moreargs) {
+      |              ^~~~~~~~~~
+      |              strncmp
+In file included from server.h:45,
+                 from networking.c:30:
+networking.c: In function ‘clientCommand’:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/limits.h:15:18: error: ‘__LONG_MAX’ undeclared (first use in this function); did you mean ‘LONG_MAX’?
+   15 | #define LONG_MAX __LONG_MAX
+      |                  ^~~~~~~~~~
+networking.c:3108:75: note: in expansion of macro ‘LONG_MAX’
+ 3108 |                     if (getRangeLongFromObjectOrReply(c, c->argv[i+1], 1, LONG_MAX, &tmp,
+      |                                                                           ^~~~~~~~
+server.c:2523:5: error: implicit declaration of function ‘pthread_setcanceltype’ [-Werror=implicit-function-declaration]
+ 2523 |     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+      |     ^~~~~~~~~~~~~~~~~~~~~
+server.c: In function ‘initServer’:
+server.c:2529:5: error: implicit declaration of function ‘signal’ [-Werror=implicit-function-declaration]
+ 2529 |     signal(SIGHUP, SIG_IGN);
+      |     ^~~~~~
+cc1: all warnings being treated as errors
+server.c:2535:9: error: implicit declaration of function ‘openlog’; did you mean ‘open’? [-Werror=implicit-function-declaration]
+ 2535 |         openlog(server.syslog_ident, LOG_PID | LOG_NDELAY | LOG_NOWAIT,
+      |         ^~~~~~~
+      |         open
+networking.c: In function ‘securityWarningCommand’:
+make[1]: *** [Makefile:434: t_set.o] Error 1
+networking.c:3604:9: error: implicit declaration of function ‘llabs’ [-Werror=implicit-function-declaration]
+ 3604 |     if (llabs(now-logged_time) > 60) {
+      |         ^~~~~
+server.c:2545:29: error: implicit declaration of function ‘pthread_self’ [-Werror=implicit-function-declaration]
+ 2545 |     server.main_thread_id = pthread_self();
+      |                             ^~~~~~~~~~~~
+server.c:2580:9: error: implicit declaration of function ‘setlocale’ [-Werror=implicit-function-declaration]
+ 2580 |     if (setlocale(LC_COLLATE,server.locale_collate) == NULL) {
+      |         ^~~~~~~~~
+server.c:2580:53: error: comparison between pointer and integer [-Werror]
+ 2580 |     if (setlocale(LC_COLLATE,server.locale_collate) == NULL) {
+      |                                                     ^~
+rdb.c: In function ‘rdbLoadRioWithLoadingCtx’:
+rdb.c:3089:25: error: implicit declaration of function ‘strcasecmp’; did you mean ‘strncmp’? [-Werror=implicit-function-declaration]
+ 3089 |             } else if (!strcasecmp(auxkey->ptr,"repl-stream-db")) {
+      |                         ^~~~~~~~~~
+      |                         strncmp
+In file included from server.h:34,
+                 from networking.c:30:
+networking.c: In function ‘IOThreadMain’:
+config.h:284:38: error: implicit declaration of function ‘pthread_setname_np’ [-Werror=implicit-function-declaration]
+  284 | #define redis_set_thread_title(name) pthread_setname_np(pthread_self(), name)
+      |                                      ^~~~~~~~~~~~~~~~~~
+networking.c:4136:5: note: in expansion of macro ‘redis_set_thread_title’
+ 4136 |     redis_set_thread_title(thdname);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+config.h:284:57: error: implicit declaration of function ‘pthread_self’ [-Werror=implicit-function-declaration]
+  284 | #define redis_set_thread_title(name) pthread_setname_np(pthread_self(), name)
+      |                                                         ^~~~~~~~~~~~
+networking.c:4136:5: note: in expansion of macro ‘redis_set_thread_title’
+ 4136 |     redis_set_thread_title(thdname);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+networking.c: In function ‘initThreadedIO’:
+rdb.c: In function ‘killRDBChild’:
+networking.c:4189:9: error: implicit declaration of function ‘exit’ [-Werror=implicit-function-declaration]
+ 4189 |         exit(1);
+      |         ^~~~
+rdb.c:3453:5: error: implicit declaration of function ‘kill’ [-Werror=implicit-function-declaration]
+ 3453 |     kill(server.child_pid, SIGUSR1);
+      |     ^~~~
+networking.c:4200:9: error: implicit declaration of function ‘pthread_mutex_init’ [-Werror=implicit-function-declaration]
+ 4200 |         pthread_mutex_init(&io_threads_mutex[i],NULL);
+      |         ^~~~~~~~~~~~~~~~~~
+networking.c:4203:13: error: implicit declaration of function ‘pthread_create’ [-Werror=implicit-function-declaration]
+ 4203 |         if (pthread_create(&tid,NULL,IOThreadMain,(void*)(long)i) != 0) {
+      |             ^~~~~~~~~~~~~~
+In file included from server.h:34,
+                 from server.c:30:
+server.c: In function ‘finishShutdown’:
+networking.c: In function ‘killIOThreads’:
+networking.c:4214:27: error: comparison of integer expressions of different signedness: ‘pthread_t’ {aka ‘long unsigned int’} and ‘int’ [-Werror=sign-compare]
+ 4214 |         if (io_threads[j] == pthread_self()) continue;
+      |                           ^~
+config.h:113:25: error: implicit declaration of function ‘fdatasync’ [-Werror=implicit-function-declaration]
+  113 | #define redis_fsync(fd) fdatasync(fd)
+      |                         ^~~~~~~~~
+server.c:4370:13: note: in expansion of macro ‘redis_fsync’
+ 4370 |         if (redis_fsync(server.aof_fd) == -1) {
+      |             ^~~~~~~~~~~
+cc1: all warnings being treated as errors
+server.c:4424:9: error: implicit declaration of function ‘flock’ [-Werror=implicit-function-declaration]
+ 4424 |         flock(server.cluster_config_file_lock_fd, LOCK_UN|LOCK_NB);
+      |         ^~~~~
+make[1]: *** [Makefile:434: rdb.o] Error 1
+networking.c:4215:30: error: implicit declaration of function ‘pthread_cancel’ [-Werror=implicit-function-declaration]
+ 4215 |         if (io_threads[j] && pthread_cancel(io_threads[j]) == 0) {
+      |                              ^~~~~~~~~~~~~~
+networking.c:4216:24: error: implicit declaration of function ‘pthread_join’ [-Werror=implicit-function-declaration]
+ 4216 |             if ((err = pthread_join(io_threads[j],NULL)) != 0) {
+      |                        ^~~~~~~~~~~~
+server.c: In function ‘genRedisInfoString’:
+server.c:5566:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 6 has type ‘long long unsigned int’ [-Werror=format=]
+ 5566 |             "# Clients\r\n"
+      |             ^~~~~~~~~~~~~~~
+......
+ 5580 |             maxin, maxout,
+      |             ~~~~~
+      |             |
+      |             long long unsigned int
+server.c:5570:47: note: format string is defined here
+ 5570 |             "client_recent_max_input_buffer:%zu\r\n"
+      |                                             ~~^
+      |                                               |
+      |                                               long unsigned int
+      |                                             %llu
+cc1: all warnings being treated as errors
+server.c:5566:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 7 has type ‘long long unsigned int’ [-Werror=format=]
+ 5566 |             "# Clients\r\n"
+      |             ^~~~~~~~~~~~~~~
+......
+ 5580 |             maxin, maxout,
+      |                    ~~~~~~
+      |                    |
+      |                    long long unsigned int
+make[1]: *** [Makefile:434: anet.o] Error 1
+server.c:5571:48: note: format string is defined here
+ 5571 |             "client_recent_max_output_buffer:%zu\r\n"
+      |                                              ~~^
+      |                                                |
+      |                                                long unsigned int
+      |                                              %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 3 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5675 |             zmalloc_used,
+      |             ~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+cc1: all warnings being treated as errors
+server.c:5624:28: note: format string is defined here
+ 5624 |             "used_memory:%zu\r\n"
+      |                          ~~^
+      |                            |
+      |                            long unsigned int
+      |                          %llu
+make[1]: *** [Makefile:434: networking.o] Error 1
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 5 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5677 |             server.cron_malloc_stats.process_rss,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                     |
+      |                                     long long unsigned int
+server.c:5626:32: note: format string is defined here
+ 5626 |             "used_memory_rss:%zu\r\n"
+      |                              ~~^
+      |                                |
+      |                                long unsigned int
+      |                              %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 7 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5679 |             server.stat_peak_memory,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5628:33: note: format string is defined here
+ 5628 |             "used_memory_peak:%zu\r\n"
+      |                               ~~^
+      |                                 |
+      |                                 long unsigned int
+      |                               %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 10 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5682 |             mh->overhead_total,
+      |             ~~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+server.c:5631:37: note: format string is defined here
+ 5631 |             "used_memory_overhead:%zu\r\n"
+      |                                   ~~^
+      |                                     |
+      |                                     long unsigned int
+      |                                   %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 11 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5683 |             mh->startup_allocated,
+      |             ~~~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+server.c:5632:36: note: format string is defined here
+ 5632 |             "used_memory_startup:%zu\r\n"
+      |                                  ~~^
+      |                                    |
+      |                                    long unsigned int
+      |                                  %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 12 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5684 |             mh->dataset,
+      |             ~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+server.c:5633:36: note: format string is defined here
+ 5633 |             "used_memory_dataset:%zu\r\n"
+      |                                  ~~^
+      |                                    |
+      |                                    long unsigned int
+      |                                  %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 14 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5686 |             server.cron_malloc_stats.allocator_allocated,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                     |
+      |                                     long long unsigned int
+server.c:5635:36: note: format string is defined here
+ 5635 |             "allocator_allocated:%zu\r\n"
+      |                                  ~~^
+      |                                    |
+      |                                    long unsigned int
+      |                                  %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 15 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5687 |             server.cron_malloc_stats.allocator_active,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                     |
+      |                                     long long unsigned int
+server.c:5636:33: note: format string is defined here
+ 5636 |             "allocator_active:%zu\r\n"
+      |                               ~~^
+      |                                 |
+      |                                 long unsigned int
+      |                               %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 16 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5688 |             server.cron_malloc_stats.allocator_resident,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                                     |
+      |                                     long long unsigned int
+server.c:5637:35: note: format string is defined here
+ 5637 |             "allocator_resident:%zu\r\n"
+      |                                 ~~^
+      |                                   |
+      |                                   long unsigned int
+      |                                 %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 36 has type ‘ssize_t’ {aka ‘long long int’} [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5708 |             mh->allocator_frag_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               ssize_t {aka long long int}
+server.c:5657:37: note: format string is defined here
+ 5657 |             "allocator_frag_bytes:%zu\r\n"
+      |                                   ~~^
+      |                                     |
+      |                                     long unsigned int
+      |                                   %llu
+server.c:5623:13: error: format ‘%zd’ expects argument of type ‘signed size_t’, but argument 38 has type ‘ssize_t’ {aka ‘long long int’} [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5710 |             mh->allocator_rss_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               ssize_t {aka long long int}
+server.c:5659:36: note: format string is defined here
+ 5659 |             "allocator_rss_bytes:%zd\r\n"
+      |                                  ~~^
+      |                                    |
+      |                                    long int
+      |                                  %lld
+server.c:5623:13: error: format ‘%zd’ expects argument of type ‘signed size_t’, but argument 40 has type ‘size_t’ {aka ‘long long unsigned int’} [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5712 |             mh->rss_extra_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               size_t {aka long long unsigned int}
+server.c:5661:35: note: format string is defined here
+ 5661 |             "rss_overhead_bytes:%zd\r\n"
+      |                                 ~~^
+      |                                   |
+      |                                   long int
+      |                                 %lld
+server.c:5623:13: error: format ‘%zd’ expects argument of type ‘signed size_t’, but argument 42 has type ‘ssize_t’ {aka ‘long long int’} [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5717 |             mh->total_frag_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~
+      |               |
+      |               ssize_t {aka long long int}
+server.c:5663:40: note: format string is defined here
+ 5663 |             "mem_fragmentation_bytes:%zd\r\n"
+      |                                      ~~^
+      |                                        |
+      |                                        long int
+      |                                      %lld
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 43 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5718 |             freeMemoryGetNotCountedMemory(),
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+server.c:5664:42: note: format string is defined here
+ 5664 |             "mem_not_counted_for_evict:%zu\r\n"
+      |                                        ~~^
+      |                                          |
+      |                                          long unsigned int
+      |                                        %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 44 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5719 |             mh->repl_backlog,
+      |             ~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+server.c:5665:40: note: format string is defined here
+ 5665 |             "mem_replication_backlog:%zu\r\n"
+      |                                      ~~^
+      |                                        |
+      |                                        long unsigned int
+      |                                      %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 45 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5720 |             server.repl_buffer_mem,
+      |             ~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5666:46: note: format string is defined here
+ 5666 |             "mem_total_replication_buffers:%zu\r\n"
+      |                                            ~~^
+      |                                              |
+      |                                              long unsigned int
+      |                                            %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 46 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5721 |             mh->clients_slaves,
+      |             ~~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+server.c:5667:35: note: format string is defined here
+ 5667 |             "mem_clients_slaves:%zu\r\n"
+      |                                 ~~^
+      |                                   |
+      |                                   long unsigned int
+      |                                 %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 47 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5722 |             mh->clients_normal,
+      |             ~~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+server.c:5668:35: note: format string is defined here
+ 5668 |             "mem_clients_normal:%zu\r\n"
+      |                                 ~~^
+      |                                   |
+      |                                   long unsigned int
+      |                                 %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 48 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5723 |             mh->cluster_links,
+      |             ~~~~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+server.c:5669:34: note: format string is defined here
+ 5669 |             "mem_cluster_links:%zu\r\n"
+      |                                ~~^
+      |                                  |
+      |                                  long unsigned int
+      |                                %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 49 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5724 |             mh->aof_buffer,
+      |             ~~~~~~~~~~~~~~
+      |               |
+      |               long long unsigned int
+server.c:5670:31: note: format string is defined here
+ 5670 |             "mem_aof_buffer:%zu\r\n"
+      |                             ~~^
+      |                               |
+      |                               long unsigned int
+      |                             %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 52 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5727 |             lazyfreeGetPendingObjectsCount(),
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+server.c:5673:41: note: format string is defined here
+ 5673 |             "lazyfree_pending_objects:%zu\r\n"
+      |                                       ~~^
+      |                                         |
+      |                                         long unsigned int
+      |                                       %llu
+server.c:5623:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 53 has type ‘long long unsigned int’ [-Werror=format=]
+ 5623 |             "# Memory\r\n"
+      |             ^~~~~~~~~~~~~~
+......
+ 5728 |             lazyfreeGetFreedObjectsCount()
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+server.c:5674:34: note: format string is defined here
+ 5674 |             "lazyfreed_objects:%zu\r\n",
+      |                                ~~^
+      |                                  |
+      |                                  long unsigned int
+      |                                %llu
+server.c:5746:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 5 has type ‘long long unsigned int’ [-Werror=format=]
+ 5746 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5779 |             server.stat_current_cow_peak,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5749:33: note: format string is defined here
+ 5749 |             "current_cow_peak:%zu\r\n"
+      |                               ~~^
+      |                                 |
+      |                                 long unsigned int
+      |                               %llu
+server.c:5746:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 6 has type ‘long long unsigned int’ [-Werror=format=]
+ 5746 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5780 |             server.stat_current_cow_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5750:33: note: format string is defined here
+ 5750 |             "current_cow_size:%zu\r\n"
+      |                               ~~^
+      |                                 |
+      |                                 long unsigned int
+      |                               %llu
+server.c:5746:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 9 has type ‘long long unsigned int’ [-Werror=format=]
+ 5746 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5783 |             server.stat_current_save_keys_processed,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5753:44: note: format string is defined here
+ 5753 |             "current_save_keys_processed:%zu\r\n"
+      |                                          ~~^
+      |                                            |
+      |                                            long unsigned int
+      |                                          %llu
+server.c:5746:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 10 has type ‘long long unsigned int’ [-Werror=format=]
+ 5746 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5784 |             server.stat_current_save_keys_total,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5754:40: note: format string is defined here
+ 5754 |             "current_save_keys_total:%zu\r\n"
+      |                                      ~~^
+      |                                        |
+      |                                        long unsigned int
+      |                                      %llu
+server.c:5746:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 18 has type ‘long long unsigned int’ [-Werror=format=]
+ 5746 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5793 |             server.stat_rdb_cow_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5762:34: note: format string is defined here
+ 5762 |             "rdb_last_cow_size:%zu\r\n"
+      |                                ~~^
+      |                                  |
+      |                                  long unsigned int
+      |                                %llu
+server.c:5746:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 30 has type ‘long long unsigned int’ [-Werror=format=]
+ 5746 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5807 |             server.stat_aof_cow_bytes,
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5774:34: note: format string is defined here
+ 5774 |             "aof_last_cow_size:%zu\r\n"
+      |                                ~~^
+      |                                  |
+      |                                  long unsigned int
+      |                                %llu
+server.c:5746:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 32 has type ‘long long unsigned int’ [-Werror=format=]
+ 5746 |             "# Persistence\r\n"
+      |             ^~~~~~~~~~~~~~~~~~~
+......
+ 5809 |             server.stat_module_cow_bytes);
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                   |
+      |                   long long unsigned int
+server.c:5776:42: note: format string is defined here
+ 5776 |             "module_fork_last_cow_size:%zu\r\n",
+      |                                        ~~^
+      |                                          |
+      |                                          long unsigned int
+      |                                        %llu
+server.c:5813:17: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 6 has type ‘long long unsigned int’ [-Werror=format=]
+ 5813 |                 "aof_current_size:%lld\r\n"
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+......
+ 5822 |                 sdslen(server.aof_buf),
+      |                 ~~~~~~~~~~~~~~~~~~~~~~
+      |                 |
+      |                 long long unsigned int
+server.c:5816:38: note: format string is defined here
+ 5816 |                 "aof_buffer_length:%zu\r\n"
+      |                                    ~~^
+      |                                      |
+      |                                      long unsigned int
+      |                                    %llu
+server.c:5886:13: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 34 has type ‘long long unsigned int’ [-Werror=format=]
+ 5886 |             "# Stats\r\n"
+      |             ^~~~~~~~~~~~~
+......
+ 5968 |             getSlaveKeyWithExpireCount(),
+      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |             |
+      |             long long unsigned int
+server.c:5918:43: note: format string is defined here
+ 5918 |             "slave_expires_tracked_keys:%zu\r\n"
+      |                                         ~~^
+      |                                           |
+      |                                           long unsigned int
+      |                                         %llu
+server.c:6131:9: error: implicit declaration of function ‘getrusage’ [-Werror=implicit-function-declaration]
+ 6131 |         getrusage(RUSAGE_SELF, &self_ru);
+      |         ^~~~~~~~~
+server.c: In function ‘createPidFile’:
+server.c:6332:17: error: passing argument 1 of ‘fprintf’ makes integer from pointer without a cast [-Werror=int-conversion]
+ 6332 |         fprintf(fp,"%d\n",(int)getpid());
+      |                 ^~
+      |                 |
+      |                 FILE * {aka struct _IO_FILE *}
+In file included from rio.h:35,
+                 from server.h:36,
+                 from server.c:30:
+/home/yanjuguang/OS/arceos/ulib/c_libax/include/stdio.h:29:18: note: expected ‘int’ but argument is of type ‘FILE *’ {aka ‘struct _IO_FILE *’}
+   29 | void fprintf(int f, const char *fmt, ...);
+      |              ~~~~^
+server.c: In function ‘daemonize’:
+server.c:6342:9: error: implicit declaration of function ‘fork’ [-Werror=implicit-function-declaration]
+ 6342 |     if (fork() != 0) exit(0); /* parent exits */
+      |         ^~~~
+server.c:6343:5: error: implicit declaration of function ‘setsid’; did you mean ‘getpid’? [-Werror=implicit-function-declaration]
+ 6343 |     setsid(); /* create a new session */
+      |     ^~~~~~
+      |     getpid
+server.c:6349:9: error: implicit declaration of function ‘dup2’ [-Werror=implicit-function-declaration]
+ 6349 |         dup2(fd, STDIN_FILENO);
+      |         ^~~~
+server.c: In function ‘redisAsciiArt’:
+server.c:6402:23: error: implicit declaration of function ‘isatty’ [-Werror=implicit-function-declaration]
+ 6402 |                       isatty(fileno(stdout))) ||
+      |                       ^~~~~~
+server.c:6402:30: error: implicit declaration of function ‘fileno’ [-Werror=implicit-function-declaration]
+ 6402 |                       isatty(fileno(stdout))) ||
+      |                              ^~~~~~
+server.c: In function ‘setupSignalHandlers’:
+server.c:6497:5: error: implicit declaration of function ‘sigemptyset’ [-Werror=implicit-function-declaration]
+ 6497 |     sigemptyset(&act.sa_mask);
+      |     ^~~~~~~~~~~
+server.c:6500:5: error: implicit declaration of function ‘sigaction’; did you mean ‘sa_sigaction’? [-Werror=implicit-function-declaration]
+ 6500 |     sigaction(SIGTERM, &act, NULL);
+      |     ^~~~~~~~~
+      |     sa_sigaction
+In file included from server.c:30:
+server.c: In function ‘redisOutOfMemoryHandler’:
+server.c:6809:26: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 3 has type ‘long long unsigned int’ [-Werror=format=]
+ 6809 |     serverLog(LL_WARNING,"Out Of Memory allocating %zu bytes!",
+      |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 6810 |         allocation_size);
+      |         ~~~~~~~~~~~~~~~   
+      |         |
+      |         long long unsigned int
+server.h:3748:27: note: in definition of macro ‘serverLog’
+ 3748 |         _serverLog(level, __VA_ARGS__);\
+      |                           ^~~~~~~~~~~
+server.c:6809:54: note: format string is defined here
+ 6809 |     serverLog(LL_WARNING,"Out Of Memory allocating %zu bytes!",
+      |                                                    ~~^
+      |                                                      |
+      |                                                      long unsigned int
+      |                                                    %llu
+In file included from server.c:30:
+server.c:6811:17: error: format ‘%zu’ expects argument of type ‘size_t’, but argument 4 has type ‘long long unsigned int’ [-Werror=format=]
+ 6811 |     serverPanic("Redis aborting for OUT OF MEMORY. Allocating %zu bytes!",
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 6812 |         allocation_size);
+      |         ~~~~~~~~~~~~~~~
+      |         |
+      |         long long unsigned int
+server.h:668:57: note: in definition of macro ‘serverPanic’
+  668 | #define serverPanic(...) _serverPanic(__FILE__,__LINE__,__VA_ARGS__),redis_unreachable()
+      |                                                         ^~~~~~~~~~~
+server.c:6811:65: note: format string is defined here
+ 6811 |     serverPanic("Redis aborting for OUT OF MEMORY. Allocating %zu bytes!",
+      |                                                               ~~^
+      |                                                                 |
+      |                                                                 long unsigned int
+      |                                                               %llu
+server.c: In function ‘redisSupervisedUpstart’:
+server.c:6915:5: error: implicit declaration of function ‘raise’; did you mean ‘raxSize’? [-Werror=implicit-function-declaration]
+ 6915 |     raise(SIGSTOP);
+      |     ^~~~~
+      |     raxSize
+server.c:6916:5: error: implicit declaration of function ‘unsetenv’; did you mean ‘getenv’? [-Werror=implicit-function-declaration]
+ 6916 |     unsetenv("UPSTART_JOB");
+      |     ^~~~~~~~
+      |     getenv
+server.c: In function ‘main’:
+server.c:7060:5: error: implicit declaration of function ‘tzset’ [-Werror=implicit-function-declaration]
+ 7060 |     tzset(); /* Populates 'timezone' global. */
+      |     ^~~~~
+server.c:7067:5: error: implicit declaration of function ‘srandom’; did you mean ‘srand’? [-Werror=implicit-function-declaration]
+ 7067 |     srandom(time(NULL)^getpid()^tv.tv_usec);
+      |     ^~~~~~~
+      |     srand
+server.c:7075:5: error: implicit declaration of function ‘umask’ [-Werror=implicit-function-declaration]
+ 7075 |     umask(server.umask = umask(0777));
+      |     ^~~~~
+cc1: all warnings being treated as errors
+make[1]: *** [Makefile:434: sds.o] Error 1
+cc1: all warnings being treated as errors
+make[1]: *** [Makefile:434: db.o] Error 1
+cc1: all warnings being treated as errors
+make[1]: *** [Makefile:434: server.o] Error 1
+make[1]: Leaving directory '/home/yanjuguang/OS/arceos/apps/c/redis/src'
+make: *** [Makefile:6: all] Error 2

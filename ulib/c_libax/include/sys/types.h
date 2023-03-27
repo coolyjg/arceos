@@ -21,6 +21,6 @@ typedef unsigned int nlink_t;
 typedef int blksize_t;
 typedef int blkcnt_t;
 
-typedef unsigned int __off_t;
+// typedef unsigned int __off_t;
 
 #endif // __SYS_TYPES_H__

@@ -33,7 +33,7 @@ enum EPOLL_EVENTS
 #define EPOLLWAKEUP EPOLLWAKEUP
     EPOLLONESHOT = 1u << 30,
 #define EPOLLONESHOT EPOLLONESHOT
-    EPOLLET = 1u << 31
+    EPOLLET = 1u << 27 //TODO
 #define EPOLLET EPOLLET
   };
 
@@ -59,5 +59,9 @@ struct epoll_event
 #define EPOLL_CTL_ADD 1	/* Add a file descriptor to the interface.  */
 #define EPOLL_CTL_DEL 2	/* Remove a file descriptor from the interface.  */
 #define EPOLL_CTL_MOD 3	/* Change file descriptor epoll_event structure.  */
+
+int epoll_create(int __size);
+int epoll_ctl(int, int, int, struct epoll_event *);
+int epoll_wait(int, struct epoll_event *, int, int);
 
 #endif

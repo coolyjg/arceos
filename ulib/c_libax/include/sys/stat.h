@@ -4,9 +4,15 @@
 #include <sys/types.h>
 #include <time.h>
 
+#ifndef O_EXCL
 #define O_EXCL   1 // TODO;
+#endif
+#ifndef O_CREAT
 #define O_CREAT  2 // TODO;
+#endif
+#ifndef O_RDONLY
 #define O_RDONLY 3 // TODO;
+#endif
 
 struct stat {
     dev_t st_dev;         /* ID of device containing file*/
