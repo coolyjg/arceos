@@ -44,3 +44,38 @@ int utimes(const char *filename, const struct timeval times[2])
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
+
+//TODO
+struct tm *localtime_r(const time_t *__restrict__ __timer, struct tm *__restrict__ __tp)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return NULL;
+}
+
+//TODO
+int nanosleep(const struct timespec *__requested_time, struct timespec *__remaining)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+void tzset(void)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return ;
+}
+
+//TODO
+int setitimer(int __which, const struct itimerval *__restrict__ __new, struct itimerval *__restrict__ __old)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int clock_gettime(clockid_t __clock_id, struct timespec *__tp)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

@@ -13,6 +13,10 @@ typedef __suseconds_t suseconds_t;
 # define __suseconds_t_defined
 #endif
 
+#define ITIMER_REAL    0
+#define ITIMER_VIRTUAL 1
+#define ITIMER_PROF    2
+
 #include <sys/select.h>
 
 // int gettimeofday(struct timeval *__restrict__ tv, struct timezone *__restrict__ tz);
@@ -35,7 +39,7 @@ struct timezone {
     int tz_dsttime;     /* (type of DST correction) */
 };
 
-typedef long timezone;
+// typedef long timezone;
 int gettimeofday(struct timeval *tv, struct timezone *tz);
 int utimes(const char *filename, const struct timeval times[2]);
 

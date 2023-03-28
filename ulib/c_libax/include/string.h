@@ -22,11 +22,17 @@ char *strstr(const char *haystack, const char *needle);
 int strcmp(const char *l, const char *r);
 char *strncpy(char *restrict d, const char *restrict s, size_t n);
 int strncmp(const char *_l, const char *_r, size_t n);
+
+int strcoll(const char *__s1, const char *__s2);
 size_t strcspn(const char *s1, const char *s2);
+int strcasecmp(const char *__s1, const char *__s2);
 
 char *strrchr(const char *str, int c);
 char *strchr(const char *str, int c);
 
 char *strerror(int n);
+
+char *strpbrk(const char *__s, const char *__accept);
+char *strdup(const char *__s);
 
 #endif // __STRING_H__

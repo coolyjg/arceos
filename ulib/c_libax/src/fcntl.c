@@ -15,3 +15,10 @@ int open(const char *filename, int flags, ...)
     printf("open file: %s\n", filename);
     return -1;
 }
+
+//TODO
+int posix_fadvise(int __fd, unsigned long __offset, unsigned long __len, int __advise)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

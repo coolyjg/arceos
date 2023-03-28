@@ -165,13 +165,43 @@ char *strerror(int n)
 }
 
 // TODO
-void *memcpy(void *dest, const void * src, size_t n){
+void *memcpy(void *dest, const void * src, size_t n)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return NULL;
+}
+
+// TODO
+void *memmove(void *__dest, const void *__src, size_t __n)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return NULL;
+}
+
+//TODO
+int strcasecmp(const char *__s1, const char *__s2)
+{
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-// TODO
-void *memmove(void *__dest, const void *__src, size_t __n){
+//TODO
+int strcoll(const char *__s1, const char *__s2)
+{
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
+}
+
+//TODO
+char *strpbrk(const char *__s, const char *__accept)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return NULL;
+}
+
+//TODO
+char *strdup(const char *__s)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return NULL;
 }

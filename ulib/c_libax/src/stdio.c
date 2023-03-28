@@ -217,3 +217,66 @@ int fclose(FILE *__stream)
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
+
+//TODO
+unsigned long fread(void *__restrict__ __ptr, unsigned long __size, unsigned long __n, FILE *__restrict__ __stream)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+unsigned long fwrite(const void *__restrict__ __ptr, unsigned long, unsigned long, FILE *__restrict)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+void perror(const char *__s)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return ;
+}
+
+//TODO
+int rename(const char *__old, const char *__new)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int sscanf(const char *__restrict__ __s, const char *__restrict__ __format, ...)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int fileno(FILE *__stream)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int feof(FILE *__stream)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int fseek(FILE *__stream, long __off, int __whence)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+long ftello(FILE *__stream)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

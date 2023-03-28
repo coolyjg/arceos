@@ -1,6 +1,8 @@
 #ifndef _PTHREAD_H
 #define _PTHREAD_H	1
 
+#include <stddef.h>
+
 typedef unsigned long int pthread_t;
 enum
 {
@@ -29,6 +31,11 @@ union pthread_attr_t
 typedef union pthread_attr_t pthread_attr_t;
 # define __have_pthread_attr_t 1
 #endif
+
+// #if defined(__NEED_pthread_condattr_t) && !defined(__DEFINED_pthread_condattr_t)
+typedef struct { unsigned __attr; } pthread_condattr_t;
+#define __DEFINED_pthread_condattr_t
+// #endif
 
 typedef struct __pthread_internal_list
 {
@@ -95,6 +102,7 @@ typedef union
 
 #define __LOCK_ALIGNMENT
 #define __SIZEOF_PTHREAD_COND_T 48
+#define __SIZEOF_PTHREAD_MUTEXATTR_T 4
 
 struct __pthread_cond_s
 {
@@ -118,5 +126,36 @@ typedef union
 typedef union pthread_attr_t pthread_attr_t;
 # define __have_pthread_attr_t 1
 #endif
+
+#define PTHREAD_MUTEX_INITIALIZER {0}
+
+//TODO: this is not a musl-like struct
+typedef union
+{
+  char __size[__SIZEOF_PTHREAD_MUTEXATTR_T];
+  int __align;
+} pthread_mutexattr_t;
+
+int pthread_mutex_init(pthread_mutex_t *__restrict __mutex, const pthread_mutexattr_t *__restrict __attr);
+int pthread_mutex_lock(pthread_mutex_t *__mutex);
+int pthread_mutex_unlock(pthread_mutex_t *__mutex);
+
+int pthread_setcancelstate(int __state, int *__oldstate);
+int pthread_setcanceltype(int __type, int *__oldtype);
+
+pthread_t pthread_self(void);
+int pthread_setname_np(pthread_t __target_thread, const char *__name);
+
+int pthread_create(pthread_t *__restrict__ __newthread, const pthread_attr_t *__restrict__ __attr, void *(*__start_routine)(void *), void *__restrict__ __arg);
+int pthread_cancel(pthread_t __th);
+int pthread_join(pthread_t __th, void **__thread_return);
+
+int pthread_cond_init(pthread_cond_t *__restrict__ __cond, const pthread_condattr_t *__restrict__ __cond_attr);
+int pthread_cond_signal(pthread_cond_t *__cond);
+int pthread_cond_wait(pthread_cond_t *__restrict__ __cond, pthread_mutex_t *__restrict__ __mutex);
+int pthread_attr_init(pthread_attr_t *__attr);
+
+int pthread_attr_getstacksize(const pthread_attr_t *__restrict__ __attr, size_t *__restrict__ __stacksize);
+int pthread_attr_setstacksize(pthread_attr_t *__attr, size_t __stacksize);
 
 #endif

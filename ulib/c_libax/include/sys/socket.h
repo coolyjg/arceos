@@ -292,8 +292,13 @@ int getsockopt(int __fd, int __level, int __optname, void *__restrict__ __optval
 int setsockopt(int __fd, int __level, int __optname, const void *__optval, socklen_t __optlen);
 
 int socket(int __domain, int __type, int __protocol);
+int accept4(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __addr_len, int __flags);
+
 int bind(int __fd, const struct sockaddr * __addr, socklen_t __len);
 int connect(int __fd, const struct sockaddr * __addr, socklen_t __len);
+int listen(int __fd, int __n);
 
+int getpeername(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __len);
+int getsockname(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __len);
 
 #endif

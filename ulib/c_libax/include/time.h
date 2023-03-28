@@ -5,6 +5,12 @@
 
 typedef long time_t;
 
+#if defined(_XOPEN_SOURCE) || defined(_BSD_SOURCE) || defined(_GNU_SOURCE)
+extern int daylight;
+extern long timezone;
+extern int getdate_err;
+#endif
+
 struct tm {
     int tm_sec;          /* seconds of minute */
     int tm_min;          /* minutes of hour */
@@ -25,6 +31,19 @@ size_t strftime(char *__restrict__ _Buf, size_t _SizeInBytes, const char *__rest
 struct tm *gmtime(const time_t *timer);
 
 struct tm *localtime(const time_t *timep);
+struct tm *localtime_r(const time_t *__restrict__ __timer, struct tm *__restrict__ __tp);
+
 time_t time(time_t *t);
+
+#include <bits/types/struct_timespec.h>
+int nanosleep(const struct timespec *__requested_time, struct timespec *__remaining);
+void tzset(void);
+
+#include <sys/time.h>
+int setitimer(int __which, const struct itimerval *__restrict__ __new, struct itimerval *__restrict__ __old);
+
+#define CLOCK_MONOTONIC 1
+
+int clock_gettime(clockid_t __clock_id, struct timespec *__tp);
 
 #endif

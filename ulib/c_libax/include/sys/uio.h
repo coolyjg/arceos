@@ -9,4 +9,7 @@ struct iovec
     size_t iov_len;	/* Length of data.  */
   };
 
+#define IOV_MAX 1024
+
+
 #endif /* sys/uio.h */

@@ -132,4 +132,9 @@ struct sockaddr_in6
 #define IPV6_XFRM_POLICY	35
 #define IPV6_HDRINCL		36
 
+uint16_t ntohs(uint16_t __netshort);
+uint32_t htonl(uint32_t __hostlong);
+uint32_t ntohl(uint32_t __netlong);
+uint16_t htons(uint16_t __hostshort);
+
 #endif

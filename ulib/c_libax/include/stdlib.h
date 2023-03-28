@@ -3,8 +3,16 @@
 
 #include <stddef.h>
 
+#define RAND_MAX (0x7fffffff)
+
+#define WEXITSTATUS(s) (((s) & 0xff00) >> 8)
+#define WTERMSIG(s) ((s) & 0x7f)
+#define WIFEXITED(s) (!WTERMSIG(s))
+#define WIFSIGNALED(s) (((s)&0xffff)-1U < 0xffu)
+
 int rand(void);
 void srand(unsigned);
+long random(void);
 
 // #ifdef AX_CONFIG_ALLOC
 void *malloc(size_t size);
@@ -13,10 +21,28 @@ void *realloc(void *memblock, size_t size);
 void free(void *addr);
 // #endif
 
+double strtod(const char *__restrict__ __nptr, char **__restrict__ __endptr);
 long long strtoll(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);
+unsigned long strtoul(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);
 long strtol(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);
+long double strtold(const char *__restrict__ __nptr, char **__restrict__ __endptr);
+unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);
 
 _Noreturn void abort(void);
+_Noreturn void exit(int __status);
+
 char *getenv(const char *name);
+
+// void qsort(void *__base, size_t __nmemb, size_t __size, int (*)(const void *, const void *) __compar);
+void qsort (void *, size_t, size_t, int (*)(const void *, const void *));
+
+long long llabs(long long __x);
+int abs(int __x);
+
+int mkostemp(char *__template, int __flags);
+long long atoll(const char *__nptr);
+int setenv(const char *__name, const char *__value, int __replace);
+int unsetenv(const char *__name);
+void srandom(unsigned int __seed);
 
 #endif //__STDLIB_H__

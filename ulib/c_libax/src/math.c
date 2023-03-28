@@ -1,64 +1,64 @@
-#include <sys/socket.h>
 #include <stdio.h>
+#include <math.h>
 
 //TODO
-int getsockopt(int __fd, int __level, int __optname, void *__restrict__ __optval, socklen_t *__restrict__ __optlen)
+long long llrint(double)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 //TODO
-int setsockopt(int __fd, int __level, int __optname, const void *__optval, socklen_t __optlen)
+double floor(double __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 //TODO
-int socket(int __domain, int __type, int __protocol)
+double sqrt(double __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 //TODO
-int bind(int __fd, const struct sockaddr * __addr, socklen_t __len)
+double pow(double __x, double __y)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 //TODO
-int connect(int __fd, const struct sockaddr * __addr, socklen_t __len)
+long long llroundl(long double __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 //TODO
-int listen(int __fd, int __n)
+double ceil(double __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 //TODO
-int accept4(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __addr_len, int __flags)
+double log(double __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 //TODO
-int getpeername(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __len)
+double cos(double __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 //TODO
-int getsockname(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __len)
+double fabs(double __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

@@ -10,7 +10,11 @@ typedef intptr_t ssize_t;
 typedef long ptrdiff_t;
 
 typedef int pid_t;
+typedef long loff_t;
 // typedef unsigned long size_t;
+
+typedef int clockid_t;
+
 #define NULL ((void *)0)
 
 #if __GNUC__ > 3

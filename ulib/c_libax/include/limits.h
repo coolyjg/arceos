@@ -1,6 +1,7 @@
 #ifndef __LIMITS__
 #define __LIMITS__
 
+#define __LONG_MAX 0x7fffffffffffffffL
 #define CHAR_BIT 8
 #define SCHAR_MIN (-128)
 #define SCHAR_MAX 127
@@ -18,5 +19,7 @@
 #define LLONG_MAX  0x7fffffffffffffffLL
 #define ULLONG_MAX (2ULL*LLONG_MAX+1)
 
+#define PATH_MAX 4096
+#define SSIZE_MAX LONG_MAX
 
 #endif
