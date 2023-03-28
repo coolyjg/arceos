@@ -79,3 +79,10 @@ int clock_gettime(clockid_t __clock_id, struct timespec *__tp)
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
+
+//TODO
+char *ctime_r(const time_t *__restrict__ __timer, char *__restrict__ __buf)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return NULL;
+}

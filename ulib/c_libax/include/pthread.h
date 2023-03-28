@@ -139,6 +139,7 @@ typedef union
 int pthread_mutex_init(pthread_mutex_t *__restrict __mutex, const pthread_mutexattr_t *__restrict __attr);
 int pthread_mutex_lock(pthread_mutex_t *__mutex);
 int pthread_mutex_unlock(pthread_mutex_t *__mutex);
+int pthread_mutex_trylock(pthread_mutex_t *__mutex);
 
 int pthread_setcancelstate(int __state, int *__oldstate);
 int pthread_setcanceltype(int __type, int *__oldtype);

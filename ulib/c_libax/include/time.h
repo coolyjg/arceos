@@ -46,4 +46,6 @@ int setitimer(int __which, const struct itimerval *__restrict__ __new, struct it
 
 int clock_gettime(clockid_t __clock_id, struct timespec *__tp);
 
+char *ctime_r(const time_t *__restrict__ __timer, char *__restrict__ __buf);
+
 #endif

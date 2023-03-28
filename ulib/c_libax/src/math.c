@@ -63,3 +63,31 @@ double fabs(double __x)
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
+
+//TODO
+double sin(double __x)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double asin(double __x)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double round(double __x)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+long double ceill(long double __x)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

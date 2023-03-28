@@ -205,3 +205,10 @@ char *strdup(const char *__s)
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return NULL;
 }
+
+//TODO
+int strncasecmp(const char *__s1, const char *__s2, size_t __n)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

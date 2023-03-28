@@ -102,7 +102,7 @@ extern FILE *const stderr;
 int getchar();
 int putchar(int);
 int puts(const char *s);
-void fprintf(int f, const char *fmt, ...);
+int fprintf(int f, const char *fmt, ...);
 int snprintf ( char * str, int size, const char * format, ... );
 #include<stdarg.h>
 int vsnprintf(char *__restrict__ __s, unsigned long __maxlen, const char *__restrict__ __format, va_list __arg);

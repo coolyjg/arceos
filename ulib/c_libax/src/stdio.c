@@ -127,7 +127,7 @@ int puts(const char *s)
 }
 
 // Print to the file. only understands %d, %x, %p, %s.
-void fprintf(int f, const char *restrict fmt, ...)
+int fprintf(int f, const char *restrict fmt, ...)
 {
     va_list ap;
     int l = 0;
@@ -195,6 +195,7 @@ void fprintf(int f, const char *restrict fmt, ...)
         s += 2;
     }
     va_end(ap);
+    return 0;
 }
 
 // TODO

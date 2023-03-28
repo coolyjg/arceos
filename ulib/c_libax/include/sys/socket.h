@@ -288,6 +288,10 @@ enum __socket_type
 #define SOCK_NONBLOCK SOCK_NONBLOCK
 };
 
+#define SHUT_RD 0
+#define SHUT_WR 1
+#define SHUT_RDWR 2
+
 int getsockopt(int __fd, int __level, int __optname, void *__restrict__ __optval, socklen_t *__restrict__ __optlen);
 int setsockopt(int __fd, int __level, int __optname, const void *__optval, socklen_t __optlen);
 
@@ -300,5 +304,7 @@ int listen(int __fd, int __n);
 
 int getpeername(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __len);
 int getsockname(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __len);
+
+int shutdown(int __fd, int __how);
 
 #endif

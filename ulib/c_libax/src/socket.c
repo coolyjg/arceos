@@ -63,3 +63,10 @@ int getsockname(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restr
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
+
+//TODO
+int shutdown(int __fd, int __how)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

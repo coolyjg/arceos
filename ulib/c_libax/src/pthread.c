@@ -23,6 +23,13 @@ int pthread_mutex_unlock(pthread_mutex_t *__mutex)
 }
 
 //TODO
+int pthread_mutex_trylock(pthread_mutex_t *__mutex)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
 int pthread_setcancelstate(int __state, int *__oldstate)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);

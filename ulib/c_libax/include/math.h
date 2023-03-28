@@ -68,5 +68,9 @@ double ceil(double __x);
 double log(double __x);
 double cos(double __x);
 double fabs(double __x);
+double sin(double __x);
+double asin(double __x);
+double round(double __x);
+long double ceill(long double __x);
 
 #endif
