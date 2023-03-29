@@ -17,12 +17,12 @@ int rand(void);
 void srand(unsigned);
 long random(void);
 
-// #ifdef AX_CONFIG_ALLOC
+#ifdef AX_CONFIG_ALLOC
 void *malloc(size_t size);
 void *calloc(size_t __nmemb, size_t __size);
 void *realloc(void *memblock, size_t size);
 void free(void *addr);
-// #endif
+#endif
 
 double strtod(const char *__restrict__ __nptr, char **__restrict__ __endptr);
 long long strtoll(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);

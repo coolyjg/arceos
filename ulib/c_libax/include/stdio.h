@@ -67,17 +67,19 @@ extern FILE *const stdin;
 extern FILE *const stdout;
 extern FILE *const stderr;
 
-// #define stdin  (stdin)
-// #define stdout (stdout)
-// #define stderr (stderr)
+#define stdin  (stdin)
+#define stdout (stdout)
+#define stderr (stderr)
 
-#define stdin 0
-#define stdout 1
-#define stderr 2
+// #define stdin 0
+// #define stdout 1
+// #define stderr 2
 
 #define EOF (-1)
 
 #define BUFSIZ 1024
+
+int fprintf(int f, const char *fmt, ...);
 
 #define printf(...) fprintf(stdout, __VA_ARGS__)
 
@@ -108,7 +110,7 @@ extern FILE *const stderr;
 int getchar();
 int putchar(int);
 int puts(const char *s);
-int fprintf(int f, const char *fmt, ...);
+
 int snprintf ( char * str, int size, const char * format, ... );
 #include<stdarg.h>
 int vsnprintf(char *__restrict__ __s, unsigned long __maxlen, const char *__restrict__ __format, va_list __arg);
