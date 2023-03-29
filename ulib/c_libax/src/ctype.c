@@ -16,15 +16,15 @@ int toupper(int __c)
 }
 
 //TODO
-int isprint(int __c)
-{
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
-}
+// int isprint(int __c)
+// {
+//     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+//     return 0;
+// }
 
 //TODO
-int isalnum(int)
-{
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
-}
+// int isalnum(int)
+// {
+//     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+//     return 0;
+// }

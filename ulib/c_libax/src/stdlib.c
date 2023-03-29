@@ -27,7 +27,7 @@ void *calloc(size_t nmemb, size_t size)
     void *mem = ax_malloc(nmemb * size);
 
     for (int i = 0; i< nmemb * size; i++)
-        mem[i] = 0;
+        ((int*)mem)[i] = 0;
     
     return mem;
 }

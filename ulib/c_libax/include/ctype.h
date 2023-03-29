@@ -4,9 +4,9 @@
 int tolower(int __c);
 int toupper(int __c);
 
-int   isprint(int);
+int isprint(int);
 #define isprint(a) (0 ? isprint(a) : ((unsigned)(a)-0x20) < 0x5f)
-
+// #define isprint(a) ((unsigned)(a)-0x20) < 0x5f
 
 int isalnum(int);
 

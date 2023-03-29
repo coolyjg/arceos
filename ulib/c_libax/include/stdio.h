@@ -3,6 +3,8 @@
 
 typedef long __off_t;
 
+#include <stddef.h>
+
 #define STDIN_FILENO 0
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
@@ -15,15 +17,15 @@ typedef long __off_t;
 #define SEEK_CUR	1	/* Seek from current position.  */
 #define SEEK_END	2	/* Seek from end of file.  */
 
-#ifndef __FILE_defined
-#define __FILE_defined 1
+// #ifndef __FILE_defined
+// #define __FILE_defined 1
 
-struct _IO_FILE;
+// struct _IO_FILE;
 
-/* The opaque type of streams.  This is the definition used elsewhere.  */
-typedef struct _IO_FILE FILE;
+// /* The opaque type of streams.  This is the definition used elsewhere.  */
+// typedef struct _IO_FILE FILE;
 
-#endif
+// #endif
 
 struct _IO_FILE {
     int _flags; /* High-order word is _IO_MAGIC; rest is flags. */
@@ -65,9 +67,13 @@ extern FILE *const stdin;
 extern FILE *const stdout;
 extern FILE *const stderr;
 
-#define stdin  (stdin)
-#define stdout (stdout)
-#define stderr (stderr)
+// #define stdin  (stdin)
+// #define stdout (stdout)
+// #define stderr (stderr)
+
+#define stdin 0
+#define stdout 1
+#define stderr 2
 
 #define EOF (-1)
 

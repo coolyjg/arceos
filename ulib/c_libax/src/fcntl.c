@@ -1,5 +1,5 @@
-#include <fcntl.h>
 #include <stdio.h>
+#include <fcntl.h>
 
 // TODO:
 int fcntl(int fd, int cmd, ... /* arg */)
