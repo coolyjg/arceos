@@ -1,0 +1,87 @@
+    [92;1mBuilding[0m App: sqlite3, Arch: aarch64, Platform: qemu-virt-aarch64, Language: c
+cargo build -Zbuild-std=core,alloc -Zbuild-std-features=compiler-builtins-mem --config "build.rustflags='-Clink-arg=-T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds'" --target aarch64-unknown-none-softfloat --target-dir /home/yanjuguang/OS/arceos/target --features "libax/platform-qemu-virt-aarch64 libax/log-level-info libax_bindings/default libax_bindings/alloc libax_bindings/paging"  --no-default-features --release -p libax_bindings
+    Finished release [optimized] target(s) in 0.08s
+rm -f ulib/c_libax/build_aarch64/libc.a
+aarch64-linux-musl-ar rc ulib/c_libax/build_aarch64/libc.a ulib/c_libax/build_aarch64/assert.o ulib/c_libax/build_aarch64/ctype.o ulib/c_libax/build_aarch64/dirent.o ulib/c_libax/build_aarch64/dlfcn.o ulib/c_libax/build_aarch64/epoll.o ulib/c_libax/build_aarch64/fcntl.o ulib/c_libax/build_aarch64/file.o ulib/c_libax/build_aarch64/glob.o ulib/c_libax/build_aarch64/in.o ulib/c_libax/build_aarch64/inet.o ulib/c_libax/build_aarch64/libgen.o ulib/c_libax/build_aarch64/locale.o ulib/c_libax/build_aarch64/math.o ulib/c_libax/build_aarch64/mmap.o ulib/c_libax/build_aarch64/netdb.o ulib/c_libax/build_aarch64/poll.o ulib/c_libax/build_aarch64/pthread.o ulib/c_libax/build_aarch64/resource.o ulib/c_libax/build_aarch64/sched.o ulib/c_libax/build_aarch64/signal.o ulib/c_libax/build_aarch64/socket.o ulib/c_libax/build_aarch64/stat.o ulib/c_libax/build_aarch64/stdio.o ulib/c_libax/build_aarch64/stdlib.o ulib/c_libax/build_aarch64/string.o ulib/c_libax/build_aarch64/syslog.o ulib/c_libax/build_aarch64/time.o ulib/c_libax/build_aarch64/uio.o ulib/c_libax/build_aarch64/unistd.o ulib/c_libax/build_aarch64/wait.o
+aarch64-linux-musl-ranlib ulib/c_libax/build_aarch64/libc.a
+    [96;1mLinking[0m ./apps/c/sqlite3/sqlite3_qemu-virt-aarch64.elf
+
+
+aarch64-linux-musl-ld -nostdlib -T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds apps/c/sqlite3/main.o apps/c/sqlite3/sqlite3.o ulib/c_libax/build_aarch64/libc.a target/aarch64-unknown-none-softfloat/release/liblibax_bindings.a -o apps/c/sqlite3/sqlite3_qemu-virt-aarch64.elf
+
+
+
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `unixGetLastError':
+sqlite3.c:(.text+0x4c08): undefined reference to `__errno_location'
+sqlite3.c:(.text+0x4c08): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `unixCheckReservedLock':
+sqlite3.c:(.text+0x4cd4): undefined reference to `__errno_location'
+sqlite3.c:(.text+0x4cd4): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `seekAndWriteFd':
+sqlite3.c:(.text+0x5248): undefined reference to `__errno_location'
+sqlite3.c:(.text+0x5248): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x5270): undefined reference to `__errno_location'
+sqlite3.c:(.text+0x5270): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `dotlockUnlock':
+sqlite3.c:(.text+0x94dc): undefined reference to `__errno_location'
+sqlite3.c:(.text+0x94dc): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o:sqlite3.c:(.text+0x958c): more undefined references to `__errno_location' follow
+apps/c/sqlite3/sqlite3.o: in function `unixFileSize':
+sqlite3.c:(.text+0x958c): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+apps/c/sqlite3/sqlite3.o: in function `seekAndRead':
+sqlite3.c:(.text+0x96f8): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+sqlite3.c:(.text+0x9724): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+sqlite3.c:(.text+0x9734): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+apps/c/sqlite3/sqlite3.o: in function `dotlockLock':
+sqlite3.c:(.text+0x125e4): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__errno_location'
+apps/c/sqlite3/sqlite3.o: in function `unixLock':
+sqlite3.c:(.text+0x17190): additional relocation overflows omitted from the output
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `sqlite3DebugPrintf.constprop.0':
+sqlite3.c:(.text+0x32978): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x32988): undefined reference to `stdout'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `robust_open':
+sqlite3.c:(.text+0x32e64): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x32ee8): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `closePendingFds':
+sqlite3.c:(.text+0x3342c): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `unixUnlock':
+sqlite3.c:(.text+0x336b8): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x336d4): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o:sqlite3.c:(.text+0x336f0): more undefined references to `__errno_location' follow
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `sqlite3TreeViewLine':
+sqlite3.c:(.text+0x3dc1c): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x3dc2c): undefined reference to `stdout'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `sqlite3VdbePrintOp':
+sqlite3.c:(.text+0x64f5c): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x64f60): undefined reference to `stdout'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `sqlite3VdbePrintOp.constprop.0':
+sqlite3.c:(.text+0x64f74): undefined reference to `stdout'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o:sqlite3.c:(.text+0x64f80): more undefined references to `stdout' follow
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `unixShmMap':
+sqlite3.c:(.text+0x83f60): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x843ac): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x8470c): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `unixOpen':
+sqlite3.c:(.text+0x8d70c): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x8d78c): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o:sqlite3.c:(.text+0x8d7a4): more undefined references to `__errno_location' follow
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `sqlite3TreeViewBareExprList':
+sqlite3.c:(.text+0x9e17c): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x9e238): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x9e250): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x9e2d4): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x9e2f4): undefined reference to `stdout'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o:sqlite3.c:(.text+0x9e30c): more undefined references to `stdout' follow
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `unixFileControl':
+sqlite3.c:(.text+0xca164): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0xca2d0): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0xca2e4): undefined reference to `__errno_location'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `sqlite3RunParser':
+sqlite3.c:(.text+0xeddf8): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0xede08): undefined reference to `stdout'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o: in function `sqlite3VdbeExec':
+sqlite3.c:(.text+0xf7ed0): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0xf7edc): undefined reference to `stdout'
+aarch64-linux-musl-ld: sqlite3.c:(.text+0x100684): undefined reference to `stdout'
+aarch64-linux-musl-ld: apps/c/sqlite3/sqlite3.o:sqlite3.c:(.text+0x100690): more undefined references to `stdout' follow
+make: *** [ulib/c_libax/build.mk:64: apps/c/sqlite3/sqlite3_qemu-virt-aarch64.elf] Error 1

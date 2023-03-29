@@ -16,10 +16,6 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
-#ifndef _BITS_TYPES_H
-# error "Never include <bits/typesizes.h> directly; use <sys/types.h> instead."
-#endif
-
 #ifndef	_BITS_TYPESIZES_H
 #define	_BITS_TYPESIZES_H	1
 

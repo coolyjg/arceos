@@ -1,5 +1,5 @@
-#ifndef	_STRINGS_H
-#define	_STRINGS_H
+#ifndef	__STRINGS_H__
+#define	__STRINGS_H__
 
 
 

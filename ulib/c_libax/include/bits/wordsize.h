@@ -1,4 +1,7 @@
 /* Determine the wordsize from the preprocessor defines.  */
+#ifndef __WORDSIZE_H_
+#define __WORDSIZE_H_
+
 
 #if defined __x86_64__ && !defined __ILP32__
 #define __WORDSIZE	64
@@ -16,4 +19,7 @@
 # define __SYSCALL_WORDSIZE		64
 #else
 # define __WORDSIZE_TIME64_COMPAT32	0
+#endif
+
+
 #endif

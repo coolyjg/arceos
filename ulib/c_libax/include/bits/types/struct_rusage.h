@@ -1,3 +1,6 @@
+#ifndef __STRUCT_RUSAGE__
+#define __STRUCT_RUSAGE__
+
 #include <bits/types.h>
 #include <bits/types/struct_timeval.h>
 
@@ -99,3 +102,4 @@ struct rusage
       };
   };
 
+#endif

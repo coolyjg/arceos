@@ -16,6 +16,9 @@
    License along with the GNU C Library; if not, see
    <https://www.gnu.org/licenses/>.  */
 
+#ifndef __TIMESIZE_H__
+#define __TIMESIZE_H__
+
 #include "wordsize.h"
 
 #if defined __x86_64__ && defined __ILP32__
@@ -24,4 +27,6 @@
 #else
 /* For others, time size is word size.  */
 # define __TIMESIZE	__WORDSIZE
+#endif
+
 #endif

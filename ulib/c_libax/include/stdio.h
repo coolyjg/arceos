@@ -63,17 +63,17 @@ struct _IO_FILE {
 
 typedef struct _IO_FILE FILE;
 
-extern FILE *const stdin;
-extern FILE *const stdout;
-extern FILE *const stderr;
+// extern FILE *const stdin;
+// extern FILE *const stdout;
+// extern FILE *const stderr;
 
-#define stdin  (stdin)
-#define stdout (stdout)
-#define stderr (stderr)
+// #define stdin  (stdin)
+// #define stdout (stdout)
+// #define stderr (stderr)
 
-// #define stdin 0
-// #define stdout 1
-// #define stderr 2
+#define stdin 0
+#define stdout 1
+#define stderr 2
 
 #define EOF (-1)
 
@@ -81,7 +81,7 @@ extern FILE *const stderr;
 
 int fprintf(int f, const char *fmt, ...);
 
-#define printf(...) fprintf(stdout, __VA_ARGS__)
+#define printf(...) fprintf(1, __VA_ARGS__)
 
 #define S_IFMT   00170000
 #define S_IFSOCK 0140000
@@ -115,7 +115,8 @@ int snprintf ( char * str, int size, const char * format, ... );
 #include<stdarg.h>
 int vsnprintf(char *__restrict__ __s, unsigned long __maxlen, const char *__restrict__ __format, va_list __arg);
 int fflush(int);
-FILE *fopen(const char *filename, const char *mode);
+//TODO: should be FILE*
+int fopen(const char *filename, const char *mode);
 
 int sscanf(const char *__restrict__ __s, const char *__restrict__ __format, ...);
 

@@ -81,7 +81,8 @@ static void printint(long long value, int base, int sign)
     if (sign)
         buf[--i] = '-';
     assert(i >= 0);
-    out(stdout, buf + i, buf_size - i);
+    // out(stdout, buf + i, buf_size - i);
+    out(1, buf + i, buf_size - i);
 }
 
 static void printptr(uint64_t value)
@@ -93,7 +94,8 @@ static void printptr(uint64_t value)
     for (j = 0; j < (sizeof(uint64_t) * 2); j++, value <<= 4)
         buf[i++] = digits[value >> (sizeof(uint64_t) * 8 - 4)];
     buf[i] = 0;
-    out(stdout, buf, i);
+    // out(stdout, buf, i);
+    out(1, buf, i);
 }
 
 // int getchar()
@@ -113,16 +115,24 @@ int fflush(int fd)
     return 0;
 }
 
+int fopen(const char *filename, const char *mode)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
 int putchar(int c)
 {
     char byte = c;
-    return out(stdout, &byte, 1);
+    // return out(stdout, &byte, 1);
+    return out(1, &byte, 1);
 }
 
 int puts(const char *s)
 {
     int r;
-    r = -(out(stdout, s, strlen(s)) < 0 || putchar('\n') < 0);
+    // r = -(out(stdout, s, strlen(s)) < 0 || putchar('\n') < 0);
+    r = -(out(1, s, strlen(s)) < 0 || putchar('\n') < 0);
     return r;
 }
 

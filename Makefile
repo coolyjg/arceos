@@ -1,8 +1,8 @@
 # Arguments
-ARCH ?= aarch64
+ARCH ?= riscv64
 SMP ?= 1
 MODE ?= release
-LOG ?= info
+LOG ?= warn
 
 A ?= apps/helloworld
 APP ?= $(A)

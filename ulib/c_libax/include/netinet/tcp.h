@@ -1,3 +1,6 @@
+#ifndef __TCP_H__
+#define __TCP_H__
+
 #define	TCP_NODELAY		 1  /* Don't delay send to coalesce packets  */
 #define	TCP_MAXSEG		 2  /* Set maximum segment size  */
 #define TCP_CORK		 3  /* Control sending of partial frames  */
@@ -45,3 +48,5 @@
 #define TCP_REPAIR_ON		 1
 #define TCP_REPAIR_OFF		 0
 #define TCP_REPAIR_OFF_NO_WP	 -1
+
+#endif
