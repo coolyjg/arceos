@@ -1,6 +1,8 @@
 #ifndef __SYS_TYPES_H__
 #define __SYS_TYPES_H__
 
+#include <stddef.h>
+
 typedef unsigned int uid_t;
 typedef unsigned int gid_t;
 typedef unsigned int mode_t;

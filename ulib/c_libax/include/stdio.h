@@ -1,10 +1,6 @@
 #ifndef __STDIO_H__
 #define __STDIO_H__
 
-// #define stdin  0
-// #define stdout 1
-// #define stderr 2
-
 typedef long __off_t;
 
 #define STDIN_FILENO 0
