@@ -5,6 +5,8 @@
 
 typedef long time_t;
 
+#define CLOCKS_PER_SEC 1000000L
+
 #if defined(_XOPEN_SOURCE) || defined(_BSD_SOURCE) || defined(_GNU_SOURCE)
 extern int daylight;
 extern long timezone;

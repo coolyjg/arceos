@@ -10,6 +10,9 @@
 #define WIFEXITED(s) (!WTERMSIG(s))
 #define WIFSIGNALED(s) (((s)&0xffff)-1U < 0xffu)
 
+#define EXIT_FAILURE 1
+#define EXIT_SUCCESS 0
+
 int rand(void);
 void srand(unsigned);
 long random(void);

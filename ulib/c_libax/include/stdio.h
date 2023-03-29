@@ -11,6 +11,10 @@ typedef long __off_t;
 #define STDOUT_FILENO 1
 #define STDERR_FILENO 2
 
+#define _IOFBF 0
+#define _IOLBF 1
+#define _IONBF 2
+
 #define SEEK_SET	0	/* Seek from beginning of file.  */
 #define SEEK_CUR	1	/* Seek from current position.  */
 #define SEEK_END	2	/* Seek from end of file.  */
