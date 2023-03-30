@@ -19,31 +19,30 @@
  *	POSIX Standard: 4.4 System Identification	<sys/utsname.h>
  */
 
-#ifndef	_SYS_UTSNAME_H
-#define	_SYS_UTSNAME_H	1
+#ifndef _SYS_UTSNAME_H
+#define _SYS_UTSNAME_H 1
 
 #include <features.h>
 #define _UTSNAME_LENGTH 65
 
 #ifndef _UTSNAME_SYSNAME_LENGTH
-# define _UTSNAME_SYSNAME_LENGTH _UTSNAME_LENGTH
+#define _UTSNAME_SYSNAME_LENGTH _UTSNAME_LENGTH
 #endif
 #ifndef _UTSNAME_NODENAME_LENGTH
-# define _UTSNAME_NODENAME_LENGTH _UTSNAME_LENGTH
+#define _UTSNAME_NODENAME_LENGTH _UTSNAME_LENGTH
 #endif
 #ifndef _UTSNAME_RELEASE_LENGTH
-# define _UTSNAME_RELEASE_LENGTH _UTSNAME_LENGTH
+#define _UTSNAME_RELEASE_LENGTH _UTSNAME_LENGTH
 #endif
 #ifndef _UTSNAME_VERSION_LENGTH
-# define _UTSNAME_VERSION_LENGTH _UTSNAME_LENGTH
+#define _UTSNAME_VERSION_LENGTH _UTSNAME_LENGTH
 #endif
 #ifndef _UTSNAME_MACHINE_LENGTH
-# define _UTSNAME_MACHINE_LENGTH _UTSNAME_LENGTH
+#define _UTSNAME_MACHINE_LENGTH _UTSNAME_LENGTH
 #endif
 
 /* Structure describing the system and machine.  */
-struct utsname
-  {
+struct utsname {
     /* Name of the implementation of the operating system.  */
     char sysname[_UTSNAME_SYSNAME_LENGTH];
 
@@ -60,21 +59,20 @@ struct utsname
 
 #if _UTSNAME_DOMAIN_LENGTH - 0
     /* Name of the domain of this node on the network.  */
-# ifdef __USE_GNU
+#ifdef __USE_GNU
     char domainname[_UTSNAME_DOMAIN_LENGTH];
-# else
+#else
     char __domainname[_UTSNAME_DOMAIN_LENGTH];
-# endif
 #endif
-  };
+#endif
+};
 
 #ifdef __USE_MISC
 /* Note that SVID assumes all members have the same size.  */
-# define SYS_NMLN  _UTSNAME_LENGTH
+#define SYS_NMLN _UTSNAME_LENGTH
 #endif
 
-
 /* Put information about the system in NAME.  */
-extern int uname (struct utsname *__name);
+extern int uname(struct utsname *__name);
 
 #endif /* sys/utsname.h  */

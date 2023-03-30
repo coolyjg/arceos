@@ -42,7 +42,8 @@ int nanosleep(const struct timespec *__requested_time, struct timespec *__remain
 void tzset(void);
 
 #include <sys/time.h>
-int setitimer(int __which, const struct itimerval *__restrict__ __new, struct itimerval *__restrict__ __old);
+int setitimer(int __which, const struct itimerval *__restrict__ __new,
+              struct itimerval *__restrict__ __old);
 
 #define CLOCK_MONOTONIC 1
 

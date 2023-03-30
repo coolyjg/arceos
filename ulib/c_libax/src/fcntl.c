@@ -1,5 +1,5 @@
-#include <stdio.h>
 #include <fcntl.h>
+#include <stdio.h>
 
 // TODO:
 int fcntl(int fd, int cmd, ... /* arg */)
@@ -16,7 +16,7 @@ int open(const char *filename, int flags, ...)
     return -1;
 }
 
-//TODO
+// TODO
 int posix_fadvise(int __fd, unsigned long __offset, unsigned long __len, int __advise)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);

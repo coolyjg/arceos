@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-#define __PRI64  "l"
+#define __PRI64 "l"
 
 #define PRIu64 __PRI64 "u"
 

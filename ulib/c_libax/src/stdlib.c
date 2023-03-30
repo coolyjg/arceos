@@ -21,14 +21,13 @@ void *malloc(size_t size)
     return ax_malloc(size);
 }
 
-//TODO
+// TODO
 void *calloc(size_t nmemb, size_t size)
 {
     void *mem = ax_malloc(nmemb * size);
 
-    for (int i = 0; i< nmemb * size; i++)
-        ((int*)mem)[i] = 0;
-    
+    for (int i = 0; i < nmemb * size; i++) ((int *)mem)[i] = 0;
+
     return mem;
 }
 
@@ -71,56 +70,57 @@ int __clzdi2(int a)
     return 0;
 }
 
-//TODO
+// TODO
 long long strtoll(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 long strtol(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
-unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base)
+// TODO
+unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__ __endptr,
+                            int __base)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 long random(void)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 long double strtold(const char *__restrict__ __nptr, char **__restrict__ __endptr)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 double strtod(const char *__restrict__ __nptr, char **__restrict__ __endptr)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
-void qsort (void *, size_t, size_t, int (*)(const void *, const void *))
+// TODO
+void qsort(void *, size_t, size_t, int (*)(const void *, const void *))
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return ;
+    return;
 }
 
-//TODO
+// TODO
 unsigned long strtoul(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
@@ -133,49 +133,49 @@ _Noreturn void exit(int __status)
     __builtin_unreachable();
 }
 
-//TODO
+// TODO
 long long llabs(long long __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int mkostemp(char *__template, int __flags)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 long long atoll(const char *__nptr)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int setenv(const char *__name, const char *__value, int __replace)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int unsetenv(const char *__name)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 void srandom(unsigned int __seed)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return ;
+    return;
 }
 
-//TODO
+// TODO
 int abs(int __x)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);

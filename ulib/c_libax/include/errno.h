@@ -140,10 +140,9 @@ static unsigned int errno;
 // int *__errno_location(void);
 // # define errno (*__errno_location ())
 
-# ifndef ENOTSUP
-#  define ENOTSUP		EOPNOTSUPP
-# endif
-
+#ifndef ENOTSUP
+#define ENOTSUP EOPNOTSUPP
+#endif
 
 #ifdef _GNU_SOURCE
 extern char *program_invocation_short_name, *program_invocation_name;

@@ -136,83 +136,83 @@ ssize_t readlink(const char *path, char *buf, size_t bufsiz)
     return 0;
 }
 
-//TODO
+// TODO
 int pipe(int *__pipedes)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int pipe2(int *__pipedes, int __flags)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int fdatasync(int __fildes)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 _Noreturn void _exit(int __status)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
 }
 
-//TODO
+// TODO
 int usleep(unsigned int __useconds)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int execve(const char *__path, char *const *__argv, char *const *__envp)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 pid_t setsid(void)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int dup2(int __fd, int __fd2)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int isatty(int __fd)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 pid_t fork(void)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int chdir(const char *__path)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
+// TODO
 int truncate(const char *__file, loff_t __length)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);

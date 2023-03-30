@@ -5,10 +5,10 @@
 
 #define RAND_MAX (0x7fffffff)
 
-#define WEXITSTATUS(s) (((s) & 0xff00) >> 8)
-#define WTERMSIG(s) ((s) & 0x7f)
-#define WIFEXITED(s) (!WTERMSIG(s))
-#define WIFSIGNALED(s) (((s)&0xffff)-1U < 0xffu)
+#define WEXITSTATUS(s) (((s)&0xff00) >> 8)
+#define WTERMSIG(s)    ((s)&0x7f)
+#define WIFEXITED(s)   (!WTERMSIG(s))
+#define WIFSIGNALED(s) (((s)&0xffff) - 1U < 0xffu)
 
 #define EXIT_FAILURE 1
 #define EXIT_SUCCESS 0
@@ -29,15 +29,17 @@ long long strtoll(const char *__restrict__ __nptr, char **__restrict__ __endptr,
 unsigned long strtoul(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);
 long strtol(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);
 long double strtold(const char *__restrict__ __nptr, char **__restrict__ __endptr);
-unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);
+unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__ __endptr,
+                            int __base);
 
 _Noreturn void abort(void);
 _Noreturn void exit(int __status);
 
 char *getenv(const char *name);
 
-// void qsort(void *__base, size_t __nmemb, size_t __size, int (*)(const void *, const void *) __compar);
-void qsort (void *, size_t, size_t, int (*)(const void *, const void *));
+// void qsort(void *__base, size_t __nmemb, size_t __size, int (*)(const void *, const void *)
+// __compar);
+void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
 
 long long llabs(long long __x);
 int abs(int __x);

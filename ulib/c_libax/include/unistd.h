@@ -6,7 +6,7 @@
 #include <sys/types.h>
 
 // #define _SC_PAGESIZE 30
-#define	X_OK	1
+#define X_OK 1
 
 long int sysconf(int name);
 off_t lseek(int fd, off_t offset, int whence);

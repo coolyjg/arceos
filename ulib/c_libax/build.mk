@@ -59,8 +59,10 @@ app-objs := $(addprefix $(APP)/,$(app-objs))
 $(APP)/%.o: $(APP)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+ifneq ($(APP), apps/c/redis)
 $(OUT_ELF): $(app-objs) $(c_lib) $(rust_lib)
 	@echo "    $(CYAN_C)Linking$(END_C) $(OUT_ELF)"
 	$(LD) $(LDFLAGS) $^ -o $@
+endif
 
 .PHONY: _gen_feat

@@ -1,5 +1,5 @@
-#ifndef	_CTYPE_H
-#define	_CTYPE_H
+#ifndef _CTYPE_H
+#define _CTYPE_H
 
 int tolower(int __c);
 int toupper(int __c);
