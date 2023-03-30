@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdio.h>
+#include <sys/mman.h>
 #include <sys/types.h>
 
 // TODO:
@@ -23,4 +24,18 @@ void *mremap(void *old_address, size_t old_size, size_t new_size, int flags,
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return NULL;
+}
+
+// TODO
+int mprotect(void *addr, size_t len, int prot)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+// TODO
+int madvise(void *addr, size_t length, int advice)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
 }

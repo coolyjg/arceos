@@ -1,21 +1,32 @@
 #ifndef __STDIO_H__
 #define __STDIO_H__
 
-#define stdin  0
-#define stdout 1
-#define stderr 2
+typedef long __off_t;
 
-int getchar();
-int putchar(int);
-int puts(const char *s);
-void fprintf(int f, const char *fmt, ...);
-int fflush(int);
+#include <stddef.h>
 
-#define EOF (-1)
+#define STDIN_FILENO  0
+#define STDOUT_FILENO 1
+#define STDERR_FILENO 2
 
-#define printf(...) fprintf(stdout, __VA_ARGS__)
+#define _IOFBF 0
+#define _IOLBF 1
+#define _IONBF 2
 
-typedef unsigned int __off_t;
+#define SEEK_SET 0 /* Seek from beginning of file.  */
+#define SEEK_CUR 1 /* Seek from current position.  */
+#define SEEK_END 2 /* Seek from end of file.  */
+
+// #ifndef __FILE_defined
+// #define __FILE_defined 1
+
+// struct _IO_FILE;
+
+// /* The opaque type of streams.  This is the definition used elsewhere.  */
+// typedef struct _IO_FILE FILE;
+
+// #endif
+
 struct _IO_FILE {
     int _flags; /* High-order word is _IO_MAGIC; rest is flags. */
 
@@ -52,6 +63,26 @@ struct _IO_FILE {
 
 typedef struct _IO_FILE FILE;
 
+// extern FILE *const stdin;
+// extern FILE *const stdout;
+// extern FILE *const stderr;
+
+// #define stdin  (stdin)
+// #define stdout (stdout)
+// #define stderr (stderr)
+
+#define stdin  0
+#define stdout 1
+#define stderr 2
+
+#define EOF (-1)
+
+#define BUFSIZ 1024
+
+int fprintf(int f, const char *fmt, ...);
+
+#define printf(...) fprintf(1, __VA_ARGS__)
+
 #define S_IFMT   00170000
 #define S_IFSOCK 0140000
 #define S_IFLNK  0120000
@@ -75,5 +106,36 @@ typedef struct _IO_FILE FILE;
 #define SEEK_SET 0
 #define SEEK_CUR 1
 #define SEEK_END 2
+
+int getchar();
+int putchar(int);
+int puts(const char *s);
+
+int snprintf(char *str, int size, const char *format, ...);
+#include <stdarg.h>
+int vsnprintf(char *__restrict__ __s, unsigned long __maxlen, const char *__restrict__ __format,
+              va_list __arg);
+int fflush(int);
+// TODO: should be FILE*
+int fopen(const char *filename, const char *mode);
+
+int sscanf(const char *__restrict__ __s, const char *__restrict__ __format, ...);
+
+unsigned long fread(void *__restrict__ __ptr, unsigned long __size, unsigned long __n,
+                    FILE *__restrict__ __stream);
+unsigned long fwrite(const void *__restrict__ __ptr, unsigned long, unsigned long,
+                     FILE *__restrict);
+
+int fclose(FILE *__stream);
+char *fgets(char *__restrict__ __s, int __n, FILE *__restrict__ __stream);
+
+void perror(const char *__s);
+
+int rename(const char *__old, const char *__new);
+
+int fileno(FILE *__stream);
+int feof(FILE *__stream);
+int fseek(FILE *__stream, long __off, int __whence);
+long ftello(FILE *__stream);
 
 #endif // __STDIO_H__

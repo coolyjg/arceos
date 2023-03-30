@@ -1,6 +1,8 @@
 #ifndef __SYS_TYPES_H__
 #define __SYS_TYPES_H__
 
+#include <stddef.h>
+
 typedef unsigned int uid_t;
 typedef unsigned int gid_t;
 typedef unsigned int mode_t;
@@ -21,6 +23,6 @@ typedef unsigned int nlink_t;
 typedef int blksize_t;
 typedef int blkcnt_t;
 
-typedef unsigned int __off_t;
+// typedef unsigned int __off_t;
 
 #endif // __SYS_TYPES_H__
