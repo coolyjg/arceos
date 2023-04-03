@@ -1,6 +1,6 @@
 #ifndef _LIBGEN_H
 #define _LIBGEN_H
 
-char *dirname(char *__path);
+char *dirname(char *s);
 
 #endif

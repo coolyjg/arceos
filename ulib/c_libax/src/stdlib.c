@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <libax.h>
 
@@ -57,11 +58,14 @@ _Noreturn void abort(void)
     __builtin_unreachable();
 }
 
-// TODO:
 char *getenv(const char *name)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	size_t l = __strchrnul(name, '=') - name;
+	if (l && !name[l] && __environ)
+		for (char **e = __environ; *e; e++)
+			if (!strncmp(name, *e, l) && l[*e] == '=')
+				return *e + l+1;
+	return 0;
 }
 
 // TODO:
