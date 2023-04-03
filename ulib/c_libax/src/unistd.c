@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <time.h>
 
 // TODO:
 long int sysconf(int name)
@@ -16,11 +17,12 @@ off_t lseek(int fd, off_t offset, int whence)
     return 0;
 }
 
-// TODO:
-unsigned int sleep(unsigned int seconds)
+unsigned sleep(unsigned seconds)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	struct timespec tv = { .tv_sec = seconds, .tv_nsec = 0 };
+	if (nanosleep(&tv, &tv))
+		return tv.tv_sec;
+	return 0;
 }
 
 // TODO:

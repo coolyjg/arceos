@@ -1,7 +1,9 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 size_t strlen(const char *s)
 {
@@ -165,25 +167,37 @@ char *strerror(int n)
     return "";
 }
 
-// TODO
-void *memcpy(void *dest, const void *src, size_t n)
+void *memcpy(void *restrict dest, const void *restrict src, size_t n)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return NULL;
+	unsigned char *d = dest;
+	const unsigned char *s = src;
+
+	for (; n; n--) *d++ = *s++;
+	return dest;
 }
 
-// TODO
-void *memmove(void *__dest, const void *__src, size_t __n)
+void *memmove(void *dest, const void *src, size_t n)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return NULL;
+	char *d = dest;
+	const char *s = src;
+
+	if (d==s) return d;
+	if ((uintptr_t)s-(uintptr_t)d-n <= -2*n) return memcpy(d, s, n);
+
+	if (d<s) {
+		for (; n; n--) *d++ = *s++;
+	} else {
+		while (n) n--, d[n] = s[n];
+	}
+
+	return dest;
 }
 
-// TODO
-int strcasecmp(const char *__s1, const char *__s2)
+int strcasecmp(const char *_l, const char *_r)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	const unsigned char *l=(void *)_l, *r=(void *)_r;
+	for (; *l && *r && (*l == *r || tolower(*l) == tolower(*r)); l++, r++);
+	return tolower(*l) - tolower(*r);
 }
 
 // TODO
@@ -193,23 +207,24 @@ int strcoll(const char *__s1, const char *__s2)
     return 0;
 }
 
-// TODO
-char *strpbrk(const char *__s, const char *__accept)
+char *strpbrk(const char *s, const char *b)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return NULL;
+	s += strcspn(s, b);
+	return *s ? (char *)s : 0;
 }
 
-// TODO
-char *strdup(const char *__s)
+char *strdup(const char *s)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return NULL;
+	size_t l = strlen(s);
+	char *d = malloc(l+1);
+	if (!d) return NULL;
+	return memcpy(d, s, l+1);
 }
 
-// TODO
-int strncasecmp(const char *__s1, const char *__s2, size_t __n)
+int strncasecmp(const char *_l, const char *_r, size_t n)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	const unsigned char *l=(void *)_l, *r=(void *)_r;
+	if (!n--) return 0;
+	for (; *l && *r && n && (*l == *r || tolower(*l) == tolower(*r)); l++, r++, n--);
+	return tolower(*l) - tolower(*r);
 }
