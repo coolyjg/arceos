@@ -341,17 +341,16 @@ else
 endif
 
 REDIS_SERVER_NAME=redis-server$(PROG_SUFFIX)
-REDIS_SERVER_OBJ_ALL=redis-server.o
 REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o eval.o bio.o rio.o rand.o memtest.o syscheck.o crcspeed.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.o localtime.o lolwut.o lolwut5.o lolwut6.o acl.o tracking.o socket.o tls.o sha256.o timeout.o setcpuaffinity.o monotonic.o mt19937-64.o resp_parser.o call_reply.o script_lua.o script.o functions.o function_lua.o $(COMMANDS_FILENAME).o strl.o connection.o unix.o logreqres.o
 ALL_SOURCES=$(sort $(patsubst %.o,%.c,$(REDIS_SERVER_OBJ)))
 
-all: $(REDIS_SERVER_NAME)
+all: $(REDIS_SERVER_NAME) 
 	@echo ""
 	@echo "Hint: It's a good idea to run 'make test' ;)"
 	@echo ""
 
 Makefile.dep:
-	-$(REDIS_CC) $(CFLAGS) -MM $(ALL_SOURCES) > Makefile.dep 2> /dev/null || true
+	-$(REDIS_CC) -MM $(ALL_SOURCES) > Makefile.dep 2> /dev/null || true
 
 ifeq (0, $(words $(findstring $(MAKECMDGOALS), $(NODEPS))))
 -include Makefile.dep
@@ -391,13 +390,7 @@ endif
 
 # redis-server
 $(REDIS_SERVER_NAME): $(REDIS_SERVER_OBJ)
-	@echo "================="
-	$(REDIS_LD) $(LDFLAGS) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a $(FINAL_LIBS)
-
-# $(REDIS_SERVER_OBJ_ALL): $(REDIS_SERVER_OBJ)
-# 	@echo "------------------"
-# 	$(REDIS_LD) -r -o $@ $^
-#	$(REDIS_CC) $(CFLAGS) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a $(FINAL_LIBS)
+	$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a $(FINAL_LIBS)
 
 DEP = $(REDIS_SERVER_OBJ:%.o=%.d)
 -include $(DEP)
@@ -406,7 +399,7 @@ DEP = $(REDIS_SERVER_OBJ:%.o=%.d)
 # building it should complete before building any other object. Instead of
 # depending on a single artifact, build all dependencies first.
 %.o: %.c .make-prerequisites
-	$(REDIS_CC) $(CFLAGS) -MMD -o $@ -c $<
+	$(REDIS_CC) -MMD -o $@ -c $<
 
 # The file commands.c is checked in and doesn't normally need to be rebuilt. It
 # is built only if python is available and its prereqs are modified.
@@ -416,7 +409,7 @@ $(COMMANDS_FILENAME).c: commands/*.json ../utils/generate-command-code.py
 endif
 
 clean:
-	rm -rf $(REDIS_SERVER_NAME) $(REDIS_SERVER_OBJ_ALL) *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep *.so
+	rm -rf $(REDIS_SERVER_NAME) $(REDIS_SENTINEL_NAME) $(REDIS_CLI_NAME) $(REDIS_BENCHMARK_NAME) $(REDIS_CHECK_RDB_NAME) $(REDIS_CHECK_AOF_NAME) *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep *.so
 	rm -f $(DEP)
 
 .PHONY: clean

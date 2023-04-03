@@ -56,13 +56,17 @@ app-objs := main.o
 
 app-objs := $(addprefix $(APP)/,$(app-objs))
 
+# app-objs += $(A)/redis/src/deps/hiredis/libhiredis.a
+# app-objs += $(A)/redis/src/deps/lua/src/liblua.a
+# app-objs += $(A)/redis/src/deps/hdr_histogram/libhdrhistogram.a
+# app-objs += $(A)/redis/src/deps/fpconv/libfpconv.a
+
 $(APP)/%.o: $(APP)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-ifneq ($(APP), apps/c/redis)
 $(OUT_ELF): $(app-objs) $(c_lib) $(rust_lib)
 	@echo "    $(CYAN_C)Linking$(END_C) $(OUT_ELF)"
 	$(LD) $(LDFLAGS) $^ -o $@
-endif
+#	$(LD) $(LDFLAGS) $^ $(A)/libhiredis.a $(A)/liblua.a $(A)/libhdrhistogram.a $(A)/libfpconv.a -o $@
 
 .PHONY: _gen_feat

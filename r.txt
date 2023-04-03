@@ -1,0 +1,1043 @@
+    [92;1mBuilding[0m App: redis, Arch: aarch64, Platform: qemu-virt-aarch64, Language: c
+cargo build -Zbuild-std=core,alloc -Zbuild-std-features=compiler-builtins-mem --config "build.rustflags='-Clink-arg=-T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds'" --target aarch64-unknown-none-softfloat --target-dir /home/yanjuguang/OS/arceos/target --features "libax/platform-qemu-virt-aarch64 libax/log-level-info libax_bindings/default libax_bindings/alloc libax_bindings/paging"  --no-default-features --release -p libax_bindings
+    Finished release [optimized] target(s) in 0.08s
+rm -f ulib/c_libax/build_aarch64/libc.a
+aarch64-linux-musl-ar rc ulib/c_libax/build_aarch64/libc.a ulib/c_libax/build_aarch64/assert.o ulib/c_libax/build_aarch64/ctype.o ulib/c_libax/build_aarch64/dirent.o ulib/c_libax/build_aarch64/dlfcn.o ulib/c_libax/build_aarch64/epoll.o ulib/c_libax/build_aarch64/fcntl.o ulib/c_libax/build_aarch64/file.o ulib/c_libax/build_aarch64/glob.o ulib/c_libax/build_aarch64/in.o ulib/c_libax/build_aarch64/inet.o ulib/c_libax/build_aarch64/libgen.o ulib/c_libax/build_aarch64/locale.o ulib/c_libax/build_aarch64/math.o ulib/c_libax/build_aarch64/mmap.o ulib/c_libax/build_aarch64/netdb.o ulib/c_libax/build_aarch64/poll.o ulib/c_libax/build_aarch64/pthread.o ulib/c_libax/build_aarch64/resource.o ulib/c_libax/build_aarch64/sched.o ulib/c_libax/build_aarch64/signal.o ulib/c_libax/build_aarch64/socket.o ulib/c_libax/build_aarch64/stat.o ulib/c_libax/build_aarch64/stdio.o ulib/c_libax/build_aarch64/stdlib.o ulib/c_libax/build_aarch64/string.o ulib/c_libax/build_aarch64/syslog.o ulib/c_libax/build_aarch64/time.o ulib/c_libax/build_aarch64/uio.o ulib/c_libax/build_aarch64/unistd.o ulib/c_libax/build_aarch64/wait.o
+aarch64-linux-musl-ranlib ulib/c_libax/build_aarch64/libc.a
+    [96;1mLinking[0m apps/c/redis//redis_qemu-virt-aarch64.elf
+aarch64-linux-musl-ld -nostdlib -T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds apps/c/redis//redis-server.o ulib/c_libax/build_aarch64/libc.a target/aarch64-unknown-none-softfloat/release/liblibax_bindings.a -o apps/c/redis//redis_qemu-virt-aarch64.elf
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `_anetTcpServer':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/anet.c:450: undefined reference to `snprintf'
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/anet.c:450:(.text+0x5d14): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `anetTcpGenericConnect':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/anet.c:307: undefined reference to `snprintf'
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/anet.c:307:(.text+0x5f78): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `anetFdToString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/anet.c:608: undefined reference to `snprintf'
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/anet.c:608:(.text+0x6edc): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `_dictGetStatsHt':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/dict.c:1539: undefined reference to `snprintf'
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/dict.c:1539:(.text+0xb09c): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/dict.c:1555: undefined reference to `snprintf'
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/dict.c:1555:(.text+0xb0ec): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/dict.c:1512: more undefined references to `snprintf' follow
+apps/c/redis//redis-server.o: in function `_dictGetStatsHt':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/dict.c:1512:(.text+0xb14c): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `snprintf'
+apps/c/redis//redis-server.o: in function `serverLogRaw':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:131:(.text+0xc5d0): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `snprintf'
+apps/c/redis//redis-server.o: in function `setOOMScoreAdj':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:2220:(.text+0xeffc): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `resetCommandTableStats':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061: undefined reference to `hdr_close'
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061:(.text+0x10ab0): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `hdr_close'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061: undefined reference to `hdr_close'
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061:(.text+0x10af8): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `hdr_close'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061: undefined reference to `hdr_close'
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061:(.text+0x10b38): additional relocation overflows omitted from the output
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061: undefined reference to `hdr_close'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061: undefined reference to `hdr_close'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3061: more undefined references to `hdr_close' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `updateCommandLatencyHistogram':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3333: undefined reference to `hdr_record_value'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3332: undefined reference to `hdr_init'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3333: undefined reference to `hdr_record_value'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3333: undefined reference to `hdr_record_value'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:3332: undefined reference to `hdr_init'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `restartServer':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:2158: undefined reference to `environ'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:2158: undefined reference to `environ'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `bytesToHuman':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:5274: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:5262: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:5277: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:5271: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:5265: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:5268: more undefined references to `snprintf' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `fillPercentileDistributionLatencies':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:5289: undefined reference to `hdr_value_at_percentile'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `genRedisInfoString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:5486: undefined reference to `uname'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisAsciiArt':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:6411: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `checkForSentinelMode':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:6731: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ztrymalloc_usable':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/zmalloc.c:120: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/zmalloc.c:120: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/zmalloc.c:120: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/zmalloc.c:120: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ztrycalloc_usable':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/zmalloc.c:181: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/zmalloc.c:181: more undefined references to `__aarch64_ldadd8_relax' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `zmalloc_get_smap_bytes_by_field':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/zmalloc.c:668: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisBuildIdString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/release.c:65: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `createClient':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:140: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `writeToClient':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:1920: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:1949: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:1947: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:1920: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:1949: more undefined references to `__aarch64_ldadd8_relax' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `genClientAddrString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:2706: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `formatAddr':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/connection.h:295: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `genClientAddrString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:2706: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `formatAddr':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/connection.h:295: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `genClientAddrString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:2706: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/connection.h:295: more undefined references to `snprintf' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `readQueryFromClient':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:2600: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:2666: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:2668: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `IOThreadMain':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:4139: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `addReplyVerbatim':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:1086: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `setDeferredAggregateLen':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:827: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:827: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:827: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/networking.c:827: more undefined references to `snprintf' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `string2ld':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:560: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:558: undefined reference to `__eqtf2'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:558: undefined reference to `__eqtf2'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:558: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `string2d':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:582: undefined reference to `__fpclassify'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `d2string':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:641: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:635: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:628: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:639: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:633: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:648: undefined reference to `fpconv_dtoa'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ld2string':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:793: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:797: undefined reference to `__gttf2'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:804: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:818: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:827: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `getTimeZone':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:994: undefined reference to `timezone'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:994: undefined reference to `timezone'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `dirRemove':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/util.c:1048: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `getLongDoubleFromObject':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/object.c:843: undefined reference to `__floatditf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/object.c:843: undefined reference to `__floatditf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `memoryCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/object.c:1590: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `scanCallback':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/db.c:818: undefined reference to `__extenddftf2'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rdbPipeReadHandler':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:1574: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `replicationGetSlaveName':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:83: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `formatAddr':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/connection.h:295: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `replicationGetSlaveName':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:85: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `replicationSetupSlaveForFullResync':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:724: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `masterTryPartialResynchronization':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:805: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:803: more undefined references to `snprintf' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sendBulkToSlave':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:1419: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:1448: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rdbPipeWriteHandler':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:1494: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `replicationSetupSlaveForFullResync':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:724: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `readSyncBulkPayload':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:1892: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:1963: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `slaveTryPartialResynchronization':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:2459: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `syncWithMaster':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/replication.c:2872: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `connGetInfo':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/connection.h:359: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rdbLoadProgressCallback':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/rdb.c:2921: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rdbReportError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/rdb.c:72: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rdbSaveDoubleValue':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/rdb.c:597: undefined reference to `fpconv_dtoa'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rdbSaveRio':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/rdb.c:1379: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rdbSave':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/rdb.c:1449: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `incrbyfloatCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_string.c:669: undefined reference to `__addtf3'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_string.c:670: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_string.c:670: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `hincrbyfloatCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_hash.c:669: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_hash.c:669: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_hash.c:687: undefined reference to `__addtf3'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_hash.c:688: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_hash.c:688: undefined reference to `__fpclassifyl'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/t_hash.c:681: undefined reference to `__floatditf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `getConfigReplicaOfOption':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/config.c:2916: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `getConfigLatencyTrackingInfoPercentilesOutputOption':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/config.c:2967: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `numericConfigGet':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/config.c:2211: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `updateMaxclients':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/config.c:2526: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rewriteConfigLatencyTrackingInfoPercentilesOutputOption':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/config.c:2989: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/config.c:562: more undefined references to `snprintf' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `memtest_test_linux_anonymous_maps':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:1926: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:1927: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:1928: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:1929: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:1930: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:1938: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `xorObjectDigest':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:207: undefined reference to `fpconv_dtoa'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:193: undefined reference to `fpconv_dtoa'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `debugCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:721: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:728: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:620: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:625: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:629: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/debug.c:634: more undefined references to `snprintf' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `lookupKeyByPattern':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sort.c:90: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `isValidAuxChar':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/cluster.c:188: undefined reference to `isalnum'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/cluster.c:188: undefined reference to `isalnum'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisReplicateCommandsCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:169: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisBreakpointCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:137: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:139: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `scriptingInit':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:184: undefined reference to `luaL_newstate'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:201: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:204: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:205: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:206: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:209: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:210: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:211: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:214: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:215: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:216: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:218: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:241: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:242: undefined reference to `lua_pcall'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:258: undefined reference to `lua_pushvalue'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:262: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `scriptingRelease':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:275: undefined reference to `lua_close'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:275: undefined reference to `lua_close'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:275: undefined reference to `lua_close'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:275: undefined reference to `lua_close'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaCreateFunction':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:444: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:454: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:456: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:446: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:450: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `evalGenericCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:496: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:499: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:500: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:537: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:501: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:517: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:518: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:530: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:506: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:511: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `scriptingRelease':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:275: undefined reference to `lua_close'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ldbReplParseCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:965: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:979: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ldbCatStackValueRec':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1042: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1108: undefined reference to `lua_topointer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1108: undefined reference to `lua_topointer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1051: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1059: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1073: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1074: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1089: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1074: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1077: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1078: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1056: undefined reference to `lua_toboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1042: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1108: undefined reference to `lua_topointer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1108: undefined reference to `lua_topointer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1051: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1059: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1073: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1074: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1089: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1074: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1077: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1078: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1056: undefined reference to `lua_toboolean'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisDebugCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:151: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ldbPrint':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1293: undefined reference to `lua_getstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1304: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1297: undefined reference to `lua_getlocal'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1313: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1311: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ldbPrintAll':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1325: undefined reference to `lua_getstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1336: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1328: undefined reference to `lua_getlocal'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1330: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ldbEval':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1396: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1397: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1399: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1411: undefined reference to `lua_pcall'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1417: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1396: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1412: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1417: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1400: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1401: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1396: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1396: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ldbRedis':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1427: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1438: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1439: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1440: undefined reference to `lua_gettable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1442: undefined reference to `lua_pushlstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1442: undefined reference to `lua_pushlstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1444: undefined reference to `lua_pcall'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1446: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ldbTrace':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1455: undefined reference to `lua_getstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1456: undefined reference to `lua_getinfo'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1457: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1455: undefined reference to `lua_getstack'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaLdbLineHook':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1623: undefined reference to `lua_getstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1624: undefined reference to `lua_getinfo'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/eval.c:1631: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `rioWriteBulkDouble':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/rio.c:517: undefined reference to `fpconv_dtoa'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `memtest':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/memtest.c:363: undefined reference to `ioctl'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `checkTHPEnabled':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/syscheck.c:180: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisAeWriteEvent':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:315: undefined reference to `redisAsyncHandleWrite'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisAeReadEvent':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:308: undefined reference to `redisAsyncHandleRead'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelEvent':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:681: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:686: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:681: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:686: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelRunPendingScripts':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:854: undefined reference to `environ'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:854: undefined reference to `environ'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `instanceLinkCloseConnection':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: more undefined references to `redisAsyncFree' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelPingReplyCallback':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2818: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelSendAuthIfNeeded':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2349: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2343: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelSetClientName':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2364: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2365: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelReceiveHelloMessages':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2996: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelSendHello':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:3037: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:3045: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelSendPing':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:3092: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelReconnectInstance':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2418: undefined reference to `redisAsyncConnectBind'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `instanceLinkCloseConnection':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelReconnectInstance':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2436: undefined reference to `redisAsyncSetConnectCallback'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2438: undefined reference to `redisAsyncSetDisconnectCallback'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2449: undefined reference to `redisAsyncConnectBind'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `instanceLinkCloseConnection':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelReconnectInstance':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2465: undefined reference to `redisAsyncSetConnectCallback'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2467: undefined reference to `redisAsyncSetDisconnectCallback'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2472: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `instanceLinkCloseConnection':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelSendPeriodicCommands':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:3157: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `instanceLinkCloseConnection':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:1052: undefined reference to `redisAsyncFree'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelAskMasterStateToOtherSentinels':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:4632: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelSendSlaveOf':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:4815: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:4821: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:4828: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:4840: undefined reference to `redisAsyncCommand'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:4848: more undefined references to `redisAsyncCommand' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `sentinelRefreshInstanceInfo':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2552: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2563: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/sentinel.c:2565: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `spt_clearenv':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:98: undefined reference to `environ'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:98: undefined reference to `environ'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `spt_init':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:192: undefined reference to `environ'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:192: undefined reference to `environ'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:236: undefined reference to `program_invocation_name'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:236: undefined reference to `program_invocation_name'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:241: undefined reference to `program_invocation_short_name'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:241: undefined reference to `program_invocation_short_name'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `spt_copyenv':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:112: undefined reference to `environ'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `setproctitle':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/setproctitle.c:289: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `hllCount':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/hyperloglog.c:1057: undefined reference to `__extenddftf2'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `fillCommandCDF':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/latency.c:475: undefined reference to `hdr_iter_log_init'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/latency.c:477: undefined reference to `hdr_iter_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/latency.c:477: undefined reference to `hdr_iter_next'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `latencyCommandGenSparkeline':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/latency.c:616: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/latency.c:612: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/latency.c:618: undefined reference to `snprintf'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/latency.c:614: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `consumeNewline':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/redis-check-aof.c:65: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/redis-check-aof.c:65: more undefined references to `snprintf' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `georadiusGeneric':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/geo.c:799: undefined reference to `__extenddftf2'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/geo.c:800: undefined reference to `__extenddftf2'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `geoposCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/geo.c:962: undefined reference to `__extenddftf2'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/geo.c:963: undefined reference to `__extenddftf2'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `lazyfreeFreeObject':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/lazyfree.c:14: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/lazyfree.c:15: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `lazyfreeFreeDatabase':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/lazyfree.c:28: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/lazyfree.c:29: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `lazyFreeLuaScripts':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/lazyfree.c:46: undefined reference to `__aarch64_ldadd8_relax'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o:/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/lazyfree.c:47: more undefined references to `__aarch64_ldadd8_relax' follow
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `moduleScanKeyCallback':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/module.c:10875: undefined reference to `__extenddftf2'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `moduleLogRaw':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/module.c:7471: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `moduleFreeCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/module.c:11943: undefined reference to `hdr_close'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `lolwutCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/lolwut.c:61: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `ACLCreateUnlinkedUser':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/acl.c:420: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `getTimeoutFromObjectOrReply':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/timeout.c:175: undefined reference to `__multf3'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/timeout.c:176: undefined reference to `__gttf2'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/timeout.c:180: undefined reference to `__fixtfdi'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `monotonicInit_posix':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/monotonic.c:151: undefined reference to `snprintf'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaProtectedTableError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1260: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1263: undefined reference to `luaL_error'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1265: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1268: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1269: undefined reference to `luaL_error'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1265: undefined reference to `lua_isnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1266: undefined reference to `luaL_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaNewIndexAllowList':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1288: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1291: undefined reference to `luaL_error'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1293: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1294: undefined reference to `luaL_error'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1296: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1299: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1327: undefined reference to `lua_rawset'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1296: undefined reference to `lua_isnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1297: undefined reference to `luaL_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redis_math_randomseed':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1551: undefined reference to `luaL_checkinteger'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redis_math_random':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1527: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1545: undefined reference to `luaL_error'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1533: undefined reference to `luaL_checkinteger'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1535: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1529: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1539: undefined reference to `luaL_checkinteger'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1540: undefined reference to `luaL_checkinteger'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1542: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1541: undefined reference to `luaL_argerror'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1534: undefined reference to `luaL_argerror'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Map':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:347: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:352: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:353: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:354: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:359: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:361: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Set':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:369: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:374: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:375: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:376: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:381: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:388: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:389: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:392: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisPcall':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1004: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1005: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1006: undefined reference to `lua_insert'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1007: undefined reference to `lua_pcall'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1019: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1009: undefined reference to `lua_remove'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1010: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1016: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1017: undefined reference to `lua_insert'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1019: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1011: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1012: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1013: undefined reference to `lua_replace'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaCreateArray':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1505: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1507: undefined reference to `lua_pushlstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1508: undefined reference to `lua_rawseti'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Null':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:482: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:487: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Double':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:514: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:519: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:520: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:521: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:522: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Bool':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:498: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:503: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Array':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:400: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:405: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:408: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:410: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Int':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:246: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:251: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_NullBulkString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:262: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:267: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_NullArray':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:277: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:282: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_VerbatimString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:438: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:443: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:444: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:445: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:446: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:447: undefined reference to `lua_pushlstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:448: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:449: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:450: undefined reference to `lua_pushlstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:451: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:452: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_BigNumber':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:463: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:468: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:469: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:470: undefined reference to `lua_pushlstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:471: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Status':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:310: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:315: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:316: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:317: undefined reference to `lua_pushlstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:318: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_BulkString':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:294: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:299: undefined reference to `lua_pushlstring'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSaveOnRegistry':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:160: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:162: undefined reference to `lua_pushlightuserdata'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:166: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:164: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:166: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaGetFromRegistry':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:173: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:174: undefined reference to `lua_gettable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:176: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:181: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:183: undefined reference to `lua_topointer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:187: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:177: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaPushErrorBuff':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:569: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:570: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:571: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:572: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:550: undefined reference to `strstr'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `redisProtocolToLuaType_Error':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:329: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:338: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:339: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:340: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisErrorReplyCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1074: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1074: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1080: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaLogCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1159: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1166: undefined reference to `lua_isnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1170: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaLogCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1183: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisSetReplCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1101: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisSetReplCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1111: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisSha1hexCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1036: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisSha1hexCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1046: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1048: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSetResp':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1198: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSetResp':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1205: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaMaskCountHook':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1568: undefined reference to `lua_sethook'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisReturnSingleFieldTable':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1060: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1060: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1065: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1066: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1067: undefined reference to `lua_pushvalue'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1068: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaArgsToRedisArgv':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:799: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:825: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:817: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:820: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:821: undefined reference to `fpconv_dtoa'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:844: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisAclCheckCmdPermissionsCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1145: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1143: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaError':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:587: undefined reference to `lua_error'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRedisGenericCommand':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:939: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:940: undefined reference to `lua_pushboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:941: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaGetStringSds':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1249: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1254: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSetErrorMetatable':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1281: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1282: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1283: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1284: undefined reference to `lua_setmetatable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSetAllowListProtection':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1339: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1340: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1341: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1342: undefined reference to `lua_setmetatable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSetTableProtectionRecursively':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1351: undefined reference to `lua_isreadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1356: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1358: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1359: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1360: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1362: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1365: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1360: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1369: undefined reference to `lua_getmetatable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1371: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterVersion':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1376: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1377: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1378: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1380: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1381: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1382: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterLogFunction':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1387: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1388: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1389: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1391: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1392: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1393: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1395: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1396: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1397: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1399: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1400: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1401: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1403: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1404: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1405: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterRedisAPI':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1409: undefined reference to `lua_pushvalue'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSetAllowListProtection':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1339: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1340: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1341: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1342: undefined reference to `lua_setmetatable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterRedisAPI':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1411: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaLoadLib':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_base'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_base'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_table'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_table'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_string'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_string'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_math'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_math'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_debug'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_debug'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_cjson'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_cjson'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_struct'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_struct'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_cmsgpack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_cmsgpack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_bit'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `luaopen_bit'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1219: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1220: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1221: undefined reference to `lua_call'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterRedisAPI':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1415: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1416: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1419: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1422: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1423: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1424: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1427: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1428: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1429: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterVersion':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1376: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1377: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1378: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1380: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1381: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1382: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterRedisAPI':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1436: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1437: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1438: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1441: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1442: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1443: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1446: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1447: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1448: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1449: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1450: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1451: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1454: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1455: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1456: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1458: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1459: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1460: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1462: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1463: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1464: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1466: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1467: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1468: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1470: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1471: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1472: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1474: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1475: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1476: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1479: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1480: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1481: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1484: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1487: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1489: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1490: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1491: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1493: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1494: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1495: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1497: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaExtractErrorInformation':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1582: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1590: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1591: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1594: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1596: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1597: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1600: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1602: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1603: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1606: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1608: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1609: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1612: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1604: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1598: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1592: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1583: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1610: undefined reference to `lua_toboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1612: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaReplyToRedisReply':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:598: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:600: undefined reference to `lua_checkstack'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:622: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:780: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:632: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:633: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:634: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:647: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:650: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:651: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:652: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:661: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:664: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:665: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:666: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:672: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:675: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:676: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:677: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:686: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:689: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:690: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:691: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:712: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:715: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:716: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:717: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:735: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:738: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:739: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:740: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:758: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:765: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:766: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:767: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:619: undefined reference to `lua_toboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:612: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:612: undefined reference to `lua_objlen'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:616: undefined reference to `lua_toboolean'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:636: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:693: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:694: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:695: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:710: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:769: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:654: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:668: undefined reference to `lua_tonumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:679: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:679: undefined reference to `lua_objlen'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:722: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:723: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:725: undefined reference to `lua_pushvalue'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:723: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:745: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:746: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:748: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:749: undefined reference to `lua_pushvalue'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:746: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:697: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:698: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:699: undefined reference to `lua_rawget'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:700: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:708: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:703: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:705: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSaveOnRegistry':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:160: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:162: undefined reference to `lua_pushlightuserdata'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:166: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaCallFunction':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1629: undefined reference to `lua_sethook'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1639: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1640: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1641: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1646: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1647: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1648: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1659: undefined reference to `lua_pcall'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1685: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1687: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1706: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaSaveOnRegistry':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:160: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:164: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:166: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaCallFunction':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1661: undefined reference to `lua_pcall'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1676: undefined reference to `lua_gc'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1714: undefined reference to `lua_sethook'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1626: undefined reference to `lua_sethook'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1688: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaMemory':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/script_lua.c:1721: undefined reference to `lua_gc'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaEngineFreeFunction':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:202: undefined reference to `luaL_unref'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaEngineCreate':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:109: undefined reference to `lua_getmetatable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:110: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:111: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:112: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:113: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:114: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:117: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:122: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:130: undefined reference to `lua_sethook'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:132: undefined reference to `lua_pcall'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:145: undefined reference to `lua_getmetatable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:146: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:147: undefined reference to `lua_getfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:148: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:149: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:150: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:152: undefined reference to `lua_sethook'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:118: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:119: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:136: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterFunctionReadArgs':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:385: undefined reference to `lua_gettop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterFunctionReadPositionalArgs':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:363: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:368: undefined reference to `luaL_ref'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterFunctionReadNamedArgs':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:277: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:283: undefined reference to `lua_pushnil'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:325: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:284: undefined reference to `lua_next'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:286: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:290: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:346: undefined reference to `luaL_unref'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:302: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:306: undefined reference to `luaL_ref'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:312: undefined reference to `lua_type'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterFunctionReadFlags':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:235: undefined reference to `lua_pushnumber'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:236: undefined reference to `lua_gettable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:237: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:242: undefined reference to `lua_isstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:247: undefined reference to `lua_tolstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:257: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:243: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterFunctionArgsDispose':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:223: undefined reference to `luaL_unref'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaRegisterFunctionReadFlags':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:239: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaEngineCall':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:173: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:174: undefined reference to `lua_gettable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:176: undefined reference to `lua_rawgeti'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:178: undefined reference to `lua_type'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:181: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaEngineLoadHook':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:89: undefined reference to `lua_sethook'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `luaEngineInitEngine':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:425: undefined reference to `luaL_newstate'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:430: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:431: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:433: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:434: undefined reference to `lua_pushcclosure'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:435: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:441: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:445: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:448: undefined reference to `lua_pushstring'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:466: undefined reference to `luaL_loadbuffer'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:467: undefined reference to `lua_pcall'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:468: undefined reference to `lua_settable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:470: undefined reference to `lua_pushvalue'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:473: undefined reference to `lua_settop'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:476: undefined reference to `lua_pushvalue'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:477: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:484: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:485: undefined reference to `lua_createtable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:486: undefined reference to `lua_pushvalue'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:487: undefined reference to `lua_setfield'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:488: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:489: undefined reference to `lua_setmetatable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:490: undefined reference to `lua_enablereadonlytable'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/function_lua.c:491: undefined reference to `lua_replace'
+aarch64-linux-musl-ld: apps/c/redis//redis-server.o: in function `main':
+/home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:7108: undefined reference to `strstr'
+aarch64-linux-musl-ld: /home/yanjuguang/OS/arceos/apps/c/redis/redis/src/server.c:7110: undefined reference to `strstr'
+make: *** [ulib/c_libax/build.mk:64: apps/c/redis//redis_qemu-virt-aarch64.elf] Error 1

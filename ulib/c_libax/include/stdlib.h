@@ -17,12 +17,10 @@ int rand(void);
 void srand(unsigned);
 long random(void);
 
-// #ifdef AX_CONFIG_ALLOC
 void *malloc(size_t size);
 void *calloc(size_t __nmemb, size_t __size);
 void *realloc(void *memblock, size_t size);
 void free(void *addr);
-// #endif
 
 double strtod(const char *__restrict__ __nptr, char **__restrict__ __endptr);
 long long strtoll(const char *__restrict__ __nptr, char **__restrict__ __endptr, int __base);
@@ -37,8 +35,6 @@ _Noreturn void exit(int __status);
 
 char *getenv(const char *name);
 
-// void qsort(void *__base, size_t __nmemb, size_t __size, int (*)(const void *, const void *)
-// __compar);
 void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
 
 long long llabs(long long __x);
