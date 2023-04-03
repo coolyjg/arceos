@@ -58,6 +58,8 @@ _Noreturn void abort(void)
     __builtin_unreachable();
 }
 
+char **__environ = 0;
+
 char *getenv(const char *name)
 {
 	size_t l = __strchrnul(name, '=') - name;
@@ -137,11 +139,9 @@ _Noreturn void exit(int __status)
     __builtin_unreachable();
 }
 
-// TODO
-long long llabs(long long __x)
+long long llabs(long long a)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	return a>0 ? a : -a;
 }
 
 // TODO
@@ -151,11 +151,19 @@ int mkostemp(char *__template, int __flags)
     return 0;
 }
 
-// TODO
-long long atoll(const char *__nptr)
+long long atoll(const char *s)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	long long n=0;
+	int neg=0;
+	while (isspace(*s)) s++;
+	switch (*s) {
+	case '-': neg=1;
+	case '+': s++;
+	}
+	/* Compute n as a negative number to avoid overflow on LLONG_MIN */
+	while (isdigit(*s))
+		n = 10*n - (*s++ - '0');
+	return neg ? n : -n;
 }
 
 // TODO
@@ -179,9 +187,7 @@ void srandom(unsigned int __seed)
     return;
 }
 
-// TODO
-int abs(int __x)
+int abs(int a)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	return a>0 ? a : -a;
 }

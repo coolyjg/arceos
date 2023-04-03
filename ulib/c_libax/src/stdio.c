@@ -98,16 +98,6 @@ static void printptr(uint64_t value)
     out(1, buf, i);
 }
 
-// int getchar()
-// {
-//     char byte = 0;
-//     if (1 == read(stdin, &byte, 1)) {
-//         return byte;
-//     } else {
-//         return EOF;
-//     }
-// }
-
 int fflush(int fd)
 {
     if (fd == 1)

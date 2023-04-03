@@ -36,4 +36,6 @@ char *strerror(int n);
 char *strpbrk(const char *__s, const char *__accept);
 char *strdup(const char *__s);
 
+char *__strchrnul(const char *s, int c);
+
 #endif // __STRING_H__

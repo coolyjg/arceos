@@ -228,3 +228,12 @@ int strncasecmp(const char *_l, const char *_r, size_t n)
 	for (; *l && *r && n && (*l == *r || tolower(*l) == tolower(*r)); l++, r++, n--);
 	return tolower(*l) - tolower(*r);
 }
+
+char *__strchrnul(const char *s, int c)
+{
+	c = (unsigned char)c;
+	if (!c) return (char *)s + strlen(s);
+    
+	for (; *s && *(unsigned char *)s != c; s++);
+	return (char *)s;
+}
