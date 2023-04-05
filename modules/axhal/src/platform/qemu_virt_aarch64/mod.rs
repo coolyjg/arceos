@@ -1,3 +1,5 @@
+use self::pl011::console_putchar;
+
 mod boot;
 mod generic_timer;
 mod pl011;
@@ -23,12 +25,15 @@ extern "C" {
 }
 
 pub(crate) fn platform_init(cpu_id: usize, _dtb: *const u8) {
-    crate::mem::clear_bss();
+    // crate::mem::clear_bss();
+    console_putchar('*' as u8);
     crate::arch::set_exception_vector_base(exception_vector_base as usize);
     crate::cpu::init_percpu(cpu_id, true);
     self::irq::init();
+    console_putchar('*' as u8);
     self::irq::init_percpu(cpu_id);
     self::pl011::init();
+    console_putchar('*' as u8);
     self::generic_timer::init();
 }
 

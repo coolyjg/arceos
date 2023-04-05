@@ -237,3 +237,9 @@ char *__strchrnul(const char *s, int c)
 	for (; *s && *(unsigned char *)s != c; s++);
 	return (char *)s;
 }
+
+char *strstr(const char *haystack, const char *needle)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

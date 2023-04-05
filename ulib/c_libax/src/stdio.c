@@ -198,6 +198,12 @@ int fprintf(int f, const char *restrict fmt, ...)
     return 0;
 }
 
+//TODO
+int getchar(void)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+}
+
 // TODO
 int vsnprintf(char *__restrict__ __s, unsigned long __maxlen, const char *__restrict__ __format,
               va_list __arg)
@@ -279,6 +285,20 @@ int fseek(FILE *__stream, long __off, int __whence)
 
 // TODO
 long ftello(FILE *__stream)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int snprintf(char *str, int size, const char *format, ...)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+char *tmpnam(char *)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

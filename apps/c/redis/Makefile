@@ -16,5 +16,6 @@ clean:
 	$(MAKE) -C $(REDIS_PATH)/deps/lua/src/ clean
 	rm -f redis-server.o
 	rm -f redis/src/redis-server.o
+	rm -f *.o
 
 .PHONY: all

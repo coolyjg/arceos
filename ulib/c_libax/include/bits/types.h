@@ -153,7 +153,9 @@ __STD_TYPE __OFF_T_TYPE __off_t;             /* Type of file sizes and offsets. 
 __STD_TYPE __OFF64_T_TYPE __off64_t;         /* Type of file sizes and offsets (LFS).  */
 __STD_TYPE __PID_T_TYPE __pid_t;             /* Type of process identifications.  */
 __STD_TYPE __FSID_T_TYPE __fsid_t;           /* Type of file system IDs.  */
+#ifndef _SIGNAL_H
 __STD_TYPE __CLOCK_T_TYPE __clock_t;         /* Type of CPU usage counts.  */
+#endif
 __STD_TYPE __RLIM_T_TYPE __rlim_t;           /* Type for resource measurement.  */
 __STD_TYPE __RLIM64_T_TYPE __rlim64_t;       /* Type for resource measurement (LFS).  */
 __STD_TYPE __ID_T_TYPE __id_t;               /* General type for IDs.  */

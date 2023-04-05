@@ -75,6 +75,8 @@ typedef struct _IO_FILE FILE;
 #define stdout 1
 #define stderr 2
 
+#define L_tmpnam 20
+
 #define EOF (-1)
 
 #define BUFSIZ 1024
@@ -107,7 +109,7 @@ int fprintf(int f, const char *fmt, ...);
 #define SEEK_CUR 1
 #define SEEK_END 2
 
-int getchar();
+int getchar(void);
 int putchar(int);
 int puts(const char *s);
 
@@ -137,5 +139,7 @@ int fileno(FILE *__stream);
 int feof(FILE *__stream);
 int fseek(FILE *__stream, long __off, int __whence);
 long ftello(FILE *__stream);
+
+char *tmpnam(char *);
 
 #endif // __STDIO_H__

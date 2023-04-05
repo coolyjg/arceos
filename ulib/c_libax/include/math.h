@@ -65,6 +65,8 @@ static __inline unsigned long long __DOUBLE_BITS(double __f)
      : sizeof(x) == sizeof(double) ? (__DOUBLE_BITS(x) & -1ULL >> 1) < 0x7ffULL << 52 \
                                    : __fpclassifyl(x) > FP_INFINITE)
 
+typedef double double_t;
+
 #define predict_false(x) (x)
 
 long double roundl(long double x);

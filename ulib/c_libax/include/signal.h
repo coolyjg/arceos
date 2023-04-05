@@ -33,7 +33,9 @@ typedef union __sigval __sigval_t;
 
 typedef int __pid_t;
 typedef unsigned int __uid_t;
+#ifndef _BITS_TYPES_H
 typedef long __clock_t;
+#endif
 #define __SI_CLOCK_T __clock_t
 
 #define __SI_MAX_SIZE 128

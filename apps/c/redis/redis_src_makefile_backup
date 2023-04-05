@@ -14,6 +14,9 @@
 
 # This is a taylored redis-server makefile
 
+CC = aarch64-linux-musl-gcc
+CFLAGS = -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I/home/yanjuguang/OS/arceos/ulib/c_libax/libax_bindings -O3
+
 release_hdr := $(shell sh -c './mkreleasehdr.sh')
 uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
 uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
@@ -30,27 +33,27 @@ STD=-pedantic -DREDIS_STATIC=''
 
 # Use -Wno-c11-extensions on clang, either where explicitly used or on
 # platforms we can assume it's being used.
-ifneq (,$(findstring clang,$(CC)))
-  STD+=-Wno-c11-extensions
-else
-ifneq (,$(findstring FreeBSD,$(uname_S)))
-  STD+=-Wno-c11-extensions
-endif
-endif
+# ifneq (,$(findstring clang,$(CC)))
+#   STD+=-Wno-c11-extensions
+# else
+# ifneq (,$(findstring FreeBSD,$(uname_S)))
+#   STD+=-Wno-c11-extensions
+# endif
+# endif
 WARN=-Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations
 OPT=$(OPTIMIZATION)
 
 # Detect if the compiler supports C11 _Atomic.
 # NUMBER_SIGN_CHAR is a workaround to support both GNU Make 4.3 and older versions.
 NUMBER_SIGN_CHAR := \#
-C11_ATOMIC := $(shell sh -c 'echo "$(NUMBER_SIGN_CHAR)include <stdatomic.h>" > foo.c; \
-	$(CC) -std=c11 -c foo.c -o foo.o > /dev/null 2>&1; \
-	if [ -f foo.o ]; then echo "yes"; rm foo.o; fi; rm foo.c')
-ifeq ($(C11_ATOMIC),yes)
-	STD+=-std=c11
-else
-	STD+=-std=c99
-endif
+# C11_ATOMIC := $(shell sh -c 'echo "$(NUMBER_SIGN_CHAR)include <stdatomic.h>" > foo.c; \
+# 	$(CC) -std=c11 -c foo.c -o foo.o > /dev/null 2>&1; \
+# 	if [ -f foo.o ]; then echo "yes"; rm foo.o; fi; rm foo.c')
+# ifeq ($(C11_ATOMIC),yes)
+# 	STD+=-std=c11
+# else
+# 	STD+=-std=c99
+# endif
 
 PREFIX?=/usr/local
 INSTALL_BIN=$(PREFIX)/bin
@@ -68,9 +71,9 @@ ifeq ($(uname_S),Linux)
 endif
 
 # To get ARM stack traces if Redis crashes we need a special C flag.
-ifneq (,$(filter aarch64 armv%,$(uname_M)))
-        CFLAGS+=-funwind-tables
-endif
+# ifneq (,$(filter aarch64 armv%,$(uname_M)))
+#         CFLAGS+=-funwind-tables
+# endif
 
 # Backwards compatibility for selecting an allocator
 ifeq ($(USE_TCMALLOC),yes)
@@ -89,26 +92,26 @@ ifeq ($(USE_JEMALLOC),no)
 	MALLOC=libc
 endif
 
-ifdef SANITIZER
-ifeq ($(SANITIZER),address)
-	MALLOC=libc
-	CFLAGS+=-fsanitize=address -fno-sanitize-recover=all -fno-omit-frame-pointer
-	LDFLAGS+=-fsanitize=address
-else
-ifeq ($(SANITIZER),undefined)
-	MALLOC=libc
-	CFLAGS+=-fsanitize=undefined -fno-sanitize-recover=all -fno-omit-frame-pointer
-	LDFLAGS+=-fsanitize=undefined
-else
-ifeq ($(SANITIZER),thread)
-	CFLAGS+=-fsanitize=thread -fno-sanitize-recover=all -fno-omit-frame-pointer
-	LDFLAGS+=-fsanitize=thread
-else
-    $(error "unknown sanitizer=${SANITIZER}")
-endif
-endif
-endif
-endif
+# ifdef SANITIZER
+# ifeq ($(SANITIZER),address)
+# 	MALLOC=libc
+# 	CFLAGS+=-fsanitize=address -fno-sanitize-recover=all -fno-omit-frame-pointer
+# 	LDFLAGS+=-fsanitize=address
+# else
+# ifeq ($(SANITIZER),undefined)
+# 	MALLOC=libc
+# 	CFLAGS+=-fsanitize=undefined -fno-sanitize-recover=all -fno-omit-frame-pointer
+# 	LDFLAGS+=-fsanitize=undefined
+# else
+# ifeq ($(SANITIZER),thread)
+# 	CFLAGS+=-fsanitize=thread -fno-sanitize-recover=all -fno-omit-frame-pointer
+# 	LDFLAGS+=-fsanitize=thread
+# else
+#     $(error "unknown sanitizer=${SANITIZER}")
+# endif
+# endif
+# endif
+# endif
 
 # Override default settings if possible
 -include .make-settings
@@ -123,104 +126,104 @@ ifneq (,$(findstring armv,$(uname_M)))
         FINAL_LIBS+=-latomic
 endif
 
-ifeq ($(uname_S),SunOS)
-	# SunOS
-	ifeq ($(findstring -m32,$(FINAL_CFLAGS)),)
-		CFLAGS+=-m64
-	endif
-	ifeq ($(findstring -m32,$(FINAL_LDFLAGS)),)
-		LDFLAGS+=-m64
-	endif
-	DEBUG=-g
-	DEBUG_FLAGS=-g
-	export CFLAGS LDFLAGS DEBUG DEBUG_FLAGS
-	INSTALL=cp -pf
-	FINAL_CFLAGS+= -D__EXTENSIONS__ -D_XPG6
-	FINAL_LIBS+= -ldl -lnsl -lsocket -lresolv -lpthread -lrt
-	ifeq ($(USE_BACKTRACE),yes)
-	    FINAL_CFLAGS+= -DUSE_BACKTRACE
-	endif
-else
-ifeq ($(uname_S),Darwin)
-	# Darwin
-	FINAL_LIBS+= -ldl
-	# Homebrew's OpenSSL is not linked to /usr/local to avoid
-	# conflicts with the system's LibreSSL installation so it
-	# must be referenced explicitly during build.
-ifeq ($(uname_M),arm64)
-	# Homebrew arm64 uses /opt/homebrew as HOMEBREW_PREFIX
-	OPENSSL_PREFIX?=/opt/homebrew/opt/openssl
-else
-	# Homebrew x86/ppc uses /usr/local as HOMEBREW_PREFIX
-	OPENSSL_PREFIX?=/usr/local/opt/openssl
-endif
-else
-ifeq ($(uname_S),AIX)
-        # AIX
-        FINAL_LDFLAGS+= -Wl,-bexpall
-        FINAL_LIBS+=-ldl -pthread -lcrypt -lbsd
-else
-ifeq ($(uname_S),OpenBSD)
-	# OpenBSD
-	FINAL_LIBS+= -lpthread
-	ifeq ($(USE_BACKTRACE),yes)
-	    FINAL_CFLAGS+= -DUSE_BACKTRACE -I/usr/local/include
-	    FINAL_LDFLAGS+= -L/usr/local/lib
-	    FINAL_LIBS+= -lexecinfo
-    	endif
+# ifeq ($(uname_S),SunOS)
+# 	# SunOS
+# 	ifeq ($(findstring -m32,$(FINAL_CFLAGS)),)
+# 		CFLAGS+=-m64
+# 	endif
+# 	ifeq ($(findstring -m32,$(FINAL_LDFLAGS)),)
+# 		LDFLAGS+=-m64
+# 	endif
+# 	DEBUG=-g
+# 	DEBUG_FLAGS=-g
+# 	export CFLAGS LDFLAGS DEBUG DEBUG_FLAGS
+# 	INSTALL=cp -pf
+# 	FINAL_CFLAGS+= -D__EXTENSIONS__ -D_XPG6
+# 	FINAL_LIBS+= -ldl -lnsl -lsocket -lresolv -lpthread -lrt
+# 	ifeq ($(USE_BACKTRACE),yes)
+# 	    FINAL_CFLAGS+= -DUSE_BACKTRACE
+# 	endif
+# else
+# ifeq ($(uname_S),Darwin)
+# 	# Darwin
+# 	FINAL_LIBS+= -ldl
+# 	# Homebrew's OpenSSL is not linked to /usr/local to avoid
+# 	# conflicts with the system's LibreSSL installation so it
+# 	# must be referenced explicitly during build.
+# ifeq ($(uname_M),arm64)
+# 	# Homebrew arm64 uses /opt/homebrew as HOMEBREW_PREFIX
+# 	OPENSSL_PREFIX?=/opt/homebrew/opt/openssl
+# else
+# 	# Homebrew x86/ppc uses /usr/local as HOMEBREW_PREFIX
+# 	OPENSSL_PREFIX?=/usr/local/opt/openssl
+# endif
+# else
+# ifeq ($(uname_S),AIX)
+#         # AIX
+#         FINAL_LDFLAGS+= -Wl,-bexpall
+#         FINAL_LIBS+=-ldl -pthread -lcrypt -lbsd
+# else
+# ifeq ($(uname_S),OpenBSD)
+# 	# OpenBSD
+# 	FINAL_LIBS+= -lpthread
+# 	ifeq ($(USE_BACKTRACE),yes)
+# 	    FINAL_CFLAGS+= -DUSE_BACKTRACE -I/usr/local/include
+# 	    FINAL_LDFLAGS+= -L/usr/local/lib
+# 	    FINAL_LIBS+= -lexecinfo
+#     	endif
 
-else
-ifeq ($(uname_S),NetBSD)
-	# NetBSD
-	FINAL_LIBS+= -lpthread
-	ifeq ($(USE_BACKTRACE),yes)
-	    FINAL_CFLAGS+= -DUSE_BACKTRACE -I/usr/pkg/include
-	    FINAL_LDFLAGS+= -L/usr/pkg/lib
-	    FINAL_LIBS+= -lexecinfo
-    	endif
-else
-ifeq ($(uname_S),FreeBSD)
-	# FreeBSD
-	FINAL_LIBS+= -lpthread -lexecinfo
-else
-ifeq ($(uname_S),DragonFly)
-	# DragonFly
-	FINAL_LIBS+= -lpthread -lexecinfo
-else
-ifeq ($(uname_S),OpenBSD)
-	# OpenBSD
-	FINAL_LIBS+= -lpthread -lexecinfo
-else
-ifeq ($(uname_S),NetBSD)
-	# NetBSD
-	FINAL_LIBS+= -lpthread -lexecinfo
-else
-ifeq ($(uname_S),Haiku)
-	# Haiku
-	FINAL_CFLAGS+= -DBSD_SOURCE
-	FINAL_LDFLAGS+= -lbsd -lnetwork
-	FINAL_LIBS+= -lpthread
-else
-	# All the other OSes (notably Linux)
-	FINAL_LDFLAGS+= -rdynamic
-	FINAL_LIBS+=-ldl -pthread -lrt
-endif
-endif
-endif
-endif
-endif
-endif
-endif
-endif
-endif
-endif
+# else
+# ifeq ($(uname_S),NetBSD)
+# 	# NetBSD
+# 	FINAL_LIBS+= -lpthread
+# 	ifeq ($(USE_BACKTRACE),yes)
+# 	    FINAL_CFLAGS+= -DUSE_BACKTRACE -I/usr/pkg/include
+# 	    FINAL_LDFLAGS+= -L/usr/pkg/lib
+# 	    FINAL_LIBS+= -lexecinfo
+#     	endif
+# else
+# ifeq ($(uname_S),FreeBSD)
+# 	# FreeBSD
+# 	FINAL_LIBS+= -lpthread -lexecinfo
+# else
+# ifeq ($(uname_S),DragonFly)
+# 	# DragonFly
+# 	FINAL_LIBS+= -lpthread -lexecinfo
+# else
+# ifeq ($(uname_S),OpenBSD)
+# 	# OpenBSD
+# 	FINAL_LIBS+= -lpthread -lexecinfo
+# else
+# ifeq ($(uname_S),NetBSD)
+# 	# NetBSD
+# 	FINAL_LIBS+= -lpthread -lexecinfo
+# else
+# ifeq ($(uname_S),Haiku)
+# 	# Haiku
+# 	FINAL_CFLAGS+= -DBSD_SOURCE
+# 	FINAL_LDFLAGS+= -lbsd -lnetwork
+# 	FINAL_LIBS+= -lpthread
+# else
+# 	# All the other OSes (notably Linux)
+# 	FINAL_LDFLAGS+= -rdynamic
+# 	FINAL_LIBS+=-ldl -pthread -lrt
+# endif
+# endif
+# endif
+# endif
+# endif
+# endif
+# endif
+# endif
+# endif
+# endif
 
-ifdef OPENSSL_PREFIX
-	OPENSSL_CFLAGS=-I$(OPENSSL_PREFIX)/include
-	OPENSSL_LDFLAGS=-L$(OPENSSL_PREFIX)/lib
-	# Also export OPENSSL_PREFIX so it ends up in deps sub-Makefiles
-	export OPENSSL_PREFIX
-endif
+# ifdef OPENSSL_PREFIX
+# 	OPENSSL_CFLAGS=-I$(OPENSSL_PREFIX)/include
+# 	OPENSSL_LDFLAGS=-L$(OPENSSL_PREFIX)/lib
+# 	# Also export OPENSSL_PREFIX so it ends up in deps sub-Makefiles
+# 	export OPENSSL_PREFIX
+# endif
 
 # Include paths to dependencies
 FINAL_CFLAGS+= -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv
@@ -252,21 +255,21 @@ ifeq ($(BUILD_WITH_SYSTEMD),yes)
 	FINAL_CFLAGS+= -DHAVE_LIBSYSTEMD
 endif
 
-ifeq ($(MALLOC),tcmalloc)
-	FINAL_CFLAGS+= -DUSE_TCMALLOC
-	FINAL_LIBS+= -ltcmalloc
-endif
+# ifeq ($(MALLOC),tcmalloc)
+# 	FINAL_CFLAGS+= -DUSE_TCMALLOC
+# 	FINAL_LIBS+= -ltcmalloc
+# endif
 
-ifeq ($(MALLOC),tcmalloc_minimal)
-	FINAL_CFLAGS+= -DUSE_TCMALLOC
-	FINAL_LIBS+= -ltcmalloc_minimal
-endif
+# ifeq ($(MALLOC),tcmalloc_minimal)
+# 	FINAL_CFLAGS+= -DUSE_TCMALLOC
+# 	FINAL_LIBS+= -ltcmalloc_minimal
+# endif
 
-ifeq ($(MALLOC),jemalloc)
-	DEPENDENCY_TARGETS+= jemalloc
-	FINAL_CFLAGS+= -DUSE_JEMALLOC -I../deps/jemalloc/include
-	FINAL_LIBS := ../deps/jemalloc/lib/libjemalloc.a $(FINAL_LIBS)
-endif
+# ifeq ($(MALLOC),jemalloc)
+# 	DEPENDENCY_TARGETS+= jemalloc
+# 	FINAL_CFLAGS+= -DUSE_JEMALLOC -I../deps/jemalloc/include
+# 	FINAL_LIBS := ../deps/jemalloc/lib/libjemalloc.a $(FINAL_LIBS)
+# endif
 
 # LIBSSL & LIBCRYPTO
 LIBSSL_LIBS=
@@ -341,16 +344,21 @@ else
 endif
 
 REDIS_SERVER_NAME=redis-server$(PROG_SUFFIX)
+REDIS_SERVER_OBJ_ALL=redis-server.o
+REDIS_SERVER_LIB = redis.a
 REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o eval.o bio.o rio.o rand.o memtest.o syscheck.o crcspeed.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.o localtime.o lolwut.o lolwut5.o lolwut6.o acl.o tracking.o socket.o tls.o sha256.o timeout.o setcpuaffinity.o monotonic.o mt19937-64.o resp_parser.o call_reply.o script_lua.o script.o functions.o function_lua.o $(COMMANDS_FILENAME).o strl.o connection.o unix.o logreqres.o
 ALL_SOURCES=$(sort $(patsubst %.o,%.c,$(REDIS_SERVER_OBJ)))
 
-all: $(REDIS_SERVER_NAME) 
+all: $(REDIS_SERVER_NAME)
+# all: $(REDIS_SERVER_LIB)
 	@echo ""
 	@echo "Hint: It's a good idea to run 'make test' ;)"
 	@echo ""
 
+
 Makefile.dep:
-	-$(REDIS_CC) -MM $(ALL_SOURCES) > Makefile.dep 2> /dev/null || true
+	-$(CC) $(CFLAGS) -MM $(ALL_SOURCES) > Makefile.dep 2> /dev/null || true
+#	-$(REDIS_CC) $(CFLAGS) -MM $(ALL_SOURCES) > Makefile.dep 2> /dev/null || true
 
 ifeq (0, $(words $(findstring $(MAKECMDGOALS), $(NODEPS))))
 -include Makefile.dep
@@ -388,9 +396,21 @@ ifneq ($(strip $(PREV_FINAL_LDFLAGS)), $(strip $(FINAL_LDFLAGS)))
 .make-prerequisites: persist-settings
 endif
 
+AR = aarch64-linux-musl-ar
+
 # redis-server
 $(REDIS_SERVER_NAME): $(REDIS_SERVER_OBJ)
-	$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a $(FINAL_LIBS)
+	@echo "================="
+	$(REDIS_LD) $(LDFLAGS) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a $(FINAL_LIBS)
+
+$(REDIS_SERVER_LIB): $(REDIS_SERVER_OBJ)
+	@echo "*****************"
+	$(AR) crs $@ $^
+
+# $(REDIS_SERVER_OBJ_ALL): $(REDIS_SERVER_OBJ)
+# 	@echo "------------------"
+# 	$(REDIS_LD) -r -o $@ $^
+#	$(REDIS_CC) $(CFLAGS) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a $(FINAL_LIBS)
 
 DEP = $(REDIS_SERVER_OBJ:%.o=%.d)
 -include $(DEP)
@@ -398,8 +418,11 @@ DEP = $(REDIS_SERVER_OBJ:%.o=%.d)
 # Because the jemalloc.h header is generated as a part of the jemalloc build,
 # building it should complete before building any other object. Instead of
 # depending on a single artifact, build all dependencies first.
+# %.o: %.c .make-prerequisites
+# 	$(REDIS_CC) $(CFLAGS) -MMD -o $@ -c $<
+
 %.o: %.c .make-prerequisites
-	$(REDIS_CC) -MMD -o $@ -c $<
+	$(CC) $(CFLAGS) $(FINAL_CFLAGS) -o $@ -c $<
 
 # The file commands.c is checked in and doesn't normally need to be rebuilt. It
 # is built only if python is available and its prereqs are modified.
@@ -409,7 +432,7 @@ $(COMMANDS_FILENAME).c: commands/*.json ../utils/generate-command-code.py
 endif
 
 clean:
-	rm -rf $(REDIS_SERVER_NAME) $(REDIS_SENTINEL_NAME) $(REDIS_CLI_NAME) $(REDIS_BENCHMARK_NAME) $(REDIS_CHECK_RDB_NAME) $(REDIS_CHECK_AOF_NAME) *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep *.so
+	rm -rf $(REDIS_SERVER_NAME) $(REDIS_SERVER_OBJ_ALL) *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep *.so
 	rm -f $(DEP)
 
 .PHONY: clean
