@@ -2,6 +2,7 @@
 #define _PTHREAD_H 1
 
 #include <stddef.h>
+#include <locale.h>
 
 typedef unsigned long int pthread_t;
 enum {
@@ -126,6 +127,60 @@ typedef union {
     char __size[__SIZEOF_PTHREAD_MUTEXATTR_T];
     int __align;
 } pthread_mutexattr_t;
+
+struct pthread {
+	/* Part 1 -- these fields may be external or
+	 * internal (accessed via asm) ABI. Do not change. */
+	struct pthread *self;
+#ifndef TLS_ABOVE_TP
+	uintptr_t *dtv;
+#endif
+	struct pthread *prev, *next; /* non-ABI */
+	uintptr_t sysinfo;
+#ifndef TLS_ABOVE_TP
+#ifdef CANARY_PAD
+	uintptr_t canary_pad;
+#endif
+	uintptr_t canary;
+#endif
+
+	/* Part 2 -- implementation details, non-ABI. */
+	int tid;
+	int errno_val;
+	volatile int detach_state;
+	volatile int cancel;
+	volatile unsigned char canceldisable, cancelasync;
+	unsigned char tsd_used:1;
+	unsigned char dlerror_flag:1;
+	unsigned char *map_base;
+	size_t map_size;
+	void *stack;
+	size_t stack_size;
+	size_t guard_size;
+	void *result;
+	struct __ptcb *cancelbuf;
+	void **tsd;
+	struct {
+		volatile void *volatile head;
+		long off;
+		volatile void *volatile pending;
+	} robust_list;
+	int h_errno_val;
+	volatile int timer_id;
+	locale_t locale;
+	volatile int killlock[1];
+	char *dlerror_buf;
+	void *stdio_locks;
+
+	/* Part 3 -- the positions of these fields relative to
+	 * the end of the structure is external and internal ABI. */
+#ifdef TLS_ABOVE_TP
+	uintptr_t canary;
+	uintptr_t *dtv;
+#endif
+};
+
+struct pthread* __pthread_self(void);
 
 int pthread_mutex_init(pthread_mutex_t *__restrict __mutex,
                        const pthread_mutexattr_t *__restrict __attr);

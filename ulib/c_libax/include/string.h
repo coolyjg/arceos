@@ -28,9 +28,6 @@ int strcoll(const char *__s1, const char *__s2);
 size_t strcspn(const char *s1, const char *s2);
 int strcasecmp(const char *__s1, const char *__s2);
 
-char *strrchr(const char *str, int c);
-char *strchr(const char *str, int c);
-
 char *strerror(int n);
 
 char *strpbrk(const char *__s, const char *__accept);

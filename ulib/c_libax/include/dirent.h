@@ -1,9 +1,33 @@
 #ifndef _DIRENT_H
 #define _DIRENT_H
 
+struct __dirstream
+{
+	long long tell;
+	int fd;
+	int buf_pos;
+	int buf_end;
+	volatile int lock[1];
+	/* Any changes to this struct must preserve the property:
+	 * offsetof(struct __dirent, buf) % sizeof(off_t) == 0 */
+	char buf[2048];
+};
+
 typedef struct __dirstream DIR;
 
 #include <sys/types.h>
+
+#define DT_UNKNOWN 0
+#define DT_FIFO 1
+#define DT_CHR 2
+#define DT_DIR 4
+#define DT_BLK 6
+#define DT_REG 8
+#define DT_LNK 10
+#define DT_SOCK 12
+#define DT_WHT 14
+#define IFTODT(x) ((x)>>12 & 017)
+#define DTTOIF(x) ((x)<<12)
 
 struct dirent {
     ino_t d_ino;

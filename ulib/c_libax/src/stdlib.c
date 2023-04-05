@@ -98,11 +98,10 @@ unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__
     return 0;
 }
 
-// TODO
+//TODO
 long random(void)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return (long)ax_rand_u32()
 }
 
 // TODO
@@ -180,11 +179,9 @@ int unsetenv(const char *__name)
     return 0;
 }
 
-// TODO
-void srandom(unsigned int __seed)
+void srandom(unsigned int s)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return;
+    ax_srand(s)
 }
 
 int abs(int a)

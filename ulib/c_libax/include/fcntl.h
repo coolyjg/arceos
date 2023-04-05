@@ -674,4 +674,7 @@ enum {
 #define _SC_SIGSTKSZ _SC_SIGSTKSZ
 };
 
+#define AT_FDCWD (-100)
+#define AT_EMPTY_PATH 0x1000
+
 #endif

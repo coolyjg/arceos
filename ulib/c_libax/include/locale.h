@@ -37,6 +37,16 @@ struct lconv {
     char int_n_sign_posn;
 };
 
+struct __locale_map;
+
+struct __locale_struct {
+	const struct __locale_map *cat[6];
+};
+
+typedef struct __locale_struct * locale_t;
+
 char *setlocale(int __category, const char *__locale);
+
+#define CURRENT_LOCALE (__pthread_self()->locale)
 
 #endif

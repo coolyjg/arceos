@@ -19,8 +19,6 @@ typedef __suseconds_t suseconds_t;
 
 #include <sys/select.h>
 
-// int gettimeofday(struct timeval *__restrict__ tv, struct timezone *__restrict__ tz);
-
 struct itimerval {
     /* Value to put into `it_value' when the timer expires.  */
     struct timeval it_interval;

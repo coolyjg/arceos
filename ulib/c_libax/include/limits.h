@@ -19,6 +19,8 @@
 #define LLONG_MAX  0x7fffffffffffffffLL
 #define ULLONG_MAX (2ULL * LLONG_MAX + 1)
 
+#define PTHREAD_STACK_MIN 2048
+
 #define PATH_MAX  4096
 #define SSIZE_MAX LONG_MAX
 

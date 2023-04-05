@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 typedef long time_t;
+#define CLOCK_REALTIME           0
 
 #define CLOCKS_PER_SEC 1000000L
 

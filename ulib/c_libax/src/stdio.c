@@ -262,18 +262,15 @@ int sscanf(const char *__restrict__ __s, const char *__restrict__ __format, ...)
     return 0;
 }
 
-// TODO
-int fileno(FILE *__stream)
+int fileno(FILE *f)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return f->fd;
 }
 
-// TODO
 int feof(FILE *__stream)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    int ret = !!(f->flags & F_EOF);
+    return ret;
 }
 
 // TODO

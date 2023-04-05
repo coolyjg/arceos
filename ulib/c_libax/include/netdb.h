@@ -2,6 +2,7 @@
 #define _NETDB_H
 
 #include "sys/socket.h"
+#include "netinet/in.h"
 
 struct addrinfo {
     int ai_flags;             /* Input flags.  */
@@ -12,6 +13,16 @@ struct addrinfo {
     struct sockaddr *ai_addr; /* Socket address for socket.  */
     char *ai_canonname;       /* Canonical name for service location.  */
     struct addrinfo *ai_next; /* Pointer to next in list.  */
+};
+
+struct aibuf {
+	struct addrinfo ai;
+	union sa {
+		struct sockaddr_in sin;
+		struct sockaddr_in6 sin6;
+	} sa;
+	volatile int lock[1];
+	short slot, ref;
 };
 
 int getaddrinfo(const char *__restrict__ __name, const char *__restrict__ __service,

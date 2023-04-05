@@ -98,97 +98,6 @@ enum {
 #define SI_KERNEL   SI_KERNEL
 };
 
-// TODO: this struct may not be musl-like
-//  typedef struct
-//    {
-//      int si_signo;		/* Signal number.  */
-//  #if __SI_ERRNO_THEN_CODE
-//      int si_errno;		/* If non-zero, an errno value associated with
-//  				   this signal, as defined in <errno.h>.  */
-//      int si_code;		/* Signal code.  */
-//  #else
-//      int si_code;
-//      int si_errno;
-//  #endif
-//  #if __WORDSIZE == 64
-//      int __pad0;			/* Explicit padding.  */
-//  #endif
-
-//     union
-//       {
-// 	int _pad[__SI_PAD_SIZE];
-
-// 	 /* kill().  */
-// 	struct
-// 	  {
-// 	    __pid_t si_pid;	/* Sending process ID.  */
-// 	    __uid_t si_uid;	/* Real user ID of sending process.  */
-// 	  } _kill;
-
-// 	/* POSIX.1b timers.  */
-// 	struct
-// 	  {
-// 	    int si_tid;		/* Timer ID.  */
-// 	    int si_overrun;	/* Overrun count.  */
-// 	    __sigval_t si_sigval;	/* Signal value.  */
-// 	  } _timer;
-
-// 	/* POSIX.1b signals.  */
-// 	struct
-// 	  {
-// 	    __pid_t si_pid;	/* Sending process ID.  */
-// 	    __uid_t si_uid;	/* Real user ID of sending process.  */
-// 	    __sigval_t si_sigval;	/* Signal value.  */
-// 	  } _rt;
-
-// 	/* SIGCHLD.  */
-// 	struct
-// 	  {
-// 	    __pid_t si_pid;	/* Which child.	 */
-// 	    __uid_t si_uid;	/* Real user ID of sending process.  */
-// 	    int si_status;	/* Exit value or signal.  */
-// 	    __SI_CLOCK_T si_utime;
-// 	    __SI_CLOCK_T si_stime;
-// 	  } _sigchld;
-
-// 	/* SIGILL, SIGFPE, SIGSEGV, SIGBUS.  */
-// 	struct
-// 	  {
-// 	    void *si_addr;	    /* Faulting insn/memory ref.  */
-// 	    __SI_SIGFAULT_ADDL
-// 	    short int si_addr_lsb;  /* Valid LSB of the reported address.  */
-// 	    union
-// 	      {
-// 		/* used when si_code=SEGV_BNDERR */
-// 		struct
-// 		  {
-// 		    void *_lower;
-// 		    void *_upper;
-// 		  } _addr_bnd;
-// 		/* used when si_code=SEGV_PKUERR */
-// 		__uint32_t _pkey;
-// 	      } _bounds;
-// 	  } _sigfault;
-
-// 	/* SIGPOLL.  */
-// 	struct
-// 	  {
-// 	    __SI_BAND_TYPE si_band;	/* Band event for SIGPOLL.  */
-// 	    int si_fd;
-// 	  } _sigpoll;
-
-// 	/* SIGSYS.  */
-// #if __SI_HAVE_SIGSYS
-// 	struct
-// 	  {
-// 	    void *_call_addr;	/* Calling user insn.  */
-// 	    int _syscall;	/* Triggering system call number.  */
-// 	    unsigned int _arch; /* AUDIT_ARCH_* of syscall.  */
-// 	  } _sigsys;
-// #endif
-//       } _sifields;
-//   } siginfo_t __SI_ALIGNMENT;
-
 union sigval {
     int sival_int;
     void *sival_ptr;
@@ -348,9 +257,8 @@ struct sigaction {
 #endif
 
 typedef void (*sighandler_t)(int);
-// typedef struct __sigset_t { unsigned long __bits[128/sizeof(long)]; } sigset_t;
 
-sighandler_t signal(int __sig, sighandler_t __handler);
+void (*signal(int, void (*)(int)))(int);
 int sigemptyset(sigset_t *__set);
 int sigaction(int __sig, const struct sigaction *__restrict__ __act,
               struct sigaction *__restrict__ __oact);

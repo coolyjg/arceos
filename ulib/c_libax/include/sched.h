@@ -7,8 +7,6 @@ typedef struct cpu_set_t {
     unsigned long __bits[128 / sizeof(long)];
 } cpu_set_t;
 
-void *memset(void *, int, size_t);
-
 #define __CPU_op_S(i, size, set, op)                                            \
     ((i) / 8U >= (size) ? 0                                                     \
                         : (((unsigned long *)(set))[(i) / 8 / sizeof(long)] op( \

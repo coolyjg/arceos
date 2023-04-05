@@ -1,5 +1,7 @@
 #include <netdb.h>
 #include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
 
 // TODO
 int getaddrinfo(const char *__restrict__ __name, const char *__restrict__ __service,
@@ -39,9 +41,14 @@ const char *gai_strerror(int ecode)
 	return LCTRANS_CUR(s);
 }
 
-// TODO
-void freeaddrinfo(struct addrinfo *__ai)
+//TODO
+void freeaddrinfo(struct addrinfo *p)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return;
+	size_t cnt;
+	for (cnt=1; p->ai_next; cnt++, p=p->ai_next);
+	struct aibuf *b = (void *)((char *)p - offsetof(struct aibuf, ai));
+	b -= b->slot;
+	// LOCK(b->lock);
+	// if (!(b->ref -= cnt)) free(b);
+	// else UNLOCK(b->lock);
 }

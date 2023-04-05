@@ -20,8 +20,7 @@ struct tm *gmtime(const time_t *timer)
 // TODO:
 struct tm *localtime(const time_t *timep)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return NULL;
 }
 
 // TODO:
@@ -31,11 +30,14 @@ time_t time(time_t *t)
     return 0;
 }
 
-// TODO:
-int gettimeofday(struct timeval *tv, struct timezone *tz)
+int gettimeofday(struct timeval *restrict tv, void *restrict tz)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	struct timespec ts;
+	if (!tv) return 0;
+	clock_gettime(CLOCK_REALTIME, &ts);
+	tv->tv_sec = ts.tv_sec;
+	tv->tv_usec = (int)ts.tv_nsec / 1000;
+	return 0;
 }
 
 // TODO:
@@ -77,13 +79,11 @@ int setitimer(int __which, const struct itimerval *__restrict__ __new,
 // TODO
 int clock_gettime(clockid_t __clock_id, struct timespec *__tp)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
 // TODO
 char *ctime_r(const time_t *__restrict__ __timer, char *__restrict__ __buf)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return NULL;
 }
