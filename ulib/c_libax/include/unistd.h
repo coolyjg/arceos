@@ -47,6 +47,6 @@ int isatty(int __fd);
 pid_t fork(void);
 
 int chdir(const char *__path);
-int truncate(const char *path, off_t length)
+int truncate(const char *path, off_t length);
 
 #endif

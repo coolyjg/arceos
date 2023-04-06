@@ -101,7 +101,7 @@ unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__
 //TODO
 long random(void)
 {
-    return (long)ax_rand_u32()
+    return (long)ax_rand_u32();
 }
 
 // TODO
@@ -181,7 +181,7 @@ int unsetenv(const char *__name)
 
 void srandom(unsigned int s)
 {
-    ax_srand(s)
+    ax_srand(s);
 }
 
 int abs(int a)

@@ -4,7 +4,6 @@
 #include <stddef.h>
 #include <locale.h>
 
-typedef unsigned long int pthread_t;
 enum {
     PTHREAD_CANCEL_ENABLE,
 #define PTHREAD_CANCEL_ENABLE PTHREAD_CANCEL_ENABLE
@@ -21,14 +20,12 @@ enum {
 
 #define __SIZEOF_PTHREAD_ATTR_T 56
 
-union pthread_attr_t {
-    char __size[__SIZEOF_PTHREAD_ATTR_T];
-    long int __align;
-};
-#ifndef __have_pthread_attr_t
-typedef union pthread_attr_t pthread_attr_t;
-#define __have_pthread_attr_t 1
-#endif
+
+
+// #ifndef __have_pthread_attr_t
+// typedef union pthread_attr_t pthread_attr_t;
+// #define __have_pthread_attr_t 1
+// #endif
 
 // #if defined(__NEED_pthread_condattr_t) && !defined(__DEFINED_pthread_condattr_t)
 typedef struct {
@@ -78,11 +75,22 @@ struct __pthread_mutex_s {
 #endif
 };
 
-typedef union {
-    struct __pthread_mutex_s __data;
-    char __size[__SIZEOF_PTHREAD_MUTEX_T];
-    long int __align;
-} pthread_mutex_t;
+// typedef union {
+//     struct __pthread_mutex_s __data;
+//     char __size[__SIZEOF_PTHREAD_MUTEX_T];
+//     long int __align;
+// } pthread_mutex_t;
+
+typedef struct { union { int __i[sizeof(long)==8?10:6]; volatile int __vi[sizeof(long)==8?10:6]; volatile void *volatile __p[sizeof(long)==8?5:6]; } __u; } pthread_mutex_t;
+
+#define _m_type __u.__i[0]
+
+typedef struct { unsigned __attr; } pthread_mutexattr_t;
+
+typedef struct { union { int __i[sizeof(long)==8?14:9]; volatile int __vi[sizeof(long)==8?14:9]; unsigned long __s[sizeof(long)==8?7:9]; } __u; } pthread_attr_t;
+#define _a_stacksize __u.__s[0]
+#define _a_guardsize __u.__s[1]
+#define _a_stackaddr __u.__s[2]
 
 typedef union {
     __extension__ unsigned long long int __value64;
@@ -106,28 +114,20 @@ struct __pthread_cond_s {
     unsigned int __g_signals[2];
 };
 
-typedef union {
-    struct __pthread_cond_s __data;
-    char __size[__SIZEOF_PTHREAD_COND_T];
-    __extension__ long long int __align;
-} pthread_cond_t;
+typedef struct { union { int __i[12]; volatile int __vi[12]; void *__p[12*sizeof(int)/sizeof(void*)]; } __u; } pthread_cond_t;
+#define _c_clock __u.__i[4]
+#define _c_shared __u.__p[0]
 
-#ifndef __have_pthread_attr_t
-typedef union pthread_attr_t pthread_attr_t;
-#define __have_pthread_attr_t 1
-#endif
 
 #define PTHREAD_MUTEX_INITIALIZER \
     {                             \
         0                         \
     }
 
-// TODO: this is not a musl-like struct
-typedef union {
-    char __size[__SIZEOF_PTHREAD_MUTEXATTR_T];
-    int __align;
-} pthread_mutexattr_t;
+#define pthread __pthread
 
+
+#include <locale.h>
 struct pthread {
 	/* Part 1 -- these fields may be external or
 	 * internal (accessed via asm) ABI. Do not change. */
@@ -167,7 +167,7 @@ struct pthread {
 	} robust_list;
 	int h_errno_val;
 	volatile int timer_id;
-	locale_t locale;
+	// locale_t locale;
 	volatile int killlock[1];
 	char *dlerror_buf;
 	void *stdio_locks;
@@ -180,7 +180,19 @@ struct pthread {
 #endif
 };
 
-struct pthread* __pthread_self(void);
+typedef struct __pthread *pthread_t;
+
+static inline uintptr_t __get_tp()
+{
+	uintptr_t tp;
+	__asm__ ("mrs %0,tpidr_el0" : "=r"(tp));
+	return tp;
+}
+
+#define PTHREAD_CANCELED ((void *)-1)
+#define SIGCANCEL 33
+
+#define __pthread_self() ((pthread_t)(__get_tp() - sizeof(struct __pthread)))
 
 int pthread_mutex_init(pthread_mutex_t *__restrict __mutex,
                        const pthread_mutexattr_t *__restrict __attr);

@@ -4,6 +4,8 @@
 #include <stdint.h>
 
 #include <stddef.h>
+#include <bits/types.h>
+
 int kill(pid_t __pid, int __sig);
 
 typedef int sig_atomic_t;
@@ -227,29 +229,17 @@ typedef void (*__sighandler_t)(int);
 #include <bits/types.h>
 
 struct sigaction {
-    /* Signal handler.  */
-#if defined __USE_POSIX199309 || defined __USE_XOPEN_EXTENDED
-    union {
-        /* Used if SA_SIGINFO is not set.  */
-        __sighandler_t sa_handler;
-        /* Used if SA_SIGINFO is set.  */
-        void (*sa_sigaction)(int, siginfo_t *, void *);
-    } __sigaction_handler;
-#define sa_handler   __sigaction_handler.sa_handler
-#define sa_sigaction __sigaction_handler.sa_sigaction
-#else
-    __sighandler_t sa_handler;
-#endif
-
-    /* Additional set of signals to be blocked.  */
-    __sigset_t sa_mask;
-
-    /* Special flags.  */
-    int sa_flags;
-
-    /* Restore handler.  */
-    void (*sa_restorer)(void);
+	union {
+		void (*sa_handler)(int);
+		void (*sa_sigaction)(int, siginfo_t *, void *);
+	} __sa_handler;
+	sigset_t sa_mask;
+	int sa_flags;
+	void (*sa_restorer)(void);
 };
+
+#define sa_handler   __sa_handler.sa_handler
+#define sa_sigaction __sa_handler.sa_sigaction
 
 #define SA_SIGINFO   4
 #define SA_NODEFER   0x40000000

@@ -30,7 +30,7 @@ DIR *fdopendir(int fd)
 		errno = ENOTDIR;
 		return 0;
 	}
-	if (!(dir = calloc(1, sizeof *dir))) {
+	if (!(dir = calloc(1, sizeof(*dir)))) {
 		return 0;
 	}
 
@@ -84,7 +84,7 @@ void rewinddir(DIR *dir)
 	// UNLOCK(dir->lock);
 }
 
-int dirfd(DIR *__dirp)
+int dirfd(DIR *d)
 {
     return d->fd;
 }

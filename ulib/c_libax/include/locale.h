@@ -9,6 +9,8 @@
 #define LC_MESSAGES 5
 #define LC_ALL      6
 
+#include <pthread.h>
+
 struct lconv {
     char *decimal_point;
     char *thousands_sep;
@@ -43,10 +45,10 @@ struct __locale_struct {
 	const struct __locale_map *cat[6];
 };
 
-typedef struct __locale_struct * locale_t;
+typedef struct __locale_struct *locale_t;
 
 char *setlocale(int __category, const char *__locale);
 
-#define CURRENT_LOCALE (__pthread_self()->locale)
+// #define CURRENT_LOCALE (__pthread_self()->locale)
 
 #endif

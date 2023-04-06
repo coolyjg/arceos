@@ -267,7 +267,7 @@ int fileno(FILE *f)
     return f->fd;
 }
 
-int feof(FILE *__stream)
+int feof(FILE *f)
 {
     int ret = !!(f->flags & F_EOF);
     return ret;

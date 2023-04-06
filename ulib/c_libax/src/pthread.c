@@ -4,11 +4,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
+#include <errno.h>
 
-struct pthread* __pthread_self(void)
-{
-	return NULL;
-}
 
 int pthread_mutex_init(pthread_mutex_t *restrict m, const pthread_mutexattr_t *restrict a)
 {

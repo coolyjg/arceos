@@ -1,19 +1,17 @@
 #ifndef _DIRENT_H
 #define _DIRENT_H
 
-struct __dirstream
+struct dirstream
 {
 	long long tell;
 	int fd;
 	int buf_pos;
 	int buf_end;
-	volatile int lock[1];
-	/* Any changes to this struct must preserve the property:
-	 * offsetof(struct __dirent, buf) % sizeof(off_t) == 0 */
+	int lock[1];
 	char buf[2048];
 };
 
-typedef struct __dirstream DIR;
+typedef struct dirstream DIR;
 
 #include <sys/types.h>
 

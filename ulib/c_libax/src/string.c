@@ -209,7 +209,8 @@ int __strcoll_l(const char *l, const char *r, locale_t loc)
 
 int strcoll(const char *l, const char *r)
 {
-	return __strcoll_l(l, r, CURRENT_LOCALE);
+	// return __strcoll_l(l, r, CURRENT_LOCALE);
+	return 0;
 }
 
 char *strpbrk(const char *s, const char *b)

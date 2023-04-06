@@ -30,7 +30,7 @@ time_t time(time_t *t)
     return 0;
 }
 
-int gettimeofday(struct timeval *restrict tv, void *restrict tz)
+int gettimeofday(struct timeval *tv, struct timezone *tz)
 {
 	struct timespec ts;
 	if (!tv) return 0;
