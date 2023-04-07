@@ -10,4 +10,9 @@ int isalnum(int);
 int isupper(int c);
 int islower(int c);
 
+int   isxdigit(int);
+int   isgraph(int);
+int   iscntrl(int);
+int   ispunct(int);
+
 #endif

@@ -4,6 +4,8 @@
 #include <sys/types.h>
 #include <time.h>
 
+long timezone = 0;
+
 // TODO:
 size_t strftime(char *__restrict__ _Buf, size_t _SizeInBytes, const char *__restrict__ _Format,
                 const struct tm *__restrict__ _Tm)
@@ -86,4 +88,23 @@ int clock_gettime(clockid_t __clock_id, struct timespec *__tp)
 char *ctime_r(const time_t *__restrict__ __timer, char *__restrict__ __buf)
 {
     return NULL;
+}
+
+//TODO
+clock_t clock (void)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+double difftime(time_t t1, time_t t0)
+{
+	return t1-t0;
+}
+
+//TODO
+time_t mktime (struct tm *)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
 }

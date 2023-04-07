@@ -144,8 +144,9 @@ static unsigned int errno;
 #define ENOTSUP EOPNOTSUPP
 #endif
 
-#ifdef _GNU_SOURCE
+// #ifdef _GNU_SOURCE
 extern char *program_invocation_short_name, *program_invocation_name;
-#endif
+
+// #endif
 
 #endif

@@ -10,6 +10,9 @@
 #define F_OK 0
 // char **environ;
 
+// char **environ = 0;
+extern char **environ;
+
 long int sysconf(int name);
 off_t lseek(int fd, off_t offset, int whence);
 unsigned int sleep(unsigned int seconds);
@@ -48,5 +51,6 @@ pid_t fork(void);
 
 int chdir(const char *__path);
 int truncate(const char *path, off_t length);
+uid_t getuid(void);
 
 #endif

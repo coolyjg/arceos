@@ -85,4 +85,18 @@ double asin(double __x);
 double round(double __x);
 long double ceill(long double __x);
 
+double      acos(double);
+double      atan(double);
+double      atan2(double, double);
+double      cosh(double);
+double      exp(double);
+double      fmod(double, double);
+double      frexp(double, int *);
+double      ldexp(double, int);
+double      log10(double);
+double      modf(double, double *);
+double      sinh(double);
+double      tan(double);
+double      tanh(double);
+
 #endif

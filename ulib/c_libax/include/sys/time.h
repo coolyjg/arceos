@@ -35,7 +35,7 @@ struct timezone {
     int tz_minuteswest; /* (minutes west of Greenwich) */
     int tz_dsttime;     /* (type of DST correction) */
 };
-
+extern long timezone;
 // typedef long timezone;
 int gettimeofday(struct timeval *tv, struct timezone *tz);
 int utimes(const char *filename, const struct timeval times[2]);

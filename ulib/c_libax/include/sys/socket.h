@@ -1,6 +1,8 @@
 #ifndef __BITS_SOCKET_H
 #define __BITS_SOCKET_H
 
+#include <stddef.h>
+
 typedef unsigned int socklen_t;
 
 #define _SS_SIZE               128
@@ -291,6 +293,7 @@ int getsockopt(int __fd, int __level, int __optname, void *__restrict__ __optval
 int setsockopt(int __fd, int __level, int __optname, const void *__optval, socklen_t __optlen);
 
 int socket(int __domain, int __type, int __protocol);
+int accept (int, struct sockaddr *__restrict, socklen_t *__restrict);
 int accept4(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __addr_len,
             int __flags);
 
@@ -302,5 +305,8 @@ int getpeername(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restr
 int getsockname(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __len);
 
 int shutdown(int __fd, int __how);
+
+ssize_t send (int, const void *, size_t, int);
+ssize_t recv (int, void *, size_t, int);
 
 #endif

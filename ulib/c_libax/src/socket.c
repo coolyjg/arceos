@@ -44,6 +44,13 @@ int listen(int __fd, int __n)
     return 0;
 }
 
+//TODO
+int accept (int, struct sockaddr *__restrict, socklen_t *__restrict)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
 // TODO
 int accept4(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __addr_len,
             int __flags)
@@ -68,6 +75,20 @@ int getsockname(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restr
 
 // TODO
 int shutdown(int __fd, int __how)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+ssize_t send (int, const void *, size_t, int)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+ssize_t recv (int, void *, size_t, int)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

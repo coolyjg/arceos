@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 
 // TODO:
 int fchmod(int fd, mode_t mode)

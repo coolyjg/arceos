@@ -143,6 +143,10 @@ int fprintf(int f, const char *fmt, ...);
 #define SEEK_END 2
 
 #define F_EOF 16
+#define F_ERR 32
+#define F_SVB 64
+
+#define UNGET 8
 
 int getchar(void);
 int putchar(int);
@@ -176,5 +180,21 @@ int fseek(FILE *__stream, long __off, int __whence);
 long ftello(FILE *__stream);
 
 char *tmpnam(char *);
+
+void clearerr(FILE *);
+int ferror(FILE *);
+int fputs(const char *__restrict, FILE *__restrict);
+FILE *freopen(const char *__restrict, const char *__restrict, FILE *__restrict);
+int fscanf(FILE *__restrict, const char *__restrict, ...);
+long ftell(FILE *);
+int getc(FILE *);
+int remove(const char *);
+int setvbuf(FILE *__restrict, char *__restrict, int, size_t);
+int sprintf(char *__restrict, const char *__restrict, ...);
+FILE *tmpfile(void);
+int ungetc(int, FILE *);
+
+typedef __builtin_va_list __isoc_va_list;
+int vfprintf(FILE *__restrict, const char *__restrict, __isoc_va_list);
 
 #endif // __STDIO_H__

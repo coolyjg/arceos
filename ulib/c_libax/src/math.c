@@ -445,3 +445,94 @@ long double ceill(long double x)
 {
 	return ceil(x);
 }
+
+//TODO
+double acos(double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double atan(double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double atan2(double, double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double cosh(double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double exp(double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double fmod(double, double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double frexp(double, int *)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double ldexp(double, int)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double log10(double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double modf(double, double *)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double sinh(double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double tan(double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+double tanh(double)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

@@ -5,6 +5,9 @@
 
 #include <libax.h>
 
+program_invocation_short_name = NULL;
+program_invocation_name = NULL;
+
 void srand(unsigned s)
 {
     ax_srand(s);
@@ -187,4 +190,11 @@ void srandom(unsigned int s)
 int abs(int a)
 {
 	return a>0 ? a : -a;
+}
+
+//TODO
+int system (const char *)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
 }

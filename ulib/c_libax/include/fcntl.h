@@ -676,4 +676,10 @@ enum {
 #define AT_FDCWD (-100)
 #define AT_EMPTY_PATH 0x1000
 
+#define SYNC_FILE_RANGE_WAIT_BEFORE 1
+#define SYNC_FILE_RANGE_WRITE 2
+#define SYNC_FILE_RANGE_WAIT_AFTER 4
+
+int sync_file_range(int, off_t, off_t, unsigned);
+
 #endif

@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <locale.h>
+#include <signal.h>
 
 enum {
     PTHREAD_CANCEL_ENABLE,
@@ -124,6 +125,8 @@ typedef struct { union { int __i[12]; volatile int __vi[12]; void *__p[12*sizeof
         0                         \
     }
 
+#include <bits/types.h>
+
 #define pthread __pthread
 
 
@@ -182,17 +185,14 @@ struct pthread {
 
 typedef struct __pthread *pthread_t;
 
-static inline uintptr_t __get_tp()
-{
-	uintptr_t tp;
-	__asm__ ("mrs %0,tpidr_el0" : "=r"(tp));
-	return tp;
-}
-
 #define PTHREAD_CANCELED ((void *)-1)
 #define SIGCANCEL 33
 
+uintptr_t __get_tp();
+
 #define __pthread_self() ((pthread_t)(__get_tp() - sizeof(struct __pthread)))
+
+_Noreturn void pthread_exit(void *);
 
 int pthread_mutex_init(pthread_mutex_t *__restrict __mutex,
                        const pthread_mutexattr_t *__restrict __attr);
@@ -220,5 +220,10 @@ int pthread_attr_init(pthread_attr_t *__attr);
 int pthread_attr_getstacksize(const pthread_attr_t *__restrict__ __attr,
                               size_t *__restrict__ __stacksize);
 int pthread_attr_setstacksize(pthread_attr_t *__attr, size_t __stacksize);
+
+
+void pthread_testcancel(void);
+
+int pthread_kill(pthread_t t, int sig);
 
 #endif

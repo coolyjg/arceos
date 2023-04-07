@@ -202,6 +202,7 @@ int fprintf(int f, const char *restrict fmt, ...)
 int getchar(void)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
 }
 
 // TODO
@@ -296,6 +297,114 @@ int snprintf(char *str, int size, const char *format, ...)
 
 //TODO
 char *tmpnam(char *)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+void clearerr(FILE *f)
+{
+    // FLOCK(f);
+	f->flags &= ~(F_EOF|F_ERR);
+	// FUNLOCK(f);
+}
+
+int ferror(FILE *f)
+{
+	// FLOCK(f);
+	int ret = !!(f->flags & F_ERR);
+	// FUNLOCK(f);
+	return ret;
+}
+
+//TODO
+int fputs(const char *restrict s, FILE *restrict f)
+{
+	size_t l = strlen(s);
+	return (fwrite(s, 1, l, f)==l) - 1;
+}
+
+//TODO
+FILE *freopen(const char *__restrict, const char *__restrict, FILE *__restrict)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int fscanf(FILE *__restrict, const char *__restrict, ...)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+long ftell(FILE *)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int getc(FILE *)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int remove(const char *)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+int setvbuf(FILE *restrict f, char *restrict buf, int type, size_t size)
+{
+	f->lbf = EOF;
+
+	if (type == _IONBF) {
+		f->buf_size = 0;
+	} else if (type == _IOLBF || type == _IOFBF) {
+		if (buf && size >= UNGET) {
+			f->buf = (void *)(buf + UNGET);
+			f->buf_size = size - UNGET;
+		}
+		if (type == _IOLBF && f->buf_size)
+			f->lbf = '\n';
+	} else {
+		return -1;
+	}
+
+	f->flags |= F_SVB;
+
+	return 0;
+}
+
+//TODO
+int sprintf(char *__restrict, const char *__restrict, ...)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+FILE *tmpfile(void)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return NULL;
+}
+
+//TODO
+int ungetc(int, FILE *)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+int vfprintf(FILE *__restrict, const char *__restrict, __isoc_va_list)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

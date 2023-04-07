@@ -23,5 +23,6 @@
 
 #define PATH_MAX  4096
 #define SSIZE_MAX LONG_MAX
+#define CHAR_MAX 127
 
 #endif

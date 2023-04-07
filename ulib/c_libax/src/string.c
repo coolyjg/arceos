@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <locale.h>
+#include <errno.h>
 
 size_t strlen(const char *s)
 {
@@ -394,4 +395,66 @@ char *strstr(const char *h, const char *n)
 	if (!n[4]) return fourbyte_strstr((void *)h, (void *)n);
 
 	return twoway_strstr((void *)h, (void *)n);
+}
+
+char *__stpcpy(char *restrict d, const char *restrict s)
+{
+	for (; (*d=*s); s++, d++);
+
+	return d;
+}
+
+char *strcpy(char *restrict dest, const char *restrict src)
+{
+	__stpcpy(dest, src);
+	return dest;
+}
+
+char *strcat(char *restrict dest, const char *restrict src)
+{
+	strcpy(dest + strlen(dest), src);
+	return dest;
+}
+
+char *strncat(char *restrict d, const char *restrict s, size_t n)
+{
+	char *a = d;
+	d += strlen(d);
+	while (n && *s) n--, *d++ = *s++;
+	*d++ = 0;
+	return a;
+}
+
+int strerror_r(int err, char *buf, size_t buflen)
+{
+	char *msg = strerror(err);
+	size_t l = strlen(msg);
+	if (l >= buflen) {
+		if (buflen) {
+			memcpy(buf, msg, buflen-1);
+			buf[buflen-1] = 0;
+		}
+		return ERANGE;
+	}
+	memcpy(buf, msg, l+1);
+	return 0;
+}
+
+#define BITOP(a,b,op) \
+ ((a)[(size_t)(b)/(8*sizeof *(a))] op (size_t)1<<((size_t)(b)%(8*sizeof *(a))))
+
+size_t strspn(const char *s, const char *c)
+{
+	const char *a = s;
+	size_t byteset[32/sizeof(size_t)] = { 0 };
+
+	if (!c[0]) return 0;
+	if (!c[1]) {
+		for (; *s == *c; s++);
+		return s-a;
+	}
+
+	for (; *c && BITOP(byteset, *(unsigned char *)c, |=); c++);
+	for (; *s && BITOP(byteset, *(unsigned char *)s, &); s++);
+	return s-a;
 }

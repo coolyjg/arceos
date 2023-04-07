@@ -5,7 +5,19 @@
 #include <unistd.h>
 #include <limits.h>
 #include <errno.h>
+#include <signal.h>
 
+uintptr_t __get_tp()
+{
+	uintptr_t tp;
+	__asm__ ("mrs %0,tpidr_el0" : "=r"(tp));
+	return tp;
+}
+
+_Noreturn void pthread_exit(void *)
+{
+
+}
 
 int pthread_mutex_init(pthread_mutex_t *restrict m, const pthread_mutexattr_t *restrict a)
 {
@@ -158,4 +170,18 @@ int pthread_attr_setstacksize(pthread_attr_t *a, size_t size)
 	a->_a_stackaddr = 0;
 	a->_a_stacksize = size;
 	return 0;
+}
+
+
+
+void pthread_testcancel(void)
+{
+
+}
+
+//TODO
+int pthread_kill(pthread_t, int)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
 }

@@ -48,7 +48,7 @@ struct __locale_struct {
 typedef struct __locale_struct *locale_t;
 
 char *setlocale(int __category, const char *__locale);
-
+struct lconv *localeconv(void);
 // #define CURRENT_LOCALE (__pthread_self()->locale)
 
 #endif

@@ -5,6 +5,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+char **environ = NULL;
+
 // TODO:
 long int sysconf(int name)
 {
@@ -216,6 +218,13 @@ int chdir(const char *__path)
 
 // TODO
 int truncate(const char *path, off_t length)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+uid_t getuid(void)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
