@@ -2,6 +2,75 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdint.h>
+
+int __eqtf2 (long double a, long double b)
+{
+	return a == b;
+}
+
+int __gttf2 (long double a, long double b)
+{
+	return a > b;
+}
+
+long double __floatditf (long i)
+{
+	return 0;
+}
+
+long double __extenddftf2 (double a)
+{
+	return 0;
+}
+
+long double __addtf3 (long double a, long double b)
+{
+	return a + b;
+}
+
+long double __multf3 (long double a, long double b)
+{
+	return a * b;
+}
+
+double __trunctfdf2 (long double a)
+{
+	return 0;
+}
+
+long __fixtfdi (long double a)
+{
+	return 0;
+}
+
+int __fpclassify(double x)
+{
+	union {double f; uint64_t i;} u = {x};
+	int e = u.i>>52 & 0x7ff;
+	if (!e) return u.i<<1 ? FP_SUBNORMAL : FP_ZERO;
+	if (e==0x7ff) return u.i<<12 ? FP_NAN : FP_INFINITE;
+	return FP_NORMAL;
+}
+
+int __fpclassifyf(float x)
+{
+	union {float f; uint32_t i;} u = {x};
+	int e = u.i>>23 & 0xff;
+	if (!e) return u.i<<1 ? FP_SUBNORMAL : FP_ZERO;
+	if (e==0xff) return u.i<<9 ? FP_NAN : FP_INFINITE;
+	return FP_NORMAL;
+}
+
+int __fpclassifyl(long double x)
+{
+	union {double f; uint64_t i;} u = {x};
+	int e = u.i>>52 & 0x7ff;
+	if (!e) return u.i<<1 ? FP_SUBNORMAL : FP_ZERO;
+	if (e==0x7ff) return u.i<<12 ? FP_NAN : FP_INFINITE;
+	return FP_NORMAL;
+	// return __fpclassify(x);
+}
 
 // Note: this is an architechture dependent implementation
 double rint(double x)
@@ -400,12 +469,16 @@ double round(double x)
 
 long double roundl(long double x)
 {
-	return round(x);
+	__asm__ ("frinta %d0, %d1" : "=w"(x) : "w"(x));
+	return x;
+	// return round(x);
 }
 
 long long llroundl(long double x)
 {
-	return roundl(x);
+	__asm__ ("frinta %d0, %d1" : "=w"(x) : "w"(x));
+	return x;
+	// return roundl(x);
 }
 
 double ceil(double x)
@@ -443,7 +516,9 @@ double asin(double __x)
 
 long double ceill(long double x)
 {
-	return ceil(x);
+	__asm__ ("frintp %d0, %d1" : "=w"(x) : "w"(x));
+	return x;
+	// return ceil(x);
 }
 
 //TODO

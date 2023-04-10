@@ -115,8 +115,8 @@ endif
 
 FINAL_CFLAGS=$(STD) $(WARN) $(OPT) $(DEBUG) $(CFLAGS) $(REDIS_CFLAGS)
 FINAL_LDFLAGS=$(LDFLAGS) $(REDIS_LDFLAGS) $(DEBUG)
-FINAL_LIBS=-lm
-DEBUG=-g -ggdb
+FINAL_LIBS= -lm -lrt
+# DEBUG=-g -ggdb
 
 # Linux ARM32 needs -latomic at linking time
 ifneq (,$(findstring armv,$(uname_M)))
@@ -203,7 +203,7 @@ ifeq ($(uname_S),Haiku)
 else
 	# All the other OSes (notably Linux)
 #	FINAL_LDFLAGS+= -rdynamic
-	FINAL_LIBS+=-ldl -pthread -lrt
+#	FINAL_LIBS+=-ldl -pthread -lrt
 endif
 endif
 endif
@@ -315,8 +315,10 @@ else
 endif
 
 # FINAL_LDFLAGS+=-fPIC
+# LD=aarch64-linux-musl-ld
 
 REDIS_CC=$(QUIET_CC)$(CC) $(FINAL_CFLAGS)
+# REDIS_LD=$(QUIET_LINK)$(CC) $(FINAL_LDFLAGS)
 REDIS_LD=$(QUIET_LINK)$(CC) $(FINAL_LDFLAGS)
 REDIS_INSTALL=$(QUIET_INSTALL)$(INSTALL)
 
@@ -373,10 +375,10 @@ persist-settings: distclean
 	echo REDIS_LDFLAGS=$(REDIS_LDFLAGS) >> .make-settings
 	echo PREV_FINAL_CFLAGS=$(FINAL_CFLAGS) >> .make-settings
 	echo PREV_FINAL_LDFLAGS=$(FINAL_LDFLAGS) >> .make-settings
-	-(cd ../deps/fpconv && CC=aarch64-linux-musl-gcc $(MAKE) CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include')
-	-(cd ../deps/hdr_histogram && CC=aarch64-linux-musl-gcc $(MAKE) CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include')
-	-(cd ../deps/hiredis && CC=aarch64-linux-musl-gcc $(MAKE) CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include' -j)
-	-(cd ../deps/lua && CC=aarch64-linux-musl-gcc $(MAKE) generic CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include' -j)
+	-(cd ../deps/fpconv && CC=aarch64-linux-musl-gcc $(MAKE) CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -nostdinc -no-pie -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include')
+	-(cd ../deps/hdr_histogram && CC=aarch64-linux-musl-gcc $(MAKE) CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -no-pie -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include')
+	-(cd ../deps/hiredis && CC=aarch64-linux-musl-gcc $(MAKE) CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -nostdinc -no-pie -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include' -j)
+	-(cd ../deps/lua && CC=aarch64-linux-musl-gcc $(MAKE) generic CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -no-pie -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include' -j)
 #	-(cd ../deps && $(MAKE) $(DEPENDENCY_TARGETS))
 
 .PHONY: persist-settings
@@ -397,7 +399,7 @@ endif
 # redis-server
 $(REDIS_SERVER_NAME): $(REDIS_SERVER_OBJ)
 	@echo "================="
-	$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a $(FINAL_LIBS)
+	$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a /home/yanjuguang/OS/arceos/ulib/c_libax/build_aarch64/libc.a /home/yanjuguang/OS/arceos/target/aarch64-unknown-none-softfloat/release/liblibax_bindings.a $(FINAL_LIBS)
 
 # $(REDIS_SERVER_LIB): $(REDIS_SERVER_OBJ)
 # 	@echo "*****************"

@@ -69,6 +69,15 @@ typedef double double_t;
 
 #define predict_false(x) (x)
 
+int __eqtf2 (long double a, long double b);
+int __gttf2 (long double a, long double b);
+long double __floatditf (long i);
+long double __extenddftf2 (double a);
+long double __addtf3 (long double a, long double b);
+long double __multf3 (long double a, long double b);
+double __trunctfdf2 (long double a);
+long __fixtfdi (long double a);
+
 long double roundl(long double x);
 double rint(double x);
 long long llrint(double);

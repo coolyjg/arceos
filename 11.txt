@@ -105,8 +105,8 @@ aarch64-linux-musl-gcc -static -no-pie -mno-outline-atomics -Werror -Wno-unused-
 aarch64-linux-musl-ar rcu liblua.a lapi.o lcode.o ldebug.o ldo.o ldump.o lfunc.o lgc.o llex.o lmem.o lobject.o lopcodes.o lparser.o lstate.o lstring.o ltable.o ltm.o lundump.o lvm.o lzio.o strbuf.o fpconv.o lauxlib.o lbaselib.o ldblib.o liolib.o lmathlib.o loslib.o ltablib.o lstrlib.o loadlib.o linit.o lua_cjson.o lua_struct.o lua_cmsgpack.o lua_bit.o	# DLL needs all object files
 aarch64-linux-musl-ar: `u' modifier ignored since `D' is the default (see `U')
 ranlib liblua.a
-aarch64-linux-musl-gcc -o lua  lua.o liblua.a -lm 
-aarch64-linux-musl-gcc -o luac  luac.o print.o liblua.a -lm 
+aarch64-linux-musl-gcc -o lua  lua.o liblua.a 
+aarch64-linux-musl-gcc -o luac  luac.o print.o liblua.a 
 make[4]: Leaving directory '/home/yanjuguang/OS/arceos/apps/c/redis/redis/deps/lua/src'
 make[3]: Leaving directory '/home/yanjuguang/OS/arceos/apps/c/redis/redis/deps/lua/src'
 make[2]: Leaving directory '/home/yanjuguang/OS/arceos/apps/c/redis/redis/deps/lua'
@@ -204,68 +204,8 @@ aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC='' -std=c11 -Wall -W -Wno-missin
 aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC='' -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3  -static -no-pie -mno-outline-atomics -Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -MMD -o unix.o -c unix.c
 aarch64-linux-musl-gcc -pedantic -DREDIS_STATIC='' -std=c11 -Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations -O3  -static -no-pie -mno-outline-atomics -Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv -MMD -o logreqres.o -c logreqres.c
 =================
-aarch64-linux-musl-gcc -static -no-pie -nostdlib -static -T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds  -o redis-server adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o eval.o bio.o rio.o rand.o memtest.o syscheck.o crcspeed.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.o localtime.o lolwut.o lolwut5.o lolwut6.o acl.o tracking.o socket.o tls.o sha256.o timeout.o setcpuaffinity.o monotonic.o mt19937-64.o resp_parser.o call_reply.o script_lua.o script.o functions.o function_lua.o commands.o strl.o connection.o unix.o logreqres.o ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a /home/yanjuguang/OS/arceos/ulib/c_libax/build_aarch64/libc.a /home/yanjuguang/OS/arceos/target/aarch64-unknown-none-softfloat/release/liblibax_bindings.a -lm
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: util.o: in function `string2ld':
-util.c:(.text+0x1594): undefined reference to `__fpclassifyl'
-util.c:(.text+0x1594): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: util.c:(.text+0x15cc): undefined reference to `__eqtf2'
-util.c:(.text+0x15cc): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__eqtf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: util.c:(.text+0x15e8): undefined reference to `__eqtf2'
-util.c:(.text+0x15e8): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__eqtf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: util.c:(.text+0x1600): undefined reference to `__fpclassifyl'
-util.c:(.text+0x1600): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: util.o: in function `string2d':
-util.c:(.text+0x16d8): undefined reference to `__fpclassify'
-util.c:(.text+0x16d8): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__fpclassify'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: util.o: in function `ld2string':
-util.c:(.text+0x1ca0): undefined reference to `__fpclassifyl'
-util.c:(.text+0x1ca0): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: util.c:(.text+0x1cbc): undefined reference to `__gttf2'
-util.c:(.text+0x1cbc): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__gttf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: util.c:(.text+0x1d2c): undefined reference to `__fpclassifyl'
-util.c:(.text+0x1d2c): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: object.o: in function `getLongDoubleFromObject':
-object.c:(.text+0x2e08): undefined reference to `__floatditf'
-object.c:(.text+0x2e08): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__floatditf'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: object.o: in function `getLongDoubleFromObjectOrReply':
-object.c:(.text+0x2f18): undefined reference to `__floatditf'
-object.c:(.text+0x2f18): relocation truncated to fit: R_AARCH64_CALL26 against undefined symbol `__floatditf'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: db.o: in function `scanCallback':
-db.c:(.text+0x1e4): undefined reference to `__extenddftf2'
-db.c:(.text+0x1e4): additional relocation overflows omitted from the output
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_string.o: in function `incrbyfloatCommand':
-t_string.c:(.text+0x22d0): undefined reference to `__addtf3'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_string.c:(.text+0x22d8): undefined reference to `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_string.c:(.text+0x22e4): undefined reference to `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_hash.o: in function `hincrbyfloatCommand':
-t_hash.c:(.text+0x2418): undefined reference to `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_hash.c:(.text+0x2424): undefined reference to `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_hash.c:(.text+0x24f8): undefined reference to `__addtf3'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_hash.c:(.text+0x2500): undefined reference to `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_hash.c:(.text+0x250c): undefined reference to `__fpclassifyl'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: t_hash.c:(.text+0x2618): undefined reference to `__floatditf'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: hyperloglog.o: in function `hllCount':
-hyperloglog.c:(.text+0x15d0): undefined reference to `__extenddftf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: geo.o: in function `georadiusGeneric':
-geo.c:(.text+0x16f0): undefined reference to `__extenddftf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: geo.c:(.text+0x1700): undefined reference to `__extenddftf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: geo.o: in function `geoposCommand':
-geo.c:(.text+0x2178): undefined reference to `__extenddftf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: geo.c:(.text+0x2188): undefined reference to `__extenddftf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: module.o:module.c:(.text+0x3644): more undefined references to `__extenddftf2' follow
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: timeout.o: in function `getTimeoutFromObjectOrReply':
-timeout.c:(.text+0x4ac): undefined reference to `__multf3'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: timeout.c:(.text+0x4c4): undefined reference to `__gttf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: timeout.c:(.text+0x4dc): undefined reference to `__fixtfdi'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: /home/yanjuguang/OS/arceos/ulib/c_libax/build_aarch64/libc.a(math.o): in function `roundl':
-math.c:(.text+0x68): undefined reference to `__trunctfdf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: math.c:(.text+0x70): undefined reference to `__extenddftf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: /home/yanjuguang/OS/arceos/ulib/c_libax/build_aarch64/libc.a(math.o): in function `llroundl':
-math.c:(.text+0x8c): undefined reference to `__fixtfdi'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: /home/yanjuguang/OS/arceos/ulib/c_libax/build_aarch64/libc.a(math.o): in function `ceill':
-math.c:(.text+0x178): undefined reference to `__trunctfdf2'
-/usr/local/aarch64-linux-musl-cross/bin/../lib/gcc/aarch64-linux-musl/11.2.1/../../../../aarch64-linux-musl/bin/ld: math.c:(.text+0x180): undefined reference to `__extenddftf2'
-collect2: error: ld returned 1 exit status
-make[1]: *** [Makefile:402: redis-server] Error 1
+aarch64-linux-musl-gcc -static -no-pie -nostdlib -static -T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds  -o redis-server adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o eval.o bio.o rio.o rand.o memtest.o syscheck.o crcspeed.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.o localtime.o lolwut.o lolwut5.o lolwut6.o acl.o tracking.o socket.o tls.o sha256.o timeout.o setcpuaffinity.o monotonic.o mt19937-64.o resp_parser.o call_reply.o script_lua.o script.o functions.o function_lua.o commands.o strl.o connection.o unix.o logreqres.o ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a /home/yanjuguang/OS/arceos/ulib/c_libax/build_aarch64/libc.a /home/yanjuguang/OS/arceos/target/aarch64-unknown-none-softfloat/release/liblibax_bindings.a -lm -lrt
+
+Hint: It's a good idea to run 'make test' ;)
+
 make[1]: Leaving directory '/home/yanjuguang/OS/arceos/apps/c/redis/redis/src'
-make: *** [Makefile:6: all] Error 2
