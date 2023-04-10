@@ -57,17 +57,14 @@ app-objs := main.o
 
 app-objs := $(addprefix $(APP)/,$(app-objs))
 
-# app-objs += $(A)/redis/deps/hiredis/libhiredis.a
-# app-objs += $(A)/redis/deps/lua/src/liblua.a
-# app-objs += $(A)/redis/deps/hdr_histogram/libhdrhistogram.a
-# app-objs += $(A)/redis/deps/fpconv/libfpconv.a
-
 $(APP)/%.o: $(APP)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OUT_ELF): $(app-objs) $(c_lib) $(rust_lib)
 	@echo "    $(CYAN_C)Linking$(END_C) $(OUT_ELF)"
-#	$(LD) $(LDFLAGS) $^ $(A)/redis/deps/hiredis/libhiredis.a $(A)/redis/deps/lua/src/liblua.a $(A)/redis/deps/hdr_histogram/libhdrhistogram.a $(A)/redis/deps/fpconv/libfpconv.a -o $@
-	$(LD) $(LDFLAGS) $^ -o $@
+#	$(LD) $(LDFLAGS) $(A)/redis/deps/hiredis/libhiredis.a $(A)/redis/deps/lua/src/liblua.a $(A)/redis/deps/hdr_histogram/libhdrhistogram.a $(A)/redis/deps/fpconv/libfpconv.a $^ -o $@
+	$(LD) $(LDFLAGS) $(app-objs) $(A)/redis/deps/hiredis/libhiredis.a $(A)/redis/deps/lua/src/liblua.a $(A)/redis/deps/hdr_histogram/libhdrhistogram.a $(A)/redis/deps/fpconv/libfpconv.a $(c_lib) $(rust_lib) -o $@
+
+#	$(LD) $(LDFLAGS) $^ -o $@
 
 .PHONY: _gen_feat

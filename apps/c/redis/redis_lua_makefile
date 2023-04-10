@@ -11,7 +11,7 @@ CC?= gcc
 CFLAGS= -O2 -Wall $(MYCFLAGS)
 
 AR = aarch64-linux-musl-ar rcu
-RANLIB= ranlib
+RANLIB= aarch64-linux-musl-ranlib
 RM= rm -f
 LIBS = $(MYLIBS)
 # LIBS= -lm $(MYLIBS)
