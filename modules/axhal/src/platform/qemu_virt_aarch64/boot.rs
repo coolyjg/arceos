@@ -106,7 +106,7 @@ unsafe fn init_mmu() {
     barrier::isb(barrier::SY);
 }
 
-unsafe fn enable_fp(){
+unsafe fn enable_fp() {
     CPACR_EL1.write(CPACR_EL1::FPEN::TrapNothing);
     barrier::isb(barrier::SY);
 }
