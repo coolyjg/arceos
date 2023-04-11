@@ -132,6 +132,11 @@ unsafe extern "C" fn _start() -> ! {
         add     x8, x8, {TASK_STACK_SIZE}
         mov     sp, x8
 
+        mrs     x1, cpacr_el1           // enable fp/neon
+        orr     x1, x1, #(0x3 << 20)
+        msr     cpacr_el1, x1
+        isb
+
         mov     x0, x19
         mov     x1, x20
         ldr     x8, ={platform_init}    // call platform_init(cpu_id, dtb)
