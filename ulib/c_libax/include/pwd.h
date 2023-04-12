@@ -4,6 +4,24 @@
 #include <stddef.h>
 #include <sys/types.h>
 
+#define NSCDVERSION 2
+#define GETPWBYNAME 0
+#define GETPWBYUID 1
+#define GETGRBYNAME 2
+#define GETGRBYGID 3
+#define GETINITGR 15
+
+#define PWVERSION 0
+#define PWFOUND 1
+#define PWNAMELEN 2
+#define PWPASSWDLEN 3
+#define PWUID 4
+#define PWGID 5
+#define PWGECOSLEN 6
+#define PWDIRLEN 7
+#define PWSHELLLEN 8
+#define PW_LEN 9
+
 struct passwd {
 	char *pw_name;
 	char *pw_passwd;
