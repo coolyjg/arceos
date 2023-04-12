@@ -4,48 +4,33 @@
 #include <time.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <libax.h>
 
 char **environ = NULL;
 
-// TODO:
-long int sysconf(int name)
+// #ifdef AX_CONFIG_FS
+int close(int fd)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return ax_close(fd);
 }
 
-// TODO:
 off_t lseek(int fd, off_t offset, int whence)
 {
     return ax_lseek(fd, offset, whence);
 }
 
-unsigned sleep(unsigned seconds)
-{
-	struct timespec tv = { .tv_sec = seconds, .tv_nsec = 0 };
-	if (nanosleep(&tv, &tv))
-		return tv.tv_sec;
-	return 0;
-}
-
-// TODO:
-pid_t getpid(void)
-{
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    printf("getpid\n");
-    return -1;
-}
-
+// TODO
 int fsync(int fd)
 {
-    return ax_close(fd);
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
 }
 
-// TODO:
-int close(int fd)
+// TODO
+int fdatasync(int __fildes)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return -1;
+    return 0;
 }
 
 // TODO:
@@ -70,7 +55,7 @@ int stat(const char *path, struct stat *buf)
     return ax_stat(path, buf);
 }
 
-int fstat(int fd, struct stat *st)
+int fstat(int fd, struct stat *buf)
 {
     return ax_fstat(fd, buf);
 }
@@ -93,6 +78,20 @@ ssize_t write(int fd, const void *buf, size_t count)
 }
 
 // TODO:
+int fchown(int fd, uid_t owner, gid_t group)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+// TODO:
+ssize_t readlink(const char *path, char *buf, size_t bufsiz)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+// TODO:
 int unlink(const char *pathname)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
@@ -106,23 +105,33 @@ int rmdir(const char *pathname)
     return 0;
 }
 
+// #endif
 // TODO:
-int fchown(int fd, uid_t owner, gid_t group)
+long int sysconf(int name)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
+}
+
+unsigned sleep(unsigned seconds)
+{
+	struct timespec tv = { .tv_sec = seconds, .tv_nsec = 0 };
+	if (nanosleep(&tv, &tv))
+		return tv.tv_sec;
+	return 0;
+}
+
+// TODO:
+pid_t getpid(void)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    printf("getpid\n");
+    return -1;
 }
 
 uid_t geteuid(void)
 {
     // return __syscall(SYS_geteuid);
-    return 0;
-}
-
-// TODO:
-ssize_t readlink(const char *path, char *buf, size_t bufsiz)
-{
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
@@ -140,17 +149,12 @@ int pipe2(int *__pipedes, int __flags)
     return 0;
 }
 
-// TODO
-int fdatasync(int __fildes)
-{
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
-}
 
 // TODO
 _Noreturn void _exit(int __status)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    abort();
 }
 
 int usleep(unsigned int useconds)

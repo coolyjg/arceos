@@ -16,13 +16,10 @@ typedef int64_t blkcnt_t;
 
 typedef long long int off_t;
 
-typedef unsigned int ino_t;
 /**
  * https://stackoverflow.com/questions/15976290/how-to-compare-nlink-t-to-int
  */
 typedef unsigned int nlink_t;
-typedef int blksize_t;
-typedef int blkcnt_t;
 
 // typedef unsigned int __off_t;
 

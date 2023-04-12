@@ -9,6 +9,9 @@ typedef intptr_t ssize_t;
 
 typedef long ptrdiff_t;
 
+typedef unsigned gid_t;
+typedef unsigned uid_t;
+
 typedef int pid_t;
 typedef long loff_t;
 typedef long clock_t;

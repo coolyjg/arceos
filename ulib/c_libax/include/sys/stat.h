@@ -4,6 +4,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <time.h>
+#include <stddef.h>
 
 #ifndef O_EXCL
 #define O_EXCL 1 // TODO;
@@ -13,21 +14,6 @@
 #endif
 #ifndef O_RDONLY
 #define O_RDONLY 3 // TODO;
-#endif
-
-#ifndef S_IRUSR
-#define S_IRUSR 0400
-#define S_IWUSR 0200
-#define S_IXUSR 0100
-#define S_IRWXU 0700
-#define S_IRGRP 0040
-#define S_IWGRP 0020
-#define S_IXGRP 0010
-#define S_IRWXG 0070
-#define S_IROTH 0004
-#define S_IWOTH 0002
-#define S_IXOTH 0001
-#define S_IRWXO 0007
 #endif
 
 struct stat {

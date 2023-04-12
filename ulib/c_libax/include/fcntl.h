@@ -62,11 +62,6 @@ typedef long long int off_t;
 #define O_SYNC   (__O_SYNC | O_DSYNC)
 #endif
 
-#define O_ACCMODE (03 | O_SEARCH)
-#define O_RDONLY  00
-#define O_WRONLY  01
-#define O_RDWR    02
-
 #define F_DUPFD 0
 #define F_GETFD 1
 #define F_SETFD 2
@@ -87,6 +82,11 @@ typedef long long int off_t;
 #define F_SETLK  6
 #define F_SETLKW 7
 #endif
+
+#define O_PATH    010000000
+#define FD_CLOEXEC 1
+#define O_TMPFILE 020040000
+#define O_EXEC     O_PATH
 
 #define F_RDLCK 0
 #define F_WRLCK 1
