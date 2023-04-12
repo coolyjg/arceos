@@ -1,6 +1,10 @@
 #ifndef __SYS_TIME_H__
 #define __SYS_TIME_H__
 
+#include <stdint.h>
+
+typedef long time_t;
+
 #include <features.h>
 
 #include <bits/types.h>

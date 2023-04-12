@@ -13,10 +13,9 @@
 // char **environ = 0;
 extern char **environ;
 
-long int sysconf(int name);
+#ifdef AX_CONFIG_FS
+int close(int fd);
 off_t lseek(int fd, off_t offset, int whence);
-unsigned int sleep(unsigned int seconds);
-pid_t getpid(void);
 int fsync(int fd);
 int fdatasync(int __fildes);
 
@@ -29,9 +28,20 @@ int fstat(int fd, struct stat *buf);
 int ftruncate(int fd, off_t length);
 ssize_t read(int fd, void *buf, size_t count);
 ssize_t write(int fd, const void *buf, size_t count);
+
+int fchown(int fd, uid_t owner, gid_t group);
+
+ssize_t readlink(const char *path, char *buf, size_t bufsiz);
 int unlink(const char *pathname);
 int rmdir(const char *pathname);
-int fchown(int fd, uid_t owner, gid_t group);
+int ftruncate(int fd, off_t length);
+
+int access(const char *pathname, int mode);
+char *getcwd(char *buf, size_t size);
+#endif
+
+unsigned sleep(unsigned seconds);
+
 uid_t geteuid(void);
 ssize_t readlink(const char *path, char *buf, size_t bufsiz);
 

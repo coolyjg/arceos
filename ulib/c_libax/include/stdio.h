@@ -118,6 +118,10 @@ int fprintf(int f, const char *fmt, ...);
 
 #define printf(...) fprintf(1, __VA_ARGS__)
 
+#define unimplemented(fmt, ...)                                                                \
+    printf("\x1b[33m%s%s:\x1b[0m " fmt "\n", "WARN: no ax_call implementation for ", __func__, \
+           ##__VA_ARGS__)
+
 #define S_IFMT   00170000
 #define S_IFSOCK 0140000
 #define S_IFLNK  0120000
@@ -196,5 +200,7 @@ int ungetc(int, FILE *);
 
 typedef __builtin_va_list __isoc_va_list;
 int vfprintf(FILE *__restrict, const char *__restrict, __isoc_va_list);
+
+#define FILENAME_MAX 4096
 
 #endif // __STDIO_H__

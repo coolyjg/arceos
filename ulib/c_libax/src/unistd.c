@@ -17,8 +17,7 @@ long int sysconf(int name)
 // TODO:
 off_t lseek(int fd, off_t offset, int whence)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return ax_lseek(fd, offset, whence);
 }
 
 unsigned sleep(unsigned seconds)
@@ -37,11 +36,9 @@ pid_t getpid(void)
     return -1;
 }
 
-// TODO:
 int fsync(int fd)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return ax_close(fd);
 }
 
 // TODO:
@@ -58,29 +55,24 @@ int access(const char *pathname, int mode)
     return 0;
 }
 
-// TODO:
 char *getcwd(char *buf, size_t size)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return ax_getcwd(buf, size);
 }
 
-// TODO:
 int lstat(const char *path, struct stat *buf)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return ax_lstat(path, buf);
 }
 
 int stat(const char *path, struct stat *buf)
 {
-    return fstatat(AT_FDCWD, path, buf, 0);
+    return ax_stat(path, buf);
 }
 
 int fstat(int fd, struct stat *st)
 {
-    // if (fd<0) return __syscall_ret(-EBADF);
-	return fstatat(fd, "", st, AT_EMPTY_PATH);
+    return ax_fstat(fd, buf);
 }
 
 // TODO:
@@ -90,18 +82,14 @@ int ftruncate(int fd, off_t length)
     return 0;
 }
 
-// TODO:
 ssize_t read(int fd, void *buf, size_t count)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return ax_read(fd, buf, count);
 }
 
-// TODO:
 ssize_t write(int fd, const void *buf, size_t count)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return ax_write(fd, buf, count);
 }
 
 // TODO:
