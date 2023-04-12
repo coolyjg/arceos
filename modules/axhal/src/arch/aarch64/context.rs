@@ -118,7 +118,8 @@ unsafe extern "C" fn fpstate_switch(_current_fpstate: &mut FpState, _next_fpstat
         stp     q30, q31, [x0, 30 * 16]
         mrs     x9, fpcr
         mrs     x10, fpsr
-        stp     x9, x10, [x0, 32 * 16]
+        str     x9, [x0, 64 *  8]
+        str     x10, [x0, 65 * 8]
         
         // restore fp/neon context
         ldp     q0, q1, [x1, 0 * 16]
@@ -137,7 +138,8 @@ unsafe extern "C" fn fpstate_switch(_current_fpstate: &mut FpState, _next_fpstat
         ldp     q26, q27, [x1, 26 * 16]
         ldp     q28, q29, [x1, 28 * 16]
         ldp     q30, q31, [x1, 30 * 16]
-        ldp     x9, x10, [x1, 32 * 16]
+        ldr     x9, [x1, 64 * 8]
+        ldr     x10, [x1, 65 * 8]
         msr     fpcr, x9
         msr     fpsr, x10
 
