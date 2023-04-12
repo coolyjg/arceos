@@ -37,8 +37,6 @@ _Noreturn void exit(int __status);
 
 char *getenv(const char *name);
 
-// void qsort(void *__base, size_t __nmemb, size_t __size, int (*)(const void *, const void *)
-// __compar);
 void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
 
 long long llabs(long long __x);
@@ -49,5 +47,7 @@ long long atoll(const char *__nptr);
 int setenv(const char *__name, const char *__value, int __replace);
 int unsetenv(const char *__name);
 void srandom(unsigned int __seed);
+
+int system (const char *);
 
 #endif //__STDLIB_H__

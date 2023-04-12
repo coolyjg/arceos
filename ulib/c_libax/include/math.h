@@ -65,6 +65,21 @@ static __inline unsigned long long __DOUBLE_BITS(double __f)
      : sizeof(x) == sizeof(double) ? (__DOUBLE_BITS(x) & -1ULL >> 1) < 0x7ffULL << 52 \
                                    : __fpclassifyl(x) > FP_INFINITE)
 
+typedef double double_t;
+
+#define predict_false(x) (x)
+
+int __eqtf2 (long double a, long double b);
+int __gttf2 (long double a, long double b);
+long double __floatditf (long i);
+long double __extenddftf2 (double a);
+long double __addtf3 (long double a, long double b);
+long double __multf3 (long double a, long double b);
+double __trunctfdf2 (long double a);
+long __fixtfdi (long double a);
+
+long double roundl(long double x);
+double rint(double x);
 long long llrint(double);
 double floor(double __x);
 double sqrt(double __x);
@@ -78,5 +93,19 @@ double sin(double __x);
 double asin(double __x);
 double round(double __x);
 long double ceill(long double __x);
+
+double      acos(double);
+double      atan(double);
+double      atan2(double, double);
+double      cosh(double);
+double      exp(double);
+double      fmod(double, double);
+double      frexp(double, int *);
+double      ldexp(double, int);
+double      log10(double);
+double      modf(double, double *);
+double      sinh(double);
+double      tan(double);
+double      tanh(double);
 
 #endif

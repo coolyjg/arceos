@@ -1,0 +1,176 @@
+    [92;1mBuilding[0m App: redis, Arch: aarch64, Platform: qemu-virt-aarch64, Language: c
+cargo build -Zbuild-std=core,alloc -Zbuild-std-features=compiler-builtins-mem --config "build.rustflags='-Clink-arg=-T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds'" --target aarch64-unknown-none-softfloat --target-dir /home/yanjuguang/OS/arceos/target --features "libax/platform-qemu-virt-aarch64 libax/log-level-info libax_bindings/default libax_bindings/alloc libax_bindings/paging"  --no-default-features --release -p libax_bindings
+   Compiling axconfig v0.1.0 (/home/yanjuguang/OS/arceos/modules/axconfig)
+   Compiling axhal v0.1.0 (/home/yanjuguang/OS/arceos/modules/axhal)
+   Compiling axtask v0.1.0 (/home/yanjuguang/OS/arceos/modules/axtask)
+   Compiling axruntime v0.1.0 (/home/yanjuguang/OS/arceos/modules/axruntime)
+   Compiling libax v0.1.0 (/home/yanjuguang/OS/arceos/ulib/libax)
+   Compiling libax_bindings v0.1.0 (/home/yanjuguang/OS/arceos/ulib/c_libax/libax_bindings)
+    Finished release [optimized] target(s) in 0.98s
+aarch64-linux-musl-ar rcs apps/c/redis/libhiredis.a apps/c/redis/redis/deps/hiredis/alloc.o apps/c/redis/redis/deps/hiredis/net.o apps/c/redis/redis/deps/hiredis/hiredis.o apps/c/redis/redis/deps/hiredis/sds.o apps/c/redis/redis/deps/hiredis/async.o apps/c/redis/redis/deps/hiredis/read.o apps/c/redis/redis/deps/hiredis/sockcompat.o
+aarch64-linux-musl-ar rcu apps/c/redis/liblua.a apps/c/redis/redis/deps/lua/src/lapi.o apps/c/redis/redis/deps/lua/src/lcode.o apps/c/redis/redis/deps/lua/src/ldebug.o apps/c/redis/redis/deps/lua/src/ldo.o apps/c/redis/redis/deps/lua/src/ldump.o apps/c/redis/redis/deps/lua/src/lfunc.o apps/c/redis/redis/deps/lua/src/lgc.o apps/c/redis/redis/deps/lua/src/llex.o apps/c/redis/redis/deps/lua/src/lmem.o apps/c/redis/redis/deps/lua/src/lobject.o apps/c/redis/redis/deps/lua/src/lopcodes.o apps/c/redis/redis/deps/lua/src/lparser.o apps/c/redis/redis/deps/lua/src/lstate.o apps/c/redis/redis/deps/lua/src/lstring.o apps/c/redis/redis/deps/lua/src/ltable.o apps/c/redis/redis/deps/lua/src/ltm.o apps/c/redis/redis/deps/lua/src/lundump.o apps/c/redis/redis/deps/lua/src/lvm.o apps/c/redis/redis/deps/lua/src/lzio.o apps/c/redis/redis/deps/lua/src/strbuf.o apps/c/redis/redis/deps/lua/src/fpconv.o apps/c/redis/redis/deps/lua/src/lauxlib.o apps/c/redis/redis/deps/lua/src/lbaselib.o apps/c/redis/redis/deps/lua/src/ldblib.o apps/c/redis/redis/deps/lua/src/liolib.o apps/c/redis/redis/deps/lua/src/lmathlib.o apps/c/redis/redis/deps/lua/src/loslib.o apps/c/redis/redis/deps/lua/src/ltablib.o apps/c/redis/redis/deps/lua/src/lstrlib.o apps/c/redis/redis/deps/lua/src/loadlib.o apps/c/redis/redis/deps/lua/src/linit.o apps/c/redis/redis/deps/lua/src/lua_cjson.o apps/c/redis/redis/deps/lua/src/lua_struct.o apps/c/redis/redis/deps/lua/src/lua_cmsgpack.o apps/c/redis/redis/deps/lua/src/lua_bit.o
+aarch64-linux-musl-ar: `u' modifier ignored since `D' is the default (see `U')
+aarch64-linux-musl-ar rcs apps/c/redis/libhdrhistogram.a apps/c/redis/redis/deps/hdr_histogram/hdr_histogram.o
+aarch64-linux-musl-ar rcs apps/c/redis/libfpconv.a apps/c/redis/redis/deps/fpconv/fpconv_dtoa.o
+mkdir -p ulib/c_libax/build_aarch64
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/assert.o ulib/c_libax/src/assert.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/cos.o ulib/c_libax/src/cos.c
+ulib/c_libax/src/cos.c:27:1: warning: multi-line comment [-Wcomment]
+   27 | // #define GET_HIGH_WORD(hi,d)                       \
+      | ^
+ulib/c_libax/src/cos.c:32:1: warning: multi-line comment [-Wcomment]
+   32 | // #define FORCE_EVAL(x) do {                        \
+      | ^
+ulib/c_libax/src/cos.c: In function ‘cos’:
+ulib/c_libax/src/cos.c:232:1: warning: control reaches end of non-void function [-Wreturn-type]
+  232 | }
+      | ^
+At top level:
+ulib/c_libax/src/cos.c:11:21: warning: ‘C6’ defined but not used [-Wunused-const-variable=]
+   11 | static const double C6  = -1.13596475577881948265e-11; /* 0xBDA8FAE9, 0xBE8838D4 */
+      |                     ^~
+ulib/c_libax/src/cos.c:10:21: warning: ‘C5’ defined but not used [-Wunused-const-variable=]
+   10 | static const double C5  =  2.08757232129817482790e-09; /* 0x3E21EE9E, 0xBDB4B1C4 */
+      |                     ^~
+ulib/c_libax/src/cos.c:9:21: warning: ‘C4’ defined but not used [-Wunused-const-variable=]
+    9 | static const double C4  = -2.75573143513906633035e-07; /* 0xBE927E4F, 0x809C52AD */
+      |                     ^~
+ulib/c_libax/src/cos.c:8:21: warning: ‘C3’ defined but not used [-Wunused-const-variable=]
+    8 | static const double C3  =  2.48015872894767294178e-05; /* 0x3EFA01A0, 0x19CB1590 */
+      |                     ^~
+ulib/c_libax/src/cos.c:7:21: warning: ‘C2’ defined but not used [-Wunused-const-variable=]
+    7 | static const double C2  = -1.38888888888741095749e-03; /* 0xBF56C16C, 0x16C15177 */
+      |                     ^~
+ulib/c_libax/src/cos.c:6:21: warning: ‘C1’ defined but not used [-Wunused-const-variable=]
+    6 | static const double C1  =  4.16666666666666019037e-02; /* 0x3FA55555, 0x5555554C */
+      |                     ^~
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/ctype.o ulib/c_libax/src/ctype.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/dirent.o ulib/c_libax/src/dirent.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/dlfcn.o ulib/c_libax/src/dlfcn.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/epoll.o ulib/c_libax/src/epoll.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/fcntl.o ulib/c_libax/src/fcntl.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/file.o ulib/c_libax/src/file.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/fnmatch.o ulib/c_libax/src/fnmatch.c
+ulib/c_libax/src/fnmatch.c: In function ‘fnmatch’:
+ulib/c_libax/src/fnmatch.c:7:1: warning: control reaches end of non-void function [-Wreturn-type]
+    7 | }
+      | ^
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/glob.o ulib/c_libax/src/glob.c
+ulib/c_libax/src/glob.c: In function ‘do_glob’:
+ulib/c_libax/src/glob.c:153:62: warning: suggest parentheses around ‘&&’ within ‘||’ [-Wparentheses]
+  153 |                     && (!de->d_name[1] || de->d_name[1]=='.' && !de->d_name[2])
+      |                                           ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~
+ulib/c_libax/src/glob.c: At top level:
+ulib/c_libax/src/glob.c:299: warning: "offsetof" redefined
+  299 | #define offsetof(t, d) __builtin_offsetof(t, d)
+      | 
+In file included from ulib/c_libax/include/glob.h:4,
+                 from ulib/c_libax/src/glob.c:1:
+ulib/c_libax/include/stddef.h:22: note: this is the location of the previous definition
+   22 | #define offsetof(type, member) __builtin_offsetof(type, member)
+      | 
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/in.o ulib/c_libax/src/in.c
+ulib/c_libax/src/in.c: In function ‘__bswap_32’:
+ulib/c_libax/src/in.c:11:32: warning: suggest parentheses around arithmetic in operand of ‘|’ [-Wparentheses]
+   11 |         return __x>>24 | __x>>8&0xff00 | __x<<8&0xff0000 | __x<<24;
+      |                          ~~~~~~^~~~~~~
+ulib/c_libax/src/in.c:11:48: warning: suggest parentheses around arithmetic in operand of ‘|’ [-Wparentheses]
+   11 |         return __x>>24 | __x>>8&0xff00 | __x<<8&0xff0000 | __x<<24;
+      |                                          ~~~~~~^~~~~~~~~
+ulib/c_libax/src/in.c: In function ‘__bswap_64’:
+ulib/c_libax/src/in.c:16:31: warning: suggest parentheses around ‘+’ inside ‘<<’ [-Wparentheses]
+   16 |         return __bswap_32(__x)+0ULL<<32 | __bswap_32(__x>>32);
+      |                ~~~~~~~~~~~~~~~^~~~~
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/inet.o ulib/c_libax/src/inet.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/ioctl.o ulib/c_libax/src/ioctl.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/libgen.o ulib/c_libax/src/libgen.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/locale.o ulib/c_libax/src/locale.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/math.o ulib/c_libax/src/math.c
+ulib/c_libax/src/math.c: In function ‘pow’:
+ulib/c_libax/src/math.c:461:1: warning: control reaches end of non-void function [-Wreturn-type]
+  461 | }
+      | ^
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/mman.o ulib/c_libax/src/mman.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/netdb.o ulib/c_libax/src/netdb.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/poll.o ulib/c_libax/src/poll.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/pthread.o ulib/c_libax/src/pthread.c
+ulib/c_libax/src/pthread.c: In function ‘pthread_exit’:
+ulib/c_libax/src/pthread.c:20:1: warning: ‘noreturn’ function does return
+   20 | }
+      | ^
+In file included from ulib/c_libax/src/pthread.c:7:
+At top level:
+ulib/c_libax/include/errno.h:139:21: warning: ‘errno’ defined but not used [-Wunused-variable]
+  139 | static unsigned int errno;
+      |                     ^~~~~
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/pwd.o ulib/c_libax/src/pwd.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/resource.o ulib/c_libax/src/resource.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/sched.o ulib/c_libax/src/sched.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/setjmp.o ulib/c_libax/src/setjmp.c
+ulib/c_libax/src/setjmp.c: In function ‘longjmp’:
+ulib/c_libax/src/setjmp.c:7:5: warning: function declared ‘noreturn’ has a ‘return’ statement
+    7 |     return ;
+      |     ^~~~~~
+ulib/c_libax/src/setjmp.c:7:5: warning: ‘noreturn’ function does return
+    7 |     return ;
+      |     ^
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/signal.o ulib/c_libax/src/signal.c
+ulib/c_libax/src/signal.c: In function ‘sigaddset’:
+ulib/c_libax/src/signal.c:53:56: warning: suggest parentheses around ‘-’ in operand of ‘&’ [-Wparentheses]
+   53 |         set->__bits[s/8/sizeof *set->__bits] |= 1UL<<(s&8*sizeof *set->__bits-1);
+      |                                                        ^
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/socket.o ulib/c_libax/src/socket.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/stat.o ulib/c_libax/src/stat.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/stdio.o ulib/c_libax/src/stdio.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/stdlib.o ulib/c_libax/src/stdlib.c
+ulib/c_libax/src/stdlib.c:8:1: warning: data definition has no type or storage class
+    8 | program_invocation_short_name = NULL;
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ulib/c_libax/src/stdlib.c:8:1: warning: type defaults to ‘int’ in declaration of ‘program_invocation_short_name’ [-Wimplicit-int]
+In file included from ulib/c_libax/include/stdio.h:6,
+                 from ulib/c_libax/src/stdlib.c:2:
+ulib/c_libax/include/stddef.h:19:14: warning: initialization of ‘int’ from ‘void *’ makes integer from pointer without a cast [-Wint-conversion]
+   19 | #define NULL ((void *)0)
+      |              ^
+ulib/c_libax/src/stdlib.c:8:33: note: in expansion of macro ‘NULL’
+    8 | program_invocation_short_name = NULL;
+      |                                 ^~~~
+ulib/c_libax/src/stdlib.c:9:1: warning: data definition has no type or storage class
+    9 | program_invocation_name = NULL;
+      | ^~~~~~~~~~~~~~~~~~~~~~~
+ulib/c_libax/src/stdlib.c:9:1: warning: type defaults to ‘int’ in declaration of ‘program_invocation_name’ [-Wimplicit-int]
+In file included from ulib/c_libax/include/stdio.h:6,
+                 from ulib/c_libax/src/stdlib.c:2:
+ulib/c_libax/include/stddef.h:19:14: warning: initialization of ‘int’ from ‘void *’ makes integer from pointer without a cast [-Wint-conversion]
+   19 | #define NULL ((void *)0)
+      |              ^
+ulib/c_libax/src/stdlib.c:9:27: note: in expansion of macro ‘NULL’
+    9 | program_invocation_name = NULL;
+      |                           ^~~~
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/string.o ulib/c_libax/src/string.c
+ulib/c_libax/src/string.c:274: warning: "BITOP" redefined
+  274 | #define BITOP(a,b,op) \
+      | 
+ulib/c_libax/src/string.c:124: note: this is the location of the previous definition
+  124 | #define BITOP(a, b, op) a[(size_t)b / (8 * sizeof(size_t))] op 1 << (size_t)b % (8 * sizeof(size_t))
+      | 
+In file included from ulib/c_libax/src/string.c:8:
+ulib/c_libax/include/errno.h:139:21: warning: ‘errno’ defined but not used [-Wunused-variable]
+  139 | static unsigned int errno;
+      |                     ^~~~~
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/syslog.o ulib/c_libax/src/syslog.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/time.o ulib/c_libax/src/time.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/uio.o ulib/c_libax/src/uio.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/unistd.o ulib/c_libax/src/unistd.c
+ulib/c_libax/src/unistd.c: In function ‘_exit’:
+ulib/c_libax/src/unistd.c:166:1: warning: ‘noreturn’ function does return
+  166 | }
+      | ^
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/utsname.o ulib/c_libax/src/utsname.c
+aarch64-linux-musl-gcc -DAX_CONFIG_DEFAULT -DAX_CONFIG_ALLOC -DAX_CONFIG_PAGING -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall -Iulib/c_libax/include -Iulib/c_libax/libax_bindings -O3 -c -o ulib/c_libax/build_aarch64/wait.o ulib/c_libax/src/wait.c
+rm -f ulib/c_libax/build_aarch64/libc.a
+aarch64-linux-musl-ar rc ulib/c_libax/build_aarch64/libc.a ulib/c_libax/build_aarch64/assert.o ulib/c_libax/build_aarch64/cos.o ulib/c_libax/build_aarch64/ctype.o ulib/c_libax/build_aarch64/dirent.o ulib/c_libax/build_aarch64/dlfcn.o ulib/c_libax/build_aarch64/epoll.o ulib/c_libax/build_aarch64/fcntl.o ulib/c_libax/build_aarch64/file.o ulib/c_libax/build_aarch64/fnmatch.o ulib/c_libax/build_aarch64/glob.o ulib/c_libax/build_aarch64/in.o ulib/c_libax/build_aarch64/inet.o ulib/c_libax/build_aarch64/ioctl.o ulib/c_libax/build_aarch64/libgen.o ulib/c_libax/build_aarch64/locale.o ulib/c_libax/build_aarch64/math.o ulib/c_libax/build_aarch64/mman.o ulib/c_libax/build_aarch64/netdb.o ulib/c_libax/build_aarch64/poll.o ulib/c_libax/build_aarch64/pthread.o ulib/c_libax/build_aarch64/pwd.o ulib/c_libax/build_aarch64/resource.o ulib/c_libax/build_aarch64/sched.o ulib/c_libax/build_aarch64/setjmp.o ulib/c_libax/build_aarch64/signal.o ulib/c_libax/build_aarch64/socket.o ulib/c_libax/build_aarch64/stat.o ulib/c_libax/build_aarch64/stdio.o ulib/c_libax/build_aarch64/stdlib.o ulib/c_libax/build_aarch64/string.o ulib/c_libax/build_aarch64/syslog.o ulib/c_libax/build_aarch64/time.o ulib/c_libax/build_aarch64/uio.o ulib/c_libax/build_aarch64/unistd.o ulib/c_libax/build_aarch64/utsname.o ulib/c_libax/build_aarch64/wait.o
+aarch64-linux-musl-ranlib ulib/c_libax/build_aarch64/libc.a
+    [96;1mLinking[0m apps/c/redis/redis_qemu-virt-aarch64.elf
+aarch64-linux-musl-ld -nostdlib -T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds apps/c/redis/redis_server.o apps/c/redis/libhiredis.a apps/c/redis/liblua.a apps/c/redis/libhdrhistogram.a apps/c/redis/libfpconv.a ulib/c_libax/build_aarch64/libc.a target/aarch64-unknown-none-softfloat/release/liblibax_bindings.a -o apps/c/redis/redis_qemu-virt-aarch64.elf
+rust-objcopy --binary-architecture=aarch64 apps/c/redis/redis_qemu-virt-aarch64.elf --strip-all -O binary apps/c/redis/redis_qemu-virt-aarch64.bin

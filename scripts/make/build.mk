@@ -20,12 +20,7 @@ else ifeq ($(APP_LANG), c)
 	$(call cargo_build,-p libax_bindings)
 endif
 
-ifeq ($(APP), apps/c/redis)
-$(OUT_BIN): _cargo_build
-	$(OBJCOPY) $(APP)/redis/src/redis-server --strip-all -O binary $@
-else
 $(OUT_BIN): _cargo_build $(OUT_ELF)
 	$(OBJCOPY) $(OUT_ELF) --strip-all -O binary $@
-endif
 
 .PHONY: _cargo_build

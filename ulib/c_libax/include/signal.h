@@ -4,6 +4,9 @@
 #include <stdint.h>
 
 #include <stddef.h>
+#include <bits/types.h>
+
+
 int kill(pid_t __pid, int __sig);
 
 typedef int sig_atomic_t;
@@ -33,7 +36,9 @@ typedef union __sigval __sigval_t;
 
 typedef int __pid_t;
 typedef unsigned int __uid_t;
+#ifndef _BITS_TYPES_H
 typedef long __clock_t;
+#endif
 #define __SI_CLOCK_T __clock_t
 
 #define __SI_MAX_SIZE 128
@@ -95,97 +100,6 @@ enum {
 #define SI_USER     SI_USER
 #define SI_KERNEL   SI_KERNEL
 };
-
-// TODO: this struct may not be musl-like
-//  typedef struct
-//    {
-//      int si_signo;		/* Signal number.  */
-//  #if __SI_ERRNO_THEN_CODE
-//      int si_errno;		/* If non-zero, an errno value associated with
-//  				   this signal, as defined in <errno.h>.  */
-//      int si_code;		/* Signal code.  */
-//  #else
-//      int si_code;
-//      int si_errno;
-//  #endif
-//  #if __WORDSIZE == 64
-//      int __pad0;			/* Explicit padding.  */
-//  #endif
-
-//     union
-//       {
-// 	int _pad[__SI_PAD_SIZE];
-
-// 	 /* kill().  */
-// 	struct
-// 	  {
-// 	    __pid_t si_pid;	/* Sending process ID.  */
-// 	    __uid_t si_uid;	/* Real user ID of sending process.  */
-// 	  } _kill;
-
-// 	/* POSIX.1b timers.  */
-// 	struct
-// 	  {
-// 	    int si_tid;		/* Timer ID.  */
-// 	    int si_overrun;	/* Overrun count.  */
-// 	    __sigval_t si_sigval;	/* Signal value.  */
-// 	  } _timer;
-
-// 	/* POSIX.1b signals.  */
-// 	struct
-// 	  {
-// 	    __pid_t si_pid;	/* Sending process ID.  */
-// 	    __uid_t si_uid;	/* Real user ID of sending process.  */
-// 	    __sigval_t si_sigval;	/* Signal value.  */
-// 	  } _rt;
-
-// 	/* SIGCHLD.  */
-// 	struct
-// 	  {
-// 	    __pid_t si_pid;	/* Which child.	 */
-// 	    __uid_t si_uid;	/* Real user ID of sending process.  */
-// 	    int si_status;	/* Exit value or signal.  */
-// 	    __SI_CLOCK_T si_utime;
-// 	    __SI_CLOCK_T si_stime;
-// 	  } _sigchld;
-
-// 	/* SIGILL, SIGFPE, SIGSEGV, SIGBUS.  */
-// 	struct
-// 	  {
-// 	    void *si_addr;	    /* Faulting insn/memory ref.  */
-// 	    __SI_SIGFAULT_ADDL
-// 	    short int si_addr_lsb;  /* Valid LSB of the reported address.  */
-// 	    union
-// 	      {
-// 		/* used when si_code=SEGV_BNDERR */
-// 		struct
-// 		  {
-// 		    void *_lower;
-// 		    void *_upper;
-// 		  } _addr_bnd;
-// 		/* used when si_code=SEGV_PKUERR */
-// 		__uint32_t _pkey;
-// 	      } _bounds;
-// 	  } _sigfault;
-
-// 	/* SIGPOLL.  */
-// 	struct
-// 	  {
-// 	    __SI_BAND_TYPE si_band;	/* Band event for SIGPOLL.  */
-// 	    int si_fd;
-// 	  } _sigpoll;
-
-// 	/* SIGSYS.  */
-// #if __SI_HAVE_SIGSYS
-// 	struct
-// 	  {
-// 	    void *_call_addr;	/* Calling user insn.  */
-// 	    int _syscall;	/* Triggering system call number.  */
-// 	    unsigned int _arch; /* AUDIT_ARCH_* of syscall.  */
-// 	  } _sigsys;
-// #endif
-//       } _sifields;
-//   } siginfo_t __SI_ALIGNMENT;
 
 union sigval {
     int sival_int;
@@ -316,29 +230,17 @@ typedef void (*__sighandler_t)(int);
 #include <bits/types.h>
 
 struct sigaction {
-    /* Signal handler.  */
-#if defined __USE_POSIX199309 || defined __USE_XOPEN_EXTENDED
-    union {
-        /* Used if SA_SIGINFO is not set.  */
-        __sighandler_t sa_handler;
-        /* Used if SA_SIGINFO is set.  */
-        void (*sa_sigaction)(int, siginfo_t *, void *);
-    } __sigaction_handler;
-#define sa_handler   __sigaction_handler.sa_handler
-#define sa_sigaction __sigaction_handler.sa_sigaction
-#else
-    __sighandler_t sa_handler;
-#endif
-
-    /* Additional set of signals to be blocked.  */
-    __sigset_t sa_mask;
-
-    /* Special flags.  */
-    int sa_flags;
-
-    /* Restore handler.  */
-    void (*sa_restorer)(void);
+	union {
+		void (*sa_handler)(int);
+		void (*sa_sigaction)(int, siginfo_t *, void *);
+	} __sa_handler;
+	sigset_t sa_mask;
+	int sa_flags;
+	void (*sa_restorer)(void);
 };
+
+#define sa_handler   __sa_handler.sa_handler
+#define sa_sigaction __sa_handler.sa_sigaction
 
 #define SA_SIGINFO   4
 #define SA_NODEFER   0x40000000
@@ -346,15 +248,14 @@ struct sigaction {
 #endif
 
 typedef void (*sighandler_t)(int);
-// typedef struct __sigset_t { unsigned long __bits[128/sizeof(long)]; } sigset_t;
 
-sighandler_t signal(int __sig, sighandler_t __handler);
+void (*signal(int, void (*)(int)))(int);
 int sigemptyset(sigset_t *__set);
 int sigaction(int __sig, const struct sigaction *__restrict__ __act,
               struct sigaction *__restrict__ __oact);
 int raise(int __sig);
 int sigaddset(sigset_t *__set, int __signo);
-int pthread_sigmask(int __how, const sigset_t *__restrict__ __newmask,
-                    sigset_t *__restrict__ __oldmask);
+int pthread_sigmask(int __how, const sigset_t *__restrict__ __newmask, sigset_t *__restrict__ __oldmask);
 
+// int pthread_kill(pthread_t t, int sig);
 #endif

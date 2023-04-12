@@ -1,16 +1,33 @@
 #include <pthread.h>
 #include <stdio.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
+#include <errno.h>
+#include <signal.h>
 
-// TODO
-int pthread_mutex_init(pthread_mutex_t *__restrict __mutex,
-                       const pthread_mutexattr_t *__restrict __attr)
+uintptr_t __get_tp()
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	uintptr_t tp;
+	__asm__ ("mrs %0,tpidr_el0" : "=r"(tp));
+	return tp;
 }
 
-// TODO
-int pthread_mutex_lock(pthread_mutex_t *__mutex)
+_Noreturn void pthread_exit(void *)
+{
+
+}
+
+int pthread_mutex_init(pthread_mutex_t *restrict m, const pthread_mutexattr_t *restrict a)
+{
+	*m = (pthread_mutex_t){0};
+	if (a) m->_m_type = a->__attr;
+	return 0;
+}
+
+//TODO
+int pthread_mutex_lock(pthread_mutex_t *m)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
@@ -30,29 +47,37 @@ int pthread_mutex_trylock(pthread_mutex_t *__mutex)
     return 0;
 }
 
-// TODO
-int pthread_setcancelstate(int __state, int *__oldstate)
+int pthread_setcancelstate(int new, int *old)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    if (new > 2U) return EINVAL;
+	struct pthread *self = __pthread_self();
+	if (old) *old = self->canceldisable;
+	self->canceldisable = new;
+	return 0;
 }
 
-// TODO
-int pthread_setcanceltype(int __type, int *__oldtype)
+void __pthread_testcancel()
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	
 }
 
-// TODO
+int pthread_setcanceltype(int new, int *old)
+{
+	struct pthread *self = __pthread_self();
+	if (new > 1U) return EINVAL;
+	if (old) *old = self->cancelasync;
+	self->cancelasync = new;
+	if (new) pthread_testcancel();
+	return 0;
+}
+
 pthread_t pthread_self(void)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return (pthread_t)0;
 }
 
-// TODO
-int pthread_setname_np(pthread_t __target_thread, const char *__name)
+//TODO
+int pthread_setname_np(pthread_t thread, const char *name)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
@@ -66,11 +91,27 @@ int pthread_create(pthread_t *__restrict__ __newthread, const pthread_attr_t *__
     return 0;
 }
 
-// TODO
-int pthread_cancel(pthread_t __th)
+static void init_cancellation()
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+
+}
+
+int pthread_cancel(pthread_t t)
+{
+    static int init;
+	if (!init) {
+		init_cancellation();
+		init = 1;
+	}
+
+    t->cancel = 1;
+	// a_store(&t->cancel, 1);
+	if (t == pthread_self()) {
+		if (t->canceldisable == PTHREAD_CANCEL_ENABLE && t->cancelasync)
+			pthread_exit(PTHREAD_CANCELED);
+		return 0;
+	}
+	return pthread_kill(t, SIGCANCEL);
 }
 
 // TODO
@@ -80,12 +121,14 @@ int pthread_join(pthread_t __th, void **__thread_return)
     return 0;
 }
 
-// TODO
-int pthread_cond_init(pthread_cond_t *__restrict__ __cond,
-                      const pthread_condattr_t *__restrict__ __cond_attr)
+int pthread_cond_init(pthread_cond_t *restrict c, const pthread_condattr_t *restrict a)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	*c = (pthread_cond_t){0};
+	if (a) {
+		c->_c_clock = a->__attr & 0x7fffffff;
+		if (a->__attr>>31) c->_c_shared = (void *)-1;
+	}
+	return 0;
 }
 
 // TODO
@@ -102,24 +145,43 @@ int pthread_cond_wait(pthread_cond_t *__restrict__ __cond, pthread_mutex_t *__re
     return 0;
 }
 
-// TODO
-int pthread_attr_init(pthread_attr_t *__attr)
+#define DEFAULT_STACK_SIZE 131072
+#define DEFAULT_GUARD_SIZE 8192
+
+int pthread_attr_init(pthread_attr_t *a)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	*a = (pthread_attr_t){0};
+	// __acquire_ptc();
+	a->_a_stacksize = DEFAULT_STACK_SIZE;
+	a->_a_guardsize = DEFAULT_GUARD_SIZE;
+	// __release_ptc();
+	return 0;
 }
 
-// TODO
-int pthread_attr_getstacksize(const pthread_attr_t *__restrict__ __attr,
-                              size_t *__restrict__ __stacksize)
+int pthread_attr_getstacksize(const pthread_attr_t *restrict a, size_t *restrict size)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	*size = a->_a_stacksize;
+	return 0;
 }
 
-// TODO
-int pthread_attr_setstacksize(pthread_attr_t *__attr, size_t __stacksize)
+int pthread_attr_setstacksize(pthread_attr_t *a, size_t size)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+	if (size-PTHREAD_STACK_MIN > SIZE_MAX/4) return EINVAL;
+	a->_a_stackaddr = 0;
+	a->_a_stacksize = size;
+	return 0;
+}
+
+
+
+void pthread_testcancel(void)
+{
+
+}
+
+//TODO
+int pthread_kill(pthread_t, int)
+{
+	printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }

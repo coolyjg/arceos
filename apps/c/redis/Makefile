@@ -4,11 +4,18 @@ REDIS_CFLAGS_S := '-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restri
 CC := aarch64-linux-musl-gcc
 
 all:
-	rm $(REDIS_PATH)/src/Makefile
+	rm -f $(REDIS_PATH)/src/Makefile
 	cp $(PWD)/redis_src_makefile $(REDIS_PATH)/src/Makefile
 	CC=$(CC) USE_JEMALLOC=no $(MAKE) -C $(REDIS_PATH) V=1 REDIS_CFLAGS=$(REDIS_CFLAGS_S) -j
 
 clean:
 	$(MAKE) -C $(REDIS_PATH) clean
+	$(MAKE) -C $(REDIS_PATH)/deps/fpconv/ clean
+	$(MAKE) -C $(REDIS_PATH)/deps/hdr_histogram/ clean
+	$(MAKE) -C $(REDIS_PATH)/deps/hiredis/ clean
+	$(MAKE) -C $(REDIS_PATH)/deps/lua/src/ clean
+	rm -f redis-server.o
+	rm -f redis/src/redis-server.o
+	rm -f *.o
 
 .PHONY: all

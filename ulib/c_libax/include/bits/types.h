@@ -153,7 +153,9 @@ __STD_TYPE __OFF_T_TYPE __off_t;             /* Type of file sizes and offsets. 
 __STD_TYPE __OFF64_T_TYPE __off64_t;         /* Type of file sizes and offsets (LFS).  */
 __STD_TYPE __PID_T_TYPE __pid_t;             /* Type of process identifications.  */
 __STD_TYPE __FSID_T_TYPE __fsid_t;           /* Type of file system IDs.  */
+#ifndef _SIGNAL_H
 __STD_TYPE __CLOCK_T_TYPE __clock_t;         /* Type of CPU usage counts.  */
+#endif
 __STD_TYPE __RLIM_T_TYPE __rlim_t;           /* Type for resource measurement.  */
 __STD_TYPE __RLIM64_T_TYPE __rlim64_t;       /* Type for resource measurement (LFS).  */
 __STD_TYPE __ID_T_TYPE __id_t;               /* General type for IDs.  */
@@ -225,11 +227,6 @@ __STD_TYPE __TIME64_T_TYPE __time64_t;
 
 #undef __STD_TYPE
 
-#define _SIGSET_NWORDS (1024 / (8 * sizeof(unsigned long int)))
-typedef struct {
-    unsigned long int __val[_SIGSET_NWORDS];
-} __sigset_t;
-
-typedef __sigset_t sigset_t;
+typedef struct __sigset_t { unsigned long __bits[128/sizeof(long)]; } sigset_t;
 
 #endif /* bits/types.h */

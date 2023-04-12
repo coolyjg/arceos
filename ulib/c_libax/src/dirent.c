@@ -1,18 +1,42 @@
 #include <dirent.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <errno.h>
+#include <string.h>
 
-// TODO
-int closedir(DIR *__dirp)
+int closedir(DIR *dir)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	int ret = close(dir->fd);
+	free(dir);
+	return ret;
 }
 
-// TODO
-DIR *fdopendir(int __fd)
+DIR *fdopendir(int fd)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return NULL;
+	DIR *dir;
+	struct stat st;
+
+	if (fstat(fd, &st) < 0) {
+		return 0;
+	}
+	if (fcntl(fd, F_GETFL) & O_PATH) {
+		errno = EBADF;
+		return 0;
+	}
+	if (!S_ISDIR(st.st_mode)) {
+		errno = ENOTDIR;
+		return 0;
+	}
+	if (!(dir = calloc(1, sizeof(*dir)))) {
+		return 0;
+	}
+
+	fcntl(fd, F_SETFD, FD_CLOEXEC);
+	dir->fd = fd;
+	return dir;
 }
 
 // TODO
@@ -29,23 +53,38 @@ struct dirent *readdir(DIR *__dirp)
     return NULL;
 }
 
-// TODO
-int readdir_r(DIR *__restrict __dirp, struct dirent *__restrict, struct dirent **__restrict)
+int readdir_r(DIR *restrict dir, struct dirent *restrict buf, struct dirent **restrict result)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	struct dirent *de;
+	int errno_save = errno;
+	int ret;
+	
+	// LOCK(dir->lock);
+	errno = 0;
+	de = readdir(dir);
+	if ((ret = errno)) {
+		// UNLOCK(dir->lock);
+		return ret;
+	}
+	errno = errno_save;
+	if (de) memcpy(buf, de, de->d_reclen);
+	else buf = NULL;
+
+	// UNLOCK(dir->lock);
+	*result = buf;
+	return 0;
 }
 
-// TODO
-void rewinddir(DIR *__dirp)
+void rewinddir(DIR *dir)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return;
+	// LOCK(dir->lock);
+	lseek(dir->fd, 0, SEEK_SET);
+	dir->buf_pos = dir->buf_end = 0;
+	dir->tell = 0;
+	// UNLOCK(dir->lock);
 }
 
-// TODO
-int dirfd(DIR *__dirp)
+int dirfd(DIR *d)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return d->fd;
 }

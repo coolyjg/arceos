@@ -9,4 +9,7 @@ typedef struct __jmp_buf_tag {
     unsigned long __ss[128 / sizeof(long)];
 } jmp_buf[1];
 
+int setjmp (jmp_buf);
+_Noreturn void longjmp (jmp_buf, int);
+
 #endif

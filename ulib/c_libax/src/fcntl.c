@@ -22,3 +22,10 @@ int posix_fadvise(int __fd, unsigned long __offset, unsigned long __len, int __a
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
+
+//TODO
+int sync_file_range(int, off_t, off_t, unsigned)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

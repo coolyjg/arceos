@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 typedef long time_t;
+#define CLOCK_REALTIME           0
 
 #define CLOCKS_PER_SEC 1000000L
 
@@ -12,6 +13,8 @@ extern int daylight;
 extern long timezone;
 extern int getdate_err;
 #endif
+
+extern long timezone;
 
 struct tm {
     int tm_sec;          /* seconds of minute */
@@ -50,5 +53,9 @@ int setitimer(int __which, const struct itimerval *__restrict__ __new,
 int clock_gettime(clockid_t __clock_id, struct timespec *__tp);
 
 char *ctime_r(const time_t *__restrict__ __timer, char *__restrict__ __buf);
+
+clock_t clock (void);
+double difftime (time_t, time_t);
+time_t mktime (struct tm *);
 
 #endif

@@ -11,6 +11,7 @@ typedef long ptrdiff_t;
 
 typedef int pid_t;
 typedef long loff_t;
+typedef long clock_t;
 // typedef unsigned long size_t;
 
 typedef int clockid_t;

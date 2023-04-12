@@ -2,8 +2,9 @@
 #define _PTHREAD_H 1
 
 #include <stddef.h>
+#include <locale.h>
+#include <signal.h>
 
-typedef unsigned long int pthread_t;
 enum {
     PTHREAD_CANCEL_ENABLE,
 #define PTHREAD_CANCEL_ENABLE PTHREAD_CANCEL_ENABLE
@@ -20,14 +21,12 @@ enum {
 
 #define __SIZEOF_PTHREAD_ATTR_T 56
 
-union pthread_attr_t {
-    char __size[__SIZEOF_PTHREAD_ATTR_T];
-    long int __align;
-};
-#ifndef __have_pthread_attr_t
-typedef union pthread_attr_t pthread_attr_t;
-#define __have_pthread_attr_t 1
-#endif
+
+
+// #ifndef __have_pthread_attr_t
+// typedef union pthread_attr_t pthread_attr_t;
+// #define __have_pthread_attr_t 1
+// #endif
 
 // #if defined(__NEED_pthread_condattr_t) && !defined(__DEFINED_pthread_condattr_t)
 typedef struct {
@@ -77,11 +76,22 @@ struct __pthread_mutex_s {
 #endif
 };
 
-typedef union {
-    struct __pthread_mutex_s __data;
-    char __size[__SIZEOF_PTHREAD_MUTEX_T];
-    long int __align;
-} pthread_mutex_t;
+// typedef union {
+//     struct __pthread_mutex_s __data;
+//     char __size[__SIZEOF_PTHREAD_MUTEX_T];
+//     long int __align;
+// } pthread_mutex_t;
+
+typedef struct { union { int __i[sizeof(long)==8?10:6]; volatile int __vi[sizeof(long)==8?10:6]; volatile void *volatile __p[sizeof(long)==8?5:6]; } __u; } pthread_mutex_t;
+
+#define _m_type __u.__i[0]
+
+typedef struct { unsigned __attr; } pthread_mutexattr_t;
+
+typedef struct { union { int __i[sizeof(long)==8?14:9]; volatile int __vi[sizeof(long)==8?14:9]; unsigned long __s[sizeof(long)==8?7:9]; } __u; } pthread_attr_t;
+#define _a_stacksize __u.__s[0]
+#define _a_guardsize __u.__s[1]
+#define _a_stackaddr __u.__s[2]
 
 typedef union {
     __extension__ unsigned long long int __value64;
@@ -105,27 +115,84 @@ struct __pthread_cond_s {
     unsigned int __g_signals[2];
 };
 
-typedef union {
-    struct __pthread_cond_s __data;
-    char __size[__SIZEOF_PTHREAD_COND_T];
-    __extension__ long long int __align;
-} pthread_cond_t;
+typedef struct { union { int __i[12]; volatile int __vi[12]; void *__p[12*sizeof(int)/sizeof(void*)]; } __u; } pthread_cond_t;
+#define _c_clock __u.__i[4]
+#define _c_shared __u.__p[0]
 
-#ifndef __have_pthread_attr_t
-typedef union pthread_attr_t pthread_attr_t;
-#define __have_pthread_attr_t 1
-#endif
 
 #define PTHREAD_MUTEX_INITIALIZER \
     {                             \
         0                         \
     }
 
-// TODO: this is not a musl-like struct
-typedef union {
-    char __size[__SIZEOF_PTHREAD_MUTEXATTR_T];
-    int __align;
-} pthread_mutexattr_t;
+#include <bits/types.h>
+
+#define pthread __pthread
+
+
+#include <locale.h>
+struct pthread {
+	/* Part 1 -- these fields may be external or
+	 * internal (accessed via asm) ABI. Do not change. */
+	struct pthread *self;
+#ifndef TLS_ABOVE_TP
+	uintptr_t *dtv;
+#endif
+	struct pthread *prev, *next; /* non-ABI */
+	uintptr_t sysinfo;
+#ifndef TLS_ABOVE_TP
+#ifdef CANARY_PAD
+	uintptr_t canary_pad;
+#endif
+	uintptr_t canary;
+#endif
+
+	/* Part 2 -- implementation details, non-ABI. */
+	int tid;
+	int errno_val;
+	volatile int detach_state;
+	volatile int cancel;
+	volatile unsigned char canceldisable, cancelasync;
+	unsigned char tsd_used:1;
+	unsigned char dlerror_flag:1;
+	unsigned char *map_base;
+	size_t map_size;
+	void *stack;
+	size_t stack_size;
+	size_t guard_size;
+	void *result;
+	struct __ptcb *cancelbuf;
+	void **tsd;
+	struct {
+		volatile void *volatile head;
+		long off;
+		volatile void *volatile pending;
+	} robust_list;
+	int h_errno_val;
+	volatile int timer_id;
+	// locale_t locale;
+	volatile int killlock[1];
+	char *dlerror_buf;
+	void *stdio_locks;
+
+	/* Part 3 -- the positions of these fields relative to
+	 * the end of the structure is external and internal ABI. */
+#ifdef TLS_ABOVE_TP
+	uintptr_t canary;
+	uintptr_t *dtv;
+#endif
+};
+
+typedef struct __pthread *pthread_t;
+
+#define PTHREAD_CANCELED ((void *)-1)
+#define SIGCANCEL 33
+
+uintptr_t __get_tp();
+
+#define __pthread_self() ((pthread_t)(__get_tp() - sizeof(struct __pthread)))
+
+_Noreturn void pthread_exit(void *);
 
 int pthread_mutex_init(pthread_mutex_t *__restrict __mutex,
                        const pthread_mutexattr_t *__restrict __attr);
@@ -153,5 +220,10 @@ int pthread_attr_init(pthread_attr_t *__attr);
 int pthread_attr_getstacksize(const pthread_attr_t *__restrict__ __attr,
                               size_t *__restrict__ __stacksize);
 int pthread_attr_setstacksize(pthread_attr_t *__attr, size_t __stacksize);
+
+
+void pthread_testcancel(void);
+
+int pthread_kill(pthread_t t, int sig);
 
 #endif

@@ -5,9 +5,14 @@ int tolower(int __c);
 int toupper(int __c);
 
 int isprint(int);
-#define isprint(a) (0 ? isprint(a) : ((unsigned)(a)-0x20) < 0x5f)
-// #define isprint(a) ((unsigned)(a)-0x20) < 0x5f
-
+int isalpha(int c);
 int isalnum(int);
+int isupper(int c);
+int islower(int c);
+
+int   isxdigit(int);
+int   isgraph(int);
+int   iscntrl(int);
+int   ispunct(int);
 
 #endif

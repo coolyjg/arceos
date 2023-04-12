@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <time.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+char **environ = NULL;
 
 // TODO:
 long int sysconf(int name)
@@ -16,11 +21,12 @@ off_t lseek(int fd, off_t offset, int whence)
     return 0;
 }
 
-// TODO:
-unsigned int sleep(unsigned int seconds)
+unsigned sleep(unsigned seconds)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	struct timespec tv = { .tv_sec = seconds, .tv_nsec = 0 };
+	if (nanosleep(&tv, &tv))
+		return tv.tv_sec;
+	return 0;
 }
 
 // TODO:
@@ -66,18 +72,15 @@ int lstat(const char *path, struct stat *buf)
     return 0;
 }
 
-// TODO:
 int stat(const char *path, struct stat *buf)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return fstatat(AT_FDCWD, path, buf, 0);
 }
 
-// TODO:
-int fstat(int fd, struct stat *buf)
+int fstat(int fd, struct stat *st)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    // if (fd<0) return __syscall_ret(-EBADF);
+	return fstatat(fd, "", st, AT_EMPTY_PATH);
 }
 
 // TODO:
@@ -122,10 +125,9 @@ int fchown(int fd, uid_t owner, gid_t group)
     return 0;
 }
 
-// TODO:
 uid_t geteuid(void)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    // return __syscall(SYS_geteuid);
     return 0;
 }
 
@@ -163,11 +165,13 @@ _Noreturn void _exit(int __status)
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
 }
 
-// TODO
-int usleep(unsigned int __useconds)
+int usleep(unsigned int useconds)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    struct timespec tv = {
+		.tv_sec = useconds/1000000,
+		.tv_nsec = (useconds%1000000)*1000
+	};
+	return nanosleep(&tv, &tv);
 }
 
 // TODO
@@ -213,7 +217,14 @@ int chdir(const char *__path)
 }
 
 // TODO
-int truncate(const char *__file, loff_t __length)
+int truncate(const char *path, off_t length)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+//TODO
+uid_t getuid(void)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

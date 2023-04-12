@@ -123,6 +123,9 @@ struct sockaddr_in6 {
 #define IPV6_XFRM_POLICY          35
 #define IPV6_HDRINCL              36
 
+#define IN6ADDR_ANY_INIT      { { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } } }
+#define IN6ADDR_LOOPBACK_INIT { { { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 } } }
+
 uint16_t ntohs(uint16_t __netshort);
 uint32_t htonl(uint32_t __hostlong);
 uint32_t ntohl(uint32_t __netlong);

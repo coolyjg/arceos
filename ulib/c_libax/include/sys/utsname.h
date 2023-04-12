@@ -73,6 +73,6 @@ struct utsname {
 #endif
 
 /* Put information about the system in NAME.  */
-extern int uname(struct utsname *__name);
+int uname (struct utsname *);
 
 #endif /* sys/utsname.h  */

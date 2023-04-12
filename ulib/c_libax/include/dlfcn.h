@@ -8,7 +8,6 @@
 #define RTLD_GLOBAL   256
 #define RTLD_LOCAL    0
 
-// #if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
 typedef struct {
     const char *dli_fname;
     void *dli_fbase;
@@ -16,8 +15,6 @@ typedef struct {
     void *dli_saddr;
 } Dl_info;
 int dladdr(const void *__address, Dl_info *__info);
-// int dlinfo(void *, int, void *);
-// #endif
 
 void *dlopen(const char *__file, int __mode);
 char *dlerror(void);

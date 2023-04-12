@@ -1,8 +1,12 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <libax.h>
+
+program_invocation_short_name = NULL;
+program_invocation_name = NULL;
 
 void srand(unsigned s)
 {
@@ -57,11 +61,16 @@ _Noreturn void abort(void)
     __builtin_unreachable();
 }
 
-// TODO:
+char **__environ = 0;
+
 char *getenv(const char *name)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	size_t l = __strchrnul(name, '=') - name;
+	if (l && !name[l] && __environ)
+		for (char **e = __environ; *e; e++)
+			if (!strncmp(name, *e, l) && l[*e] == '=')
+				return *e + l+1;
+	return 0;
 }
 
 // TODO:
@@ -92,11 +101,10 @@ unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__
     return 0;
 }
 
-// TODO
+//TODO
 long random(void)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+    return (long)ax_rand_u32();
 }
 
 // TODO
@@ -133,11 +141,9 @@ _Noreturn void exit(int __status)
     __builtin_unreachable();
 }
 
-// TODO
-long long llabs(long long __x)
+long long llabs(long long a)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	return a>0 ? a : -a;
 }
 
 // TODO
@@ -147,11 +153,19 @@ int mkostemp(char *__template, int __flags)
     return 0;
 }
 
-// TODO
-long long atoll(const char *__nptr)
+long long atoll(const char *s)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return 0;
+	long long n=0;
+	int neg=0;
+	while (isspace(*s)) s++;
+	switch (*s) {
+	case '-': neg=1;
+	case '+': s++;
+	}
+	/* Compute n as a negative number to avoid overflow on LLONG_MIN */
+	while (isdigit(*s))
+		n = 10*n - (*s++ - '0');
+	return neg ? n : -n;
 }
 
 // TODO
@@ -168,15 +182,18 @@ int unsetenv(const char *__name)
     return 0;
 }
 
-// TODO
-void srandom(unsigned int __seed)
+void srandom(unsigned int s)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return;
+    ax_srand(s);
 }
 
-// TODO
-int abs(int __x)
+int abs(int a)
+{
+	return a>0 ? a : -a;
+}
+
+//TODO
+int system (const char *)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

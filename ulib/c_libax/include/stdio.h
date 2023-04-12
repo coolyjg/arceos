@@ -4,6 +4,7 @@
 typedef long __off_t;
 
 #include <stddef.h>
+#include <sys/types.h>
 
 #define STDIN_FILENO  0
 #define STDOUT_FILENO 1
@@ -27,41 +28,73 @@ typedef long __off_t;
 
 // #endif
 
-struct _IO_FILE {
-    int _flags; /* High-order word is _IO_MAGIC; rest is flags. */
+// struct _IO_FILE {
+//     int _flags; /* High-order word is _IO_MAGIC; rest is flags. */
 
-    /* The following pointers correspond to the C++ streambuf protocol. */
-    char *_IO_read_ptr;   /* Current read pointer */
-    char *_IO_read_end;   /* End of get area. */
-    char *_IO_read_base;  /* Start of putback+get area. */
-    char *_IO_write_base; /* Start of put area. */
-    char *_IO_write_ptr;  /* Current put pointer. */
-    char *_IO_write_end;  /* End of put area. */
-    char *_IO_buf_base;   /* Start of reserve area. */
-    char *_IO_buf_end;    /* End of reserve area. */
+//     /* The following pointers correspond to the C++ streambuf protocol. */
+//     char *_IO_read_ptr;   /* Current read pointer */
+//     char *_IO_read_end;   /* End of get area. */
+//     char *_IO_read_base;  /* Start of putback+get area. */
+//     char *_IO_write_base; /* Start of put area. */
+//     char *_IO_write_ptr;  /* Current put pointer. */
+//     char *_IO_write_end;  /* End of put area. */
+//     char *_IO_buf_base;   /* Start of reserve area. */
+//     char *_IO_buf_end;    /* End of reserve area. */
 
-    /* The following fields are used to support backing up and undo. */
-    char *_IO_save_base;   /* Pointer to start of non-current get area. */
-    char *_IO_backup_base; /* Pointer to first valid character of backup area */
-    char *_IO_save_end;    /* Pointer to end of non-current get area. */
+//     /* The following fields are used to support backing up and undo. */
+//     char *_IO_save_base;   /* Pointer to start of non-current get area. */
+//     char *_IO_backup_base; /* Pointer to first valid character of backup area */
+//     char *_IO_save_end;    /* Pointer to end of non-current get area. */
 
-    struct _IO_marker *_markers;
+//     struct _IO_marker *_markers;
 
-    struct _IO_FILE *_chain;
+//     struct _IO_FILE *_chain;
 
-    int _fileno;
-    int _flags2;
-    __off_t _old_offset; /* This used to be _offset but it's too small.  */
+//     int _fileno;
+//     int _flags2;
+//     __off_t _old_offset; /* This used to be _offset but it's too small.  */
 
-    /* 1+column number of pbase(); 0 is unknown. */
-    unsigned short _cur_column;
-    signed char _vtable_offset;
-    char _shortbuf[1];
+//     /* 1+column number of pbase(); 0 is unknown. */
+//     unsigned short _cur_column;
+//     signed char _vtable_offset;
+//     char _shortbuf[1];
 
-    //   _IO_lock_t *_lock;
-};
+//     //   _IO_lock_t *_lock;
+// };
+
 
 typedef struct _IO_FILE FILE;
+
+struct _IO_FILE {
+	unsigned flags;
+	unsigned char *rpos, *rend;
+	int (*close)(FILE *);
+	unsigned char *wend, *wpos;
+	unsigned char *mustbezero_1;
+	unsigned char *wbase;
+	size_t (*read)(FILE *, unsigned char *, size_t);
+	size_t (*write)(FILE *, const unsigned char *, size_t);
+	off_t (*seek)(FILE *, off_t, int);
+	unsigned char *buf;
+	size_t buf_size;
+	FILE *prev, *next;
+	int fd;
+	int pipe_pid;
+	long lockcount;
+	int mode;
+	volatile int lock;
+	int lbf;
+	void *cookie;
+	off_t off;
+	char *getln_buf;
+	void *mustbezero_2;
+	unsigned char *shend;
+	off_t shlim, shcnt;
+	FILE *prev_locked, *next_locked;
+	struct __locale_struct *locale;
+};
+
+// typedef struct _IO_FILE FILE;
 
 // extern FILE *const stdin;
 // extern FILE *const stdout;
@@ -74,6 +107,8 @@ typedef struct _IO_FILE FILE;
 #define stdin  0
 #define stdout 1
 #define stderr 2
+
+#define L_tmpnam 20
 
 #define EOF (-1)
 
@@ -107,7 +142,13 @@ int fprintf(int f, const char *fmt, ...);
 #define SEEK_CUR 1
 #define SEEK_END 2
 
-int getchar();
+#define F_EOF 16
+#define F_ERR 32
+#define F_SVB 64
+
+#define UNGET 8
+
+int getchar(void);
 int putchar(int);
 int puts(const char *s);
 
@@ -137,5 +178,23 @@ int fileno(FILE *__stream);
 int feof(FILE *__stream);
 int fseek(FILE *__stream, long __off, int __whence);
 long ftello(FILE *__stream);
+
+char *tmpnam(char *);
+
+void clearerr(FILE *);
+int ferror(FILE *);
+int fputs(const char *__restrict, FILE *__restrict);
+FILE *freopen(const char *__restrict, const char *__restrict, FILE *__restrict);
+int fscanf(FILE *__restrict, const char *__restrict, ...);
+long ftell(FILE *);
+int getc(FILE *);
+int remove(const char *);
+int setvbuf(FILE *__restrict, char *__restrict, int, size_t);
+int sprintf(char *__restrict, const char *__restrict, ...);
+FILE *tmpfile(void);
+int ungetc(int, FILE *);
+
+typedef __builtin_va_list __isoc_va_list;
+int vfprintf(FILE *__restrict, const char *__restrict, __isoc_va_list);
 
 #endif // __STDIO_H__

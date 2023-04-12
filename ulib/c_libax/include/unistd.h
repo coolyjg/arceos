@@ -7,6 +7,11 @@
 
 // #define _SC_PAGESIZE 30
 #define X_OK 1
+#define F_OK 0
+// char **environ;
+
+// char **environ = 0;
+extern char **environ;
 
 long int sysconf(int name);
 off_t lseek(int fd, off_t offset, int whence);
@@ -45,6 +50,7 @@ int isatty(int __fd);
 pid_t fork(void);
 
 int chdir(const char *__path);
-int truncate(const char *__file, loff_t __length);
+int truncate(const char *path, off_t length);
+uid_t getuid(void);
 
 #endif

@@ -28,12 +28,17 @@ int strcoll(const char *__s1, const char *__s2);
 size_t strcspn(const char *s1, const char *s2);
 int strcasecmp(const char *__s1, const char *__s2);
 
-char *strrchr(const char *str, int c);
-char *strchr(const char *str, int c);
-
 char *strerror(int n);
 
 char *strpbrk(const char *__s, const char *__accept);
 char *strdup(const char *__s);
+
+char *__strchrnul(const char *s, int c);
+
+char *strcpy (char *__restrict, const char *__restrict);
+char *strcat (char *__restrict, const char *__restrict);
+char *strncat (char *__restrict, const char *__restrict, size_t);
+int strerror_r (int, char *, size_t);
+size_t strspn (const char *, const char *);
 
 #endif // __STRING_H__

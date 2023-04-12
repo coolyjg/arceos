@@ -13,7 +13,7 @@ out_feat := $(obj_dir)/.features.txt
 ulib_src := $(wildcard $(src_dir)/*.c)
 ulib_obj := $(patsubst $(src_dir)/%.c,$(obj_dir)/%.o,$(ulib_src))
 
-CFLAGS += -static -no-pie -fno-builtin -ffreestanding -nostdinc -Wall
+CFLAGS += -static -no-pie -fno-builtin -ffreestanding -nostdinc -fPIC -Wall
 CFLAGS += -I$(inc_dir) -I$(ulib_dir)/$(rust_lib_name)
 LDFLAGS += -nostdlib -T$(LD_SCRIPT)
 
@@ -25,6 +25,7 @@ ifeq ($(ARCH), riscv64)
   CFLAGS += -march=rv64gc -mabi=lp64d -mcmodel=medany
 else ifeq ($(ARCH), aarch64)
   CFLAGS += # -mgeneral-regs-only
+#  CFLAGS += -mgeneral-regs-only
 endif
 
 ifneq ($(wildcard $(in_feat)),)    # features.txt exists
@@ -59,10 +60,8 @@ app-objs := $(addprefix $(APP)/,$(app-objs))
 $(APP)/%.o: $(APP)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-ifneq ($(APP), apps/c/redis)
 $(OUT_ELF): $(app-objs) $(c_lib) $(rust_lib)
 	@echo "    $(CYAN_C)Linking$(END_C) $(OUT_ELF)"
 	$(LD) $(LDFLAGS) $^ -o $@
-endif
 
 .PHONY: _gen_feat
