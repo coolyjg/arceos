@@ -58,7 +58,7 @@ int pthread_setcancelstate(int new, int *old)
 
 void __pthread_testcancel()
 {
-	
+	return ;
 }
 
 int pthread_setcanceltype(int new, int *old)
@@ -93,7 +93,7 @@ int pthread_create(pthread_t *__restrict__ __newthread, const pthread_attr_t *__
 
 static void init_cancellation()
 {
-
+	return ;
 }
 
 int pthread_cancel(pthread_t t)

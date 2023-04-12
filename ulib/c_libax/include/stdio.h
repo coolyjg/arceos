@@ -129,7 +129,7 @@ int fprintf(int f, const char *fmt, ...);
 #define F_EOF 16
 #define F_ERR 32
 #define F_SVB 64
-
+#define F_NORD 4
 #define UNGET 8
 
 int getchar(void);
@@ -177,6 +177,15 @@ int setvbuf(FILE *__restrict, char *__restrict, int, size_t);
 int sprintf(char *__restrict, const char *__restrict, ...);
 FILE *tmpfile(void);
 int ungetc(int, FILE *);
+
+ssize_t getdelim(char **__restrict, size_t *__restrict, int, FILE *__restrict);
+ssize_t getline(char **__restrict, size_t *__restrict, FILE *__restrict);
+
+int __uflow(FILE *f);
+int getc_unlocked(FILE *);
+
+#define getc_unlocked(f) \
+	( ((f)->rpos != (f)->rend) ? *(f)->rpos++ : __uflow((f)) )
 
 typedef __builtin_va_list __isoc_va_list;
 int vfprintf(FILE *__restrict, const char *__restrict, __isoc_va_list);
