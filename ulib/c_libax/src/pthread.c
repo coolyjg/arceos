@@ -16,7 +16,7 @@ uintptr_t __get_tp()
 
 _Noreturn void pthread_exit(void *)
 {
-
+	unimplemented();
 }
 
 int pthread_mutex_init(pthread_mutex_t *restrict m, const pthread_mutexattr_t *restrict a)

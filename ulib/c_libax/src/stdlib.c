@@ -5,8 +5,8 @@
 
 #include <libax.h>
 
-program_invocation_short_name = NULL;
-program_invocation_name = NULL;
+char *program_invocation_short_name = NULL;
+char *program_invocation_name = NULL;
 
 void srand(unsigned s)
 {

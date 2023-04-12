@@ -1,6 +1,7 @@
 #include <glob.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include <unistd.h>
 #include <string.h>
 #include <dirent.h>
@@ -150,7 +151,7 @@ static int do_glob(char *buf, size_t pos, int type, char *pat, int flags, int (*
 		/* With GLOB_PERIOD, don't allow matching . or .. unless
 		 * fnmatch would match them with FNM_PERIOD rules in effect. */
 		if (p2 && (flags & GLOB_PERIOD) && de->d_name[0]=='.'
-		    && (!de->d_name[1] || de->d_name[1]=='.' && !de->d_name[2])
+		    && (!de->d_name[1] || (de->d_name[1]=='.' && !de->d_name[2]))
 		    && fnmatch(pat, de->d_name, fnm_flags | FNM_PERIOD))
 			continue;
 
@@ -295,8 +296,6 @@ int glob(const char *restrict pat, int flags, int (*errfunc)(const char *path, i
 	
 	return error;
 }
-
-#define offsetof(t, d) __builtin_offsetof(t, d)
 
 void globfree(glob_t *g)
 {

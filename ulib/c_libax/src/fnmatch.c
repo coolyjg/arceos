@@ -11,5 +11,6 @@
 //TODO
 int fnmatch(const char *pat, const char *str, int flags)
 {
-
+    unimplemented();
+    return 0;
 }

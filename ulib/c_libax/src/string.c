@@ -121,7 +121,9 @@ int strncmp(const char *_l, const char *_r, size_t n)
     return *l - *r;
 }
 
-#define BITOP(a, b, op) a[(size_t)b / (8 * sizeof(size_t))] op 1 << (size_t)b % (8 * sizeof(size_t))
+#define BITOP(a,b,op) \
+ ((a)[(size_t)(b)/(8*sizeof *(a))] op (size_t)1<<((size_t)(b)%(8*sizeof *(a))))
+
 size_t strcspn(const char *s1, const char *s2)
 {
     const char *a = s1;
@@ -270,9 +272,6 @@ static char *fourbyte_strstr(const unsigned char *h, const unsigned char *n)
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a,b) ((a)<(b)?(a):(b))
-
-#define BITOP(a,b,op) \
- ((a)[(size_t)(b)/(8*sizeof *(a))] op (size_t)1<<((size_t)(b)%(8*sizeof *(a))))
 
 static char *twoway_strstr(const unsigned char *h, const unsigned char *n)
 {
@@ -439,9 +438,6 @@ int strerror_r(int err, char *buf, size_t buflen)
 	memcpy(buf, msg, l+1);
 	return 0;
 }
-
-#define BITOP(a,b,op) \
- ((a)[(size_t)(b)/(8*sizeof *(a))] op (size_t)1<<((size_t)(b)%(8*sizeof *(a))))
 
 size_t strspn(const char *s, const char *c)
 {
