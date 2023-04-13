@@ -1,6 +1,6 @@
 #include <dlfcn.h>
-#include <stdio.h>
 #include <pthread.h>
+#include <stdio.h>
 
 // TODO
 int dladdr(const void *__address, Dl_info *__info)
@@ -16,14 +16,15 @@ void *dlopen(const char *__file, int __mode)
 
 char *dlerror()
 {
-	struct pthread* self = __pthread_self();
-	if (!self->dlerror_flag) return 0;
-	self->dlerror_flag = 0;
-	char *s = self->dlerror_buf;
-	if (s == (void *)-1)
-		return "Dynamic linker failed to allocate memory for error message";
-	else
-		return s;
+    struct pthread *self = __pthread_self();
+    if (!self->dlerror_flag)
+        return 0;
+    self->dlerror_flag = 0;
+    char *s = self->dlerror_buf;
+    if (s == (void *)-1)
+        return "Dynamic linker failed to allocate memory for error message";
+    else
+        return s;
 }
 
 // TODO

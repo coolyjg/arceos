@@ -62,36 +62,35 @@ typedef long __off_t;
 //     //   _IO_lock_t *_lock;
 // };
 
-
 typedef struct _IO_FILE FILE;
 
 struct _IO_FILE {
-	unsigned flags;
-	unsigned char *rpos, *rend;
-	int (*close)(FILE *);
-	unsigned char *wend, *wpos;
-	unsigned char *mustbezero_1;
-	unsigned char *wbase;
-	size_t (*read)(FILE *, unsigned char *, size_t);
-	size_t (*write)(FILE *, const unsigned char *, size_t);
-	off_t (*seek)(FILE *, off_t, int);
-	unsigned char *buf;
-	size_t buf_size;
-	FILE *prev, *next;
-	int fd;
-	int pipe_pid;
-	long lockcount;
-	int mode;
-	volatile int lock;
-	int lbf;
-	void *cookie;
-	off_t off;
-	char *getln_buf;
-	void *mustbezero_2;
-	unsigned char *shend;
-	off_t shlim, shcnt;
-	FILE *prev_locked, *next_locked;
-	struct __locale_struct *locale;
+    unsigned flags;
+    unsigned char *rpos, *rend;
+    int (*close)(FILE *);
+    unsigned char *wend, *wpos;
+    unsigned char *mustbezero_1;
+    unsigned char *wbase;
+    size_t (*read)(FILE *, unsigned char *, size_t);
+    size_t (*write)(FILE *, const unsigned char *, size_t);
+    off_t (*seek)(FILE *, off_t, int);
+    unsigned char *buf;
+    size_t buf_size;
+    FILE *prev, *next;
+    int fd;
+    int pipe_pid;
+    long lockcount;
+    int mode;
+    volatile int lock;
+    int lbf;
+    void *cookie;
+    off_t off;
+    char *getln_buf;
+    void *mustbezero_2;
+    unsigned char *shend;
+    off_t shlim, shcnt;
+    FILE *prev_locked, *next_locked;
+    struct __locale_struct *locale;
 };
 
 // typedef struct _IO_FILE FILE;
@@ -126,11 +125,11 @@ int fprintf(int f, const char *fmt, ...);
 #define SEEK_CUR 1
 #define SEEK_END 2
 
-#define F_EOF 16
-#define F_ERR 32
-#define F_SVB 64
+#define F_EOF  16
+#define F_ERR  32
+#define F_SVB  64
 #define F_NORD 4
-#define UNGET 8
+#define UNGET  8
 
 int getchar(void);
 int putchar(int);
@@ -184,8 +183,9 @@ ssize_t getline(char **__restrict, size_t *__restrict, FILE *__restrict);
 int __uflow(FILE *f);
 int getc_unlocked(FILE *);
 
-#define getc_unlocked(f) \
-	( ((f)->rpos != (f)->rend) ? *(f)->rpos++ : __uflow((f)) )
+FILE *fdopen(int, const char *);
+
+#define getc_unlocked(f) (((f)->rpos != (f)->rend) ? *(f)->rpos++ : __uflow((f)))
 
 typedef __builtin_va_list __isoc_va_list;
 int vfprintf(FILE *__restrict, const char *__restrict, __isoc_va_list);

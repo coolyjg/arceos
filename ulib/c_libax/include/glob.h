@@ -10,7 +10,7 @@
 #define GLOB_NOCHECK  0x10
 #define GLOB_APPEND   0x20
 #define GLOB_NOESCAPE 0x40
-#define	GLOB_PERIOD   0x80
+#define GLOB_PERIOD   0x80
 
 #define GLOB_TILDE       0x1000
 #define GLOB_TILDE_CHECK 0x4000

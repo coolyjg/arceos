@@ -65,12 +65,12 @@ char **__environ = 0;
 
 char *getenv(const char *name)
 {
-	size_t l = __strchrnul(name, '=') - name;
-	if (l && !name[l] && __environ)
-		for (char **e = __environ; *e; e++)
-			if (!strncmp(name, *e, l) && l[*e] == '=')
-				return *e + l+1;
-	return 0;
+    size_t l = __strchrnul(name, '=') - name;
+    if (l && !name[l] && __environ)
+        for (char **e = __environ; *e; e++)
+            if (!strncmp(name, *e, l) && l[*e] == '=')
+                return *e + l + 1;
+    return 0;
 }
 
 // TODO:
@@ -101,7 +101,7 @@ unsigned long long strtoull(const char *__restrict__ __nptr, char **__restrict__
     return 0;
 }
 
-//TODO
+// TODO
 long random(void)
 {
     return (long)ax_rand_u32();
@@ -143,7 +143,7 @@ _Noreturn void exit(int __status)
 
 long long llabs(long long a)
 {
-	return a>0 ? a : -a;
+    return a > 0 ? a : -a;
 }
 
 // TODO
@@ -155,17 +155,18 @@ int mkostemp(char *__template, int __flags)
 
 long long atoll(const char *s)
 {
-	long long n=0;
-	int neg=0;
-	while (isspace(*s)) s++;
-	switch (*s) {
-	case '-': neg=1;
-	case '+': s++;
-	}
-	/* Compute n as a negative number to avoid overflow on LLONG_MIN */
-	while (isdigit(*s))
-		n = 10*n - (*s++ - '0');
-	return neg ? n : -n;
+    long long n = 0;
+    int neg = 0;
+    while (isspace(*s)) s++;
+    switch (*s) {
+    case '-':
+        neg = 1;
+    case '+':
+        s++;
+    }
+    /* Compute n as a negative number to avoid overflow on LLONG_MIN */
+    while (isdigit(*s)) n = 10 * n - (*s++ - '0');
+    return neg ? n : -n;
 }
 
 // TODO
@@ -189,11 +190,11 @@ void srandom(unsigned int s)
 
 int abs(int a)
 {
-	return a>0 ? a : -a;
+    return a > 0 ? a : -a;
 }
 
-//TODO
-int system (const char *)
+// TODO
+int system(const char *)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

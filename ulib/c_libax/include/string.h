@@ -35,10 +35,10 @@ char *strdup(const char *__s);
 
 char *__strchrnul(const char *s, int c);
 
-char *strcpy (char *__restrict, const char *__restrict);
-char *strcat (char *__restrict, const char *__restrict);
-char *strncat (char *__restrict, const char *__restrict, size_t);
-int strerror_r (int, char *, size_t);
-size_t strspn (const char *, const char *);
+char *strcpy(char *__restrict, const char *__restrict);
+char *strcat(char *__restrict, const char *__restrict);
+char *strncat(char *__restrict, const char *__restrict, size_t);
+int strerror_r(int, char *, size_t);
+size_t strspn(const char *, const char *);
 
 #endif // __STRING_H__

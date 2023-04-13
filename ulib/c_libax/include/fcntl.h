@@ -83,9 +83,9 @@ typedef long long int off_t;
 #define F_SETLKW 7
 #endif
 
-#define O_PATH    010000000
+#define O_PATH     010000000
 #define FD_CLOEXEC 1
-#define O_TMPFILE 020040000
+#define O_TMPFILE  020040000
 #define O_EXEC     O_PATH
 
 #define F_RDLCK 0
@@ -101,8 +101,9 @@ typedef long long int off_t;
 /* operations for bsd flock(), also used by the kernel implementation */
 #define LOCK_SH 1 /* shared lock */
 #define LOCK_EX 2 /* exclusive lock */
-#define LOCK_NB 4             /* or'd with one of the above to prevent \
-                     blocking */
+#define LOCK_NB                                            \
+    4             /* or'd with one of the above to prevent \
+         blocking */
 #define LOCK_UN 8 /* remove lock */
 
 /*
@@ -605,12 +606,12 @@ enum {
 #define _SC_SIGSTKSZ _SC_SIGSTKSZ
 };
 
-#define AT_FDCWD (-100)
+#define AT_FDCWD      (-100)
 #define AT_EMPTY_PATH 0x1000
 
 #define SYNC_FILE_RANGE_WAIT_BEFORE 1
-#define SYNC_FILE_RANGE_WRITE 2
-#define SYNC_FILE_RANGE_WAIT_AFTER 4
+#define SYNC_FILE_RANGE_WRITE       2
+#define SYNC_FILE_RANGE_WAIT_AFTER  4
 
 int sync_file_range(int, off_t, off_t, unsigned);
 

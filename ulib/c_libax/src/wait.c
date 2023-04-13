@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <sys/wait.h>
 #include <sys/resource.h>
+#include <sys/wait.h>
 
 // TODO
 pid_t waitpid(pid_t __pid, int *__stat_loc, int __options)
@@ -9,8 +9,8 @@ pid_t waitpid(pid_t __pid, int *__stat_loc, int __options)
     return 0;
 }
 
-//TODO
-pid_t wait3 (int *, int, struct rusage *)
+// TODO
+pid_t wait3(int *, int, struct rusage *)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

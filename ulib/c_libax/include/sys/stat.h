@@ -1,10 +1,10 @@
 #ifndef __SYS_STAT_H__
 #define __SYS_STAT_H__
 
+#include <stddef.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <time.h>
-#include <stddef.h>
 
 #ifndef O_EXCL
 #define O_EXCL 1 // TODO;

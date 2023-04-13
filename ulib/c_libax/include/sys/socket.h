@@ -1,7 +1,10 @@
 #ifndef __BITS_SOCKET_H
 #define __BITS_SOCKET_H
 
+#include <endian.h>
+#include <limits.h>
 #include <stddef.h>
+#include <sys/uio.h>
 
 typedef unsigned int socklen_t;
 
@@ -20,6 +23,40 @@ struct sockaddr_storage {
     unsigned short int ss_family; /* Address family, etc.  */
     char __ss_padding[_SS_PADSIZE];
     __ss_aligntype __ss_align; /* Force desired alignment.  */
+};
+
+struct msghdr {
+    void *msg_name;
+    socklen_t msg_namelen;
+    struct iovec *msg_iov;
+#if __LONG_MAX > 0x7fffffff && __BYTE_ORDER == __BIG_ENDIAN
+    int __pad1;
+#endif
+    int msg_iovlen;
+#if __LONG_MAX > 0x7fffffff && __BYTE_ORDER == __LITTLE_ENDIAN
+    int __pad1;
+#endif
+    void *msg_control;
+#if __LONG_MAX > 0x7fffffff && __BYTE_ORDER == __BIG_ENDIAN
+    int __pad2;
+#endif
+    socklen_t msg_controllen;
+#if __LONG_MAX > 0x7fffffff && __BYTE_ORDER == __LITTLE_ENDIAN
+    int __pad2;
+#endif
+    int msg_flags;
+};
+
+struct cmsghdr {
+#if __LONG_MAX > 0x7fffffff && __BYTE_ORDER == __BIG_ENDIAN
+    int __pad1;
+#endif
+    socklen_t cmsg_len;
+#if __LONG_MAX > 0x7fffffff && __BYTE_ORDER == __LITTLE_ENDIAN
+    int __pad1;
+#endif
+    int cmsg_level;
+    int cmsg_type;
 };
 
 #define SOL_SOCKET 1
@@ -252,6 +289,8 @@ struct sockaddr_storage {
 #define AF_MCTP       PF_MCTP
 #define AF_MAX        PF_MAX
 
+#define MSG_NOSIGNAL 0x4000
+
 enum __socket_type {
     SOCK_STREAM = 1, /* Sequenced, reliable, connection-based
                         byte streams.  */
@@ -293,7 +332,7 @@ int getsockopt(int __fd, int __level, int __optname, void *__restrict__ __optval
 int setsockopt(int __fd, int __level, int __optname, const void *__optval, socklen_t __optlen);
 
 int socket(int __domain, int __type, int __protocol);
-int accept (int, struct sockaddr *__restrict, socklen_t *__restrict);
+int accept(int, struct sockaddr *__restrict, socklen_t *__restrict);
 int accept4(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restrict__ __addr_len,
             int __flags);
 
@@ -306,7 +345,9 @@ int getsockname(int __fd, struct sockaddr *__restrict __addr, socklen_t *__restr
 
 int shutdown(int __fd, int __how);
 
-ssize_t send (int, const void *, size_t, int);
-ssize_t recv (int, void *, size_t, int);
+ssize_t send(int, const void *, size_t, int);
+ssize_t recv(int, void *, size_t, int);
+
+ssize_t sendmsg(int, const struct msghdr *, int);
 
 #endif

@@ -35,12 +35,13 @@ time_t time(time_t *t)
 
 int gettimeofday(struct timeval *tv, struct timezone *tz)
 {
-	struct timespec ts;
-	if (!tv) return 0;
-	clock_gettime(CLOCK_REALTIME, &ts);
-	tv->tv_sec = ts.tv_sec;
-	tv->tv_usec = (int)ts.tv_nsec / 1000;
-	return 0;
+    struct timespec ts;
+    if (!tv)
+        return 0;
+    clock_gettime(CLOCK_REALTIME, &ts);
+    tv->tv_sec = ts.tv_sec;
+    tv->tv_usec = (int)ts.tv_nsec / 1000;
+    return 0;
 }
 
 // TODO:
@@ -91,8 +92,8 @@ char *ctime_r(const time_t *__restrict__ __timer, char *__restrict__ __buf)
     return NULL;
 }
 
-//TODO
-clock_t clock (void)
+// TODO
+clock_t clock(void)
 {
     unimplemented();
     return 0;
@@ -100,11 +101,11 @@ clock_t clock (void)
 
 double difftime(time_t t1, time_t t0)
 {
-	return t1-t0;
+    return t1 - t0;
 }
 
-//TODO
-time_t mktime (struct tm *)
+// TODO
+time_t mktime(struct tm *)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;

@@ -3,9 +3,8 @@
 
 #include <stdint.h>
 
-#include <stddef.h>
 #include <bits/types.h>
-
+#include <stddef.h>
 
 int kill(pid_t __pid, int __sig);
 
@@ -230,13 +229,13 @@ typedef void (*__sighandler_t)(int);
 #include <bits/types.h>
 
 struct sigaction {
-	union {
-		void (*sa_handler)(int);
-		void (*sa_sigaction)(int, siginfo_t *, void *);
-	} __sa_handler;
-	sigset_t sa_mask;
-	int sa_flags;
-	void (*sa_restorer)(void);
+    union {
+        void (*sa_handler)(int);
+        void (*sa_sigaction)(int, siginfo_t *, void *);
+    } __sa_handler;
+    sigset_t sa_mask;
+    int sa_flags;
+    void (*sa_restorer)(void);
 };
 
 #define sa_handler   __sa_handler.sa_handler
@@ -255,7 +254,8 @@ int sigaction(int __sig, const struct sigaction *__restrict__ __act,
               struct sigaction *__restrict__ __oact);
 int raise(int __sig);
 int sigaddset(sigset_t *__set, int __signo);
-int pthread_sigmask(int __how, const sigset_t *__restrict__ __newmask, sigset_t *__restrict__ __oldmask);
+int pthread_sigmask(int __how, const sigset_t *__restrict__ __newmask,
+                    sigset_t *__restrict__ __oldmask);
 
 // int pthread_kill(pthread_t t, int sig);
 #endif

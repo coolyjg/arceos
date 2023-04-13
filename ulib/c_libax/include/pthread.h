@@ -1,9 +1,9 @@
 #ifndef _PTHREAD_H
 #define _PTHREAD_H 1
 
-#include <stddef.h>
 #include <locale.h>
 #include <signal.h>
+#include <stddef.h>
 
 enum {
     PTHREAD_CANCEL_ENABLE,
@@ -20,8 +20,6 @@ enum {
 };
 
 #define __SIZEOF_PTHREAD_ATTR_T 56
-
-
 
 // #ifndef __have_pthread_attr_t
 // typedef union pthread_attr_t pthread_attr_t;
@@ -82,13 +80,27 @@ struct __pthread_mutex_s {
 //     long int __align;
 // } pthread_mutex_t;
 
-typedef struct { union { int __i[sizeof(long)==8?10:6]; volatile int __vi[sizeof(long)==8?10:6]; volatile void *volatile __p[sizeof(long)==8?5:6]; } __u; } pthread_mutex_t;
+typedef struct {
+    union {
+        int __i[sizeof(long) == 8 ? 10 : 6];
+        volatile int __vi[sizeof(long) == 8 ? 10 : 6];
+        volatile void *volatile __p[sizeof(long) == 8 ? 5 : 6];
+    } __u;
+} pthread_mutex_t;
 
 #define _m_type __u.__i[0]
 
-typedef struct { unsigned __attr; } pthread_mutexattr_t;
+typedef struct {
+    unsigned __attr;
+} pthread_mutexattr_t;
 
-typedef struct { union { int __i[sizeof(long)==8?14:9]; volatile int __vi[sizeof(long)==8?14:9]; unsigned long __s[sizeof(long)==8?7:9]; } __u; } pthread_attr_t;
+typedef struct {
+    union {
+        int __i[sizeof(long) == 8 ? 14 : 9];
+        volatile int __vi[sizeof(long) == 8 ? 14 : 9];
+        unsigned long __s[sizeof(long) == 8 ? 7 : 9];
+    } __u;
+} pthread_attr_t;
 #define _a_stacksize __u.__s[0]
 #define _a_guardsize __u.__s[1]
 #define _a_stackaddr __u.__s[2]
@@ -115,10 +127,15 @@ struct __pthread_cond_s {
     unsigned int __g_signals[2];
 };
 
-typedef struct { union { int __i[12]; volatile int __vi[12]; void *__p[12*sizeof(int)/sizeof(void*)]; } __u; } pthread_cond_t;
-#define _c_clock __u.__i[4]
+typedef struct {
+    union {
+        int __i[12];
+        volatile int __vi[12];
+        void *__p[12 * sizeof(int) / sizeof(void *)];
+    } __u;
+} pthread_cond_t;
+#define _c_clock  __u.__i[4]
 #define _c_shared __u.__p[0]
-
 
 #define PTHREAD_MUTEX_INITIALIZER \
     {                             \
@@ -129,64 +146,63 @@ typedef struct { union { int __i[12]; volatile int __vi[12]; void *__p[12*sizeof
 
 #define pthread __pthread
 
-
 #include <locale.h>
 struct pthread {
-	/* Part 1 -- these fields may be external or
-	 * internal (accessed via asm) ABI. Do not change. */
-	struct pthread *self;
+    /* Part 1 -- these fields may be external or
+     * internal (accessed via asm) ABI. Do not change. */
+    struct pthread *self;
 #ifndef TLS_ABOVE_TP
-	uintptr_t *dtv;
+    uintptr_t *dtv;
 #endif
-	struct pthread *prev, *next; /* non-ABI */
-	uintptr_t sysinfo;
+    struct pthread *prev, *next; /* non-ABI */
+    uintptr_t sysinfo;
 #ifndef TLS_ABOVE_TP
 #ifdef CANARY_PAD
-	uintptr_t canary_pad;
+    uintptr_t canary_pad;
 #endif
-	uintptr_t canary;
+    uintptr_t canary;
 #endif
 
-	/* Part 2 -- implementation details, non-ABI. */
-	int tid;
-	int errno_val;
-	volatile int detach_state;
-	volatile int cancel;
-	volatile unsigned char canceldisable, cancelasync;
-	unsigned char tsd_used:1;
-	unsigned char dlerror_flag:1;
-	unsigned char *map_base;
-	size_t map_size;
-	void *stack;
-	size_t stack_size;
-	size_t guard_size;
-	void *result;
-	struct __ptcb *cancelbuf;
-	void **tsd;
-	struct {
-		volatile void *volatile head;
-		long off;
-		volatile void *volatile pending;
-	} robust_list;
-	int h_errno_val;
-	volatile int timer_id;
-	// locale_t locale;
-	volatile int killlock[1];
-	char *dlerror_buf;
-	void *stdio_locks;
+    /* Part 2 -- implementation details, non-ABI. */
+    int tid;
+    int errno_val;
+    volatile int detach_state;
+    volatile int cancel;
+    volatile unsigned char canceldisable, cancelasync;
+    unsigned char tsd_used : 1;
+    unsigned char dlerror_flag : 1;
+    unsigned char *map_base;
+    size_t map_size;
+    void *stack;
+    size_t stack_size;
+    size_t guard_size;
+    void *result;
+    struct __ptcb *cancelbuf;
+    void **tsd;
+    struct {
+        volatile void *volatile head;
+        long off;
+        volatile void *volatile pending;
+    } robust_list;
+    int h_errno_val;
+    volatile int timer_id;
+    // locale_t locale;
+    volatile int killlock[1];
+    char *dlerror_buf;
+    void *stdio_locks;
 
-	/* Part 3 -- the positions of these fields relative to
-	 * the end of the structure is external and internal ABI. */
+    /* Part 3 -- the positions of these fields relative to
+     * the end of the structure is external and internal ABI. */
 #ifdef TLS_ABOVE_TP
-	uintptr_t canary;
-	uintptr_t *dtv;
+    uintptr_t canary;
+    uintptr_t *dtv;
 #endif
 };
 
 typedef struct __pthread *pthread_t;
 
 #define PTHREAD_CANCELED ((void *)-1)
-#define SIGCANCEL 33
+#define SIGCANCEL        33
 
 uintptr_t __get_tp();
 
@@ -220,7 +236,6 @@ int pthread_attr_init(pthread_attr_t *__attr);
 int pthread_attr_getstacksize(const pthread_attr_t *__restrict__ __attr,
                               size_t *__restrict__ __stacksize);
 int pthread_attr_setstacksize(pthread_attr_t *__attr, size_t __stacksize);
-
 
 void pthread_testcancel(void);
 

@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 
 // TODO:
 int fchmod(int fd, mode_t mode)
@@ -30,7 +30,7 @@ mode_t umask(mode_t __mask)
     return 0;
 }
 
-//TODO
+// TODO
 int fstatat(int, const char *__restrict, struct stat *__restrict, int)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);

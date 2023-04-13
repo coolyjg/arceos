@@ -1,10 +1,10 @@
-#include <stdio.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <time.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 #include <libax.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <time.h>
+#include <unistd.h>
 
 char **environ = NULL;
 
@@ -115,10 +115,10 @@ long int sysconf(int name)
 
 unsigned sleep(unsigned seconds)
 {
-	struct timespec tv = { .tv_sec = seconds, .tv_nsec = 0 };
-	if (nanosleep(&tv, &tv))
-		return tv.tv_sec;
-	return 0;
+    struct timespec tv = {.tv_sec = seconds, .tv_nsec = 0};
+    if (nanosleep(&tv, &tv))
+        return tv.tv_sec;
+    return 0;
 }
 
 // TODO:
@@ -149,7 +149,6 @@ int pipe2(int *__pipedes, int __flags)
     return 0;
 }
 
-
 // TODO
 _Noreturn void _exit(int __status)
 {
@@ -159,11 +158,8 @@ _Noreturn void _exit(int __status)
 
 int usleep(unsigned int useconds)
 {
-    struct timespec tv = {
-		.tv_sec = useconds/1000000,
-		.tv_nsec = (useconds%1000000)*1000
-	};
-	return nanosleep(&tv, &tv);
+    struct timespec tv = {.tv_sec = useconds / 1000000, .tv_nsec = (useconds % 1000000) * 1000};
+    return nanosleep(&tv, &tv);
 }
 
 // TODO
@@ -215,7 +211,7 @@ int truncate(const char *path, off_t length)
     return 0;
 }
 
-//TODO
+// TODO
 uid_t getuid(void)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);

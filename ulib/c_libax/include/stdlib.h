@@ -48,6 +48,6 @@ int setenv(const char *__name, const char *__value, int __replace);
 int unsetenv(const char *__name);
 void srandom(unsigned int __seed);
 
-int system (const char *);
+int system(const char *);
 
 #endif //__STDLIB_H__

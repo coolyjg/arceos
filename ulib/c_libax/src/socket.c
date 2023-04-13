@@ -44,8 +44,8 @@ int listen(int __fd, int __n)
     return 0;
 }
 
-//TODO
-int accept (int, struct sockaddr *__restrict, socklen_t *__restrict)
+// TODO
+int accept(int, struct sockaddr *__restrict, socklen_t *__restrict)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
@@ -80,15 +80,22 @@ int shutdown(int __fd, int __how)
     return 0;
 }
 
-//TODO
-ssize_t send (int, const void *, size_t, int)
+// TODO
+ssize_t send(int, const void *, size_t, int)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
 
-//TODO
-ssize_t recv (int, void *, size_t, int)
+// TODO
+ssize_t recv(int, void *, size_t, int)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}
+
+// TODO
+ssize_t sendmsg(int fd, const struct msghdr *msg, int flags)
 {
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
