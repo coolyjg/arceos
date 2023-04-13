@@ -1,15 +1,16 @@
 #![cfg_attr(not(test), no_std)]
+#![feature(doc_auto_cfg)]
 
 pub use axlog::{debug, error, info, trace, warn};
-
-#[cfg(feature = "alloc")]
-extern crate alloc;
-extern crate axlog;
 
 #[cfg(not(test))]
 extern crate axruntime;
 
 #[cfg(feature = "alloc")]
+extern crate alloc;
+
+#[cfg(feature = "alloc")]
+#[doc(no_inline)]
 pub use alloc::{boxed, format, string, vec};
 
 pub mod env;
@@ -27,3 +28,6 @@ pub mod net;
 
 #[cfg(feature = "display")]
 pub mod display;
+
+#[cfg(feature = "cbindings")]
+pub mod cbindings;
