@@ -17,5 +17,6 @@ clean:
 	rm -f redis-server.o
 	rm -f redis/src/redis-server.o
 	rm -f *.o
+	rm -f *.a
 
 .PHONY: all

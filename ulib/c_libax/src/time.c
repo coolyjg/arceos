@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <time.h>
+#include "time.h"
 
 long timezone = 0;
+const char __utc[] = "UTC";
 
 // TODO:
 size_t strftime(char *__restrict__ _Buf, size_t _SizeInBytes, const char *__restrict__ _Format,
@@ -66,10 +67,10 @@ int nanosleep(const struct timespec *__requested_time, struct timespec *__remain
 }
 
 // TODO
-void tzset(void)
+void tzset()
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    return;
+	unimplemented();
+    return ;
 }
 
 // TODO

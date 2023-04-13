@@ -2,6 +2,10 @@
 #define __TIME_H__
 
 #include <stddef.h>
+#include "limits.h"
+#include "string.h"
+#include "sys/mman.h"
+#include "stdlib.h"
 
 typedef long time_t;
 #define CLOCK_REALTIME 0

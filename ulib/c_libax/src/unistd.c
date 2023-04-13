@@ -124,9 +124,9 @@ unsigned sleep(unsigned seconds)
 // TODO:
 pid_t getpid(void)
 {
-    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
-    printf("getpid\n");
-    return -1;
+    // printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    // return -1;
+    return 1;
 }
 
 uid_t geteuid(void)

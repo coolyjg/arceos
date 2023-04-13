@@ -22,6 +22,10 @@
 #define PTHREAD_STACK_MIN 2048
 
 #define LOGIN_NAME_MAX 256
+#ifndef NAME_MAX
+#define NAME_MAX 255
+#endif
+#define TZNAME_MAX 6
 
 #define PATH_MAX  4096
 #define SSIZE_MAX LONG_MAX

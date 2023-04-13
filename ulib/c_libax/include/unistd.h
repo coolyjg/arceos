@@ -8,6 +8,7 @@
 // #define _SC_PAGESIZE 30
 #define X_OK 1
 #define F_OK 0
+#define W_OK 2
 // char **environ;
 
 // char **environ = 0;
@@ -35,7 +36,7 @@ int unlink(const char *pathname);
 int rmdir(const char *pathname);
 
 // #endif
-
+long int sysconf(int name);
 unsigned sleep(unsigned seconds);
 
 uid_t geteuid(void);
@@ -57,5 +58,6 @@ pid_t fork(void);
 int chdir(const char *__path);
 int truncate(const char *path, off_t length);
 uid_t getuid(void);
+pid_t getpid(void);
 
 #endif
