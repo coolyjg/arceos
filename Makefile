@@ -85,10 +85,13 @@ debug: build
 	$(GDB) $(OUT_ELF) -ex 'target remote localhost:1234'
 
 clippy:
-	cargo clippy --target $(TARGET)
+	$(call cargo_clippy)
 
 doc:
 	$(call cargo_doc)
+
+doc_check_missing:
+	$(call cargo_doc,-D missing-docs)
 
 fmt:
 	cargo fmt --all
@@ -97,10 +100,13 @@ fmt_c:
 	@clang-format --style=file -i $(shell find ulib/c_libax -iname '*.c' -o -iname '*.h')
 
 test:
-	$(call unittest)
+	$(call app_test)
 
-test_no_fail_fast:
-	$(call unittest,--no-fail-fast)
+unit_test:
+	$(call unit_test)
+
+unit_test_no_fail_fast:
+	$(call unit_test,--no-fail-fast)
 
 disk_img:
 ifneq ($(wildcard $(DISK_IMG)),)
