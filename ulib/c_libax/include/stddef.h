@@ -19,7 +19,13 @@ typedef long clock_t;
 
 typedef int clockid_t;
 
-#define NULL ((void *)0)
+#if __cplusplus >= 201103L
+#define NULL nullptr
+#elif defined(__cplusplus)
+#define NULL 0L
+#else
+#define NULL ((void*)0)
+#endif
 
 #if __GNUC__ > 3
 #define offsetof(type, member) __builtin_offsetof(type, member)

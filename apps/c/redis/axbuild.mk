@@ -27,7 +27,7 @@ $(pre-objs):
 	cp $(APP)/redis_hdr_makefile $(APP)/redis/deps/hdr_histogram/Makefile
 	cp $(APP)/redis_hiredis_makefile $(APP)/redis/deps/hiredis/Makefile
 	cp $(APP)/redis_lua_makefile $(APP)/redis/deps/lua/src/Makefile
-	cd $(APP)/redis && CC=aarch64-linux-musl-gcc USE_JEMALLOC=no $(MAKE) V=1 REDIS_CFLAGS='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include' REDIS_LDFLAGS+='-nostdlib -static -T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds' CFLAGS="-static -no-pie -mno-outline-atomics" LDFLAGS="-static -no-pie"
+	cd $(APP)/redis && CC=aarch64-linux-musl-gcc USE_JEMALLOC=no $(MAKE) -j V=1 REDIS_CFLAGS='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -nostdinc -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include' REDIS_LDFLAGS+='-nostdlib -static -T/home/yanjuguang/OS/arceos/modules/axhal/linker_aarch64.lds' CFLAGS="-static -no-pie -mno-outline-atomics" LDFLAGS="-static -no-pie"
 
 $(APP)/redis_server.o: $(pre-objs)
 	aarch64-linux-musl-ld -r -o $@ $^
