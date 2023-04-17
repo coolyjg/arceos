@@ -111,21 +111,6 @@ char *strncpy(char *restrict d, const char *restrict s, size_t n)
     return d;
 }
 
-char *strcat(char *restrict d, const char *restrict s)
-{
-    strcpy(d + strlen(d), s);
-    return d;
-}
-
-char *strncat(char *restrict d, const char *restrict s, size_t n)
-{
-    char *a = d;
-    d += strlen(d);
-    while (n && *s) n--, *d++ = *s++;
-    *d++ = 0;
-    return a;
-}
-
 int strcmp(const char *l, const char *r)
 {
     for (; *l == *r && *l; l++, r++)
