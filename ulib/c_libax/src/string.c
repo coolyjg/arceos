@@ -436,20 +436,6 @@ char *strstr(const char *h, const char *n)
     return twoway_strstr((void *)h, (void *)n);
 }
 
-char *__stpcpy(char *restrict d, const char *restrict s)
-{
-    for (; (*d = *s); s++, d++)
-        ;
-
-    return d;
-}
-
-char *strcpy(char *restrict dest, const char *restrict src)
-{
-    __stpcpy(dest, src);
-    return dest;
-}
-
 char *strcat(char *restrict dest, const char *restrict src)
 {
     strcpy(dest + strlen(dest), src);

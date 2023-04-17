@@ -18,5 +18,7 @@ clean:
 	rm -f redis/src/redis-server.o
 	rm -f *.o
 	rm -f *.a
+	rm -f $(REDIS_PATH)/src/.make-settings
+	rm -f $(REDIS_PATH)/src/.make-prerequisites
 
 .PHONY: all
