@@ -319,7 +319,6 @@ int ferror(FILE *f)
     return ret;
 }
 
-// TODO
 int fputs(const char *restrict s, FILE *restrict f)
 {
     size_t l = strlen(s);
