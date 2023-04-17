@@ -188,3 +188,10 @@ int pthread_kill(pthread_t, int)
     printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
     return 0;
 }
+
+// TODO
+int pthread_cond_broadcast(pthread_cond_t *c)
+{
+    printf("%s%s\n", "Error: no ax_call implementation for ", __func__);
+    return 0;
+}

@@ -123,6 +123,9 @@ struct sockaddr_in6 {
 #define IPV6_XFRM_POLICY          35
 #define IPV6_HDRINCL              36
 
+#define INET_ADDRSTRLEN  16
+#define INET6_ADDRSTRLEN 46
+
 #define IN6ADDR_ANY_INIT                                       \
     {                                                          \
         {                                                      \

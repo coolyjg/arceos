@@ -10,7 +10,7 @@ all:
 
 clean:
 	$(MAKE) -C $(REDIS_PATH) clean
-	$(MAKE) -C $(REDIS_PATH)/deps/fpconv/ clean
+#	$(MAKE) -C $(REDIS_PATH)/deps/fpconv/ clean
 	$(MAKE) -C $(REDIS_PATH)/deps/hdr_histogram/ clean
 	$(MAKE) -C $(REDIS_PATH)/deps/hiredis/ clean
 	$(MAKE) -C $(REDIS_PATH)/deps/lua/src/ clean

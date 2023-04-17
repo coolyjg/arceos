@@ -241,4 +241,6 @@ void pthread_testcancel(void);
 
 int pthread_kill(pthread_t t, int sig);
 
+int pthread_cond_broadcast(pthread_cond_t *);
+
 #endif
