@@ -1,3 +1,4 @@
 [submodule "apps/c/redis/redis"]
 	path = apps/c/redis/redis
 	url = https://github.com/redis/redis
+	branch = "7.0"
