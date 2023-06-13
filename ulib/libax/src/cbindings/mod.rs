@@ -27,9 +27,12 @@ mod pthread;
 mod socket;
 #[cfg(feature = "fp_simd")]
 mod strtod;
+#[cfg(feature = "alloc")]
+mod uio;
 
 mod errno;
 mod setjmp;
+mod stat;
 mod stdio;
 mod sys;
 mod time;
@@ -78,7 +81,10 @@ pub use self::pthread::mutex::{
     ax_pthread_mutex_init, ax_pthread_mutex_lock, ax_pthread_mutex_unlock,
 };
 #[cfg(feature = "multitask")]
-pub use self::pthread::{ax_getpid, ax_pthread_create, ax_pthread_exit, ax_pthread_join};
+pub use self::pthread::{
+    ax_getpid, ax_pthread_create, ax_pthread_exit, ax_pthread_join, ax_pthread_setcancelstate,
+    ax_pthread_setcanceltype,
+};
 
 #[cfg(feature = "pipe")]
 pub use self::pipe::ax_pipe;
@@ -89,7 +95,11 @@ pub use self::io_mpx::{ax_epoll_create, ax_epoll_ctl, ax_epoll_wait, ax_select};
 #[cfg(feature = "fp_simd")]
 pub use self::strtod::{ax_strtod, ax_strtof};
 
+#[cfg(feature = "alloc")]
+pub use self::uio::ax_writev;
+
 pub use self::errno::ax_errno_string;
+pub use self::stat::ax_umask;
 pub use self::stdio::{ax_print_str, ax_println_str};
 pub use self::sys::ax_sysconf;
 pub use self::time::{ax_clock_gettime, ax_nanosleep};

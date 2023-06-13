@@ -53,7 +53,7 @@ pub struct FlattenObjects<T, const CAP: usize> {
 impl<T, const CAP: usize> FlattenObjects<T, CAP> {
     /// Creates a new empty `FlattenObjects`.
     pub const fn new() -> Self {
-        assert!(CAP <= 1024);
+        // assert!(CAP <= 1024);
         Self {
             objects: MaybeUninit::uninit_array(),
             // SAFETY: zero initialization is OK for `id_bitmap` (an array of integers).

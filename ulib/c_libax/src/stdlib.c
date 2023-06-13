@@ -9,6 +9,9 @@
 
 #include <libax.h>
 
+char *program_invocation_short_name = "dummy";
+char *program_invocation_name = "dummy";
+
 #define __DECONST(type, var) ((type)(uintptr_t)(const void *)(var))
 
 void srand(unsigned s)
@@ -21,11 +24,19 @@ int rand(void)
     return ax_rand_u32();
 }
 
+// TODO
+long random(void)
+{
+    return (long)ax_rand_u32();
+}
+
 #ifdef AX_CONFIG_ALLOC
 
 void *malloc(size_t size)
 {
-    return ax_malloc(size);
+    void *ret = ax_malloc(size);
+
+    return ret;
 }
 
 void *calloc(size_t m, size_t n)
@@ -37,12 +48,17 @@ void *calloc(size_t m, size_t n)
 
 void *realloc(void *memblock, size_t size)
 {
-    if (!memblock)
-        return malloc(size);
+    // printf("realloc: addr = %p\n", memblock);
+    if (!memblock) {
+        void *ret = calloc(size, 1);
+        // printf("realloc return: addr = %p\n", ret);
+        return ret;
+    }
 
     size_t o_size = *(size_t *)(memblock - 8);
 
     void *mem = ax_malloc(size);
+    // printf("realloc return : addr = %p\n", mem);
 
     for (int i = 0; i < (o_size < size ? o_size : size); i++)
         ((char *)mem)[i] = ((char *)memblock)[i];
@@ -53,8 +69,10 @@ void *realloc(void *memblock, size_t size)
 
 void free(void *addr)
 {
-    if (!addr)
+    if (!addr) {
+        printf("NULL pointer called free\n");
         return;
+    }
     return ax_free(addr);
 }
 
@@ -346,7 +364,7 @@ exit:
     return acc;
 }
 
-void exit(int status)
+_Noreturn void exit(int status)
 {
     ax_exit(status);
 }
@@ -388,4 +406,36 @@ double strtod(const char *restrict s, char **restrict p)
     return ax_strtod(s, p);
 }
 
+// TODO: precision may not be enough
+long double strtold(const char *restrict s, char **restrict p)
+{
+    return (long double)strtod(s, p);
+}
+
 #endif
+
+// TODO
+void qsort(void *, size_t, size_t, int (*)(const void *, const void *))
+{
+    unimplemented();
+    return;
+}
+
+// TODO
+int mkostemp(char *__template, int __flags)
+{
+    unimplemented();
+    return 0;
+}
+
+void srandom(unsigned int s)
+{
+    ax_srand(s);
+}
+
+// TODO
+int system(const char *)
+{
+    unimplemented();
+    return 0;
+}

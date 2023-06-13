@@ -14,18 +14,6 @@ struct __dirstream {
 
 typedef struct __dirstream DIR;
 
-struct dirent {
-    ino_t d_ino;
-    off_t d_off;
-    unsigned short d_reclen;
-    unsigned char d_type;
-    char d_name[256];
-};
-
-int closedir(DIR *);
-DIR *fdopendir(int);
-int dirfd(DIR *);
-
 #define DT_UNKNOWN 0
 #define DT_FIFO    1
 #define DT_CHR     2
@@ -38,4 +26,20 @@ int dirfd(DIR *);
 #define IFTODT(x)  ((x) >> 12 & 017)
 #define DTTOIF(x)  ((x) << 12)
 
-#endif //_DIRENT_H
+struct dirent {
+    ino_t d_ino;
+    off_t d_off;
+    unsigned short d_reclen;
+    unsigned char d_type;
+    char d_name[256];
+};
+
+int closedir(DIR *);
+DIR *fdopendir(int);
+DIR *opendir(const char *);
+struct dirent *readdir(DIR *);
+int readdir_r(DIR *__restrict, struct dirent *__restrict, struct dirent **__restrict);
+void rewinddir(DIR *);
+int dirfd(DIR *);
+
+#endif

@@ -52,8 +52,10 @@ typedef void *pthread_t;
 
 _Noreturn void pthread_exit(void *);
 pthread_t pthread_self(void);
+
 int pthread_create(pthread_t *__restrict, const pthread_attr_t *__restrict, void *(*)(void *),
                    void *__restrict);
+int pthread_cancel(pthread_t);
 int pthread_join(pthread_t t, void **res);
 
 int pthread_setcancelstate(int, int *);
@@ -62,7 +64,26 @@ int pthread_setcanceltype(int, int *);
 int pthread_mutex_init(pthread_mutex_t *__restrict, const pthread_mutexattr_t *__restrict);
 int pthread_mutex_lock(pthread_mutex_t *);
 int pthread_mutex_unlock(pthread_mutex_t *);
+int pthread_mutex_trylock(pthread_mutex_t *);
 
-#endif // AX_CONFIG_MULTITASK
+int pthread_setname_np(pthread_t, const char *);
+
+int pthread_cond_init(pthread_cond_t *__restrict__ __cond,
+                      const pthread_condattr_t *__restrict__ __cond_attr);
+int pthread_cond_signal(pthread_cond_t *__cond);
+int pthread_cond_wait(pthread_cond_t *__restrict__ __cond, pthread_mutex_t *__restrict__ __mutex);
+int pthread_attr_init(pthread_attr_t *__attr);
+
+int pthread_attr_getstacksize(const pthread_attr_t *__restrict__ __attr,
+                              size_t *__restrict__ __stacksize);
+int pthread_attr_setstacksize(pthread_attr_t *__attr, size_t __stacksize);
+
+void pthread_testcancel(void);
+
+int pthread_kill(pthread_t t, int sig);
+
+int pthread_cond_broadcast(pthread_cond_t *);
+
+#endif
 
 #endif // _PTHREAD_H

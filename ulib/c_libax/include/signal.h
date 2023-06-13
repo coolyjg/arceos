@@ -13,9 +13,6 @@ union sigval {
 
 typedef union sigval __sigval_t;
 
-#define __SI_MAX_SIZE 128
-#define __SI_PAD_SIZE ((__SI_MAX_SIZE / sizeof(int)) - 4)
-
 #define SA_NOCLDSTOP 1
 #define SA_NOCLDWAIT 2
 #define SA_SIGINFO   4
@@ -167,5 +164,10 @@ struct sigaction {
 
 void (*signal(int, void (*)(int)))(int);
 int sigaction(int, const struct sigaction *__restrict, struct sigaction *__restrict);
+int sigemptyset(sigset_t *);
+int raise(int);
+int sigaddset(sigset_t *, int);
+int pthread_sigmask(int, const sigset_t *__restrict, sigset_t *__restrict);
+int kill(pid_t, int);
 
 #endif

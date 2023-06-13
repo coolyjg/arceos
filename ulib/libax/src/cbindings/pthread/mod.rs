@@ -1,6 +1,6 @@
 use alloc::{boxed::Box, collections::BTreeMap, sync::Arc};
 use core::cell::UnsafeCell;
-use core::ffi::{c_int, c_void};
+use core::ffi::{c_int, c_uchar, c_void};
 
 use axerrno::{LinuxError, LinuxResult};
 use axtask::AxTaskRef;
@@ -20,6 +20,8 @@ lazy_static::lazy_static! {
             retval: Arc::new(Packet {
                 result: UnsafeCell::new(core::ptr::null_mut()),
             }),
+            cancelasync: 0,
+            canceldisable: 0,
         };
         let ptr = Box::into_raw(Box::new(main_thread)) as *mut c_void;
         map.insert(main_tid, ForceSendSync(ptr));
@@ -37,6 +39,8 @@ unsafe impl<T> Sync for Packet<T> {}
 pub struct Pthread {
     inner: AxTaskRef,
     retval: Arc<Packet<*mut c_void>>,
+    canceldisable: c_uchar,
+    cancelasync: c_uchar,
 }
 
 impl Pthread {
@@ -64,6 +68,8 @@ impl Pthread {
         let thread = Pthread {
             inner: task_inner,
             retval: my_packet,
+            cancelasync: 0,
+            canceldisable: 0,
         };
         let ptr = Box::into_raw(Box::new(thread)) as *mut c_void;
         TID_TO_PTHREAD.write().insert(tid, ForceSendSync(ptr));
@@ -80,6 +86,10 @@ impl Pthread {
 
     fn current() -> Option<&'static Pthread> {
         unsafe { core::ptr::NonNull::new(Self::current_ptr()).map(|ptr| ptr.as_ref()) }
+    }
+
+    fn current_mut() -> Option<&'static mut Pthread> {
+        unsafe { core::ptr::NonNull::new(Self::current_ptr()).map(|mut ptr| ptr.as_mut()) }
     }
 
     fn exit_current(retval: *mut c_void) -> ! {
@@ -100,6 +110,28 @@ impl Pthread {
         TID_TO_PTHREAD.write().remove(&tid);
         drop(thread);
         Ok(retval)
+    }
+
+    fn set_canceltype(&mut self, new: c_int, old: *mut c_int) -> LinuxResult<c_int> {
+        if new as usize > 1 {
+            return Err(LinuxError::EINVAL);
+        }
+        if !old.is_null() {
+            unsafe { core::ptr::write(old, self.cancelasync as _) };
+        }
+        self.cancelasync = new as _;
+        Ok(0)
+    }
+
+    fn set_cancelstate(&mut self, new: c_int, old: *mut c_int) -> LinuxResult<c_int> {
+        if new as usize > 2 {
+            return Err(LinuxError::EINVAL);
+        }
+        if !old.is_null() {
+            unsafe { core::ptr::write(old, self.canceldisable as _) };
+        }
+        self.canceldisable = new as _;
+        Ok(0)
     }
 }
 
@@ -159,6 +191,28 @@ pub unsafe extern "C" fn ax_pthread_join(
         if !retval.is_null() {
             unsafe { core::ptr::write(retval, ret) };
         }
+        Ok(0)
+    })
+}
+
+/// Sets the cancelability state of the calling thread to the value given in `new`.
+#[no_mangle]
+pub unsafe extern "C" fn ax_pthread_setcanceltype(new: c_int, old: *mut c_int) -> c_int {
+    debug!("ax_pthread_setcanceltype <= {}", new);
+    ax_call_body!(ax_pthread_setcanceltype, {
+        (*(Pthread::current_mut().expect("fail to get current thread") as *mut Pthread))
+            .set_canceltype(new, old)?;
+        Ok(0)
+    })
+}
+
+/// Sets the cancelability state of the calling thread to the value given in `new`.
+#[no_mangle]
+pub unsafe extern "C" fn ax_pthread_setcancelstate(new: c_int, old: *mut c_int) -> c_int {
+    debug!("ax_pthread_setcancelstate <= {}", new);
+    ax_call_body!(ax_pthread_setcancelstate, {
+        (*(Pthread::current_mut().expect("fail to get current thread") as *mut Pthread))
+            .set_cancelstate(new, old)?;
         Ok(0)
     })
 }

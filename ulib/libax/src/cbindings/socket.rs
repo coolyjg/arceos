@@ -9,6 +9,7 @@ use axnet::{resolve_socket_addr, IpAddr, Ipv4Addr, SocketAddr, TcpSocket, UdpSoc
 use super::ctypes;
 use super::fd_ops::FileLike;
 use super::utils::char_ptr_to_str;
+use crate::cbindings::errno::set_errno;
 use crate::io::PollState;
 use crate::sync::Mutex;
 
@@ -412,7 +413,13 @@ pub unsafe extern "C" fn ax_accept(
             return Err(LinuxError::EFAULT);
         }
         let socket = Socket::from_fd(socket_fd)?;
-        let new_socket = socket.accept()?;
+        // let new_socket = socket.accept()?;
+        let new_socket = socket.accept();
+        match new_socket {
+            Ok(_) => {}
+            Err(e) => set_errno(e as _),
+        }
+        let new_socket = new_socket?;
         let addr = new_socket.peer_addr()?;
         let new_fd = Socket::add_to_fd_table(Socket::Tcp(Mutex::new(new_socket)))?;
         unsafe {
