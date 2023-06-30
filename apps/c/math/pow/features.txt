@@ -1,2 +1,0 @@
-default
-fp_simd
