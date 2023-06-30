@@ -30,7 +30,7 @@ endif
 
 $(pre-objs):
 	@echo "--------pre-building redis--------"
-    patch -p1 -N -d $(redis-dir) -r - < $(APP)/redis.patch
+	patch -p1 -N -d $(redis-dir) -r - < $(APP)/redis.patch
 	cd $(APP)/redis && CC=$(ARCH)-linux-musl-gcc USE_JEMALLOC=no $(MAKE) -j V=1 REDIS_CFLAGS='$(MY_REDIS_CFLAGS)' REDIS_LDFLAGS+='$(MY_REDIS_LDFLAGS)' CFLAGS="$(MY_CFLAGS)" LDFLAGS="-static -no-pie"
 
 $(APP)/redis_server.o: $(pre-objs)
