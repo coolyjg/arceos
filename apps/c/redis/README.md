@@ -4,9 +4,10 @@
 - Then run `make A=apps/c/redis/ LOG=info FS=y NET=y ARCH=aarch64 SMP=4 run`
 
 # How to run second?
+## Rebuild
 - Enter apps/c/redis, run `make clean`
 - Return to ArceOS root directory, run `make clean A=apps/c/redis && make A=apps/c/redis/ LOG=info FS=y NET=y ARCH=aarch64 SMP=4 run`
-- Or: 
+## Or use full command 
   - `qemu-system-aarch64 -m 2G -smp 4 -cpu cortex-a72 -machine virt -kernel apps/c/redis//redis_qemu-virt-aarch64.bin -device virtio-blk-device,drive=disk0 -drive id=disk0,if=none,format=raw,file=disk.img -device virtio-net-device,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5555-:5555,hostfwd=udp::5555-:5555 -nographic`
 
 # How to test?
@@ -19,7 +20,7 @@
 - Only test "aarch64".
 - Must use `SMP=xxx`.
 - Must run `make clean`, this may be changed later.
-- Enlarge memory size in `qemu.mk` and `qemu-virt-aarch64.toml` to 2G to support big operation numbers
+- Enlarge memory size in `qemu.mk` and `qemu-virt-aarch64.toml` to 2G to support big operation number
 - Extend fd number to 4096, and cancel corresponed checks in flatten_objects. 
 
 # Some test result
