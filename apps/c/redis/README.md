@@ -67,7 +67,7 @@
 | *LRANGE_600 | 100K | 30 | 1 | 1877.30 |
 | MSET | 100K | 30 | 1 | 8929.37 |
 
-- Comparing to local Redis server, approximately 10x gap
+- Comparing to local Redis server, approximately 15x gap
 ```
 PING_INLINE: 176056.33 requests per second
 PING_BULK: 173611.12 requests per second
