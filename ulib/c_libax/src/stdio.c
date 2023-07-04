@@ -256,7 +256,7 @@ int fclose(FILE *f)
 // TODO
 int rename(const char *__old, const char *__new)
 {
-    unimplemented();
+    unimplemented("old: %s, new: %s", __old, __new);
     return 0;
 }
 

@@ -126,12 +126,12 @@ off_t lseek(int fd, off_t offset, int whence)
 // TODO:
 int fsync(int fd)
 {
-    unimplemented();
+    unimplemented("fd: %d", fd);
     return 0;
 }
 
 // TODO
-int fdatasync(int __fildes)
+int fdatasync(int fd)
 {
     unimplemented();
     return 0;

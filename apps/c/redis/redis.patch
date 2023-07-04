@@ -418,7 +418,7 @@ index 6baa8bd0f..2bc3ea483 100644
  #if (defined(__APPLE__) && defined(MAC_OS_X_VERSION_10_6)) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined (__NetBSD__)
  #define HAVE_KQUEUE 1
 diff --git a/src/server.c b/src/server.c
-index e1d1b316e..aeba32e95 100644
+index e1d1b316e..5b08911ec 100644
 --- a/src/server.c
 +++ b/src/server.c
 @@ -37,6 +37,7 @@
@@ -544,7 +544,17 @@ index e1d1b316e..aeba32e95 100644
  
      if (server.maxmemory_clients != 0)
          initServerClientMemUsageBuckets();
-@@ -6107,7 +6127,7 @@ int checkIgnoreWarning(const char *warning) {
+@@ -4092,6 +4112,9 @@ int prepareForShutdown(int flags) {
+         flags = (flags & ~SHUTDOWN_SAVE) | SHUTDOWN_NOSAVE;
+ 
+     server.shutdown_flags = flags;
++    char buf[128];
++    sprintf(buf, "shutdown flag = %d", flags);
++    puts(buf);
+ 
+     serverLog(LL_WARNING,"User requested shutdown...");
+     if (server.supervised_mode == SUPERVISED_SYSTEMD)
+@@ -6107,7 +6130,7 @@ int checkIgnoreWarning(const char *warning) {
              break;
      }
      sdsfreesplitres(argv,argc);
@@ -553,7 +563,7 @@ index e1d1b316e..aeba32e95 100644
  }
  
  #ifdef __linux__
-@@ -6851,6 +6871,11 @@ redisTestProc *getTestProcByName(const char *name) {
+@@ -6851,6 +6874,11 @@ redisTestProc *getTestProcByName(const char *name) {
  #endif
  
  int main(int argc, char **argv) {
