@@ -22,11 +22,10 @@ const int HOUR_PER_DAY = 24;
 #define DAYS_PER_4Y   (365 * 4 + 1)
 
 // TODO:
-size_t strftime(char *__restrict__ _Buf, size_t _SizeInBytes, const char *__restrict__ _Format,
-                const struct tm *__restrict__ _Tm)
+size_t strftime(char *restrict buf, size_t size, const char *restrict format,
+                const struct tm *restrict timeptr)
 {
-    unimplemented();
-    return 0;
+    return ax_strftime(buf, size, format, timeptr);
 }
 
 int __secs_to_tm(long long t, struct tm *tm)
@@ -219,6 +218,5 @@ double difftime(time_t t1, time_t t0)
 // TODO
 time_t mktime(struct tm *tm)
 {
-    unimplemented();
-    return 0;
+    return ax_mktime(tm);
 }

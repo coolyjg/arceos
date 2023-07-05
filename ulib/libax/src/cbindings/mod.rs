@@ -31,9 +31,11 @@ mod strtod;
 mod uio;
 
 mod errno;
+mod mktime;
 mod setjmp;
 mod stat;
 mod stdio;
+mod strftime;
 mod sys;
 mod time;
 
@@ -99,7 +101,9 @@ pub use self::strtod::{ax_strtod, ax_strtof};
 pub use self::uio::ax_writev;
 
 pub use self::errno::ax_errno_string;
+pub use self::mktime::ax_mktime;
 pub use self::stat::ax_umask;
 pub use self::stdio::{ax_print_str, ax_println_str};
+pub use self::strftime::ax_strftime;
 pub use self::sys::ax_sysconf;
 pub use self::time::{ax_clock_gettime, ax_nanosleep};

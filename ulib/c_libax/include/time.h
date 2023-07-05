@@ -50,8 +50,4 @@ double difftime(time_t, time_t);
 
 time_t mktime(struct tm *);
 
-#ifdef AX_CONFIG_FP_SIMD
-double difftime(time_t, time_t);
-#endif
-
 #endif
