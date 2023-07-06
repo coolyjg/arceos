@@ -90,3 +90,35 @@ LRANGE_500 (first 450 elements): 35186.49 requests per second
 LRANGE_600 (first 600 elements): 28320.59 requests per second
 MSET (10 keys): 183150.19 requests per second
 ```
+
+## Unikraft
+- On aarch64:
+  - `redis-benchmark -h 172.44.0.2 -q -n 100000 -c 30`
+  - Separately: 
+   ```
+    SET: 13814.06 requests per second
+    GET: 15297.54 requests per second
+   ```
+  - The whole benchmark:
+   ```
+    PING_INLINE: 14369.88 requests per second
+    PING_BULK: 13335.11 requests per second
+    SET: 13650.01 requests per second
+    GET: 12103.61 requests per second
+    INCR: 13395.85 requests per second
+    LPUSH: 10279.61 requests per second
+    RPUSH: 12536.04 requests per second
+    LPOP: 9541.07 requests per second
+    RPOP: 12540.76 requests per second
+    SADD: 11880.72 requests per second
+    HSET: 12318.30 requests per second
+    SPOP: 12235.41 requests per second
+    ZADD: 12130.03 requests per second
+    ZPOPMIN: 12223.45 requests per second
+    LPUSH (needed to benchmark LRANGE): 11125.95 requests per second
+    LRANGE_100 (first 100 elements): 6791.17 requests per second
+    LRANGE_300 (first 300 elements): 3772.30 requests per second
+    LRANGE_500 (first 450 elements): 2779.71 requests per second
+    LRANGE_600 (first 600 elements): 2230.80 requests per second
+    MSET (10 keys): 9215.74 requests per second
+   ```
