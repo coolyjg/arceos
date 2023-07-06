@@ -27,8 +27,10 @@ struct tm {
     const char *__tm_zone;
 };
 
+#ifdef AX_CONFIG_ALLOC
 size_t strftime(char *__restrict__ _Buf, size_t _SizeInBytes, const char *__restrict__ _Format,
                 const struct tm *__restrict__ _Tm);
+#endif
 
 struct tm *gmtime(const time_t *timer);
 

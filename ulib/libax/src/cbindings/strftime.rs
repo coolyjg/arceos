@@ -83,7 +83,7 @@ impl<T: Write> Write for CountingWriter<T> {
     }
 
     fn write_all(&mut self, buf: &[u8]) -> axerrno::AxResult {
-        match self.inner.write_all(&buf) {
+        match self.inner.write_all(buf) {
             Ok(()) => (),
             Err(err) => return Err(err),
         }

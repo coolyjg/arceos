@@ -25,6 +25,8 @@ mod pipe;
 mod pthread;
 #[cfg(feature = "net")]
 mod socket;
+#[cfg(feature = "alloc")]
+mod strftime;
 #[cfg(feature = "fp_simd")]
 mod strtod;
 #[cfg(feature = "alloc")]
@@ -35,7 +37,6 @@ mod mktime;
 mod setjmp;
 mod stat;
 mod stdio;
-mod strftime;
 mod sys;
 mod time;
 
@@ -100,10 +101,12 @@ pub use self::strtod::{ax_strtod, ax_strtof};
 #[cfg(feature = "alloc")]
 pub use self::uio::ax_writev;
 
+#[cfg(feature = "alloc")]
+pub use self::strftime::ax_strftime;
+
 pub use self::errno::ax_errno_string;
 pub use self::mktime::ax_mktime;
 pub use self::stat::ax_umask;
 pub use self::stdio::{ax_print_str, ax_println_str};
-pub use self::strftime::ax_strftime;
 pub use self::sys::ax_sysconf;
 pub use self::time::{ax_clock_gettime, ax_nanosleep};
