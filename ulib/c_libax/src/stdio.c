@@ -238,7 +238,8 @@ size_t fread(void *restrict destv, size_t size, size_t nmemb, FILE *restrict f)
 
 size_t fwrite(const void *restrict src, size_t size, size_t nmemb, FILE *restrict f)
 {
-    return (size_t)ax_write(f->fd, src, size * nmemb) / size;
+    int n = (size_t)ax_write(f->fd, src, size * nmemb);
+    return n == size * nmemb? nmemb: n / size;
 }
 
 int fputs(const char *restrict s, FILE *restrict f)

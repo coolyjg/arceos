@@ -22,8 +22,11 @@
 - Must run `make clean`, this may be changed later.
 - Enlarge memory size in `qemu.mk` and `qemu-virt-aarch64.toml` to 2G to support big operation number
 - Extend fd number to 4096, and cancel corresponed checks in flatten_objects. 
-- Extend disk.img size to 1G in `utils.mk`
-  - `@dd if=/dev/zero of=$(1) bs=1M count=64` -> `@dd if=/dev/zero of=$(1) bs=1M count=1024`
+- Extend disk.img size to 16G in `utils.mk`
+  - `@dd if=/dev/zero of=$(1) bs=1M count=64` -> `@dd if=/dev/zero of=$(1) bs=1G count=16`
+  - This seems to be something related to fatfs implementation: 
+    - disk_size = 64MB -> file_size <= 512B
+    - disk_size = 8GB -> file_size <= 4096B
 
 # Some test result
 ## 0630(test for 5 rounds):
@@ -46,13 +49,13 @@
 | | | | 5 | 12853.47 |
 
 ## 0704(other tests, 1 round)
-- Do other tests. (`LPUSH` and `RPUSH` has unkown bug when finishing, and so does `LRANGE_*`)
+- Do other tests. (`LPUSH` and `RPUSH` has unkown bug when finishing, and so does `LRANGE_*`, expande disk size would fix this)
 
 | Operation | Op number | Concurrency | Round | Result(request per seconds) |
 |-|-|-|-|-|
 | PING_INLINE | 100K | 30 | 1 | 12147.72 |
 | INCR | 100K | 30 | 1 | 13097.58 |
-| LPUSH | 100K | 30 | 1 | 10866.02 |
+| LPUSH | 100K | 30 | 1 | 12955.05 |
 | RPUSH | 100K | 30 | 1 | 11339.15 |
 | LPOP | 100K | 30 | 1 | 12611.93 |
 | RPOP | 100K | 30 | 1 | 13106.16 |
@@ -61,10 +64,10 @@
 | SPOP | 100K | 30 | 1 | 12918.23 |
 | ZADD | 100K | 30 | 1 | 10462.44 |
 | ZPOPMIN | 100K | 30 | 1 | 12817.23 |
-| *LRANGE_100 | 100K | 30 | 1 | 5840.78 |
-| *LRANGE_300 | 100K | 30 | 1 | 3269.79 |
-| *LRANGE_500 | 100K | 30 | 1 | 2412.89 |
-| *LRANGE_600 | 100K | 30 | 1 | 1877.30 |
+| LRANGE_100 | 100K | 30 | 1 | 6462.45 |
+| LRANGE_300 | 100K | 30 | 1 | 3318.84 |
+| LRANGE_500 | 100K | 30 | 1 | 2522.13 |
+| LRANGE_600 | 100K | 30 | 1 | 1877.30 |
 | MSET | 100K | 30 | 1 | 8929.37 |
 
 - Comparing to local Redis server, approximately 15x gap
