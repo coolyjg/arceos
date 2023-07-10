@@ -89,11 +89,7 @@ pub unsafe extern "C" fn ax_write(fd: c_int, buf: *const c_void, count: usize) -
         let file_like = get_file_like(fd)?;
         let mut write_len = 0;
         while write_len < count {
-            let len = file_like.write(&src[write_len..])?;
-            write_len += len;
-            if len == 0 {
-                break;
-            }
+            write_len += file_like.write(&src[write_len..])?;
         }
         Ok(write_len)
     })
