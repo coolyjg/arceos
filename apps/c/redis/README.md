@@ -54,6 +54,7 @@
 | | | | 5 | 12853.47 |
 
 - 0710(Extend disk size)
+
 | Operation | Op number | Concurrency | Round | Result(request per seconds) |
 |-|-|-|-|-|
 | SET | 100K | 30 | 1 | 12740.48 |
