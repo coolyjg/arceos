@@ -1,0 +1,449 @@
+c[?7l[2J[0mSeaBIOS (version rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org)
+
+
+iPXE (http://ipxe.org) 00:03.0 CA00 PCI2.10 PnP PMM+7FF90D40+7FEF0D40 CA00
+Press Ctrl-B to configure iPXE (PCI 00:03.0)...                                                                               
+
+
+Booting from ROM..
+Initialize IDT & GDT...
+
+       d8888                            .d88888b.   .d8888b.
+      d88888                           d88P" "Y88b d88P  Y88b
+     d88P888                           888     888 Y88b.
+    d88P 888 888d888  .d8888b  .d88b.  888     888  "Y888b.
+   d88P  888 888P"   d88P"    d8P  Y8b 888     888     "Y88b.
+  d88P   888 888     888      88888888 888     888       "888
+ d8888888888 888     Y88b.    Y8b.     Y88b. .d88P Y88b  d88P
+d88P     888 888      "Y8888P  "Y8888   "Y88888P"   "Y8888P"
+
+arch = x86_64
+platform = pc-x86
+smp = 4
+build_mode = release
+log_level = info
+
+[37m[  0.002937 axruntime:124] [32mLogging is enabled.[m
+[m[37m[  0.003253 axruntime:125] [32mPrimary CPU 0 started, dtb = 0x0.[m
+[m[37m[  0.003625 axruntime:127] [32mFound physcial memory regions:[m
+[m[37m[  0.004038 axruntime:129] [32m  [PA:0x0, PA:0x9f000) low memory (READ | WRITE | RESERVED)[m
+[m[37m[  0.004547 axruntime:129] [32m  [PA:0x200000, PA:0x434000) .text (READ | EXECUTE | RESERVED)[m
+[m[37m[  0.005063 axruntime:129] [32m  [PA:0x434000, PA:0x486000) .rodata (READ | RESERVED)[m
+[m[37m[  0.005571 axruntime:129] [32m  [PA:0x486000, PA:0x4ec000) .data (READ | WRITE | RESERVED)[m
+[m[37m[  0.006078 axruntime:129] [32m  [PA:0x4ec000, PA:0x4f0000) .percpu (READ | WRITE | RESERVED)[m
+[m[37m[  0.006595 axruntime:129] [32m  [PA:0x4f0000, PA:0x5f0000) boot stack (READ | WRITE | RESERVED)[m
+[m[37m[  0.007280 axruntime:129] [32m  [PA:0x5f0000, PA:0x645000) .bss (READ | WRITE | RESERVED)[m
+[m[37m[  0.007779 axruntime:129] [32m  [PA:0xb0000000, PA:0xc0000000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.008351 axruntime:129] [32m  [PA:0xfe000000, PA:0xfec00000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.008922 axruntime:129] [32m  [PA:0xfec00000, PA:0xfec01000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.009522 axruntime:129] [32m  [PA:0xfed00000, PA:0xfed01000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.010104 axruntime:129] [32m  [PA:0xfee00000, PA:0xfee01000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.010655 axruntime:129] [32m  [PA:0x645000, PA:0x80000000) free memory (READ | WRITE | FREE)[m
+[m[37m[  0.011175 axruntime:140] [32mInitialize global memory allocator...[m
+[m[37m[  0.011622 axruntime:146] [32mInitialize kernel page table...[m
+[m[37m[  0.012016 axruntime:150] [32mInitialize platform devices...[m
+[m[37m[  0.012418 axhal::platform::pc_x86::apic:87] [32mInitialize Local APIC...[m
+[m[37m[  0.012837 axhal::platform::pc_x86::apic:102] [32mUsing x2APIC.[m
+[m[37m[  0.013224 axhal::platform::pc_x86::apic:116] [32mInitialize IO APIC...[m
+[m[37m[  0.013643 axtask::api:65] [32mInitialize scheduling...[m
+[m[37m[  0.014105 axtask::api:71] [32m  use FIFO scheduler.[m
+[m[37m[  0.014432 axdriver:149] [32mInitialize device drivers...[m
+[m[37m[  0.014781 axdriver:150] [32m  device model: static[m
+[m[37m[  0.021455 virtio_drivers::device::blk:55] [32mdevice features: SEG_MAX | GEOMETRY | BLK_SIZE | FLUSH | TOPOLOGY | CONFIG_WCE | DISCARD | WRITE_ZEROES | RING_INDIRECT_DESC | RING_EVENT_IDX | VERSION_1[m
+[m[37m[  0.022548 virtio_drivers::device::blk:64] [32mconfig: 0xffffff80fe002000[m
+[m[37m[  0.022980 virtio_drivers::device::blk:69] [32mfound a block device of size 16777216KB[m
+[m[37m[  0.023578 axdriver::bus::pci:104] [32mregistered a new Block device at 00:02.0: "virtio-blk"[m
+[m[37m[  0.027131 virtio_drivers::device::net::dev_raw:31] [32mDevice features CTRL_GUEST_OFFLOADS | MAC | MRG_RXBUF | STATUS | CTRL_VQ | CTRL_RX | CTRL_VLAN | CTRL_RX_EXTRA | GUEST_ANNOUNCE | CTL_MAC_ADDR | RING_INDIRECT_DESC | RING_EVENT_IDX | VERSION_1[m
+[m[37m[  0.028922 axdriver::bus::pci:104] [32mregistered a new Net device at 00:03.0: "virtio-net"[m
+[m[37m[  0.148312 axfs:40] [32mInitialize filesystems...[m
+[m[37m[  0.148653 axfs:43] [32m  use block device 0: "virtio-blk"[m
+[m[37m[  0.151065 fatfs::dir:140] [31mIs a directory[m
+[m[37m[  0.154400 fatfs::dir:140] [31mIs a directory[m
+[m[37m[  0.159061 fatfs::dir:140] [31mIs a directory[m
+[m[37m[  0.164144 fatfs::dir:140] [31mIs a directory[m
+[m[37m[  0.166499 axnet:45] [32mInitialize network subsystem...[m
+[m[37m[  0.166881 axnet:48] [32m  use NIC 0: "virtio-net"[m
+[m[37m[  0.168345 axnet::smoltcp_impl:302] [32mcreated net interface "eth0":[m
+[m[37m[  0.168764 axnet::smoltcp_impl:303] [32m  ether:    52-54-00-12-34-56[m
+[m[37m[  0.169158 axnet::smoltcp_impl:304] [32m  ip:       10.0.2.15/24[m
+[m[37m[  0.169594 axnet::smoltcp_impl:305] [32m  gateway:  10.0.2.2[m
+[m[37m[  0.180004 axruntime::mp:35] [32mSecondary CPU 1 started.[m
+[m[37m[  0.180390 axruntime::mp:45] [32mSecondary CPU 1 init OK.[m
+[m[37m[  0.190199 axruntime::mp:35] [32mSecondary CPU 2 started.[m
+[m[37m[  0.190574 axruntime::mp:45] [32mSecondary CPU 2 init OK.[m
+[m[37m[  0.200395 axruntime::mp:35] [32mSecondary CPU 3 started.[m
+[m[37m[  0.200563 axruntime:176] [32mInitialize interrupt handlers...[m
+[m[37m[  0.200789 axruntime::mp:45] [32mSecondary CPU 3 init OK.[m
+[m[37m[  0.201143 axruntime:180] [32mPrimary CPU 0 init OK.[m
+[m[33mWARN: no ax_call implementation for tzset:[0m 
+[37m[  0.202107 0:2 libax::cbindings::file:111] [32max_open => Err(ENOENT)[m
+[m[37m[  0.202558 0:2 libax::cbindings::file:111] [32max_open => Err(ENOENT)[m
+[m[37m[  0.202955 0:2 libax::cbindings::file:111] [32max_open => Err(ENOENT)[m
+[m[37m[  0.203761 0:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  0.204218 0:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m2:C -5179 Jan 1970 -6:-28:-16.204 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2:C -5179 Jan 1970 -6:-28:-16.205 # Redis version=7.0.11, bits=64, commit=391aa407, modified=1, pid=2, just started
+2:C -5179 Jan 1970 -6:-28:-16.205 # Warning: no config file specified, using the default config. In order to specify a config file use ./redis-server /path/to/redis.conf
+2:M -5179 Jan 1970 -6:-28:-16.206 * Increased maximum number of open files to 10032 (it was originally set to 4096).
+2:M -5179 Jan 1970 -6:-28:-16.207 * monotonic clock: POSIX clock_gettime
+[37m[  0.207550 0:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  0.208007 0:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 6, level: 1, optname: 2, optval: 1, optlen: 4
+[37m[  0.209044 0:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[37m[  0.209500 0:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  0.209952 0:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[minitServer: evictionPoolAlloc pass
+initServer: resetServerStates pass
+initServer: aeCreateTimeEvent pass
+initServer: createSocketAcceptHandler1 pass
+initServer: createSocketAcceptHandler2 pass
+initServer: aeCreateFileEvent1 pass
+initServer: aeCreateFileEvent2 pass
+initServer: aeSetBeforeSleepProc pass
+initServer: aeSetBeforeSleepProc pass
+initServer: clusterInit pass
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+initServer: scriptingInit pass
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+NULL pointer called free
+initServer: functionsInit pass
+initServer: slowlogInit pass
+initServer: latencyMonitorInit pass
+initServer: ACLUpdateDefaultUserPassword pass
+[33mWARN: no ax_call implementation for setitimer:[0m 
+initServer: applyWatchdogPeriod pass
+[33mWARN: no ax_call implementation for isatty:[0m 
+2:M -5179 Jan 1970 -6:-28:-16.220 * Running mode=standalone, port=5555.
+2:M -5179 Jan 1970 -6:-28:-16.220 # Server initialized
+2:M -5179 Jan 1970 -6:-28:-16.220 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+[33mWARN: no ax_call implementation for pthread_setname_np:[0m 
+[33mWARN: no ax_call implementation for pthread_sigmask:[0m 
+[33mWARN: no ax_call implementation for pthread_setname_np:[0m 
+[[33mWARN: no ax_call implementation for pthread_sigmask:[0m 
+37m[  0.228068 0:2 libax::cbindings::file:147] [32max_stat => Err(ENOENT)[m
+[m[37m[  0.233852 0:2 libax::cbindings::file:111] [32max_open => Err(ENOENT)[m
+[m2:M -5179 Jan 1970 -6:-28:-16.234 * Ready to accept connections
+2:M -5179 Jan 1970 -6:-28:-16.234 * Ready to accept connections
+ 
+[33mWARN: no ax_call implementation for pthread_setname_np:[0m 
+[33mWARN: no ax_call implementation for pthread_sigmask:[0m 
+[37m[  3.791858 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.792384 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.792851 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 7, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 7, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 7, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 7, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 7, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.795948 1:2 libax::cbindings::socket:410] [32max_accept => Err(EAGAIN)[m
+[m[37m[  3.797480 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.798052 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.798512 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 8, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 8, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 8, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 8, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 8, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.801581 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.802137 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.802598 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 9, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 9, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 9, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 9, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 9, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.805705 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.806215 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.806672 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 10, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 10, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 10, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 10, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 10, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.810048 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.810555 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.811021 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 11, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 11, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 11, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 11, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 11, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.814221 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.814724 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.815183 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 12, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 12, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 12, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 12, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 12, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.818261 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.818747 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.819202 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 13, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 13, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 13, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 13, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 13, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.822256 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.822720 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.823223 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 14, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 14, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 14, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 14, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 14, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.826500 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.827031 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.827500 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 15, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 15, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 15, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 15, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 15, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.830710 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.831195 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.831685 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 16, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 16, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 16, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 16, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 16, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.834824 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.835286 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.835776 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 17, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 17, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 17, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 17, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 17, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.838816 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.839279 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.839767 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 18, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 18, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 18, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 18, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 18, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.842801 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.843264 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.843723 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 19, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 19, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 19, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 19, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 19, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.846751 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.847211 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.847721 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 20, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 20, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 20, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 20, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 20, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.851177 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.851658 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.852135 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 21, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 21, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 21, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 21, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 21, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.855271 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.855754 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.856232 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 22, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 22, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 22, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 22, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 22, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.859379 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.859863 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.860374 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 23, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 23, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 23, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 23, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 23, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.863594 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.864079 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.864562 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 24, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 24, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 24, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 24, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 24, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.867721 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.868206 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.868683 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 25, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 25, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 25, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 25, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 25, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.871866 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.872352 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.872834 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 26, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 26, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 26, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 26, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 26, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.876213 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.876707 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.877196 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 27, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 27, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 27, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 27, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 27, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.880427 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.880921 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.881416 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 28, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 28, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 28, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 28, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 28, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.884645 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.885139 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.885629 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 29, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 29, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 29, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 29, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 29, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.888863 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.889354 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.889846 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 30, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 30, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 30, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 30, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 30, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.893074 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.893566 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.894059 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 31, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 31, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 31, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 31, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 31, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.897281 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  3.897778 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  3.898272 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 32, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 32, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 32, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 32, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 32, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  3.901503 1:2 libax::cbindings::socket:410] [32max_accept => Err(EAGAIN)[m
+[m[37m[  4.511159 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  4.511711 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  4.512189 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 33, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 33, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 33, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 33, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 33, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  4.515375 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  4.515850 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  4.516319 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 34, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 34, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 34, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 34, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 34, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  4.519443 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  4.519925 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  4.520399 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 35, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 35, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 35, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 35, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 35, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  4.523874 1:2 libax::cbindings::socket:410] [32max_accept => Err(EAGAIN)[m
+[m[37m[  4.660063 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  4.660557 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  4.661058 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 36, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 36, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 36, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 36, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 36, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  4.664185 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[  4.664656 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[  4.665139 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 37, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 37, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 37, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 37, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 37, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[  4.668264 1:2 libax::cbindings::socket:410] [32max_accept => Err(EAGAIN)[m
+[m[37m[ 17.126803 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 1[m
+[m[37m[ 17.127616 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 2[m
+[m[37m[ 17.128379 1:2 libax::cbindings::fd_ops:176] [33munsupported fcntl parameters: cmd 3[m
+[m[33mWARN: no ax_call implementation for setsockopt:[0m fd: 38, level: 6, optname: 1, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 38, level: 1, optname: 9, optval: 1, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 38, level: 6, optname: 4, optval: 300, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 38, level: 6, optname: 5, optval: 100, optlen: 4
+[33mWARN: no ax_call implementation for setsockopt:[0m fd: 38, level: 6, optname: 6, optval: 3, optlen: 4
+[37m[ 17.133399 1:2 libax::cbindings::socket:410] [32max_accept => Err(EAGAIN)[m
+[mshutdown flag = 0
+2:M 16 May 2029 11:25:05.134 # User requested shutdown...
+2:M 16 May 2029 11:25:05.134 * Saving the final RDB snapshot before exiting.
+[33mWARN: no ax_call implementation for fsync:[0m fd: 39
+[33mWARN: no ax_call implementation for rename:[0m old: temp-2.rdb, new: dump.rdb
+[33mWARN: no ax_call implementation for fdatasync:[0m 
+2:M 16 May 2029 11:25:05.150 * DB saved on disk
+2:M 16 May 2029 11:25:05.151 # Redis is now ready to exit, bye bye...
+[37m[ 17.151960 1:2 axhal::platform::pc_x86::misc:7] [32mShutting down...[m
+[m
