@@ -85,8 +85,17 @@ pub unsafe extern "C" fn ax_write(fd: c_int, buf: *const c_void, count: usize) -
         if buf.is_null() {
             return Err(LinuxError::EFAULT);
         }
-        let src = unsafe { core::slice::from_raw_parts(buf as *const u8, count) };
-        get_file_like(fd)?.write(src)
+        let src: &[u8] = unsafe { core::slice::from_raw_parts(buf as *const u8, count) };
+        let file_like = get_file_like(fd)?;
+        let mut write_len = 0;
+        while write_len < count {
+            let len = file_like.write(&src[write_len..])?;
+            write_len += len;
+            if len == 0 {
+                break;
+            }
+        }
+        Ok(write_len)
     })
 }
 

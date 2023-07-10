@@ -7,4 +7,3 @@ multitask
 net
 pipe
 irq
-use-ramdisk
