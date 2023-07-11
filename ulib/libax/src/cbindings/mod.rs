@@ -31,6 +31,8 @@ mod strftime;
 mod strtod;
 #[cfg(feature = "alloc")]
 mod uio;
+#[cfg(feature = "fp_simd")]
+mod math;
 
 mod errno;
 mod mktime;
@@ -103,6 +105,9 @@ pub use self::uio::ax_writev;
 
 #[cfg(feature = "alloc")]
 pub use self::strftime::ax_strftime;
+
+#[cfg(feature = "fp_simd")]
+pub use self::math::{ax_log, ax_pow};
 
 pub use self::errno::ax_errno_string;
 pub use self::mktime::ax_mktime;

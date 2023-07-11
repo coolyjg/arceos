@@ -1,0 +1,109 @@
+    [92;1mBuilding[0m App: log, Arch: aarch64, Platform: qemu-virt-aarch64, App type: c
+[37mcargo rustc[0m [90m--target aarch64-unknown-none-softfloat --target-dir /home/yanjuguang/OS/arceos/target --release --crate-type staticlib --features "libax/platform-qemu-virt-aarch64 libax/log-level-info libax/default libax/fp_simd libax/cbindings"  --no-default-features -p libax  -- -C link-arg=-T/home/yanjuguang/OS/arceos/modules/axhal/linker_qemu-virt-aarch64.lds -C link-arg=-no-pie[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3  -c -o apps/c/math/log//main.o apps/c/math/log//main.c[0m
+[37mmkdir[0m [90m-p ulib/c_libax/build_aarch64[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/assert.o ulib/c_libax/src/assert.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/ctype.o ulib/c_libax/src/ctype.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/dirent.o ulib/c_libax/src/dirent.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/dlfcn.o ulib/c_libax/src/dlfcn.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/env.o ulib/c_libax/src/env.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/epoll.o ulib/c_libax/src/epoll.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/fcntl.o ulib/c_libax/src/fcntl.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/file.o ulib/c_libax/src/file.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/fnmatch.o ulib/c_libax/src/fnmatch.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/glob.o ulib/c_libax/src/glob.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/ioctl.o ulib/c_libax/src/ioctl.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/libgen.o ulib/c_libax/src/libgen.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/libm.o ulib/c_libax/src/libm.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/locale.o ulib/c_libax/src/locale.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/log.o ulib/c_libax/src/log.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/math.o ulib/c_libax/src/math.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/mmap.o ulib/c_libax/src/mmap.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/netdb.o ulib/c_libax/src/netdb.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/network.o ulib/c_libax/src/network.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/poll.o ulib/c_libax/src/poll.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/pow.o ulib/c_libax/src/pow.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/printf.o ulib/c_libax/src/printf.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/pthread.o ulib/c_libax/src/pthread.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/pwd.o ulib/c_libax/src/pwd.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/resource.o ulib/c_libax/src/resource.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/sched.o ulib/c_libax/src/sched.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/select.o ulib/c_libax/src/select.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/signal.o ulib/c_libax/src/signal.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/socket.o ulib/c_libax/src/socket.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/stat.o ulib/c_libax/src/stat.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/stdio.o ulib/c_libax/src/stdio.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/stdlib.o ulib/c_libax/src/stdlib.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/string.o ulib/c_libax/src/string.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/syslog.o ulib/c_libax/src/syslog.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/time.o ulib/c_libax/src/time.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/uio.o ulib/c_libax/src/uio.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/unistd.o ulib/c_libax/src/unistd.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/utsname.o ulib/c_libax/src/utsname.c[0m
+[37maarch64-linux-musl-gcc[0m [90m-DAX_CONFIG_DEFAULT -DAX_CONFIG_FP_SIMD -nostdinc -static -no-pie -fno-builtin -ffreestanding -Wall -Iulib/c_libax/include -Iulib/c_libax/../libax/include -O3 -c -o ulib/c_libax/build_aarch64/wait.o ulib/c_libax/src/wait.c[0m
+[37maarch64-linux-musl-ar[0m [90mrc ulib/c_libax/build_aarch64/libc.a ulib/c_libax/build_aarch64/assert.o ulib/c_libax/build_aarch64/ctype.o ulib/c_libax/build_aarch64/dirent.o ulib/c_libax/build_aarch64/dlfcn.o ulib/c_libax/build_aarch64/env.o ulib/c_libax/build_aarch64/epoll.o ulib/c_libax/build_aarch64/fcntl.o ulib/c_libax/build_aarch64/file.o ulib/c_libax/build_aarch64/fnmatch.o ulib/c_libax/build_aarch64/glob.o ulib/c_libax/build_aarch64/ioctl.o ulib/c_libax/build_aarch64/libgen.o ulib/c_libax/build_aarch64/libm.o ulib/c_libax/build_aarch64/locale.o ulib/c_libax/build_aarch64/log.o ulib/c_libax/build_aarch64/math.o ulib/c_libax/build_aarch64/mmap.o ulib/c_libax/build_aarch64/netdb.o ulib/c_libax/build_aarch64/network.o ulib/c_libax/build_aarch64/poll.o ulib/c_libax/build_aarch64/pow.o ulib/c_libax/build_aarch64/printf.o ulib/c_libax/build_aarch64/pthread.o ulib/c_libax/build_aarch64/pwd.o ulib/c_libax/build_aarch64/resource.o ulib/c_libax/build_aarch64/sched.o ulib/c_libax/build_aarch64/select.o ulib/c_libax/build_aarch64/signal.o ulib/c_libax/build_aarch64/socket.o ulib/c_libax/build_aarch64/stat.o ulib/c_libax/build_aarch64/stdio.o ulib/c_libax/build_aarch64/stdlib.o ulib/c_libax/build_aarch64/string.o ulib/c_libax/build_aarch64/syslog.o ulib/c_libax/build_aarch64/time.o ulib/c_libax/build_aarch64/uio.o ulib/c_libax/build_aarch64/unistd.o ulib/c_libax/build_aarch64/utsname.o ulib/c_libax/build_aarch64/wait.o[0m
+[37maarch64-linux-musl-ranlib[0m [90mulib/c_libax/build_aarch64/libc.a[0m
+    [96;1mLinking[0m apps/c/math/log//log_qemu-virt-aarch64.elf
+[37maarch64-linux-musl-ld[0m [90m-nostdlib -static -no-pie --gc-sections -T/home/yanjuguang/OS/arceos/modules/axhal/linker_qemu-virt-aarch64.lds apps/c/math/log//main.o ulib/c_libax/build_aarch64/libc.a target/aarch64-unknown-none-softfloat/release/liblibax.a -o apps/c/math/log//log_qemu-virt-aarch64.elf[0m
+[37mrust-objcopy --binary-architecture=aarch64[0m [90mapps/c/math/log//log_qemu-virt-aarch64.elf --strip-all -O binary apps/c/math/log//log_qemu-virt-aarch64.bin[0m
+    [96;1mRunning[0m on qemu...
+[37mqemu-system-aarch64[0m [90m-m 2G -smp 1 -cpu cortex-a72 -machine virt -kernel apps/c/math/log//log_qemu-virt-aarch64.bin -nographic[0m
+
+       d8888                            .d88888b.   .d8888b.
+      d88888                           d88P" "Y88b d88P  Y88b
+     d88P888                           888     888 Y88b.
+    d88P 888 888d888  .d8888b  .d88b.  888     888  "Y888b.
+   d88P  888 888P"   d88P"    d8P  Y8b 888     888     "Y88b.
+  d88P   888 888     888      88888888 888     888       "888
+ d8888888888 888     Y88b.    Y8b.     Y88b. .d88P Y88b  d88P
+d88P     888 888      "Y8888P  "Y8888   "Y88888P"   "Y8888P"
+
+arch = aarch64
+platform = qemu-virt-aarch64
+smp = 1
+build_mode = release
+log_level = info
+
+[37m[  0.001855 0 axruntime:124] [32mLogging is enabled.[m
+[m[37m[  0.002460 0 axruntime:125] [32mPrimary CPU 0 started, dtb = 0x48000000.[m
+[m[37m[  0.002716 0 axruntime:127] [32mFound physcial memory regions:[m
+[m[37m[  0.002947 0 axruntime:129] [32m  [PA:0x40080000, PA:0x4008f000) .text (READ | EXECUTE | RESERVED)[m
+[m[37m[  0.003292 0 axruntime:129] [32m  [PA:0x4008f000, PA:0x40093000) .rodata (READ | RESERVED)[m
+[m[37m[  0.003504 0 axruntime:129] [32m  [PA:0x40093000, PA:0x40096000) .data (READ | WRITE | RESERVED)[m
+[m[37m[  0.003693 0 axruntime:129] [32m  [PA:0x40096000, PA:0x40097000) .percpu (READ | WRITE | RESERVED)[m
+[m[37m[  0.003871 0 axruntime:129] [32m  [PA:0x40097000, PA:0x400d7000) boot stack (READ | WRITE | RESERVED)[m
+[m[37m[  0.004061 0 axruntime:129] [32m  [PA:0x400d7000, PA:0x400d8000) .bss (READ | WRITE | RESERVED)[m
+[m[37m[  0.004250 0 axruntime:129] [32m  [PA:0x9000000, PA:0x9001000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.004429 0 axruntime:129] [32m  [PA:0x8000000, PA:0x8020000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.004604 0 axruntime:129] [32m  [PA:0xa000000, PA:0xa004000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.004780 0 axruntime:129] [32m  [PA:0x10000000, PA:0x3eff0000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.004960 0 axruntime:129] [32m  [PA:0x4010000000, PA:0x4020000000) mmio (READ | WRITE | DEVICE | RESERVED)[m
+[m[37m[  0.005161 0 axruntime:129] [32m  [PA:0x400d8000, PA:0xc0000000) free memory (READ | WRITE | FREE)[m
+[m[37m[  0.005375 0 axruntime:150] [32mInitialize platform devices...[m
+[m[37m[  0.005529 0 axruntime:180] [32mPrimary CPU 0 init OK.[m
+[mtest log
+x = 2.700000
+[37m[  0.006399 0 libax::cbindings::math:15] [32mAX_LOG <= x_: 0000000000000000000000000000000000000000000000000000000000001101,[m
+[m[37m[  0.006689 0 libax::cbindings::math:16] [32max_log <= x: 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064[m
+[mln(2.700000)  = 0.000000
+x = 1.000000
+[37m[  0.007869 0 libax::cbindings::math:15] [32mAX_LOG <= x_: 0000000000000000000000000000000000000000000000000000000000001101,[m
+[m[37m[  0.008084 0 libax::cbindings::math:16] [32max_log <= x: 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064[m
+[mln(1.0) = 0.000000
+x = 2.000000
+[37m[  0.008728 0 libax::cbindings::math:15] [32mAX_LOG <= x_: 0000000000000000000000000000000000000000000000000000000000001101,[m
+[m[37m[  0.008936 0 libax::cbindings::math:16] [32max_log <= x: 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064[m
+[mln(2.0) = 0.000000
+x = 200.000000
+[37m[  0.009586 0 libax::cbindings::math:15] [32mAX_LOG <= x_: 0000000000000000000000000000000000000000000000000000000000001111,[m
+[m[37m[  0.009877 0 libax::cbindings::math:16] [32max_log <= x: 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000074[m
+[mln(200.0) = 0.000000
+x = 200.000000
+[37m[  0.010527 0 libax::cbindings::math:15] [32mAX_LOG <= x_: 0000000000000000000000000000000000000000000000000000000000001111,[m
+[m[37m[  0.010816 0 libax::cbindings::math:16] [32max_log <= x: 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000074[m
+[mx = 2.000000
+[37m[  0.011427 0 libax::cbindings::math:15] [32mAX_LOG <= x_: 0000000000000000000000000000000000000000000000000000000000001101,[m
+[m[37m[  0.011632 0 libax::cbindings::math:16] [32max_log <= x: 0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000064[m
+[mln(200.0) / ln(2.0) = nan
+[37m[  0.012317 0 axhal::platform::aarch64_common::psci:26] [32mShutting down...[m
+[m
