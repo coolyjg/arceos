@@ -252,12 +252,13 @@ int fclose(FILE *f)
 {
     return ax_close(f->fd);
 }
-#endif
 
 int rename(const char *old, const char *new)
 {
     return ax_rename(old, new);
 }
+
+#endif
 
 int fileno(FILE *f)
 {

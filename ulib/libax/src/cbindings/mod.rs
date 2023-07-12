@@ -71,7 +71,7 @@ pub use self::malloc::{ax_free, ax_malloc};
 pub use self::fd_ops::{ax_close, ax_dup, ax_dup3, ax_fcntl, ax_fstat, ax_read, ax_write};
 
 #[cfg(feature = "fs")]
-pub use self::file::{ax_getcwd, ax_lseek, ax_lstat, ax_open, ax_stat};
+pub use self::file::{ax_getcwd, ax_lseek, ax_lstat, ax_open, ax_rename, ax_stat};
 
 #[cfg(feature = "net")]
 pub use self::socket::{

@@ -49,6 +49,7 @@ extern FILE *const stderr;
 #if defined(AX_CONFIG_ALLOC) && defined(AX_CONFIG_FS)
 FILE *fopen(const char *filename, const char *mode);
 char *fgets(char *__restrict, int, FILE *__restrict);
+int rename(const char *__old, const char *__new);
 #endif
 
 int fflush(FILE *);
@@ -76,8 +77,6 @@ size_t fread(void *__restrict, size_t, size_t, FILE *__restrict);
 size_t fwrite(const void *__restrict, size_t, size_t, FILE *__restrict);
 
 int fclose(FILE *);
-
-int rename(const char *__old, const char *__new);
 
 int fileno(FILE *__stream);
 int feof(FILE *__stream);
