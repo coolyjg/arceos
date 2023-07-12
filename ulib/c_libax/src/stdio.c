@@ -254,11 +254,9 @@ int fclose(FILE *f)
 }
 #endif
 
-// TODO
-int rename(const char *__old, const char *__new)
+int rename(const char *old, const char *new)
 {
-    unimplemented("old: %s, new: %s", __old, __new);
-    return 0;
+    return ax_rename(old, new);
 }
 
 int fileno(FILE *f)

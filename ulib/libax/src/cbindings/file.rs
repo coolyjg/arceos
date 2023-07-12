@@ -3,7 +3,7 @@ use axerrno::{LinuxError, LinuxResult};
 use core::ffi::{c_char, c_int};
 
 use super::{ctypes, fd_ops::FileLike, utils::char_ptr_to_str};
-use crate::fs::OpenOptions;
+use crate::fs::{self, OpenOptions};
 use crate::io::{prelude::*, PollState, SeekFrom};
 use crate::sync::Mutex;
 
@@ -33,8 +33,18 @@ impl FileLike for File {
     }
 
     fn write(&self, buf: &[u8]) -> LinuxResult<usize> {
-        let len = self.0.lock().write(buf)?;
-        Ok(len)
+        let total = buf.len();
+        let mut write_len = 0;
+        while write_len < total {
+            let len = self.0.lock().write(&buf[write_len..])?;
+            write_len += len;
+            if len == 0 {
+                break;
+            }
+        }
+        Ok(write_len)
+        // let len = self.0.lock().write(buf)?;
+        // Ok(len)
     }
 
     fn stat(&self) -> LinuxResult<ctypes::stat> {
@@ -188,6 +198,21 @@ pub unsafe extern "C" fn ax_getcwd(buf: *mut c_char, size: usize) -> *mut c_char
             Ok(buf)
         } else {
             Err(LinuxError::ERANGE)
+        }
+    })
+}
+
+// int rename(const char *__old, const char *__new)
+/// Rename `old` file to `new`
+#[no_mangle]
+pub unsafe extern "C" fn ax_rename(old: *const c_char, new: *const c_char) -> c_int {
+    ax_call_body!(ax_rename, {
+        let old_path = char_ptr_to_str(old)?;
+        let new_path = char_ptr_to_str(new)?;
+        debug!("ax_rename <= old: {:?}, new: {:?}", old_path, new_path);
+        match fs::rename(old_path, new_path) {
+            Ok(_) => Ok(0),
+            Err(e) => Err(LinuxError::from(e)),
         }
     })
 }

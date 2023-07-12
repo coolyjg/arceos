@@ -43,7 +43,6 @@
 #![feature(int_roundings)]
 #![feature(naked_functions)]
 #![feature(result_option_inspect)]
-#![feature(core_intrinsics)]
 
 #[allow(unused_imports)]
 #[macro_use]

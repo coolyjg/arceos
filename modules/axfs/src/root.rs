@@ -131,6 +131,16 @@ impl VfsNodeOps for RootDirectory {
             }
         })
     }
+
+    fn rename(&self, src_path: &str, dst_path: &str) -> VfsResult {
+        self.lookup_mounted_fs(src_path, |fs, rest_path| {
+            if rest_path.is_empty() {
+                ax_err!(NotFound)
+            } else {
+                fs.root_dir().rename(rest_path, dst_path)
+            }
+        })
+    }
 }
 
 #[cfg(all(feature = "ramfs", feature = "procfs"))]
@@ -383,4 +393,10 @@ pub(crate) fn set_current_dir(path: &str) -> AxResult {
         *CURRENT_DIR_PATH.lock() = abs_path;
         Ok(())
     }
+}
+
+pub(crate) fn rename(old: &str, new: &str) -> AxResult {
+    debug!("root::rename <= old : {:?}, new: {:?}", old, new);
+    // let new_node = parent_node_of(None, new);
+    parent_node_of(None, old).rename(old, new)
 }
