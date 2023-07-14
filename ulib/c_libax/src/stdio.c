@@ -238,7 +238,7 @@ size_t fread(void *restrict destv, size_t size, size_t nmemb, FILE *restrict f)
 
 size_t fwrite(const void *restrict src, size_t size, size_t nmemb, FILE *restrict f)
 {
-    int n = (size_t)ax_write(f->fd, src, size * nmemb);
+    size_t n = write(f->fd, src, size * nmemb);
     return n == size * nmemb ? nmemb : n / size;
 }
 
@@ -255,7 +255,8 @@ int fclose(FILE *f)
 
 int rename(const char *old, const char *new)
 {
-    return ax_rename(old, new);
+    // return ax_rename(old, new);
+    return 0;
 }
 
 #endif

@@ -70,7 +70,13 @@ ssize_t read(int fd, void *buf, size_t count)
 
 ssize_t write(int fd, const void *buf, size_t count)
 {
-    return ax_write(fd, buf, count);
+    ssize_t write_len = 0;
+    ssize_t len = 0;
+    do {
+        len = ax_write(fd, buf + write_len, count - write_len);
+        write_len += len;
+    } while (len > 0);
+    return write_len;
 }
 #endif
 

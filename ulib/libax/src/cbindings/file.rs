@@ -33,18 +33,8 @@ impl FileLike for File {
     }
 
     fn write(&self, buf: &[u8]) -> LinuxResult<usize> {
-        let total = buf.len();
-        let mut write_len = 0;
-        while write_len < total {
-            let len = self.0.lock().write(&buf[write_len..])?;
-            write_len += len;
-            if len == 0 {
-                break;
-            }
-        }
-        Ok(write_len)
-        // let len = self.0.lock().write(buf)?;
-        // Ok(len)
+        let len = self.0.lock().write(buf)?;
+        Ok(len)
     }
 
     fn stat(&self) -> LinuxResult<ctypes::stat> {

@@ -3,7 +3,7 @@
 - At ArceOS root directory, run `git submodule update --init --recursive` to fetch Redis source code.
 - Then run `make A=apps/c/redis/ LOG=info FS=y NET=y ARCH=aarch64 SMP=4 run`
 
-# How to run second?
+# How to run secondly?
 ## Rebuild
 - Enter apps/c/redis, run `make clean`
 - Return to ArceOS root directory, run `make clean A=apps/c/redis && make A=apps/c/redis/ LOG=info FS=y NET=y ARCH=aarch64 SMP=4 run`
@@ -68,10 +68,27 @@
 | | | | 4 | 13974.29 |
 | | | | 5 | 14005.60 |
 
-### Other tests, one round(0704)
+- 0714(Update net implementation, maximum: 2.9w(set))
+
+| Operation | Op number | Concurrency | Round | Result(request per seconds) |
+|-|-|-|-|-|
+| SET | 100K | 30 | 1 | 25713.55 |
+| | | | 2 | 25246.15 |
+| | | | 3 | 24968.79 |
+| | | | 4 | 25018.76 |
+| | | | 5 | 25348.54 |
+| GET | 100K | 30 | 1 | 27917.37 |
+| | | | 2 | 28360.75 |
+| | | | 3 | 27525.46 |
+| | | | 4 | 27901.79 |
+| | | | 5 | 27495.19 |
+
+### Other tests, one round
 - Do other tests. 
-- Use `config set save""` to avoid rapidly saving.
+- Use `config set save ""` to avoid rapidly saving.
 - Use `-c 30`
+
+- 0704
 
 | Operation | Op number | Concurrency | Round | Result(request per seconds) |
 |-|-|-|-|-|
@@ -92,11 +109,37 @@
 | LRANGE_600 | 100K | 30 | 1 | 1877.30 |
 | MSET | 100K | 30 | 1 | 8929.37 |
 
+- 0714
+```
+PING_INLINE: 28768.70 requests per second
+PING_BULK: 31347.96 requests per second
+SET: 23185.72 requests per second
+GET: 25700.33 requests per second
+INCR: 25746.65 requests per second
+LPUSH: 20416.50 requests per second
+RPUSH: 20868.12 requests per second
+LPOP: 20370.75 requests per second
+RPOP: 19956.10 requests per second
+SADD: 25361.40 requests per second
+HSET: 21431.63 requests per second
+SPOP: 25438.82 requests per second
+ZADD: 23820.87 requests per second
+ZPOPMIN: 26954.18 requests per second
+LPUSH (needed to benchmark LRANGE): 26385.22 requests per second
+LRANGE_100 (first 100 elements): 23912.00 requests per second
+LRANGE_300 (first 300 elements): 22665.46 requests per second
+LRANGE_500 (first 450 elements): 23369.95 requests per second
+LRANGE_600 (first 600 elements): 22256.84 requests per second
+MSET (10 keys): 18460.40 requests per second
+```
+
 ## X86_64
-### SET and GET(0710)
+### SET and GET
 - command: 
   - `redis-benchmark -p 5555 -n 100000 -q -t set -c 30`
   - `redis-benchmark -p 5555 -n 100000 -q -t get -c 30`
+
+- 0710
 
 | Operation | Op number | Concurrency | Round | Result(request per seconds) |
 |-|-|-|-|-|
@@ -111,7 +154,24 @@
 | | | | 4 | 33178.50 |
 | | | | 5 | 32268.47 |
 
-### Other tests(0710)
+- 0714
+
+| Operation | Op number | Concurrency | Round | Result(request per seconds) |
+|-|-|-|-|-|
+| SET | 100K | 30 | 1 | 105263.16 |
+| | | | 2 | 105263.16 |
+| | | | 3 | 103950.10 |
+| | | | 4 | 107758.62 |
+| | | | 5 | 105820.11 |
+| GET | 100K | 30 | 1 | 103199.18 |
+| | | | 2 | 104058.27 |
+| | | | 3 | 99502.48 |
+| | | | 4 | 106951.88 |
+| | | | 5 | 105263.16 |
+
+### Other tests
+
+- 0710
 
 | Operation | Op number | Concurrency | Round | Result(request per seconds) |
 |-|-|-|-|-|
@@ -132,7 +192,32 @@
 | LRANGE_600 | 100K | 30 | 1 | 7760.96 |
 | MSET | 100K | 30 | 1 | 31269.54 |
 
-- Comparing to local Redis server, approximately 5x gap
+- 0714
+
+```
+PING_INLINE: 111607.14 requests per second
+PING_BULK: 102880.66 requests per second
+SET: 80971.66 requests per second
+GET: 103519.66 requests per second
+INCR: 98425.20 requests per second
+LPUSH: 70274.07 requests per second
+RPUSH: 108108.11 requests per second
+LPOP: 53561.86 requests per second
+RPOP: 100200.40 requests per second
+SADD: 62150.41 requests per second
+HSET: 99009.90 requests per second
+SPOP: 104712.05 requests per second
+ZADD: 105263.16 requests per second
+ZPOPMIN: 110497.24 requests per second
+LPUSH (needed to benchmark LRANGE): 74682.60 requests per second
+LRANGE_100 (first 100 elements): 62305.30 requests per second
+LRANGE_300 (first 300 elements): 8822.23 requests per second
+LRANGE_500 (first 450 elements): 22446.69 requests per second
+LRANGE_600 (first 600 elements): 17280.11 requests per second
+MSET (10 keys): 92081.03 requests per second
+```
+
+- Comparing to local Redis server
 ```
 PING_INLINE: 176056.33 requests per second
 PING_BULK: 173611.12 requests per second
