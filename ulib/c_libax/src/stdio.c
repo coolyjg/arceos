@@ -255,8 +255,7 @@ int fclose(FILE *f)
 
 int rename(const char *old, const char *new)
 {
-    // return ax_rename(old, new);
-    return 0;
+    return ax_rename(old, new);
 }
 
 #endif
