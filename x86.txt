@@ -1,0 +1,17 @@
+    [92;1mBuilding[0m App: redis, Arch: x86_64, Platform: x86_64-qemu-q35, App type: c
+[37mcargo rustc[0m [90m--target x86_64-unknown-none --target-dir /root/OS/arceos/target --release --features "libax/log-level-info libax/bus-pci libax/default libax/alloc libax/paging libax/fs libax/fp_simd libax/multitask libax/net libax/pipe libax/irq libax/use-ramdisk libax/fd libax/cbindings"  -p libax --crate-type staticlib[0m
+   Compiling libax v0.1.0 (/root/OS/arceos/ulib/libax)
+error[E0080]: evaluation of constant value failed
+  --> ulib/libax/src/cbindings/pthread/mutex.rs:7:1
+   |
+7  | / static_assertions::const_assert_eq!(
+8  | |     size_of::<PthreadMutex>(),
+9  | |     size_of::<ctypes::pthread_mutex_t>()
+10 | | );
+   | |_^ attempt to compute `0_usize - 1_usize`, which would overflow
+   |
+   = note: this error originates in the macro `const_assert` which comes from the expansion of the macro `static_assertions::const_assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0080`.
+error: could not compile `libax` (lib) due to previous error
+make: *** [scripts/make/build.mk:31: _cargo_build] Error 101

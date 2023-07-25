@@ -1,0 +1,577 @@
+diff --git a/deps/hdr_histogram/Makefile b/deps/hdr_histogram/Makefile
+index 28dd93ea1..ed8b87078 100644
+--- a/deps/hdr_histogram/Makefile
++++ b/deps/hdr_histogram/Makefile
+@@ -9,7 +9,7 @@ DEBUG= -g
+ R_CC=$(CC) $(R_CFLAGS)
+ R_LD=$(CC) $(R_LDFLAGS)
+ 
+-AR= ar
++AR = $(ARCH)-linux-musl-ar
+ ARFLAGS= rcs
+ 
+ libhdrhistogram.a: hdr_histogram.o
+@@ -23,5 +23,3 @@ hdr_histogram.o: hdr_histogram.h hdr_histogram.c
+ clean:
+ 	rm -f *.o
+ 	rm -f *.a
+-
+-
+diff --git a/deps/hiredis/Makefile b/deps/hiredis/Makefile
+index a2ad84c6b..d84c81393 100644
+--- a/deps/hiredis/Makefile
++++ b/deps/hiredis/Makefile
+@@ -9,6 +9,8 @@ TESTS=hiredis-test
+ LIBNAME=libhiredis
+ PKGCONFNAME=hiredis.pc
+ 
++AR = $(ARCH)-linux-musl-ar
++
+ HIREDIS_MAJOR=$(shell grep HIREDIS_MAJOR hiredis.h | awk '{print $$3}')
+ HIREDIS_MINOR=$(shell grep HIREDIS_MINOR hiredis.h | awk '{print $$3}')
+ HIREDIS_PATCH=$(shell grep HIREDIS_PATCH hiredis.h | awk '{print $$3}')
+@@ -41,7 +43,8 @@ CXX:=$(shell sh -c 'type $${CXX%% *} >/dev/null 2>/dev/null && echo $(CXX) || ec
+ OPTIMIZATION?=-O3
+ WARNINGS=-Wall -W -Wstrict-prototypes -Wwrite-strings -Wno-missing-field-initializers
+ DEBUG_FLAGS?= -g -ggdb
+-REAL_CFLAGS=$(OPTIMIZATION) -fPIC $(CPPFLAGS) $(CFLAGS) $(WARNINGS) $(DEBUG_FLAGS)
++# REAL_CFLAGS=$(OPTIMIZATION) -fPIC $(CPPFLAGS) $(CFLAGS) $(WARNINGS) $(DEBUG_FLAGS)
++REAL_CFLAGS=$(OPTIMIZATION) $(CPPFLAGS) $(CFLAGS) $(WARNINGS) $(DEBUG_FLAGS)
+ REAL_LDFLAGS=$(LDFLAGS)
+ 
+ DYLIBSUFFIX=so
+@@ -135,7 +138,8 @@ ifeq ($(uname_S),Darwin)
+   DYLIB_PLUGIN=-Wl,-undefined -Wl,dynamic_lookup
+ endif
+ 
+-all: dynamic static hiredis-test pkgconfig
++# all: dynamic static hiredis-test pkgconfig
++all: static hiredis-test pkgconfig
+ 
+ dynamic: $(DYLIBNAME) $(SSL_DYLIB)
+ 
+@@ -254,7 +258,7 @@ check: hiredis-test
+ 	TEST_SSL=$(USE_SSL) ./test.sh
+ 
+ .c.o:
+-	$(CC) -std=c99 -c $(REAL_CFLAGS) $<
++	$(CC) -c $(REAL_CFLAGS) $<
+ 
+ clean:
+ 	rm -rf $(DYLIBNAME) $(STLIBNAME) $(SSL_DYLIBNAME) $(SSL_STLIBNAME) $(TESTS) $(PKGCONFNAME) examples/hiredis-example* *.o *.gcda *.gcno *.gcov
+diff --git a/deps/lua/src/Makefile b/deps/lua/src/Makefile
+index f3bba2f81..a00c6dbfe 100644
+--- a/deps/lua/src/Makefile
++++ b/deps/lua/src/Makefile
+@@ -9,13 +9,14 @@ PLAT= none
+ 
+ CC?= gcc
+ CFLAGS= -O2 -Wall $(MYCFLAGS)
+-AR= ar rcu
+-RANLIB= ranlib
++
++AR = $(ARCH)-linux-musl-ar rcs
++RANLIB= $(ARCH)-linux-musl-ranlib
+ RM= rm -f
+-LIBS= -lm $(MYLIBS)
++LIBS = $(MYLIBS)
++# LIBS= -lm $(MYLIBS)
+ 
+ MYCFLAGS=
+-MYLDFLAGS=
+ MYLIBS=
+ 
+ # == END OF USER SETTINGS. NO NEED TO CHANGE ANYTHING BELOW THIS LINE =========
+diff --git a/src/Makefile b/src/Makefile
+index e4f7d9068..901e6b8a7 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -12,11 +12,18 @@
+ # Dependencies are stored in the Makefile.dep file. To rebuild this file
+ # Just use 'make dep', but this is only needed by developers.
+ 
++# This is a taylored redis-server makefile
++# v4
+ release_hdr := $(shell sh -c './mkreleasehdr.sh')
+ uname_S := $(shell sh -c 'uname -s 2>/dev/null || echo not')
+ uname_M := $(shell sh -c 'uname -m 2>/dev/null || echo not')
+-OPTIMIZATION?=-O2
+-DEPENDENCY_TARGETS=hiredis linenoise lua hdr_histogram
++OPTIMIZATION?=-O3
++ifeq ($(OPTIMIZATION),-O3)
++	REDIS_CFLAGS+=-flto=auto
++	REDIS_LDFLAGS+=-flto
++endif
++# DEPENDENCY_TARGETS=hiredis lua hdr_histogram fpconv
++DEPENDENCY_TARGETS=hiredis lua hdr_histogram
+ NODEPS:=clean distclean
+ 
+ # Default settings
+@@ -31,20 +38,21 @@ ifneq (,$(findstring FreeBSD,$(uname_S)))
+   STD+=-Wno-c11-extensions
+ endif
+ endif
+-WARN=-Wall -W -Wno-missing-field-initializers
++WARN=-Wall -W -Wno-missing-field-initializers -Werror=deprecated-declarations
+ OPT=$(OPTIMIZATION)
+ 
+ # Detect if the compiler supports C11 _Atomic.
+ # NUMBER_SIGN_CHAR is a workaround to support both GNU Make 4.3 and older versions.
+ NUMBER_SIGN_CHAR := \#
+-C11_ATOMIC := $(shell sh -c 'echo "$(NUMBER_SIGN_CHAR)include <stdatomic.h>" > foo.c; \
+-	$(CC) -std=c11 -c foo.c -o foo.o > /dev/null 2>&1; \
+-	if [ -f foo.o ]; then echo "yes"; rm foo.o; fi; rm foo.c')
+-ifeq ($(C11_ATOMIC),yes)
+-	STD+=-std=c11
+-else
+-	STD+=-std=c99
+-endif
++# C11_ATOMIC := $(shell sh -c 'echo "$(NUMBER_SIGN_CHAR)include <stdatomic.h>" > foo.c; \
++# 	$(CC) -std=c11 -c foo.c -o foo.o > /dev/null 2>&1; \
++# 	if [ -f foo.o ]; then echo "yes"; rm foo.o; fi; rm foo.c')
++# ifeq ($(C11_ATOMIC),yes)
++# 	STD+=-std=c11
++# else
++# 	STD+=-std=c99
++# endif
++STD+=-std=c99
+ 
+ PREFIX?=/usr/local
+ INSTALL_BIN=$(PREFIX)/bin
+@@ -55,24 +63,16 @@ ifndef PYTHON
+ PYTHON := $(shell which python3 || which python)
+ endif
+ 
+-# Default allocator defaults to Jemalloc if it's not an ARM
++# Default allocator defaults to Jemalloc on Linux and libc otherwise
+ MALLOC=libc
+-ifneq ($(uname_M),armv6l)
+-ifneq ($(uname_M),armv7l)
+ ifeq ($(uname_S),Linux)
+ 	MALLOC=jemalloc
+ endif
+-endif
+-endif
+ 
+ # To get ARM stack traces if Redis crashes we need a special C flag.
+-ifneq (,$(filter aarch64 armv,$(uname_M)))
+-        CFLAGS+=-funwind-tables
+-else
+-ifneq (,$(findstring armv,$(uname_M)))
++ifneq (,$(filter aarch64 armv%,$(uname_M)))
+         CFLAGS+=-funwind-tables
+ endif
+-endif
+ 
+ # Backwards compatibility for selecting an allocator
+ ifeq ($(USE_TCMALLOC),yes)
+@@ -117,8 +117,9 @@ endif
+ 
+ FINAL_CFLAGS=$(STD) $(WARN) $(OPT) $(DEBUG) $(CFLAGS) $(REDIS_CFLAGS)
+ FINAL_LDFLAGS=$(LDFLAGS) $(REDIS_LDFLAGS) $(DEBUG)
+-FINAL_LIBS=-lm
+-DEBUG=-g -ggdb
++# FINAL_LIBS= -lm -lrt
++FINAL_LIBS=
++# DEBUG=-g -ggdb
+ 
+ # Linux ARM32 needs -latomic at linking time
+ ifneq (,$(findstring armv,$(uname_M)))
+@@ -139,6 +140,9 @@ ifeq ($(uname_S),SunOS)
+ 	INSTALL=cp -pf
+ 	FINAL_CFLAGS+= -D__EXTENSIONS__ -D_XPG6
+ 	FINAL_LIBS+= -ldl -lnsl -lsocket -lresolv -lpthread -lrt
++	ifeq ($(USE_BACKTRACE),yes)
++	    FINAL_CFLAGS+= -DUSE_BACKTRACE
++	endif
+ else
+ ifeq ($(uname_S),Darwin)
+ 	# Darwin
+@@ -201,8 +205,8 @@ ifeq ($(uname_S),Haiku)
+ 	FINAL_LIBS+= -lpthread
+ else
+ 	# All the other OSes (notably Linux)
+-	FINAL_LDFLAGS+= -rdynamic
+-	FINAL_LIBS+=-ldl -pthread -lrt
++#	FINAL_LDFLAGS+= -rdynamic
++#	FINAL_LIBS+=-ldl -pthread -lrt
+ endif
+ endif
+ endif
+@@ -217,13 +221,13 @@ endif
+ ifdef OPENSSL_PREFIX
+ 	OPENSSL_CFLAGS=-I$(OPENSSL_PREFIX)/include
+ 	OPENSSL_LDFLAGS=-L$(OPENSSL_PREFIX)/lib
+-	# Also export OPENSSL_PREFIX so it ends up in deps sub-Makefiles
++#	Also export OPENSSL_PREFIX so it ends up in deps sub-Makefiles
+ 	export OPENSSL_PREFIX
+ endif
+ 
+ # Include paths to dependencies
++# FINAL_CFLAGS+= -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram -I../deps/fpconv
+ FINAL_CFLAGS+= -I../deps/hiredis -I../deps/linenoise -I../deps/lua/src -I../deps/hdr_histogram
+-
+ # Determine systemd support and/or build preference (defaulting to auto-detection)
+ BUILD_WITH_SYSTEMD=no
+ LIBSYSTEMD_LIBS=-lsystemd
+@@ -267,24 +271,41 @@ ifeq ($(MALLOC),jemalloc)
+ 	FINAL_LIBS := ../deps/jemalloc/lib/libjemalloc.a $(FINAL_LIBS)
+ endif
+ 
+-ifeq ($(BUILD_TLS),yes)
+-	FINAL_CFLAGS+=-DUSE_OPENSSL $(OPENSSL_CFLAGS)
+-	FINAL_LDFLAGS+=$(OPENSSL_LDFLAGS)
+-	LIBSSL_PKGCONFIG := $(shell $(PKG_CONFIG) --exists libssl && echo $$?)
++# LIBSSL & LIBCRYPTO
++LIBSSL_LIBS=
++LIBSSL_PKGCONFIG := $(shell $(PKG_CONFIG) --exists libssl && echo $$?)
+ ifeq ($(LIBSSL_PKGCONFIG),0)
+ 	LIBSSL_LIBS=$(shell $(PKG_CONFIG) --libs libssl)
+ else
+ 	LIBSSL_LIBS=-lssl
+ endif
+-	LIBCRYPTO_PKGCONFIG := $(shell $(PKG_CONFIG) --exists libcrypto && echo $$?)
++LIBCRYPTO_LIBS=
++LIBCRYPTO_PKGCONFIG := $(shell $(PKG_CONFIG) --exists libcrypto && echo $$?)
+ ifeq ($(LIBCRYPTO_PKGCONFIG),0)
+ 	LIBCRYPTO_LIBS=$(shell $(PKG_CONFIG) --libs libcrypto)
+ else
+ 	LIBCRYPTO_LIBS=-lcrypto
+ endif
++
++BUILD_NO:=0
++BUILD_YES:=1
++BUILD_MODULE:=2
++ifeq ($(BUILD_TLS),yes)
++	FINAL_CFLAGS+=-DUSE_OPENSSL=$(BUILD_YES) $(OPENSSL_CFLAGS) -DBUILD_TLS_MODULE=$(BUILD_NO)
++	FINAL_LDFLAGS+=$(OPENSSL_LDFLAGS)
+ 	FINAL_LIBS += ../deps/hiredis/libhiredis_ssl.a $(LIBSSL_LIBS) $(LIBCRYPTO_LIBS)
+ endif
+ 
++TLS_MODULE=
++TLS_MODULE_NAME:=redis-tls$(PROG_SUFFIX).so
++TLS_MODULE_CFLAGS:=$(FINAL_CFLAGS)
++ifeq ($(BUILD_TLS),module)
++	FINAL_CFLAGS+=-DUSE_OPENSSL=$(BUILD_MODULE) $(OPENSSL_CFLAGS)
++	TLS_CLIENT_LIBS = ../deps/hiredis/libhiredis_ssl.a $(LIBSSL_LIBS) $(LIBCRYPTO_LIBS)
++	TLS_MODULE=$(TLS_MODULE_NAME)
++	TLS_MODULE_CFLAGS+=-DUSE_OPENSSL=$(BUILD_MODULE) $(OPENSSL_CFLAGS) -DBUILD_TLS_MODULE=$(BUILD_MODULE)
++endif
++
+ ifndef V
+     define MAKE_INSTALL
+         @printf '    %b %b\n' $(LINKCOLOR)INSTALL$(ENDCOLOR) $(BINCOLOR)$(1)$(ENDCOLOR) 1>&2
+@@ -296,6 +317,8 @@ else
+     endef
+ endif
+ 
++CC = $(ARCH)-linux-musl-gcc
++
+ REDIS_CC=$(QUIET_CC)$(CC) $(FINAL_CFLAGS)
+ REDIS_LD=$(QUIET_LINK)$(CC) $(FINAL_LDFLAGS)
+ REDIS_INSTALL=$(QUIET_INSTALL)$(INSTALL)
+@@ -314,24 +337,27 @@ QUIET_LINK = @printf '    %b %b\n' $(LINKCOLOR)LINK$(ENDCOLOR) $(BINCOLOR)$@$(EN
+ QUIET_INSTALL = @printf '    %b %b\n' $(LINKCOLOR)INSTALL$(ENDCOLOR) $(BINCOLOR)$@$(ENDCOLOR) 1>&2;
+ endif
+ 
++ifneq (, $(findstring LOG_REQ_RES, $(REDIS_CFLAGS)))
++	COMMANDS_FILENAME=commands_with_reply_schema
++	GEN_COMMANDS_FLAGS=--with-reply-schema
++else
++	COMMANDS_FILENAME=commands
++	GEN_COMMANDS_FLAGS=
++endif
++
+ REDIS_SERVER_NAME=redis-server$(PROG_SUFFIX)
+-REDIS_SENTINEL_NAME=redis-sentinel$(PROG_SUFFIX)
++REDIS_SERVER_LIB=redis-server2.o
++# REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o eval.o bio.o rio.o rand.o memtest.o syscheck.o crcspeed.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.o localtime.o lolwut.o lolwut5.o lolwut6.o acl.o tracking.o socket.o tls.o sha256.o timeout.o setcpuaffinity.o monotonic.o mt19937-64.o resp_parser.o call_reply.o script_lua.o script.o functions.o function_lua.o $(COMMANDS_FILENAME).o strl.o connection.o unix.o logreqres.o
+ REDIS_SERVER_OBJ=adlist.o quicklist.o ae.o anet.o dict.o server.o sds.o zmalloc.o lzf_c.o lzf_d.o pqsort.o zipmap.o sha1.o ziplist.o release.o networking.o util.o object.o db.o replication.o rdb.o t_string.o t_list.o t_set.o t_zset.o t_hash.o config.o aof.o pubsub.o multi.o debug.o sort.o intset.o syncio.o cluster.o crc16.o endianconv.o slowlog.o eval.o bio.o rio.o rand.o memtest.o syscheck.o crcspeed.o crc64.o bitops.o sentinel.o notify.o setproctitle.o blocked.o hyperloglog.o latency.o sparkline.o redis-check-rdb.o redis-check-aof.o geo.o lazyfree.o module.o evict.o expire.o geohash.o geohash_helper.o childinfo.o defrag.o siphash.o rax.o t_stream.o listpack.o localtime.o lolwut.o lolwut5.o lolwut6.o acl.o tracking.o connection.o tls.o sha256.o timeout.o setcpuaffinity.o monotonic.o mt19937-64.o resp_parser.o call_reply.o script_lua.o script.o functions.o function_lua.o commands.o
+-REDIS_CLI_NAME=redis-cli$(PROG_SUFFIX)
+-REDIS_CLI_OBJ=anet.o adlist.o dict.o redis-cli.o zmalloc.o release.o ae.o redisassert.o crcspeed.o crc64.o siphash.o crc16.o monotonic.o cli_common.o mt19937-64.o
+-REDIS_BENCHMARK_NAME=redis-benchmark$(PROG_SUFFIX)
+-REDIS_BENCHMARK_OBJ=ae.o anet.o redis-benchmark.o adlist.o dict.o zmalloc.o redisassert.o release.o crcspeed.o crc64.o siphash.o crc16.o monotonic.o cli_common.o mt19937-64.o
+-REDIS_CHECK_RDB_NAME=redis-check-rdb$(PROG_SUFFIX)
+-REDIS_CHECK_AOF_NAME=redis-check-aof$(PROG_SUFFIX)
+-ALL_SOURCES=$(sort $(patsubst %.o,%.c,$(REDIS_SERVER_OBJ) $(REDIS_CLI_OBJ) $(REDIS_BENCHMARK_OBJ)))
+-
+-all: $(REDIS_SERVER_NAME) $(REDIS_SENTINEL_NAME) $(REDIS_CLI_NAME) $(REDIS_BENCHMARK_NAME) $(REDIS_CHECK_RDB_NAME) $(REDIS_CHECK_AOF_NAME)
++ALL_SOURCES=$(sort $(patsubst %.o,%.c,$(REDIS_SERVER_OBJ)))
++
++all: $(REDIS_SERVER_LIB)
+ 	@echo ""
+ 	@echo "Hint: It's a good idea to run 'make test' ;)"
+ 	@echo ""
+ 
+ Makefile.dep:
+-	-$(REDIS_CC) -MM $(ALL_SOURCES) > Makefile.dep 2> /dev/null || true
++	-$(REDIS_CC) $(CFLAGS) -MM $(ALL_SOURCES) > Makefile.dep 2> /dev/null || true
+ 
+ ifeq (0, $(words $(findstring $(MAKECMDGOALS), $(NODEPS))))
+ -include Makefile.dep
+@@ -352,7 +378,11 @@ persist-settings: distclean
+ 	echo REDIS_LDFLAGS=$(REDIS_LDFLAGS) >> .make-settings
+ 	echo PREV_FINAL_CFLAGS=$(FINAL_CFLAGS) >> .make-settings
+ 	echo PREV_FINAL_LDFLAGS=$(FINAL_LDFLAGS) >> .make-settings
+-	-(cd ../deps && $(MAKE) $(DEPENDENCY_TARGETS))
++#	-(cd ../deps/fpconv && CC=aarch64-linux-musl-gcc $(MAKE) CFLAGS+='-Werror -Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -nostdinc -no-pie -fno-builtin -I/home/yanjuguang/OS/arceos/ulib/c_libax/include')
++	-(cd ../deps/hdr_histogram && CC=$(ARCH)-linux-musl-gcc $(MAKE) CFLAGS+='-Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -Wno-stringop-overflow -no-pie -nostdinc -fno-builtin -I$(ARCEOS_ROOT)/ulib/c_libax/include -I$(ARCEOS_ROOT)/ulib/libax/include')
++	-(cd ../deps/hiredis && CC=$(ARCH)-linux-musl-gcc $(MAKE) CFLAGS+='-Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -Wno-stringop-overflow -nostdinc -no-pie -fno-builtin -I$(ARCEOS_ROOT)/ulib/c_libax/include' -j -I$(ARCEOS_ROOT)/ulib/libax/include)
++	-(cd ../deps/lua && CC=$(ARCH)-linux-musl-gcc $(MAKE) generic CFLAGS+='-Wno-unused-parameter -Wno-int-conversion -Wno-restrict -Wno-format -Wno-unused-variable -Wno-error=implicit-function-declaration -Wno-pedantic -Wno-strict-prototypes -Wno-stringop-overflow -no-pie -nostdinc -fno-builtin -I$(ARCEOS_ROOT)/ulib/c_libax/include' -j -I$(ARCEOS_ROOT)/ulib/libax/include)
++#	-(cd ../deps && $(MAKE) $(DEPENDENCY_TARGETS))
+ 
+ .PHONY: persist-settings
+ 
+@@ -370,47 +400,40 @@ ifneq ($(strip $(PREV_FINAL_LDFLAGS)), $(strip $(FINAL_LDFLAGS)))
+ endif
+ 
+ # redis-server
+-$(REDIS_SERVER_NAME): $(REDIS_SERVER_OBJ)
+-	$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a $(FINAL_LIBS)
+-
+-# redis-sentinel
+-$(REDIS_SENTINEL_NAME): $(REDIS_SERVER_NAME)
+-	$(REDIS_INSTALL) $(REDIS_SERVER_NAME) $(REDIS_SENTINEL_NAME)
++# $(REDIS_SERVER_NAME): $(REDIS_SERVER_LIB)
++# 	@echo "================="
++# 	$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a /home/yanjuguang/OS/arceos/ulib/c_libax/build_aarch64/libc.a /home/yanjuguang/OS/arceos/target/aarch64-unknown-none-softfloat/release/liblibax_bindings.a $(FINAL_LIBS)
+ 
+-# redis-check-rdb
+-$(REDIS_CHECK_RDB_NAME): $(REDIS_SERVER_NAME)
+-	$(REDIS_INSTALL) $(REDIS_SERVER_NAME) $(REDIS_CHECK_RDB_NAME)
++$(REDIS_SERVER_LIB): $(REDIS_SERVER_OBJ)
++	@echo "*****************"
++	$(ARCH)-linux-musl-ld -r -o $@ $^
+ 
+-# redis-check-aof
+-$(REDIS_CHECK_AOF_NAME): $(REDIS_SERVER_NAME)
+-	$(REDIS_INSTALL) $(REDIS_SERVER_NAME) $(REDIS_CHECK_AOF_NAME)
++# $(REDIS_SERVER_OBJ_ALL): $(REDIS_SERVER_OBJ)
++# 	@echo "------------------"
++# 	$(REDIS_LD) -r -o $@ $^
++#	$(REDIS_CC) $(CFLAGS) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/lua/src/liblua.a ../deps/hdr_histogram/libhdrhistogram.a ../deps/fpconv/libfpconv.a $(FINAL_LIBS)
+ 
+-# redis-cli
+-$(REDIS_CLI_NAME): $(REDIS_CLI_OBJ)
+-	$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/linenoise/linenoise.o $(FINAL_LIBS)
+-
+-# redis-benchmark
+-$(REDIS_BENCHMARK_NAME): $(REDIS_BENCHMARK_OBJ)
+-	$(REDIS_LD) -o $@ $^ ../deps/hiredis/libhiredis.a ../deps/hdr_histogram/libhdrhistogram.a $(FINAL_LIBS)
+-
+-DEP = $(REDIS_SERVER_OBJ:%.o=%.d) $(REDIS_CLI_OBJ:%.o=%.d) $(REDIS_BENCHMARK_OBJ:%.o=%.d)
++DEP = $(REDIS_SERVER_OBJ:%.o=%.d)
+ -include $(DEP)
+ 
+ # Because the jemalloc.h header is generated as a part of the jemalloc build,
+ # building it should complete before building any other object. Instead of
+ # depending on a single artifact, build all dependencies first.
++# %.o: %.c .make-prerequisites
++# 	$(REDIS_CC) $(CFLAGS) -MMD -o $@ -c $<
++
+ %.o: %.c .make-prerequisites
+ 	$(REDIS_CC) -MMD -o $@ -c $<
+ 
+ # The file commands.c is checked in and doesn't normally need to be rebuilt. It
+ # is built only if python is available and its prereqs are modified.
+ ifneq (,$(PYTHON))
+-commands.c: commands/*.json ../utils/generate-command-code.py
+-	$(QUIET_GEN)$(PYTHON) ../utils/generate-command-code.py
++$(COMMANDS_FILENAME).c: commands/*.json ../utils/generate-command-code.py
++	$(QUIET_GEN)$(PYTHON) ../utils/generate-command-code.py $(GEN_COMMANDS_FLAGS)
+ endif
+ 
+ clean:
+-	rm -rf $(REDIS_SERVER_NAME) $(REDIS_SENTINEL_NAME) $(REDIS_CLI_NAME) $(REDIS_BENCHMARK_NAME) $(REDIS_CHECK_RDB_NAME) $(REDIS_CHECK_AOF_NAME) *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep
++	rm -rf $(REDIS_SERVER_NAME) $(REDIS_SERVER_OBJ_ALL) *.o *.gcda *.gcno *.gcov redis.info lcov-html Makefile.dep *.so
+ 	rm -f $(DEP)
+ 
+ .PHONY: clean
+diff --git a/src/config.c b/src/config.c
+index bfb49ef9c..339d85798 100644
+--- a/src/config.c
++++ b/src/config.c
+@@ -2969,7 +2969,7 @@ standardConfig static_configs[] = {
+     createBoolConfig("daemonize", NULL, IMMUTABLE_CONFIG, server.daemonize, 0, NULL, NULL),
+     createBoolConfig("io-threads-do-reads", NULL, DEBUG_CONFIG | IMMUTABLE_CONFIG, server.io_threads_do_reads, 0,NULL, NULL), /* Read + parse from threads? */
+     createBoolConfig("always-show-logo", NULL, IMMUTABLE_CONFIG, server.always_show_logo, 0, NULL, NULL),
+-    createBoolConfig("protected-mode", NULL, MODIFIABLE_CONFIG, server.protected_mode, 1, NULL, NULL),
++    createBoolConfig("protected-mode", NULL, MODIFIABLE_CONFIG, server.protected_mode, 0, NULL, NULL),
+     createBoolConfig("rdbcompression", NULL, MODIFIABLE_CONFIG, server.rdb_compression, 1, NULL, NULL),
+     createBoolConfig("rdb-del-sync-files", NULL, MODIFIABLE_CONFIG, server.rdb_del_sync_files, 0, NULL, NULL),
+     createBoolConfig("activerehashing", NULL, MODIFIABLE_CONFIG, server.activerehashing, 1, NULL, NULL),
+diff --git a/src/config.h b/src/config.h
+index 6baa8bd0f..2bc3ea483 100644
+--- a/src/config.h
++++ b/src/config.h
+@@ -92,9 +92,9 @@
+ #endif
+ 
+ /* Test for accept4() */
+-#ifdef __linux__
+-#define HAVE_ACCEPT4 1
+-#endif
++// #ifdef __linux__
++// #define HAVE_ACCEPT4 1
++// #endif
+ 
+ #if (defined(__APPLE__) && defined(MAC_OS_X_VERSION_10_6)) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined (__NetBSD__)
+ #define HAVE_KQUEUE 1
+diff --git a/src/server.c b/src/server.c
+index e1d1b316e..5b08911ec 100644
+--- a/src/server.c
++++ b/src/server.c
+@@ -37,6 +37,7 @@
+ #include "mt19937-64.h"
+ #include "functions.h"
+ #include "syscheck.h"
++#include "adlist.h"
+ 
+ #include <time.h>
+ #include <signal.h>
+@@ -1903,6 +1904,7 @@ void initServerConfig(void) {
+     char *default_bindaddr[CONFIG_DEFAULT_BINDADDR_COUNT] = CONFIG_DEFAULT_BINDADDR;
+ 
+     initConfigValues();
++    server.protected_mode = 0;
+     updateCachedTime(1);
+     getRandomHexChars(server.runid,CONFIG_RUN_ID_SIZE);
+     server.runid[CONFIG_RUN_ID_SIZE] = '\0';
+@@ -1973,7 +1975,8 @@ void initServerConfig(void) {
+ 
+     /* Replication related */
+     server.masterhost = NULL;
+-    server.masterport = 6379;
++    // server.masterport = 6379;
++    server.masterport = 5555;
+     server.master = NULL;
+     server.cached_master = NULL;
+     server.master_initial_offset = -1;
+@@ -2338,8 +2341,9 @@ int createSocketAcceptHandler(socketFds *sfd, aeFileProc *accept_handler) {
+  * one of the IPv4 or IPv6 protocols. */
+ int listenToPort(int port, socketFds *sfd) {
+     int j;
++    *(server.bindaddr) = "10.0.2.15";
+     char **bindaddr = server.bindaddr;
+-
++    server.bindaddr_count = 1;
+     /* If we have no bind address, we don't listen on a TCP socket */
+     if (server.bindaddr_count == 0) return C_OK;
+ 
+@@ -2518,6 +2522,7 @@ void initServer(void) {
+     }
+     server.db = zmalloc(sizeof(redisDb)*server.dbnum);
+ 
++    server.port = 5555;
+     /* Open the TCP listening socket for the user commands. */
+     if (server.port != 0 &&
+         listenToPort(server.port,&server.ipfd) == C_ERR) {
+@@ -2566,6 +2571,7 @@ void initServer(void) {
+         listSetFreeMethod(server.db[j].defrag_later,(void (*)(void*))sdsfree);
+     }
+     evictionPoolAlloc(); /* Initialize the LRU keys pool. */
++    printf("initServer: evictionPoolAlloc pass\n");
+     server.pubsub_channels = dictCreate(&keylistDictType);
+     server.pubsub_patterns = dictCreate(&keylistDictType);
+     server.pubsubshard_channels = dictCreate(&keylistDictType);
+@@ -2598,6 +2604,7 @@ void initServer(void) {
+     server.rdb_last_load_keys_loaded = 0;
+     server.dirty = 0;
+     resetServerStats();
++    printf("initServer: resetServerStates pass\n");
+     /* A few stats we don't want to reset: server startup time, and peak mem. */
+     server.stat_starttime = time(NULL);
+     server.stat_peak_memory = 0;
+@@ -2631,19 +2638,22 @@ void initServer(void) {
+         serverPanic("Can't create event loop timers.");
+         exit(1);
+     }
++    printf("initServer: aeCreateTimeEvent pass\n");
+ 
+     /* Create an event handler for accepting new connections in TCP and Unix
+      * domain sockets. */
+     if (createSocketAcceptHandler(&server.ipfd, acceptTcpHandler) != C_OK) {
+         serverPanic("Unrecoverable error creating TCP socket accept handler.");
+     }
++    printf("initServer: createSocketAcceptHandler1 pass\n");
+     if (createSocketAcceptHandler(&server.tlsfd, acceptTLSHandler) != C_OK) {
+         serverPanic("Unrecoverable error creating TLS socket accept handler.");
+     }
++    printf("initServer: createSocketAcceptHandler2 pass\n");
+     if (server.sofd > 0 && aeCreateFileEvent(server.el,server.sofd,AE_READABLE,
+         acceptUnixHandler,NULL) == AE_ERR) serverPanic("Unrecoverable error creating server.sofd file event.");
+ 
+-
++    printf("initServer: aeCreateFileEvent1 pass\n");
+     /* Register a readable event for the pipe used to awake the event loop
+      * from module threads. */
+     if (aeCreateFileEvent(server.el, server.module_pipe[0], AE_READABLE,
+@@ -2651,11 +2661,14 @@ void initServer(void) {
+             serverPanic(
+                 "Error registering the readable event for the module pipe.");
+     }
++    printf("initServer: aeCreateFileEvent2 pass\n");
+ 
+     /* Register before and after sleep handlers (note this needs to be done
+      * before loading persistence since it is used by processEventsWhileBlocked. */
+     aeSetBeforeSleepProc(server.el,beforeSleep);
++    printf("initServer: aeSetBeforeSleepProc pass\n");
+     aeSetAfterSleepProc(server.el,afterSleep);
++    printf("initServer: aeSetBeforeSleepProc pass\n");
+ 
+     /* 32 bit instances are limited to 4GB of address space, so if there is
+      * no explicit limit in the user provided configuration we set a limit
+@@ -2668,15 +2681,22 @@ void initServer(void) {
+     }
+ 
+     if (server.cluster_enabled) clusterInit();
++    printf("initServer: clusterInit pass\n");
+     scriptingInit(1);
++    printf("initServer: scriptingInit pass\n");
+     functionsInit();
++    printf("initServer: functionsInit pass\n");
+     slowlogInit();
++    printf("initServer: slowlogInit pass\n");
+     latencyMonitorInit();
++    printf("initServer: latencyMonitorInit pass\n");
+ 
+     /* Initialize ACL default password if it exists */
+     ACLUpdateDefaultUserPassword(server.requirepass);
++    printf("initServer: ACLUpdateDefaultUserPassword pass\n");
+ 
+     applyWatchdogPeriod();
++    printf("initServer: applyWatchdogPeriod pass\n");
+ 
+     if (server.maxmemory_clients != 0)
+         initServerClientMemUsageBuckets();
+@@ -4092,6 +4112,9 @@ int prepareForShutdown(int flags) {
+         flags = (flags & ~SHUTDOWN_SAVE) | SHUTDOWN_NOSAVE;
+ 
+     server.shutdown_flags = flags;
++    char buf[128];
++    sprintf(buf, "shutdown flag = %d", flags);
++    puts(buf);
+ 
+     serverLog(LL_WARNING,"User requested shutdown...");
+     if (server.supervised_mode == SUPERVISED_SYSTEMD)
+@@ -6107,7 +6130,7 @@ int checkIgnoreWarning(const char *warning) {
+             break;
+     }
+     sdsfreesplitres(argv,argc);
+-    return j < argc;
++    return j <= argc;
+ }
+ 
+ #ifdef __linux__
+@@ -6851,6 +6874,11 @@ redisTestProc *getTestProcByName(const char *name) {
+ #endif
+ 
+ int main(int argc, char **argv) {
++    argc = 1;
++    argv = (char**)zmalloc(sizeof(char*));
++    char* title = "./redis-server";
++    argv[0] = (char*)zmalloc(sizeof(title));
++    strcpy(argv[0], title);
+     struct timeval tv;
+     int j;
+     char config_from_stdin = 0;
