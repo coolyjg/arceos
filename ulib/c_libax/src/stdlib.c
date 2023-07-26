@@ -9,8 +9,8 @@
 
 #include <libax.h>
 
-char *program_invocation_short_name = NULL;
-char *program_invocation_name = NULL;
+char *program_invocation_short_name = "dummy";
+char *program_invocation_name = "dummy";
 
 #define __DECONST(type, var) ((type)(uintptr_t)(const void *)(var))
 

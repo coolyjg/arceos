@@ -8,3 +8,4 @@ net
 pipe
 irq
 use-ramdisk
+epoll

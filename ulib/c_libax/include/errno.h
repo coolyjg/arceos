@@ -142,5 +142,6 @@
 
 int *__errno_location(void);
 #define errno (*__errno_location())
+extern char *program_invocation_short_name, *program_invocation_name;
 
 #endif // __ERRNO_H__

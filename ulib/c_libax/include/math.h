@@ -24,6 +24,8 @@ typedef double double_t;
 #define FP_ILOGBNAN (-1 - 0x7fffffff)
 #define FP_ILOGB0   FP_ILOGBNAN
 
+#define M_PI 3.14159265358979323846 /* pi */
+
 #define LOG_TABLE_BITS  7
 #define LOG_POLY_ORDER  6
 #define LOG_POLY1_ORDER 12
