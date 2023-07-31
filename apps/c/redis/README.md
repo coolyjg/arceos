@@ -273,6 +273,12 @@ MSET (10 keys): 183150.19 requests per second
 
 # Run ArceOS-Redis On PC
 
+## Notification
+
+- Comment out `spt_init()`.
+- It will be nicer to comment out `pthread_cond_wait` as well.
+- change `axruntime/Cargo.toml`, use `fs = ["alloc", "paging", "axdriver/ramdisk", "dep:axfs"]` and `net = ["alloc", "paging", "axdriver/ixgbe", "dep:axnet"]`
+
 ## Compile and Run
 
 - `make A=apps/c/redis LOG=info NET=y BLK=y PLATFORM=x86_64-pc-oslab APP_FEATURES=use-ramdisk IP=10.2.2.2 GW=10.2.2.1 SMP=4 ARCH=x86_64`
@@ -282,7 +288,3 @@ MSET (10 keys): 183150.19 requests per second
 - Connect to ArceOS-Redis server by:
   - `redis-cli -p 5555 -h 10.2.2.2`
   - `redis-benchmark -p 5555 -h 10.2.2.2`
-
-## Other notification
-
-- Comment out `spt_init()`.
