@@ -109,7 +109,11 @@ CROSS_COMPILE ?= $(ARCH)-linux-musl-
 CC := $(CROSS_COMPILE)gcc
 AR := $(CROSS_COMPILE)ar
 RANLIB := $(CROSS_COMPILE)ranlib
-LD := rust-lld -flavor gnu
+ifeq ($(ARCH), x86_64)
+	LD := rust-lld -flavor gnu
+else
+    LD := $(CROSS_COMPILE)ld
+endif
 
 OBJDUMP ?= rust-objdump -d --print-imm-hex --x86-asm-syntax=intel
 OBJCOPY ?= rust-objcopy --binary-architecture=$(ARCH)
