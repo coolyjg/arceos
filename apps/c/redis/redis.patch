@@ -417,7 +417,7 @@ index 6baa8bd0f..2bc3ea483 100644
  #if (defined(__APPLE__) && defined(MAC_OS_X_VERSION_10_6)) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined (__NetBSD__)
  #define HAVE_KQUEUE 1
 diff --git a/src/server.c b/src/server.c
-index b170cbbd3..08a36e801 100644
+index b170cbbd3..8f114dd99 100644
 --- a/src/server.c
 +++ b/src/server.c
 @@ -37,6 +37,7 @@
@@ -446,18 +446,19 @@ index b170cbbd3..08a36e801 100644
      server.master = NULL;
      server.cached_master = NULL;
      server.master_initial_offset = -1;
-@@ -2338,8 +2341,9 @@ int createSocketAcceptHandler(socketFds *sfd, aeFileProc *accept_handler) {
+@@ -2338,8 +2341,10 @@ int createSocketAcceptHandler(socketFds *sfd, aeFileProc *accept_handler) {
   * one of the IPv4 or IPv6 protocols. */
  int listenToPort(int port, socketFds *sfd) {
      int j;
-+    *(server.bindaddr) = "10.0.2.15";
++    // *(server.bindaddr) = "10.0.2.15";
++    *(server.bindaddr) = "0.0.0.0";
      char **bindaddr = server.bindaddr;
 -
 +    server.bindaddr_count = 1;
      /* If we have no bind address, we don't listen on a TCP socket */
      if (server.bindaddr_count == 0) return C_OK;
  
-@@ -2518,6 +2522,7 @@ void initServer(void) {
+@@ -2518,6 +2523,7 @@ void initServer(void) {
      }
      server.db = zmalloc(sizeof(redisDb)*server.dbnum);
  
@@ -465,7 +466,7 @@ index b170cbbd3..08a36e801 100644
      /* Open the TCP listening socket for the user commands. */
      if (server.port != 0 &&
          listenToPort(server.port,&server.ipfd) == C_ERR) {
-@@ -2566,6 +2571,7 @@ void initServer(void) {
+@@ -2566,6 +2572,7 @@ void initServer(void) {
          listSetFreeMethod(server.db[j].defrag_later,(void (*)(void*))sdsfree);
      }
      evictionPoolAlloc(); /* Initialize the LRU keys pool. */
@@ -473,7 +474,7 @@ index b170cbbd3..08a36e801 100644
      server.pubsub_channels = dictCreate(&keylistDictType);
      server.pubsub_patterns = dictCreate(&keylistDictType);
      server.pubsubshard_channels = dictCreate(&keylistDictType);
-@@ -2598,6 +2604,7 @@ void initServer(void) {
+@@ -2598,6 +2605,7 @@ void initServer(void) {
      server.rdb_last_load_keys_loaded = 0;
      server.dirty = 0;
      resetServerStats();
@@ -481,7 +482,7 @@ index b170cbbd3..08a36e801 100644
      /* A few stats we don't want to reset: server startup time, and peak mem. */
      server.stat_starttime = time(NULL);
      server.stat_peak_memory = 0;
-@@ -2631,19 +2638,22 @@ void initServer(void) {
+@@ -2631,19 +2639,22 @@ void initServer(void) {
          serverPanic("Can't create event loop timers.");
          exit(1);
      }
@@ -505,7 +506,7 @@ index b170cbbd3..08a36e801 100644
      /* Register a readable event for the pipe used to awake the event loop
       * from module threads. */
      if (aeCreateFileEvent(server.el, server.module_pipe[0], AE_READABLE,
-@@ -2651,11 +2661,14 @@ void initServer(void) {
+@@ -2651,11 +2662,14 @@ void initServer(void) {
              serverPanic(
                  "Error registering the readable event for the module pipe.");
      }
@@ -520,7 +521,7 @@ index b170cbbd3..08a36e801 100644
  
      /* 32 bit instances are limited to 4GB of address space, so if there is
       * no explicit limit in the user provided configuration we set a limit
-@@ -2668,15 +2681,22 @@ void initServer(void) {
+@@ -2668,15 +2682,22 @@ void initServer(void) {
      }
  
      if (server.cluster_enabled) clusterInit();
@@ -543,7 +544,7 @@ index b170cbbd3..08a36e801 100644
  
      if (server.maxmemory_clients != 0)
          initServerClientMemUsageBuckets();
-@@ -4093,6 +4113,9 @@ int prepareForShutdown(int flags) {
+@@ -4093,6 +4114,9 @@ int prepareForShutdown(int flags) {
          flags = (flags & ~SHUTDOWN_SAVE) | SHUTDOWN_NOSAVE;
  
      server.shutdown_flags = flags;
@@ -553,7 +554,7 @@ index b170cbbd3..08a36e801 100644
  
      serverLog(LL_WARNING,"User requested shutdown...");
      if (server.supervised_mode == SUPERVISED_SYSTEMD)
-@@ -6108,7 +6131,7 @@ int checkIgnoreWarning(const char *warning) {
+@@ -6108,7 +6132,7 @@ int checkIgnoreWarning(const char *warning) {
              break;
      }
      sdsfreesplitres(argv,argc);
@@ -562,7 +563,7 @@ index b170cbbd3..08a36e801 100644
  }
  
  #ifdef __linux__
-@@ -6854,6 +6877,11 @@ redisTestProc *getTestProcByName(const char *name) {
+@@ -6854,6 +6878,11 @@ redisTestProc *getTestProcByName(const char *name) {
  #endif
  
  int main(int argc, char **argv) {
@@ -574,3 +575,12 @@ index b170cbbd3..08a36e801 100644
      struct timeval tv;
      int j;
      char config_from_stdin = 0;
+@@ -6900,7 +6929,7 @@ int main(int argc, char **argv) {
+ 
+     /* We need to initialize our libraries, and the server configuration. */
+ #ifdef INIT_SETPROCTITLE_REPLACEMENT
+-    spt_init(argc, argv);
++    // spt_init(argc, argv);
+ #endif
+     setlocale(LC_COLLATE,"");
+     tzset(); /* Populates 'timezone' global. */

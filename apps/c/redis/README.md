@@ -275,7 +275,7 @@ MSET (10 keys): 183150.19 requests per second
 
 ## Notification
 
-- Comment out `spt_init()`.
+- Comment out `spt_init()`(Already patched).
 - It will be nicer to comment out `pthread_cond_wait` as well.
 - change `axruntime/Cargo.toml`, use `fs = ["alloc", "paging", "axdriver/ramdisk", "dep:axfs"]` and `net = ["alloc", "paging", "axdriver/ixgbe", "dep:axnet"]`
 
@@ -284,7 +284,6 @@ MSET (10 keys): 183150.19 requests per second
 - `make A=apps/c/redis LOG=info NET=y BLK=y PLATFORM=x86_64-pc-oslab APP_FEATURES=use-ramdisk IP=10.2.2.2 GW=10.2.2.1 SMP=4 ARCH=x86_64`
 - Copy `redis_x86_64-pc-oslab.elf` to `/boot`, then reboot.
 - Enter `grub` then boot the PC by ArceOS Redis.
-- `server.c` line 2344 should be changed to `0.0.0.0`
 - Connect to ArceOS-Redis server by:
   - `redis-cli -p 5555 -h 10.2.2.2`
   - `redis-benchmark -p 5555 -h 10.2.2.2`
