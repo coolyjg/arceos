@@ -41,7 +41,7 @@ macro_rules! ax_call_body {
         match res {
             Ok(v) => v as _,
             Err(e) => {
-                crate::errno::set_errno(e.code());
+                crate::imp::errno::set_errno(e.code());
                 -1 as _
             }
         }
@@ -55,7 +55,7 @@ macro_rules! ax_call_body_no_debug {
         match res {
             Ok(v) => v as _,
             Err(e) => {
-                crate::errno::set_errno(e.code());
+                crate::imp::errno::set_errno(e.code());
                 -1 as _
             }
         }

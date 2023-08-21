@@ -37,7 +37,7 @@ ifeq ($(APP_TYPE), rust)
 	$(call cargo_build,--manifest-path $(APP)/Cargo.toml,$(AX_FEAT) $(LIB_FEAT) $(APP_FEAT))
 	@cp $(rust_elf) $(OUT_ELF)
 else ifeq ($(APP_TYPE), c)
-	$(call cargo_build,-p axlibc,$(AX_FEAT) $(LIB_FEAT))
+	$(call cargo_build,-p arceos_posix_api,$(AX_FEAT) $(LIB_FEAT))
 endif
 
 $(OUT_DIR):

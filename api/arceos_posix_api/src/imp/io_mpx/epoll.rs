@@ -2,10 +2,11 @@
 //!
 //! TODO: do not support `EPOLLET` flag
 
-use crate::{
+use crate::imp::{
     ctypes,
     fd_ops::{add_file_like, get_file_like, FileLike},
 };
+
 use axerrno::{LinuxError, LinuxResult};
 use axhal::time::current_time;
 use axstd::sync::Mutex;

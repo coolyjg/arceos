@@ -8,7 +8,7 @@ use axio::PollState;
 use axnet::{TcpSocket, UdpSocket};
 use axstd::sync::Mutex;
 
-use crate::{ctypes, fd_ops::FileLike, utils::char_ptr_to_str};
+use crate::imp::{ctypes, fd_ops::FileLike, utils::char_ptr_to_str};
 
 pub enum Socket {
     Udp(Mutex<UdpSocket>),

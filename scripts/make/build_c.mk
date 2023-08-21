@@ -1,11 +1,12 @@
-rust_lib_name := axlibc
+rust_lib_name := arceos_posix_api
 rust_lib := target/$(TARGET)/$(MODE)/lib$(rust_lib_name).a
 
 ulib_dir := ulib/axlibc
+posix_dir := api/arceos_posix_api
 src_dir := $(ulib_dir)/c
 obj_dir := $(ulib_dir)/build_$(ARCH)
 inc_dir := $(ulib_dir)/include
-inc_gen_dir = $(ulib_dir)/include_gen
+inc_gen_dir = $(posix_dir)/include_gen
 c_lib := $(obj_dir)/libc.a
 libgcc :=
 

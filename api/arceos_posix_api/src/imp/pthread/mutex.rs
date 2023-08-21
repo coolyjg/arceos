@@ -1,4 +1,4 @@
-use crate::{ctypes, utils::check_null_mut_ptr};
+use crate::imp::{ctypes, utils::check_null_mut_ptr};
 use axerrno::LinuxResult;
 use axstd::sync::Mutex;
 use core::ffi::c_int;
