@@ -191,6 +191,31 @@ dependencies = [
 ]
 
 [[package]]
+name = "arceos_posix_api"
+version = "0.1.0"
+dependencies = [
+ "axalloc",
+ "axconfig",
+ "axerrno",
+ "axfeat",
+ "axfs",
+ "axhal",
+ "axio",
+ "axlog",
+ "axnet",
+ "axruntime",
+ "axsync",
+ "axtask",
+ "bindgen",
+ "cbindgen",
+ "flatten_objects",
+ "lazy_static",
+ "spin 0.9.8",
+ "spinlock",
+ "static_assertions",
+]
+
+[[package]]
 name = "arm_gic"
 version = "0.1.0"
 dependencies = [
@@ -395,22 +420,14 @@ dependencies = [
 name = "axlibc"
 version = "0.1.0"
 dependencies = [
- "axalloc",
- "axconfig",
+ "arceos_posix_api",
  "axerrno",
  "axfeat",
- "axhal",
  "axio",
- "axlog",
- "axnet",
- "axstd",
- "axtask",
  "bindgen",
  "cbindgen",
  "flatten_objects",
  "lazy_static",
- "spin 0.9.8",
- "static_assertions",
 ]
 
 [[package]]

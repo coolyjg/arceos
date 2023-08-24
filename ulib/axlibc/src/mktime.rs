@@ -1,6 +1,6 @@
 use core::ffi::c_int;
 
-use crate::ctypes;
+use arceos_posix_api::ctypes;
 
 const MONTH_DAYS: [[c_int; 12]; 2] = [
     // Non-leap years:
@@ -16,7 +16,7 @@ fn leap_year(year: c_int) -> bool {
 
 /// `mktime` implementation
 #[no_mangle]
-pub unsafe extern "C" fn ax_mktime(t: *mut ctypes::tm) -> ctypes::time_t {
+pub unsafe extern "C" fn mktime(t: *mut ctypes::tm) -> ctypes::time_t {
     let mut year = (*t).tm_year + 1900;
     let mut month = (*t).tm_mon;
     let mut day = (*t).tm_mday as i64 - 1;

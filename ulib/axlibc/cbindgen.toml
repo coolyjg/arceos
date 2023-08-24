@@ -14,7 +14,6 @@ sys_includes = [
     "sys/time.h",
     "pthread.h",
 ]
-includes = ["axconfig.h"]
 
 [export.rename]
 "stat" = "struct stat"
@@ -24,6 +23,7 @@ includes = ["axconfig.h"]
 "epoll_event" = "struct epoll_event"
 "iovec" = "struct iovec"
 "tm" = "struct tm"
+"rlimit" = "struct rlimit"
 
 [fn]
 no_return = "__attribute__((noreturn))"

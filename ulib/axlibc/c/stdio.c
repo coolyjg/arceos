@@ -32,13 +32,7 @@ static int __write_buffer(FILE *f)
     int r = 0;
     if (f->buffer_len == 0)
         return 0;
-    if (f->fd == stdout->fd || f->fd == stderr->fd) {
-        r = ax_print_str(f->buf, f->buffer_len);
-#ifdef AX_CONFIG_FD
-    } else {
-        r = write(f->fd, f->buf, f->buffer_len);
-#endif
-    }
+    r = write(f->fd, f->buf, f->buffer_len);
     return r;
 }
 
@@ -108,7 +102,7 @@ int putchar(int c)
 
 int puts(const char *s)
 {
-    return ax_println_str(s, strlen(s)); // TODO: lock
+    return println_str(s, strlen(s));
 }
 
 void perror(const char *msg)
@@ -219,7 +213,7 @@ char *fgets(char *restrict s, int n, FILE *restrict f)
     int cnt = 0;
     while (cnt < n - 1) {
         char c;
-        if (ax_read(f->fd, (void *)&c, 1) > 0) {
+        if (read(f->fd, (void *)&c, 1) > 0) {
             if (c != '\n')
                 s[cnt++] = c;
             else
@@ -237,7 +231,7 @@ size_t fread(void *restrict destv, size_t size, size_t nmemb, FILE *restrict f)
     size_t read_len = 0;
     size_t len = 0;
     do {
-        len = ax_read(f->fd, destv + read_len, total - read_len);
+        len = read(f->fd, destv + read_len, total - read_len);
         if (len < 0)
             break;
         read_len += len;
@@ -251,7 +245,7 @@ size_t fwrite(const void *restrict src, size_t size, size_t nmemb, FILE *restric
     size_t write_len = 0;
     size_t len = 0;
     do {
-        len = ax_write(f->fd, src + write_len, total - write_len);
+        len = write(f->fd, src + write_len, total - write_len);
         if (len < 0)
             break;
         write_len += len;
@@ -267,13 +261,7 @@ int fputs(const char *restrict s, FILE *restrict f)
 
 int fclose(FILE *f)
 {
-    return ax_close(f->fd);
-}
-
-// TODO
-int rename(const char *old, const char *new)
-{
-    return ax_rename(old, new);
+    return close(f->fd);
 }
 
 int fileno(FILE *f)
