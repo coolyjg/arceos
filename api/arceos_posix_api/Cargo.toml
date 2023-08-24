@@ -1,0 +1,53 @@
+[package]
+name = "arceos_posix_api"
+version = "0.1.0"
+edition = "2021"
+authors = [
+    "Yuekai Jia <equation618@gmail.com>",
+    "yanjuguang <coolyanjg@163.com>",
+    "wudashuai <wu-ds20@mails.tsinghua.edu.cn>",
+    "yfblock <321353225@qq.com>",
+    "scPointer <bhy18@mails.tsinghua.edu.cn>",
+    "Shiping Yuan <robert_yuan@pku.edu.com>",
+]
+description = "ArceOS system call layer"
+license = "GPL-3.0-or-later OR Apache-2.0"
+repository = "https://github.com/rcore-os/arceos/tree/main/api/arceos_posix_api"
+
+[lib]
+crate-type = ["staticlib"]
+
+[features]
+default = []
+
+alloc = ["axalloc", "axfeat/alloc", "axio/alloc"]
+
+fp_simd = ["axfeat/fp_simd"]
+
+multitask = ["axtask/multitask", "axfeat/multitask"]
+
+# Libc features
+fd = ["alloc"]
+pipe = ["fd"]
+select = ["fd"]
+epoll = ["fd"]
+
+[dependencies]
+axfeat = { path = "../axfeat" }
+axruntime = { path = "../../modules/axruntime" }
+axio = { path = "../../crates/axio" }
+axhal = { path = "../../modules/axhal" }
+axlog = { path = "../../modules/axlog" }
+axerrno = { path = "../../crates/axerrno" }
+axalloc = { path = "../../modules/axalloc", optional = true }
+axtask = { path = "../../modules/axtask", optional = true }
+
+num_enum = { version = "0.5.11", default-features = false }
+lazy_static = { version = "1.4", features = ["spin_no_std"] }
+flatten_objects = { path = "../../crates/flatten_objects" }
+spin = { version = "0.9" }
+
+[build-dependencies]
+cbindgen = { version = "0.24" }
+bindgen ={ version = "0.66" }
+axconfig = { path = "../../modules/axconfig" }
