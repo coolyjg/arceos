@@ -30,7 +30,7 @@ pub fn check_null_mut_ptr<T>(ptr: *mut T) -> LinuxResult {
     }
 }
 
-macro_rules! ax_call_body {
+macro_rules! syscall_body {
     ($fn: ident, $($stmt: tt)*) => {{
         #[allow(clippy::redundant_closure_call)]
         let res = (|| -> axerrno::LinuxResult<_> { $($stmt)* })();
@@ -48,7 +48,7 @@ macro_rules! ax_call_body {
     }};
 }
 
-macro_rules! ax_call_body_no_debug {
+macro_rules! syscall_body_no_debug {
     ($($stmt: tt)*) => {{
         #[allow(clippy::redundant_closure_call)]
         let res = (|| -> axerrno::LinuxResult<_> { $($stmt)* })();

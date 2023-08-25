@@ -24,7 +24,9 @@ alloc = ["axalloc", "axfeat/alloc", "axio/alloc"]
 
 fp_simd = ["axfeat/fp_simd"]
 
-multitask = ["axtask/multitask", "axfeat/multitask"]
+multitask = ["axtask/multitask", "axfeat/multitask", "axsync/multitask"]
+
+net = ["axfeat/net", "axnet", "fd"]
 
 # Libc features
 fd = ["alloc"]
@@ -39,13 +41,16 @@ axio = { path = "../../crates/axio" }
 axhal = { path = "../../modules/axhal" }
 axlog = { path = "../../modules/axlog" }
 axerrno = { path = "../../crates/axerrno" }
+axnet = { path = "../../modules/axnet", optional = true }
 axalloc = { path = "../../modules/axalloc", optional = true }
 axtask = { path = "../../modules/axtask", optional = true }
+axsync = { path = "../../modules/axsync", default-features = false, optional = true }
 
 num_enum = { version = "0.5.11", default-features = false }
 lazy_static = { version = "1.4", features = ["spin_no_std"] }
 flatten_objects = { path = "../../crates/flatten_objects" }
 spin = { version = "0.9" }
+spinlock = { path = "../../crates/spinlock" }
 
 [build-dependencies]
 cbindgen = { version = "0.24" }

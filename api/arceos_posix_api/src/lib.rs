@@ -21,7 +21,7 @@ extern crate alloc;
 
 mod errno;
 
-pub mod syscall;
 mod imp;
+pub mod syscall;
 
 pub use imp::*;

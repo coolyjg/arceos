@@ -55,11 +55,11 @@ pub fn close_file_like(fd: c_int) -> LinuxResult {
 /// Close a file by `fd`.
 #[no_mangle]
 pub unsafe extern "C" fn sys_close(fd: c_int) -> c_int {
-    debug!("ax_close <= {}", fd);
+    debug!("sys_close <= {}", fd);
     if (0..2).contains(&fd) {
         return 0; // stdin, stdout, stderr
     }
-    ax_call_body!(ax_close, close_file_like(fd).map(|_| 0))
+    syscall_body!(sys_close, close_file_like(fd).map(|_| 0))
 }
 
 /// Read data from the file indicated by `fd`.
@@ -67,8 +67,8 @@ pub unsafe extern "C" fn sys_close(fd: c_int) -> c_int {
 /// Return the read size if success.
 #[no_mangle]
 pub unsafe extern "C" fn sys_read(fd: c_int, buf: *mut c_void, count: usize) -> ctypes::ssize_t {
-    debug!("ax_read <= {} {:#x} {}", fd, buf as usize, count);
-    ax_call_body!(ax_read, {
+    debug!("sys_read <= {} {:#x} {}", fd, buf as usize, count);
+    syscall_body!(sys_read, {
         if buf.is_null() {
             return Err(LinuxError::EFAULT);
         }
@@ -82,8 +82,8 @@ pub unsafe extern "C" fn sys_read(fd: c_int, buf: *mut c_void, count: usize) -> 
 /// Return the written size if success.
 #[no_mangle]
 pub unsafe extern "C" fn sys_write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t {
-    debug!("ax_write <= {} {:#x} {}", fd, buf as usize, count);
-    ax_call_body!(ax_write, {
+    debug!("sys_write <= {} {:#x} {}", fd, buf as usize, count);
+    syscall_body!(sys_write, {
         if buf.is_null() {
             return Err(LinuxError::EFAULT);
         }
@@ -97,8 +97,8 @@ pub unsafe extern "C" fn sys_write(fd: c_int, buf: *const c_void, count: usize) 
 /// Return 0 if success.
 #[no_mangle]
 pub unsafe extern "C" fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> ctypes::ssize_t {
-    debug!("ax_fstat <= {} {:#x}", fd, buf as usize);
-    ax_call_body!(ax_fstat, {
+    debug!("sys_fstat <= {} {:#x}", fd, buf as usize);
+    syscall_body!(sys_fstat, {
         if buf.is_null() {
             return Err(LinuxError::EFAULT);
         }
@@ -116,8 +116,8 @@ fn dup_fd(old_fd: c_int) -> LinuxResult<c_int> {
 /// Duplicate a file descriptor
 #[no_mangle]
 pub unsafe extern "C" fn sys_dup(old_fd: c_int) -> c_int {
-    debug!("ax_dup <= {}", old_fd);
-    ax_call_body!(ax_dup, dup_fd(old_fd))
+    debug!("sys_dup <= {}", old_fd);
+    syscall_body!(sys_dup, dup_fd(old_fd))
 }
 
 /// `dup3()` is the same as `dup2()`, except that:
@@ -128,11 +128,11 @@ pub unsafe extern "C" fn sys_dup(old_fd: c_int) -> c_int {
 #[no_mangle]
 pub unsafe extern "C" fn sys_dup3(old_fd: c_int, new_fd: c_int, flags: c_int) -> c_int {
     debug!(
-        "ax_dup3 <= old_fd: {}, new_fd: {}, flags: {}",
+        "sys_dup3 <= old_fd: {}, new_fd: {}, flags: {}",
         old_fd, new_fd, flags
     );
 
-    ax_call_body!(ax_dup3, {
+    syscall_body!(sys_dup3, {
         if old_fd == new_fd {
             return Err(LinuxError::EINVAL);
         }
@@ -162,8 +162,8 @@ pub unsafe extern "C" fn sys_dup3(old_fd: c_int, new_fd: c_int, flags: c_int) ->
 /// TODO: `SET/GET` command is ignored
 #[no_mangle]
 pub unsafe extern "C" fn sys_fcntl(fd: c_int, cmd: c_int, arg: usize) -> c_int {
-    debug!("ax_fcntl <= fd: {} cmd: {} arg: {}", fd, cmd, arg);
-    ax_call_body!(ax_fcntl, {
+    debug!("sys_fcntl <= fd: {} cmd: {} arg: {}", fd, cmd, arg);
+    syscall_body!(sys_fcntl, {
         match cmd as u32 {
             ctypes::F_DUPFD => dup_fd(fd),
             ctypes::F_DUPFD_CLOEXEC => {

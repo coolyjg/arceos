@@ -201,7 +201,9 @@ dependencies = [
  "axhal",
  "axio",
  "axlog",
+ "axnet",
  "axruntime",
+ "axsync",
  "axtask",
  "bindgen",
  "cbindgen",
@@ -209,6 +211,7 @@ dependencies = [
  "lazy_static",
  "num_enum",
  "spin 0.9.8",
+ "spinlock",
 ]
 
 [[package]]
