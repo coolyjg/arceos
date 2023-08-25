@@ -92,6 +92,8 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         #[cfg(feature = "fd")]
         SyscallId::FCNTL => crate::sys_fcntl(args[0] as c_int, args[1] as c_int, args[2]) as _,
         #[cfg(feature = "fd")]
-        SyscallId::DUP3 => crate::sys_dup3(args[0] as c_int, args[1] as c_int, args[2] as c_int) as _,
+        SyscallId::DUP3 => {
+            crate::sys_dup3(args[0] as c_int, args[1] as c_int, args[2] as c_int) as _
+        }
     }
 }
