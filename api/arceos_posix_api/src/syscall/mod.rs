@@ -26,8 +26,22 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         SyscallId::CLOSE => crate::sys_close(args[0] as c_int) as _,
         #[cfg(feature = "fd")]
         SyscallId::FSTAT => crate::sys_fstat(args[0] as c_int, args[1] as *mut ctypes::stat) as _,
+        #[cfg(feature = "fd")]
+        SyscallId::WRITEV => crate::sys_writev(
+            args[0] as c_int,
+            args[1] as *const ctypes::iovec,
+            args[2] as c_int,
+        ) as _,
         #[cfg(feature = "pipe")]
         SyscallId::PIPE => crate::sys_pipe(args[0] as *mut c_int, args[1] as *mut c_int) as _,
+        #[cfg(feature = "select")]
+        SyscallId::SELECT => crate::sys_select(
+            args[0] as c_int,
+            args[1] as *mut ctypes::fd_set,
+            args[2] as *mut ctypes::fd_set,
+            args[3] as *mut ctypes::fd_set,
+            args[4] as *mut ctypes::timeval,
+        ) as _,
         #[cfg(feature = "multitask")]
         SyscallId::SCHED_YIELD => crate::sys_sched_yield(),
         #[cfg(feature = "fd")]
@@ -91,6 +105,22 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         ) as _,
         #[cfg(feature = "fd")]
         SyscallId::FCNTL => crate::sys_fcntl(args[0] as c_int, args[1] as c_int, args[2]) as _,
+        #[cfg(feature = "epoll")]
+        SyscallId::EPOLL_CREATE => crate::sys_epoll_create(args[0] as c_int) as _,
+        #[cfg(feature = "epoll")]
+        SyscallId::EPOLL_WAIT => crate::sys_epoll_wait(
+            args[0] as c_int,
+            args[1] as *mut ctypes::epoll_event,
+            args[2] as c_int,
+            args[3] as c_int,
+        ) as _,
+        #[cfg(feature = "epoll")]
+        SyscallId::EPOLL_CTL => crate::sys_epoll_ctl(
+            args[0] as c_int,
+            args[1] as c_int,
+            args[2] as c_int,
+            args[3] as *mut ctypes::epoll_event,
+        ) as _,
         #[cfg(feature = "fd")]
         SyscallId::DUP3 => {
             crate::sys_dup3(args[0] as c_int, args[1] as c_int, args[2] as c_int) as _

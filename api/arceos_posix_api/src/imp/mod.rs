@@ -6,21 +6,31 @@ pub mod ctypes;
 
 #[cfg(feature = "fd")]
 mod fd_ops;
+#[cfg(any(feature = "select", feature = "epoll"))]
+mod io_mpx;
 #[cfg(feature = "pipe")]
 mod pipe;
 #[cfg(feature = "net")]
 mod socket;
 #[cfg(feature = "multitask")]
 mod task;
+#[cfg(feature = "fd")]
+mod uio;
 
 mod stdio;
 mod sync;
 
 #[cfg(feature = "fd")]
 pub use fd_ops::*;
+#[cfg(feature = "select")]
+pub use io_mpx::sys_select;
+#[cfg(feature = "epoll")]
+pub use io_mpx::{sys_epoll_create, sys_epoll_ctl, sys_epoll_wait};
 #[cfg(feature = "pipe")]
 pub use pipe::*;
 #[cfg(feature = "net")]
 pub use socket::*;
 #[cfg(feature = "multitask")]
 pub use task::*;
+#[cfg(feature = "fd")]
+pub use uio::*;

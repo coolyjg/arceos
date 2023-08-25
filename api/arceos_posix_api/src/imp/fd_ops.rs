@@ -8,7 +8,7 @@ use flatten_objects::FlattenObjects;
 use spin::RwLock;
 
 use super::ctypes;
-use super::stdio::{Stdin, Stdout};
+use super::stdio::{stdin, stdout};
 
 pub const AX_FILE_LIMIT: usize = 1024;
 
@@ -24,9 +24,9 @@ pub trait FileLike: Send + Sync {
 lazy_static::lazy_static! {
     static ref FD_TABLE: RwLock<FlattenObjects<Arc<dyn FileLike>, AX_FILE_LIMIT>> = {
         let mut fd_table = FlattenObjects::new();
-        fd_table.add_at(0, Arc::new(Stdin::new()) as _).unwrap(); // stdin
-        fd_table.add_at(1, Arc::new(Stdout::new()) as _).unwrap(); // stdout
-        fd_table.add_at(2, Arc::new(Stdout::new()) as _).unwrap(); // stderr
+        fd_table.add_at(0, Arc::new(stdin()) as _).unwrap(); // stdin
+        fd_table.add_at(1, Arc::new(stdout()) as _).unwrap(); // stdout
+        fd_table.add_at(2, Arc::new(stdout()) as _).unwrap(); // stderr
         RwLock::new(fd_table)
     };
 }

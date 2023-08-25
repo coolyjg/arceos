@@ -2,18 +2,21 @@
 use super::FileLike;
 #[cfg(feature = "fd")]
 use alloc::sync::Arc;
-#[cfg(feature = "fd")]
+
 use axerrno::{LinuxError, LinuxResult};
-#[cfg(feature = "fd")]
-use axio::PollState;
+use axio::{prelude::*, BufReader, PollState, Result};
 
-// TODO: wrap this with mutex
-pub struct Stdin;
+use super::sync::Mutex;
 
-impl Stdin {
-    pub fn new() -> Self {
-        Self {}
-    }
+struct StdinRaw;
+struct StdoutRaw;
+
+pub struct Stdin {
+    inner: &'static Mutex<BufReader<StdinRaw>>,
+}
+
+pub struct Stdout {
+    inner: &'static Mutex<StdoutRaw>,
 }
 
 fn console_read_bytes() -> Option<u8> {
@@ -25,18 +28,8 @@ fn console_write_bytes(buf: &[u8]) -> axerrno::AxResult<usize> {
     Ok(buf.len())
 }
 
-// TODO: wrap this with mutex
-pub struct Stdout;
-
-impl Stdout {
-    pub fn new() -> Self {
-        Self {}
-    }
-}
-
-#[cfg(feature = "fd")]
-impl FileLike for Stdin {
-    fn read(&self, buf: &mut [u8]) -> LinuxResult<usize> {
+impl Read for StdinRaw {
+    fn read(&mut self, buf: &mut [u8]) -> axerrno::AxResult<usize> {
         let mut read_len = 0;
         while read_len < buf.len() {
             if let Some(c) = console_read_bytes() {
@@ -47,6 +40,76 @@ impl FileLike for Stdin {
             }
         }
         Ok(read_len)
+    }
+}
+
+impl Write for StdoutRaw {
+    fn write(&mut self, buf: &[u8]) -> axerrno::AxResult<usize> {
+        console_write_bytes(buf)
+    }
+
+    fn flush(&mut self) -> axerrno::AxResult {
+        Ok(())
+    }
+}
+
+impl Stdin {
+    #[allow(dead_code)]
+    pub(crate) fn read_locked(&self, buf: &mut [u8]) -> Result<usize> {
+        self.inner.lock().read(buf)
+    }
+}
+
+impl Read for Stdin {
+    // Block until at least one byte is read.
+    fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
+        let read_len = self.inner.lock().read(buf)?;
+        if buf.is_empty() || read_len > 0 {
+            return Ok(read_len);
+        }
+        // try again until we get something
+        loop {
+            let read_len = self.inner.lock().read(buf)?;
+            if read_len > 0 {
+                return Ok(read_len);
+            }
+            super::task::sys_sched_yield();
+        }
+    }
+}
+
+impl Stdout {
+    #[allow(dead_code)]
+    pub(crate) fn write_locked(&self, buf: &[u8]) -> Result<usize> {
+        self.inner.lock().write(buf)
+    }
+}
+
+impl Write for Stdout {
+    fn write(&mut self, buf: &[u8]) -> Result<usize> {
+        self.inner.lock().write(buf)
+    }
+    fn flush(&mut self) -> Result {
+        self.inner.lock().flush()
+    }
+}
+
+/// Constructs a new handle to the standard input of the current process.
+pub fn stdin() -> Stdin {
+    static INSTANCE: Mutex<BufReader<StdinRaw>> = Mutex::new(BufReader::new(StdinRaw));
+    Stdin { inner: &INSTANCE }
+}
+
+/// Constructs a new handle to the standard output of the current process.
+pub fn stdout() -> Stdout {
+    static INSTANCE: Mutex<StdoutRaw> = Mutex::new(StdoutRaw);
+    Stdout { inner: &INSTANCE }
+}
+
+#[cfg(feature = "fd")]
+impl FileLike for Stdin {
+    fn read(&self, buf: &mut [u8]) -> LinuxResult<usize> {
+        Ok(self.read_locked(buf)?)
     }
 
     fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {
@@ -86,7 +149,7 @@ impl FileLike for Stdout {
     }
 
     fn write(&self, buf: &[u8]) -> LinuxResult<usize> {
-        Ok(console_write_bytes(buf)?)
+        Ok(self.write_locked(buf)?)
     }
 
     fn stat(&self) -> LinuxResult<super::ctypes::stat> {
