@@ -19,6 +19,7 @@ mod uio;
 
 mod stdio;
 mod sync;
+mod time;
 
 #[cfg(feature = "fd")]
 pub use fd_ops::*;
@@ -34,3 +35,5 @@ pub use socket::*;
 pub use task::*;
 #[cfg(feature = "fd")]
 pub use uio::*;
+
+pub use time::*;

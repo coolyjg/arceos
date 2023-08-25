@@ -143,7 +143,7 @@ pub unsafe extern "C" fn sys_select(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            axstd::thread::yield_now();
+            crate::imp::task::sys_sched_yield();
         }
     })
 }

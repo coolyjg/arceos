@@ -48,6 +48,7 @@ pub enum SyscallId {
     FCNTL = 72,
     #[cfg(feature = "epoll")]
     EPOLL_CREATE = 213,
+    CLOCK_GETTIME = 228,
     // TODO: epoll_wait or epoll_pwait?
     #[cfg(feature = "epoll")]
     EPOLL_WAIT = 232,

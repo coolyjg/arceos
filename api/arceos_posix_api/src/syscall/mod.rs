@@ -107,6 +107,10 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         SyscallId::FCNTL => crate::sys_fcntl(args[0] as c_int, args[1] as c_int, args[2]) as _,
         #[cfg(feature = "epoll")]
         SyscallId::EPOLL_CREATE => crate::sys_epoll_create(args[0] as c_int) as _,
+        SyscallId::CLOCK_GETTIME => crate::sys_clock_gettime(
+            args[0] as ctypes::clockid_t,
+            args[1] as *mut ctypes::timespec,
+        ) as _,
         #[cfg(feature = "epoll")]
         SyscallId::EPOLL_WAIT => crate::sys_epoll_wait(
             args[0] as c_int,
