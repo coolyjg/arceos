@@ -11,9 +11,14 @@ pub enum SyscallId {
     WRITE = 1,
     #[cfg(feature = "fd")]
     CLOSE = 3,
-    // TODO: This may not be a syscall
+    #[cfg(feature = "fs")]
+    STAT = 4,
     #[cfg(feature = "fd")]
     FSTAT = 5,
+    #[cfg(feature = "fs")]
+    LSTAT = 6,
+    #[cfg(feature = "fs")]
+    LSEEK = 8,
     #[cfg(feature = "fd")]
     WRITEV = 20,
     #[cfg(feature = "pipe")]
@@ -46,6 +51,10 @@ pub enum SyscallId {
     GETPEERNAME = 52,
     #[cfg(feature = "fd")]
     FCNTL = 72,
+    #[cfg(feature = "fs")]
+    GETCWD = 79,
+    #[cfg(feature = "fs")]
+    RENAME = 82,
     #[cfg(feature = "epoll")]
     EPOLL_CREATE = 213,
     CLOCK_GETTIME = 228,
@@ -58,13 +67,16 @@ pub enum SyscallId {
     DUP3 = 292,
 
     // ArceOS specific syscall, starting from 500
-    // `send` should call `sendto`
+    /// `send` should call `sendto`
     #[cfg(feature = "net")]
     SEND = 500,
-    // `recv` should call `recvfrom`
+    /// `recv` should call `recvfrom`
     #[cfg(feature = "net")]
     RECV = 501,
-    // This is not a syscall, but requires `dns send` in ArceOS
+    /// This is not a syscall, but requires `dns send` in ArceOS
     #[cfg(feature = "net")]
     GETADDRINFO = 502,
+    /// `open` should call `openat`
+    #[cfg(feature = "fs")]
+    OPEN = 503,
 }

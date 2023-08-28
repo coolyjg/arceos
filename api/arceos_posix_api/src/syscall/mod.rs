@@ -24,8 +24,20 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         SyscallId::WRITE => crate::sys_write(args[0] as c_int, args[1] as *mut c_void, args[2]),
         #[cfg(feature = "fd")]
         SyscallId::CLOSE => crate::sys_close(args[0] as c_int) as _,
+        #[cfg(feature = "fs")]
+        SyscallId::STAT => {
+            crate::sys_stat(args[0] as *const c_char, args[1] as *mut ctypes::stat) as _
+        }
         #[cfg(feature = "fd")]
         SyscallId::FSTAT => crate::sys_fstat(args[0] as c_int, args[1] as *mut ctypes::stat) as _,
+        #[cfg(feature = "fs")]
+        SyscallId::LSTAT => {
+            crate::sys_lstat(args[0] as *const c_char, args[1] as *mut ctypes::stat) as _
+        }
+        #[cfg(feature = "fs")]
+        SyscallId::LSEEK => {
+            crate::sys_lseek(args[0] as c_int, args[1] as ctypes::off_t, args[2] as c_int) as _
+        }
         #[cfg(feature = "fd")]
         SyscallId::WRITEV => crate::sys_writev(
             args[0] as c_int,
@@ -104,6 +116,12 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         ) as _,
         #[cfg(feature = "fd")]
         SyscallId::FCNTL => crate::sys_fcntl(args[0] as c_int, args[1] as c_int, args[2]) as _,
+        #[cfg(feature = "fs")]
+        SyscallId::GETCWD => crate::sys_getcwd(args[0] as *mut c_char, args[1] as usize) as _,
+        #[cfg(feature = "fs")]
+        SyscallId::RENAME => {
+            crate::sys_rename(args[0] as *const c_char, args[1] as *const c_char) as _
+        }
         #[cfg(feature = "epoll")]
         SyscallId::EPOLL_CREATE => crate::sys_epoll_create(args[0] as c_int) as _,
         SyscallId::CLOCK_GETTIME => crate::sys_clock_gettime(
@@ -150,6 +168,12 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
             args[1] as *const c_char,
             args[2] as *mut ctypes::sockaddr,
             args[3] as ctypes::size_t,
+        ) as _,
+        #[cfg(feature = "fs")]
+        SyscallId::OPEN => crate::sys_open(
+            args[0] as *const c_char,
+            args[1] as c_int,
+            args[2] as ctypes::mode_t,
         ) as _,
     }
 }

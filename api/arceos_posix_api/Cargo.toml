@@ -26,6 +26,8 @@ fp_simd = ["axfeat/fp_simd"]
 
 multitask = ["axtask/multitask", "axfeat/multitask", "axsync/multitask"]
 
+fs =["fd", "axfeat/fs", "axfs"]
+
 net = ["axfeat/net", "axnet", "fd"]
 
 # Libc features
@@ -41,6 +43,7 @@ axio = { path = "../../crates/axio" }
 axhal = { path = "../../modules/axhal" }
 axlog = { path = "../../modules/axlog" }
 axerrno = { path = "../../crates/axerrno" }
+axfs = { path = "../../modules/axfs", optional = true }
 axnet = { path = "../../modules/axnet", optional = true }
 axalloc = { path = "../../modules/axalloc", optional = true }
 axtask = { path = "../../modules/axtask", optional = true }

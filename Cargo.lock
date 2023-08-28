@@ -198,6 +198,7 @@ dependencies = [
  "axconfig",
  "axerrno",
  "axfeat",
+ "axfs",
  "axhal",
  "axio",
  "axlog",

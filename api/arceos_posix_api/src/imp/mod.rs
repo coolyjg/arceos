@@ -6,6 +6,8 @@ pub mod ctypes;
 
 #[cfg(feature = "fd")]
 mod fd_ops;
+#[cfg(feature = "fs")]
+mod file;
 #[cfg(any(feature = "select", feature = "epoll"))]
 mod io_mpx;
 #[cfg(feature = "pipe")]
@@ -22,6 +24,8 @@ mod time;
 
 #[cfg(feature = "fd")]
 pub use fd_ops::*;
+#[cfg(feature = "fs")]
+pub use file::*;
 #[cfg(feature = "select")]
 pub use io_mpx::sys_select;
 #[cfg(feature = "epoll")]
