@@ -316,8 +316,6 @@ pub unsafe extern "C" fn sys_sendto(
 /// Send a message on a socket to the address connected.
 ///
 /// Return the number of bytes sent if success.
-///
-/// TODO: this is not a syscall, `send` should call `sendto`
 #[no_mangle]
 pub unsafe extern "C" fn sys_send(
     socket_fd: c_int,
@@ -374,8 +372,6 @@ pub unsafe extern "C" fn sys_recvfrom(
 /// Receive a message on a socket.
 ///
 /// Return the number of bytes received if success.
-///
-/// TODO: this is not a syscall, `recv` should call `recvfrom`
 #[no_mangle]
 pub unsafe extern "C" fn sys_recv(
     socket_fd: c_int,
@@ -457,8 +453,6 @@ pub unsafe extern "C" fn sys_shutdown(
 /// Query addresses for a domain name.
 ///
 /// Return address number if success.
-///
-/// TODO: this is not a syscall
 #[no_mangle]
 pub unsafe extern "C" fn sys_getaddrinfo(
     node: *const c_char,

@@ -41,7 +41,7 @@ pub enum SyscallId {
     #[cfg(feature = "net")]
     LISTEN = 50,
     #[cfg(feature = "net")]
-    GETADDRINFO = 51,
+    GETSOCKNAME = 51,
     #[cfg(feature = "net")]
     GETPEERNAME = 52,
     #[cfg(feature = "fd")]
@@ -56,4 +56,15 @@ pub enum SyscallId {
     EPOLL_CTL = 233,
     #[cfg(feature = "fd")]
     DUP3 = 292,
+
+    // ArceOS specific syscall, starting from 500
+    // `send` should call `sendto`
+    #[cfg(feature = "net")]
+    SEND = 500,
+    // `recv` should call `recvfrom`
+    #[cfg(feature = "net")]
+    RECV = 501,
+    // This is not a syscall, but requires `dns send` in ArceOS
+    #[cfg(feature = "net")]
+    GETADDRINFO = 502,
 }

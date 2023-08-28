@@ -91,11 +91,10 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         #[cfg(feature = "net")]
         SyscallId::LISTEN => crate::sys_listen(args[0] as c_int, args[1] as c_int) as _,
         #[cfg(feature = "net")]
-        SyscallId::GETADDRINFO => crate::sys_getaddrinfo(
-            args[0] as *const c_char,
-            args[1] as *const c_char,
-            args[2] as *mut ctypes::sockaddr,
-            args[3] as ctypes::size_t,
+        SyscallId::GETSOCKNAME => crate::sys_getsockname(
+            args[0] as c_int,
+            args[1] as *mut ctypes::sockaddr,
+            args[2] as *mut ctypes::socklen_t,
         ) as _,
         #[cfg(feature = "net")]
         SyscallId::GETPEERNAME => crate::sys_getpeername(
@@ -129,5 +128,28 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         SyscallId::DUP3 => {
             crate::sys_dup3(args[0] as c_int, args[1] as c_int, args[2] as c_int) as _
         }
+
+        #[cfg(feature = "net")]
+        SyscallId::SEND => crate::sys_send(
+            args[0] as c_int,
+            args[1] as *const c_void,
+            args[2] as ctypes::size_t,
+            args[3] as c_int,
+        ) as _,
+
+        #[cfg(feature = "net")]
+        SyscallId::RECV => crate::sys_recv(
+            args[0] as c_int,
+            args[1] as *mut c_void,
+            args[2] as ctypes::size_t,
+            args[3] as c_int,
+        ) as _,
+        #[cfg(feature = "net")]
+        SyscallId::GETADDRINFO => crate::sys_getaddrinfo(
+            args[0] as *const c_char,
+            args[1] as *const c_char,
+            args[2] as *mut ctypes::sockaddr,
+            args[3] as ctypes::size_t,
+        ) as _,
     }
 }

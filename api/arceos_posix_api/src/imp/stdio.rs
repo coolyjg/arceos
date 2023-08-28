@@ -3,8 +3,7 @@ use super::FileLike;
 #[cfg(feature = "fd")]
 use alloc::sync::Arc;
 
-use axerrno::{LinuxError, LinuxResult};
-use axio::{prelude::*, BufReader, PollState, Result};
+use axio::{prelude::*, BufReader, Result};
 
 use super::sync::Mutex;
 
@@ -108,15 +107,15 @@ pub fn stdout() -> Stdout {
 
 #[cfg(feature = "fd")]
 impl FileLike for Stdin {
-    fn read(&self, buf: &mut [u8]) -> LinuxResult<usize> {
+    fn read(&self, buf: &mut [u8]) -> axerrno::LinuxResult<usize> {
         Ok(self.read_locked(buf)?)
     }
 
-    fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {
-        Err(LinuxError::EPERM)
+    fn write(&self, _buf: &[u8]) -> axerrno::LinuxResult<usize> {
+        Err(axerrno::LinuxError::EPERM)
     }
 
-    fn stat(&self) -> LinuxResult<super::ctypes::stat> {
+    fn stat(&self) -> axerrno::LinuxResult<super::ctypes::stat> {
         let st_mode = 0o20000 | 0o440u32; // S_IFCHR | r--r-----
         Ok(super::ctypes::stat {
             st_ino: 1,
@@ -130,29 +129,29 @@ impl FileLike for Stdin {
         self
     }
 
-    fn poll(&self) -> LinuxResult<PollState> {
-        Ok(PollState {
+    fn poll(&self) -> axerrno::LinuxResult<axio::PollState> {
+        Ok(axio::PollState {
             readable: true,
             writable: true,
         })
     }
 
-    fn set_nonblocking(&self, _nonblocking: bool) -> LinuxResult {
+    fn set_nonblocking(&self, _nonblocking: bool) -> axerrno::LinuxResult {
         Ok(())
     }
 }
 
 #[cfg(feature = "fd")]
 impl FileLike for Stdout {
-    fn read(&self, _buf: &mut [u8]) -> LinuxResult<usize> {
-        Err(LinuxError::EPERM)
+    fn read(&self, _buf: &mut [u8]) -> axerrno::LinuxResult<usize> {
+        Err(axerrno::LinuxError::EPERM)
     }
 
-    fn write(&self, buf: &[u8]) -> LinuxResult<usize> {
+    fn write(&self, buf: &[u8]) -> axerrno::LinuxResult<usize> {
         Ok(self.write_locked(buf)?)
     }
 
-    fn stat(&self) -> LinuxResult<super::ctypes::stat> {
+    fn stat(&self) -> axerrno::LinuxResult<super::ctypes::stat> {
         let st_mode = 0o20000 | 0o220u32; // S_IFCHR | -w--w----
         Ok(super::ctypes::stat {
             st_ino: 1,
@@ -166,14 +165,14 @@ impl FileLike for Stdout {
         self
     }
 
-    fn poll(&self) -> LinuxResult<PollState> {
-        Ok(PollState {
+    fn poll(&self) -> axerrno::LinuxResult<axio::PollState> {
+        Ok(axio::PollState {
             readable: true,
             writable: true,
         })
     }
 
-    fn set_nonblocking(&self, _nonblocking: bool) -> LinuxResult {
+    fn set_nonblocking(&self, _nonblocking: bool) -> axerrno::LinuxResult {
         Ok(())
     }
 }
