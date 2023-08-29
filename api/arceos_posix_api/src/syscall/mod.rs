@@ -50,7 +50,7 @@ pub fn syscall(syscall_id: SyscallId, args: [usize; 6]) -> usize {
                 args[2] as c_int,
             ) as _,
             #[cfg(feature = "pipe")]
-            SyscallId::PIPE => crate::sys_pipe(args[0] as *mut c_int, args[1] as *mut c_int) as _,
+            SyscallId::PIPE => crate::sys_pipe(args[0] as *mut c_int) as _,
             #[cfg(feature = "select")]
             SyscallId::SELECT => crate::sys_select(
                 args[0] as c_int,

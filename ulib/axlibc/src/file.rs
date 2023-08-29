@@ -35,7 +35,7 @@ pub unsafe extern "C" fn lseek(fd: c_int, offset: ctypes::off_t, whence: c_int) 
 ///
 /// Return 0 if success.
 #[no_mangle]
-pub unsafe extern "C" fn stat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::ssize_t {
+pub unsafe extern "C" fn stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
     e(syscall2(SyscallId::STAT, [path as usize, buf as usize])) as _
 }
 
@@ -43,7 +43,7 @@ pub unsafe extern "C" fn stat(path: *const c_char, buf: *mut ctypes::stat) -> ct
 ///
 /// Return 0 if success.
 #[no_mangle]
-pub unsafe extern "C" fn lstat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::ssize_t {
+pub unsafe extern "C" fn lstat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
     e(syscall2(SyscallId::LSTAT, [path as usize, buf as usize])) as _
 }
 

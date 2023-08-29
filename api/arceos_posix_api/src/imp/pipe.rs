@@ -199,7 +199,7 @@ impl FileLike for Pipe {
 ///
 /// Return 0 if succeed
 #[no_mangle]
-pub unsafe extern "C" fn sys_pipe(fd1: *mut c_int, fd2: *mut c_int) -> c_int {
+pub unsafe extern "C" fn sys_pipe(fd: *mut c_int) -> c_int {
     syscall_body!(sys_pipe, {
         let (read_end, write_end) = Pipe::new();
         let read_fd = super::fd_ops::add_file_like(Arc::new(read_end))?;
@@ -207,8 +207,8 @@ pub unsafe extern "C" fn sys_pipe(fd1: *mut c_int, fd2: *mut c_int) -> c_int {
             super::fd_ops::close_file_like(read_fd).ok();
         })?;
         unsafe {
-            *fd1 = read_fd as c_int;
-            *fd2 = write_fd as c_int;
+            *fd = read_fd as c_int;
+            *(fd.add(1)) = write_fd as c_int;
         }
         Ok(0)
     })

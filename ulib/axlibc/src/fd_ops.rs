@@ -2,6 +2,8 @@ use crate::{ctypes, utils::e};
 use arceos_posix_api::{syscall1, syscall2, syscall3, SyscallId};
 use core::ffi::{c_int, c_void};
 
+pub const AX_FILE_LIMIT: usize = 1024;
+
 /// Close a file by `fd`.
 #[no_mangle]
 pub unsafe extern "C" fn close(fd: c_int) -> c_int {
@@ -34,7 +36,7 @@ pub unsafe extern "C" fn write(fd: c_int, buf: *const c_void, count: usize) -> c
 ///
 /// Return 0 if success.
 #[no_mangle]
-pub unsafe extern "C" fn fstat(fd: c_int, buf: *mut ctypes::stat) -> ctypes::ssize_t {
+pub unsafe extern "C" fn fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
     e(syscall2(SyscallId::FSTAT, [fd as usize, buf as usize])) as _
 }
 

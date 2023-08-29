@@ -133,7 +133,7 @@ pub unsafe extern "C" fn recv(
 pub unsafe extern "C" fn listen(
     socket_fd: c_int,
     backlog: c_int, // currently not used
-) -> ctypes::ssize_t {
+) -> c_int {
     e(syscall2(
         SyscallId::LISTEN,
         [socket_fd as usize, backlog as usize],
@@ -148,7 +148,7 @@ pub unsafe extern "C" fn accept(
     socket_fd: c_int,
     socket_addr: *mut ctypes::sockaddr,
     socket_len: *mut ctypes::socklen_t,
-) -> ctypes::ssize_t {
+) -> c_int {
     e(syscall3(
         SyscallId::ACCEPT,
         [
@@ -166,7 +166,7 @@ pub unsafe extern "C" fn accept(
 pub unsafe extern "C" fn shutdown(
     socket_fd: c_int,
     flag: c_int, // currently not used
-) -> ctypes::ssize_t {
+) -> c_int {
     e(syscall2(
         SyscallId::SHUTDOWN,
         [socket_fd as usize, flag as usize],
