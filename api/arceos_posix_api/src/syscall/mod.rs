@@ -9,6 +9,7 @@ use syscall_id::SyscallId;
 
 use crate::ctypes;
 
+#[allow(improper_ctypes_definitions)]
 #[no_mangle]
 pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
     let syscall_name = SyscallId::try_from(syscall_id).unwrap_or(SyscallId::INVALID);
@@ -58,6 +59,10 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         SyscallId::SCHED_YIELD => crate::sys_sched_yield(),
         #[cfg(feature = "fd")]
         SyscallId::DUP => crate::sys_dup(args[0] as c_int) as _,
+        SyscallId::NANO_SLEEP => crate::sys_nanosleep(
+            args[0] as *const ctypes::timespec,
+            args[1] as *mut ctypes::timespec,
+        ) as _,
         #[cfg(feature = "multitask")]
         SyscallId::GETPID => crate::sys_getpid() as _,
         #[cfg(feature = "net")]

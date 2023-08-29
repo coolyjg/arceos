@@ -1,3 +1,5 @@
+use core::time::Duration;
+
 /// Relinquish the CPU, and switches to another task.
 ///
 /// For single-threaded configuration (`multitask` feature is disabled), we just
@@ -12,4 +14,11 @@ pub fn sys_sched_yield() -> isize {
         core::hint::spin_loop();
     }
     0
+}
+
+pub fn sys_sleep_until(deadline: Duration) {
+    #[cfg(feature = "multitask")]
+    axtask::sleep_until(deadline);
+    #[cfg(not(feature = "multitask"))]
+    axhal::time::busy_wait_until(deadline);
 }

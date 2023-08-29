@@ -2,12 +2,7 @@ use crate::{ctypes, utils::check_null_mut_ptr};
 use crate::imp::sync::Mutex;
 use axerrno::LinuxResult;
 use core::ffi::c_int;
-use core::mem::{size_of, ManuallyDrop};
-
-static_assertions::const_assert_eq!(
-    size_of::<PthreadMutex>(),
-    size_of::<ctypes::pthread_mutex_t>()
-);
+use core::mem::ManuallyDrop;
 
 #[repr(C)]
 pub struct PthreadMutex(Mutex<()>);

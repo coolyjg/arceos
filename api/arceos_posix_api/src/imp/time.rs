@@ -50,3 +50,34 @@ pub unsafe extern "C" fn sys_clock_gettime(
         Ok(0)
     })
 }
+
+/// Sleep some nanoseconds
+///
+/// TODO: should be woken by signals, and set errno
+#[no_mangle]
+pub unsafe extern "C" fn sys_nanosleep(
+    req: *const ctypes::timespec,
+    rem: *mut ctypes::timespec,
+) -> c_int {
+    syscall_body!(sys_nanosleep, {
+        if req.is_null() || (*req).tv_nsec < 0 || (*req).tv_nsec > 999999999 {
+            return Err(LinuxError::EINVAL);
+        }
+
+        debug!("sys_nanosleep <= {}.{:09}s", (*req).tv_sec, (*req).tv_nsec);
+        let dur = Duration::from(*req);
+
+        let now = axhal::time::current_time();
+        super::task::sys_sleep_until(axhal::time::current_time() + dur);
+        let after = axhal::time::current_time();
+        let actual = after - now;
+
+        if let Some(diff) = dur.checked_sub(actual) {
+            if !rem.is_null() {
+                unsafe { (*rem) = diff.into() };
+            }
+            return Err(LinuxError::EINTR);
+        }
+        Ok(0)
+    })
+}

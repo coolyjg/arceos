@@ -29,6 +29,7 @@ pub enum SyscallId {
     SCHED_YIELD = 24,
     #[cfg(feature = "fd")]
     DUP = 32,
+    NANO_SLEEP = 35,
     #[cfg(feature = "multitask")]
     GETPID = 39,
     #[cfg(feature = "net")]
