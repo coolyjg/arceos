@@ -58,6 +58,6 @@ pub unsafe extern "C" fn getcwd(buf: *mut c_char, size: usize) -> *mut c_char {
 ///
 /// Return 0 if the operation succeeds, otherwise return -1.
 #[no_mangle]
-pub unsafe extern "C" fn ax_rename(old: *const c_char, new: *const c_char) -> c_int {
+pub unsafe extern "C" fn rename(old: *const c_char, new: *const c_char) -> c_int {
     e(syscall2(SyscallId::RENAME, [old as usize, new as usize]))
 }
