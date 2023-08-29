@@ -11,17 +11,17 @@
 extern crate axruntime;
 
 #[macro_use]
-mod utils;
-
-#[macro_use]
 extern crate axlog;
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
-mod errno;
+#[macro_use]
+mod utils;
 
 mod imp;
-pub mod syscall;
+mod syscall;
 
-pub use imp::*;
+use imp::*;
+pub use syscall::syscall_id::SyscallId;
+pub use syscall::{syscall, syscall0, syscall1, syscall2, syscall3, syscall4, syscall5, syscall6};

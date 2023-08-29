@@ -2,7 +2,7 @@
 #![allow(unused_macros)]
 
 use axerrno::{LinuxError, LinuxResult};
-use core::ffi::{c_char, CStr};
+use core::ffi::{c_char, c_int, CStr};
 
 pub fn char_ptr_to_str<'a>(str: *const c_char) -> LinuxResult<&'a str> {
     if str.is_null() {
@@ -27,6 +27,19 @@ pub fn check_null_mut_ptr<T>(ptr: *mut T) -> LinuxResult {
         Err(LinuxError::EFAULT)
     } else {
         Ok(())
+    }
+}
+
+// TODO: parse errno more elegantly
+const ERRNO_MAX: usize = 4095;
+
+pub fn e(ret: usize) -> c_int {
+    // if syscall return -4094 ~ -1
+    if ret > ERRNO_MAX.wrapping_neg() {
+        crate::errno::set_errno((ret as i32).abs());
+        -1
+    } else {
+        ret as _
     }
 }
 

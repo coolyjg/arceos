@@ -14,8 +14,8 @@ description = "ArceOS system call layer"
 license = "GPL-3.0-or-later OR Apache-2.0"
 repository = "https://github.com/rcore-os/arceos/tree/main/api/arceos_posix_api"
 
-[lib]
-crate-type = ["staticlib"]
+# [lib]
+# crate-type = ["staticlib"]
 
 [features]
 default = []

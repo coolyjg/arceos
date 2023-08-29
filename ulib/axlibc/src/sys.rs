@@ -22,7 +22,8 @@ pub unsafe extern "C" fn ax_sysconf(name: c_int) -> c_long {
             ctypes::_SC_AVPHYS_PAGES => Ok(axalloc::global_allocator().available_pages() as c_long),
             // Maximum number of files per process
             #[cfg(feature = "fd")]
-            ctypes::_SC_OPEN_MAX => Ok(super::fd_ops::AX_FILE_LIMIT as c_long),
+            ctypes::_SC_OPEN_MAX => Ok(0),
+            // ctypes::_SC_OPEN_MAX => Ok(super::fd_ops::AX_FILE_LIMIT as c_long),
             _ => Ok(0),
         }
     })

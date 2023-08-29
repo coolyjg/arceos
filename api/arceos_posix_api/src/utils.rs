@@ -41,8 +41,7 @@ macro_rules! syscall_body {
         match res {
             Ok(v) => v as _,
             Err(e) => {
-                crate::errno::set_errno(e.code());
-                -1 as _
+                -e.code() as _
             }
         }
     }};
@@ -55,8 +54,7 @@ macro_rules! syscall_body_no_debug {
         match res {
             Ok(v) => v as _,
             Err(e) => {
-                crate::errno::set_errno(e.code());
-                -1 as _
+                -e.code() as _
             }
         }
     }};

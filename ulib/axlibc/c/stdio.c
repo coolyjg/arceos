@@ -267,14 +267,15 @@ int fputs(const char *restrict s, FILE *restrict f)
 
 int fclose(FILE *f)
 {
-    return ax_close(f->fd);
+    // return ax_close(f->fd);
+    return close(f->fd);
 }
 
 // TODO
-int rename(const char *old, const char *new)
-{
-    return ax_rename(old, new);
-}
+// int rename(const char *old, const char *new)
+// {
+//     return ax_rename(old, new);
+// }
 
 int fileno(FILE *f)
 {

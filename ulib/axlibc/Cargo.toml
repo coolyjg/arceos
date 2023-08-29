@@ -26,19 +26,19 @@ default = []
 smp = ["axstd/smp"]
 
 # Floating point/SIMD
-fp_simd = ["axstd/fp_simd"]
+fp_simd = ["axstd/fp_simd", "arceos_posix_api/fp_simd"]
 
 # Memory
-alloc = ["axstd/alloc", "dep:axalloc"]
+alloc = ["axstd/alloc", "dep:axalloc", "arceos_posix_api/alloc"]
 
 # Multi-task
-multitask = ["axstd/multitask", "axtask/multitask"]
+multitask = ["axstd/multitask", "axtask/multitask", "arceos_posix_api/multitask"]
 
 # File system
-fs = ["axstd/fs", "fd"]
+fs = ["axstd/fs", "fd", "arceos_posix_api/fs"]
 
 # Networking
-net = ["axstd/net", "dep:axnet", "fd"]
+net = ["axstd/net", "dep:axnet", "fd", "arceos_posix_api/net"]
 
 # Libc features
 fd = ["alloc"]
@@ -52,6 +52,7 @@ axfeat = { path = "../../api/axfeat" }
 axstd = { path = "../axstd" }
 axhal = { path = "../../modules/axhal" }
 axlog = { path = "../../modules/axlog" }
+arceos_posix_api = { path = "../../api/arceos_posix_api"}
 axconfig = { path = "../../modules/axconfig" }
 axalloc = { path = "../../modules/axalloc", optional = true }
 axnet = { path = "../../modules/axnet", optional = true }

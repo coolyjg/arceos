@@ -152,7 +152,7 @@ struct tm *localtime(const time_t *timep)
 time_t time(time_t *t)
 {
     struct timespec ts;
-    ax_clock_gettime(&ts);
+    clock_gettime(CLOCK_REALTIME, &ts);
     time_t ret = ts.tv_sec;
     if (t)
         *t = ret;
@@ -178,15 +178,15 @@ int utimes(const char *filename, const struct timeval times[2])
 }
 
 // TODO: Should match _clk,
-int clock_gettime(clockid_t _clk, struct timespec *ts)
-{
-    return ax_clock_gettime(ts);
-}
+// int clock_gettime(clockid_t _clk, struct timespec *ts)
+// {
+//     return ax_clock_gettime(ts);
+// }
 
-int nanosleep(const struct timespec *req, struct timespec *rem)
-{
-    return ax_nanosleep(req, rem);
-}
+// int nanosleep(const struct timespec *req, struct timespec *rem)
+// {
+//     return ax_nanosleep(req, rem);
+// }
 
 // TODO
 void tzset()

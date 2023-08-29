@@ -11,6 +11,6 @@ mod epoll;
 mod select;
 
 #[cfg(feature = "epoll")]
-pub use self::epoll::{ax_epoll_create, ax_epoll_ctl, ax_epoll_wait};
+pub use self::epoll::{epoll_create, epoll_ctl, epoll_wait};
 #[cfg(feature = "select")]
 pub use self::select::ax_select;
