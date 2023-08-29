@@ -42,9 +42,9 @@ net = ["axstd/net", "dep:axnet", "fd", "arceos_posix_api/net"]
 
 # Libc features
 fd = ["alloc"]
-pipe = ["fd"]
-select = ["fd"]
-epoll = ["fd"]
+pipe = ["fd", "arceos_posix_api/pipe"]
+select = ["fd", "arceos_posix_api/select"]
+epoll = ["fd", "arceos_posix_api/epoll"]
 
 [dependencies]
 # ArceOS modules

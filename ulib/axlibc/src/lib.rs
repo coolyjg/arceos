@@ -64,6 +64,19 @@ mod stdio;
 mod sys;
 mod time;
 
+/// Get current thread ID.
+#[no_mangle]
+pub unsafe extern "C" fn getpid() -> core::ffi::c_int {
+    #[cfg(not(feature = "multitask"))]
+    return 2; // `Main` task ID
+    #[cfg(feature = "multitask")]
+    {
+        use crate::utils::e;
+        use arceos_posix_api::{syscall0, SyscallId};
+        e(syscall0(SyscallId::GETPID))
+    }
+}
+
 /// Abort the current process.
 #[no_mangle]
 pub unsafe extern "C" fn ax_panic() -> ! {
@@ -73,7 +86,10 @@ pub unsafe extern "C" fn ax_panic() -> ! {
 /// Exits the current thread.
 #[no_mangle]
 pub unsafe extern "C" fn ax_exit(exit_code: core::ffi::c_int) -> ! {
-    axstd::thread::exit(exit_code)
+    use crate::utils::e;
+    use arceos_posix_api::{syscall1, SyscallId};
+    e(syscall1(SyscallId::EXIT, exit_code as usize));
+    unreachable!()
 }
 
 pub use self::rand::{ax_rand_u32, ax_srand};
@@ -100,7 +116,7 @@ pub use self::socket::{
 #[cfg(feature = "multitask")]
 pub use self::pthread::mutex::{pthread_mutex_init, pthread_mutex_lock, pthread_mutex_unlock};
 #[cfg(feature = "multitask")]
-pub use self::pthread::{getpid, pthread_create, pthread_exit, pthread_join};
+pub use self::pthread::{pthread_create, pthread_exit, pthread_join};
 
 #[cfg(feature = "pipe")]
 pub use self::pipe::pipe;

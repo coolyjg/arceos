@@ -52,5 +52,5 @@ pub use socket::{
 #[cfg(feature = "fd")]
 pub use uio::sys_writev;
 
-pub use task::sys_sched_yield;
+pub use task::{sys_exit, sys_sched_yield};
 pub use time::{sys_clock_gettime, sys_nanosleep};

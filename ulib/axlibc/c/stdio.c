@@ -219,7 +219,8 @@ char *fgets(char *restrict s, int n, FILE *restrict f)
     int cnt = 0;
     while (cnt < n - 1) {
         char c;
-        if (ax_read(f->fd, (void *)&c, 1) > 0) {
+        // if (ax_read(f->fd, (void *)&c, 1) > 0) {
+        if (read(f->fd, (void *)&c, 1) > 0) {
             if (c != '\n')
                 s[cnt++] = c;
             else
@@ -237,7 +238,8 @@ size_t fread(void *restrict destv, size_t size, size_t nmemb, FILE *restrict f)
     size_t read_len = 0;
     size_t len = 0;
     do {
-        len = ax_read(f->fd, destv + read_len, total - read_len);
+        // len = ax_read(f->fd, destv + read_len, total - read_len);
+        len = read(f->fd, destv + read_len, total - read_len);
         if (len < 0)
             break;
         read_len += len;
@@ -251,7 +253,8 @@ size_t fwrite(const void *restrict src, size_t size, size_t nmemb, FILE *restric
     size_t write_len = 0;
     size_t len = 0;
     do {
-        len = ax_write(f->fd, src + write_len, total - write_len);
+        // len = ax_write(f->fd, src + write_len, total - write_len);
+        len = write(f->fd, src + write_len, total - write_len);
         if (len < 0)
             break;
         write_len += len;

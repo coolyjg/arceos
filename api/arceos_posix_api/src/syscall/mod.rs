@@ -125,6 +125,8 @@ pub fn syscall(syscall_id: SyscallId, args: [usize; 6]) -> usize {
                 args[1] as *mut ctypes::sockaddr,
                 args[2] as *mut ctypes::socklen_t,
             ) as _,
+            #[allow(unreachable_code)]
+            SyscallId::EXIT => crate::sys_exit(args[0] as c_int) as _,
             #[cfg(feature = "fd")]
             SyscallId::FCNTL => crate::sys_fcntl(args[0] as c_int, args[1] as c_int, args[2]) as _,
             #[cfg(feature = "fs")]

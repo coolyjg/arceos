@@ -52,6 +52,7 @@ pub enum SyscallId {
     GETSOCKNAME = 51,
     #[cfg(feature = "net")]
     GETPEERNAME = 52,
+    EXIT = 60,
     #[cfg(feature = "fd")]
     FCNTL = 72,
     #[cfg(feature = "fs")]

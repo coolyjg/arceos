@@ -4,15 +4,6 @@ use core::ffi::{c_int, c_void};
 
 pub mod mutex;
 
-/// Get current thread ID.
-#[no_mangle]
-pub unsafe extern "C" fn getpid() -> c_int {
-    #[cfg(not(feature = "multitask"))]
-    return 2; // `Main` task ID
-    #[cfg(feature = "multitask")]
-    e(syscall0(SyscallId::GETPID))
-}
-
 /// Returns the `pthread` struct of current thread.
 #[no_mangle]
 pub unsafe extern "C" fn pthread_self() -> ctypes::pthread_t {
