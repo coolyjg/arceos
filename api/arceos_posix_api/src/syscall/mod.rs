@@ -1,6 +1,3 @@
-#[macro_use]
-mod macros;
-
 mod syscall_id;
 
 use core::ffi::{c_char, c_int, c_void};
@@ -56,7 +53,7 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
             args[4] as *mut ctypes::timeval,
         ) as _,
         #[cfg(feature = "multitask")]
-        SyscallId::SCHED_YIELD => crate::sys_sched_yield(),
+        SyscallId::SCHED_YIELD => crate::sys_sched_yield() as _,
         #[cfg(feature = "fd")]
         SyscallId::DUP => crate::sys_dup(args[0] as c_int) as _,
         SyscallId::NANO_SLEEP => crate::sys_nanosleep(

@@ -1,5 +1,7 @@
 fn main() {
     use std::io::Write;
+    use std::path::{Path, PathBuf};
+
     fn gen_pthread_mutex(out_file: &str) -> std::io::Result<()> {
         // TODO: generate size and initial content automatically.
         let (mutex_size, mutex_init) = if cfg!(feature = "multitask") {
@@ -26,6 +28,13 @@ typedef struct {{
         )?;
         std::fs::write(out_file, output)?;
         Ok(())
+    }
+
+    fn gen_rust_to_c_bindings(crate_dir: &Path, out_file: &str) {
+        // load configs from "cbindgen.toml"
+        cbindgen::generate(crate_dir)
+            .expect("Unable to generate rust->c bindings")
+            .write_to_file(out_file);
     }
 
     fn gen_c_to_rust_bindings(in_file: &str, out_file: &str) {
@@ -91,6 +100,8 @@ typedef struct {{
             .expect("Couldn't write bindings!");
     }
 
+    let crate_dir = PathBuf::from(&std::env::var("CARGO_MANIFEST_DIR").unwrap());
+    gen_rust_to_c_bindings(&crate_dir, "posix_api.h");
     gen_pthread_mutex("../../ulib/axlibc/include/ax_pthread_mutex.h").unwrap();
     gen_c_to_rust_bindings("ctypes.h", "src/imp/ctypes_gen.rs");
 }

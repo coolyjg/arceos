@@ -1,10 +1,11 @@
-use core::time::Duration;
+use core::{ffi::c_int, time::Duration};
 
 /// Relinquish the CPU, and switches to another task.
 ///
 /// For single-threaded configuration (`multitask` feature is disabled), we just
 /// relax the CPU and wait for incoming interrupts.
-pub fn sys_sched_yield() -> isize {
+#[no_mangle]
+pub unsafe extern "C" fn sys_sched_yield() -> c_int {
     #[cfg(feature = "multitask")]
     axtask::yield_now();
     #[cfg(not(feature = "multitask"))]

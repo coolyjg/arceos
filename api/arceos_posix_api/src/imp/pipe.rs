@@ -123,7 +123,9 @@ impl FileLike for Pipe {
                 }
                 drop(ring_buffer);
                 // Data not ready, wait for write end
-                sys_sched_yield(); // TODO: use synconize primitive
+                unsafe {
+                    sys_sched_yield(); // TODO: use synconize primitive
+                }
                 continue;
             }
             for _ in 0..loop_read {
@@ -148,7 +150,9 @@ impl FileLike for Pipe {
             if loop_write == 0 {
                 drop(ring_buffer);
                 // Buffer is full, wait for read end to consume
-                sys_sched_yield(); // TODO: use synconize primitive
+                unsafe {
+                    sys_sched_yield(); // TODO: use synconize primitive
+                }
                 continue;
             }
             for _ in 0..loop_write {

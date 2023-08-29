@@ -72,7 +72,9 @@ impl Read for Stdin {
             if read_len > 0 {
                 return Ok(read_len);
             }
-            super::task::sys_sched_yield();
+            unsafe {
+                super::task::sys_sched_yield();
+            }
         }
     }
 }
