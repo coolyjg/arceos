@@ -12,12 +12,12 @@ mod file;
 mod io_mpx;
 #[cfg(feature = "pipe")]
 mod pipe;
+#[cfg(feature = "multitask")]
+mod pthread;
 #[cfg(feature = "net")]
 mod socket;
 #[cfg(feature = "fd")]
 mod uio;
-#[cfg(feature = "multitask")]
-mod pthread;
 
 mod stdio;
 mod sync;
@@ -34,14 +34,14 @@ pub use io_mpx::sys_select;
 pub use io_mpx::{sys_epoll_create, sys_epoll_ctl, sys_epoll_wait};
 #[cfg(feature = "pipe")]
 pub use pipe::*;
+#[cfg(feature = "multitask")]
+pub use pthread::mutex::*;
+#[cfg(feature = "multitask")]
+pub use pthread::*;
 #[cfg(feature = "net")]
 pub use socket::*;
 #[cfg(feature = "fd")]
 pub use uio::*;
-#[cfg(feature = "multitask")]
-pub use pthread::*;
-#[cfg(feature = "multitask")]
-pub use pthread::mutex::*;
 
 pub use task::*;
 pub use time::*;

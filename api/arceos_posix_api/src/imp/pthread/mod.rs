@@ -126,15 +126,18 @@ pub unsafe extern "C" fn sys_pthread_self() -> ctypes::pthread_t {
 pub unsafe extern "C" fn sys_pthread_create(
     res: *mut ctypes::pthread_t,
     attr: *const ctypes::pthread_attr_t,
-    start_routine: extern "C" fn(arg: *mut c_void) -> *mut c_void,
+    start_routine: *mut c_void,
     arg: *mut c_void,
 ) -> c_int {
     debug!(
         "sys_pthread_create <= {:#x}, {:#x}",
         start_routine as usize, arg as usize
     );
+    let entry = core::mem::transmute::<*mut c_void, extern "C" fn(arg: *mut c_void) -> *mut c_void>(
+        start_routine,
+    );
     syscall_body!(sys_pthread_create, {
-        let ptr = Pthread::create(attr, start_routine, arg)?;
+        let ptr = Pthread::create(attr, entry, arg)?;
         unsafe { core::ptr::write(res, ptr) };
         Ok(0)
     })

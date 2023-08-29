@@ -119,7 +119,7 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         #[cfg(feature = "fd")]
         SyscallId::FCNTL => crate::sys_fcntl(args[0] as c_int, args[1] as c_int, args[2]) as _,
         #[cfg(feature = "fs")]
-        SyscallId::GETCWD => crate::sys_getcwd(args[0] as *mut c_char, args[1] as usize) as _,
+        SyscallId::GETCWD => crate::sys_getcwd(args[0] as *mut c_char, args[1]) as _,
         #[cfg(feature = "fs")]
         SyscallId::RENAME => {
             crate::sys_rename(args[0] as *const c_char, args[1] as *const c_char) as _
@@ -183,9 +183,10 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         SyscallId::PTHREAD_CREATE => crate::sys_pthread_create(
             args[0] as *mut ctypes::pthread_t,
             args[1] as *const ctypes::pthread_attr_t,
-            args[2] as fn(arg: *mut c_void) -> *mut c_void,
+            args[2] as *mut c_void,
             args[3] as *mut c_void,
         ) as _,
+        #[allow(unreachable_code)]
         #[cfg(feature = "multitask")]
         SyscallId::PTHREAD_EXIT => crate::sys_pthread_exit(args[0] as *mut c_void) as _,
         #[cfg(feature = "multitask")]
