@@ -58,6 +58,8 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
         SyscallId::SCHED_YIELD => crate::sys_sched_yield(),
         #[cfg(feature = "fd")]
         SyscallId::DUP => crate::sys_dup(args[0] as c_int) as _,
+        #[cfg(feature = "multitask")]
+        SyscallId::GETPID => crate::sys_getpid() as _,
         #[cfg(feature = "net")]
         SyscallId::SOCKET => {
             crate::sys_socket(args[0] as c_int, args[1] as c_int, args[2] as c_int) as _
@@ -175,5 +177,33 @@ pub unsafe extern "C" fn syscall(syscall_id: usize, args: [usize; 6]) -> isize {
             args[1] as c_int,
             args[2] as ctypes::mode_t,
         ) as _,
+        #[cfg(feature = "multitask")]
+        SyscallId::PTHREAD_SELF => crate::sys_pthread_self() as _,
+        #[cfg(feature = "multitask")]
+        SyscallId::PTHREAD_CREATE => crate::sys_pthread_create(
+            args[0] as *mut ctypes::pthread_t,
+            args[1] as *const ctypes::pthread_attr_t,
+            args[2] as fn(arg: *mut c_void) -> *mut c_void,
+            args[3] as *mut c_void,
+        ) as _,
+        #[cfg(feature = "multitask")]
+        SyscallId::PTHREAD_EXIT => crate::sys_pthread_exit(args[0] as *mut c_void) as _,
+        #[cfg(feature = "multitask")]
+        SyscallId::PTHREAD_JOIN => {
+            crate::sys_pthread_join(args[0] as ctypes::pthread_t, args[1] as *mut *mut c_void) as _
+        }
+        #[cfg(feature = "multitask")]
+        SyscallId::PTHREAD_MUTEX_INIT => crate::sys_pthread_mutex_init(
+            args[0] as *mut ctypes::pthread_mutex_t,
+            args[1] as *const ctypes::pthread_mutexattr_t,
+        ) as _,
+        #[cfg(feature = "multitask")]
+        SyscallId::PTHREAD_MUTEX_LOCK => {
+            crate::sys_pthread_mutex_lock(args[0] as *mut ctypes::pthread_mutex_t) as _
+        }
+        #[cfg(feature = "multitask")]
+        SyscallId::PTHREAD_MUTEX_UNLOCK => {
+            crate::sys_pthread_mutex_unlock(args[0] as *mut ctypes::pthread_mutex_t) as _
+        }
     }
 }

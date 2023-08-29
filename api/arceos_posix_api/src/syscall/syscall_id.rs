@@ -29,6 +29,8 @@ pub enum SyscallId {
     SCHED_YIELD = 24,
     #[cfg(feature = "fd")]
     DUP = 32,
+    #[cfg(feature = "multitask")]
+    GETPID = 39,
     #[cfg(feature = "net")]
     SOCKET = 41,
     #[cfg(feature = "net")]
@@ -79,4 +81,25 @@ pub enum SyscallId {
     /// `open` should call `openat`
     #[cfg(feature = "fs")]
     OPEN = 503,
+    /// This is not a syscall
+    #[cfg(feature = "multitask")]
+    PTHREAD_SELF = 504,
+    /// `pthread_create` should call `sys_clone`
+    #[cfg(feature = "multitask")]
+    PTHREAD_CREATE = 505,
+    /// Not a standard syscall
+    #[cfg(feature = "multitask")]
+    PTHREAD_EXIT = 506,
+    /// `pthread_join` should use `futex`
+    #[cfg(feature = "multitask")]
+    PTHREAD_JOIN = 507,
+    /// Not a standard syscall
+    #[cfg(feature = "multitask")]
+    PTHREAD_MUTEX_INIT = 508,
+    /// `pthread_mutex_lock` should call `futex`
+    #[cfg(feature = "multitask")]
+    PTHREAD_MUTEX_LOCK = 509,
+    /// `pthread_mutex_unlock` should call `futex`
+    #[cfg(feature = "multitask")]
+    PTHREAD_MUTEX_UNLOCK = 510,
 }

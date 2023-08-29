@@ -16,6 +16,8 @@ mod pipe;
 mod socket;
 #[cfg(feature = "fd")]
 mod uio;
+#[cfg(feature = "multitask")]
+mod pthread;
 
 mod stdio;
 mod sync;
@@ -36,6 +38,10 @@ pub use pipe::*;
 pub use socket::*;
 #[cfg(feature = "fd")]
 pub use uio::*;
+#[cfg(feature = "multitask")]
+pub use pthread::*;
+#[cfg(feature = "multitask")]
+pub use pthread::mutex::*;
 
 pub use task::*;
 pub use time::*;

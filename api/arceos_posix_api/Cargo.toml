@@ -52,6 +52,7 @@ axsync = { path = "../../modules/axsync", default-features = false, optional = t
 num_enum = { version = "0.5.11", default-features = false }
 lazy_static = { version = "1.4", features = ["spin_no_std"] }
 flatten_objects = { path = "../../crates/flatten_objects" }
+static_assertions = "1.1.0"
 spin = { version = "0.9" }
 spinlock = { path = "../../crates/spinlock" }
 
