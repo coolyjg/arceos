@@ -9,5 +9,5 @@ use crate::utils::e;
 /// Return 0 if succeed
 #[no_mangle]
 pub unsafe extern "C" fn pipe(fd: *mut c_int) -> c_int {
-    e(syscall1(SyscallId::PIPE, [fd as usize]))
+    e(syscall1(SyscallId::PIPE, fd as usize))
 }
