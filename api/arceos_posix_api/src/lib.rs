@@ -4,6 +4,7 @@
 #![feature(naked_functions)]
 #![feature(result_option_inspect)]
 #![allow(clippy::missing_safety_doc)]
+#![allow(missing_docs)]
 #![allow(non_camel_case_types, non_upper_case_globals)]
 
 extern crate axruntime;
@@ -20,8 +21,7 @@ mod utils;
 mod imp;
 mod syscall;
 
+pub use imp::sync::*;
 use imp::*;
 pub use syscall::syscall_id::SyscallId;
 pub use syscall::{syscall, syscall0, syscall1, syscall2, syscall3, syscall4, syscall5, syscall6};
-// pub use imp::{stdin, stdout};
-pub use imp::sync::*;
