@@ -245,7 +245,8 @@ int pipe2(int fd[2], int flag)
 // TODO
 _Noreturn void _exit(int status)
 {
-    ax_exit(status);
+    // ax_exit(status);
+    exit(status);
 }
 
 // TODO

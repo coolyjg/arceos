@@ -25,3 +25,5 @@ mod syscall;
 use imp::*;
 pub use syscall::syscall_id::SyscallId;
 pub use syscall::{syscall, syscall0, syscall1, syscall2, syscall3, syscall4, syscall5, syscall6};
+// pub use imp::{stdin, stdout};
+pub use imp::sync::*;

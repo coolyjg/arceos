@@ -61,6 +61,7 @@ mod mktime;
 mod rand;
 mod setjmp;
 mod stdio;
+mod stdio_imp;
 mod sys;
 mod time;
 
@@ -85,19 +86,20 @@ pub unsafe extern "C" fn ax_panic() -> ! {
 
 /// Exits the current thread.
 #[no_mangle]
-pub unsafe extern "C" fn ax_exit(exit_code: core::ffi::c_int) -> ! {
-    use crate::utils::e;
-    use arceos_posix_api::{syscall1, SyscallId};
-    e(syscall1(SyscallId::EXIT, exit_code as usize));
+pub unsafe extern "C" fn exit(exit_code: core::ffi::c_int) -> ! {
+    crate::utils::e(arceos_posix_api::syscall1(
+        arceos_posix_api::SyscallId::EXIT,
+        exit_code as usize,
+    ));
     unreachable!()
 }
 
 pub use self::rand::{ax_rand_u32, ax_srand};
 
 #[cfg(feature = "alloc")]
-pub use self::malloc::{ax_free, ax_malloc};
+pub use self::malloc::{free, malloc};
 #[cfg(feature = "alloc")]
-pub use self::strftime::ax_strftime;
+pub use self::strftime::strftime;
 
 #[cfg(feature = "fd")]
 pub use self::fd_ops::{ax_fcntl, close, dup, dup3, fstat, read, write};
@@ -128,10 +130,10 @@ pub use self::io_mpx::ax_select;
 pub use self::io_mpx::{epoll_create, epoll_ctl, epoll_wait};
 
 #[cfg(feature = "fp_simd")]
-pub use self::strtod::{ax_strtod, ax_strtof};
+pub use self::strtod::{strtod, strtof};
 
-pub use self::errno::ax_errno_string;
-pub use self::mktime::ax_mktime;
-pub use self::stdio::{ax_print_str, ax_println_str};
+pub use self::errno::strerror;
+pub use self::mktime::mktime;
+pub use self::stdio::{ax_println_str, print_str};
 pub use self::sys::ax_sysconf;
 pub use self::time::{clock_gettime, nanosleep};

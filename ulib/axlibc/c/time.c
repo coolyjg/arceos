@@ -21,13 +21,13 @@ const int HOUR_PER_DAY = 24;
 #define DAYS_PER_100Y (365 * 100 + 24)
 #define DAYS_PER_4Y   (365 * 4 + 1)
 
-#ifdef AX_CONFIG_ALLOC
-size_t strftime(char *restrict buf, size_t size, const char *restrict format,
-                const struct tm *restrict timeptr)
-{
-    return ax_strftime(buf, size, format, timeptr);
-}
-#endif
+// #ifdef AX_CONFIG_ALLOC
+// size_t strftime(char *restrict buf, size_t size, const char *restrict format,
+//                 const struct tm *restrict timeptr)
+// {
+//     return ax_strftime(buf, size, format, timeptr);
+// }
+// #endif
 
 int __secs_to_tm(long long t, struct tm *tm)
 {
@@ -223,7 +223,7 @@ double difftime(time_t t1, time_t t0)
 }
 #endif
 
-time_t mktime(struct tm *tm)
-{
-    return ax_mktime(tm);
-}
+// time_t mktime(struct tm *tm)
+// {
+//     return ax_mktime(tm);
+// }

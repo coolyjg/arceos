@@ -8,14 +8,9 @@ use crate::ctypes;
 
 #[allow(improper_ctypes_definitions)]
 pub fn syscall(syscall_id: SyscallId, args: [usize; 6]) -> usize {
-    // let syscall_name = SyscallId::try_from(syscall_id).unwrap_or(SyscallId::INVALID);
-    let syscall_name = syscall_id;
-    // debug!(
-    //     "syscall <= syscall_id: {}, syscall_name: {:?}",
-    //     syscall_id, syscall_name
-    // );
+    debug!("syscall <= syscall_name: {:?}", syscall_id);
     unsafe {
-        match syscall_name {
+        match syscall_id {
             SyscallId::INVALID => !0,
             #[cfg(feature = "fd")]
             SyscallId::READ => {
