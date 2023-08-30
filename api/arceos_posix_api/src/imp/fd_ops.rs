@@ -21,9 +21,41 @@ pub trait FileLike: Send + Sync {
     fn set_nonblocking(&self, nonblocking: bool) -> LinuxResult;
 }
 
+#[derive(Default)]
+struct Dummy;
+
+impl FileLike for Dummy {
+    fn read(&self, _buf: &mut [u8]) -> LinuxResult<usize> {
+        Err(LinuxError::EPERM)
+    }
+
+    fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {
+        Err(LinuxError::EPERM)
+    }
+
+    fn stat(&self) -> LinuxResult<ctypes::stat> {
+        Err(LinuxError::EPERM)
+    }
+
+    fn into_any(self: Arc<Self>) -> Arc<dyn core::any::Any + Send + Sync> {
+        self
+    }
+
+    fn poll(&self) -> LinuxResult<PollState> {
+        Err(LinuxError::EPERM)
+    }
+
+    fn set_nonblocking(&self, _nonblocking: bool) -> LinuxResult {
+        Ok(())
+    }
+}
+
 lazy_static::lazy_static! {
     static ref FD_TABLE: RwLock<FlattenObjects<Arc<dyn FileLike>, AX_FILE_LIMIT>> = {
-        let fd_table = FlattenObjects::new();
+        let mut fd_table = FlattenObjects::new();
+        fd_table.add_at(0, Arc::new(Dummy::default()) as _).unwrap(); // stdin
+        fd_table.add_at(1, Arc::new(Dummy::default()) as _).unwrap(); // stdout
+        fd_table.add_at(2, Arc::new(Dummy::default()) as _).unwrap(); // stderr
         RwLock::new(fd_table)
     };
 }
@@ -37,7 +69,7 @@ pub fn get_file_like(fd: c_int) -> LinuxResult<Arc<dyn FileLike>> {
 }
 
 pub fn add_file_like(f: Arc<dyn FileLike>) -> LinuxResult<c_int> {
-    Ok(FD_TABLE.write().add(f).ok_or(LinuxError::EMFILE)? as c_int + 3)
+    Ok(FD_TABLE.write().add(f).ok_or(LinuxError::EMFILE)? as c_int)
 }
 
 pub fn close_file_like(fd: c_int) -> LinuxResult {
@@ -156,7 +188,7 @@ pub unsafe extern "C" fn sys_dup3(old_fd: c_int, new_fd: c_int, flags: c_int) ->
 
 /// Fcntl implementation
 ///
-/// TODO: `SET/GET` command is ignored
+/// TODO: `SET/GET` command is ignored, hard-code stdin/stdout
 #[no_mangle]
 pub unsafe extern "C" fn sys_fcntl(fd: c_int, cmd: c_int, arg: usize) -> c_int {
     debug!("sys_fcntl <= fd: {} cmd: {} arg: {}", fd, cmd, arg);
@@ -168,6 +200,9 @@ pub unsafe extern "C" fn sys_fcntl(fd: c_int, cmd: c_int, arg: usize) -> c_int {
                 dup_fd(fd)
             }
             ctypes::F_SETFL => {
+                if fd == 0 || fd == 1 || fd == 2 {
+                    return Ok(0);
+                }
                 get_file_like(fd)?.set_nonblocking(arg & (ctypes::O_NONBLOCK as usize) > 0)?;
                 Ok(0)
             }

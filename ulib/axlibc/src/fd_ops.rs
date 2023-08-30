@@ -45,7 +45,6 @@ pub unsafe extern "C" fn read(fd: c_int, buf: *mut c_void, count: usize) -> ctyp
 /// Return the written size if success.
 #[no_mangle]
 pub unsafe extern "C" fn write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t {
-    // Stdout
     if fd == 0 {
         crate::errno::set_errno(LinuxError::EPERM as _);
         return -1;
@@ -70,6 +69,27 @@ pub unsafe extern "C" fn write(fd: c_int, buf: *const c_void, count: usize) -> c
 /// Return 0 if success.
 #[no_mangle]
 pub unsafe extern "C" fn fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
+    if fd == 0 {
+        return ax_call_body!(fstat, {
+            if buf.is_null() {
+                return Err(LinuxError::EFAULT);
+            }
+            unsafe {
+                *buf = stdin().stat()?;
+            }
+            Ok(0)
+        });
+    } else if fd == 1 || fd == 2 {
+        return ax_call_body!(fstat, {
+            if buf.is_null() {
+                return Err(LinuxError::EFAULT);
+            }
+            unsafe {
+                *buf = stdout().stat()?;
+            }
+            Ok(0)
+        });
+    }
     e(syscall2(SyscallId::FSTAT, [fd as usize, buf as usize])) as _
 }
 

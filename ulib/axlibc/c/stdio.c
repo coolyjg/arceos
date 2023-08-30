@@ -109,7 +109,8 @@ int putchar(int c)
 
 int puts(const char *s)
 {
-    return ax_println_str(s, strlen(s)); // TODO: lock
+    // return ax_println_str(s, strlen(s));
+    return println_str(s, strlen(s));
 }
 
 void perror(const char *msg)

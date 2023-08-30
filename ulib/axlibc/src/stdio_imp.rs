@@ -75,6 +75,26 @@ impl Stdin {
     pub fn read_line(&self, buf: &mut String) -> Result<usize> {
         self.inner.lock().read_line(buf)
     }
+
+    #[cfg(feature = "fd")]
+    pub fn stat(&self) -> Result<super::ctypes::stat> {
+        let st_mode = 0o20000 | 0o440u32; // S_IFCHR | r--r-----
+        Ok(super::ctypes::stat {
+            st_ino: 1,
+            st_nlink: 1,
+            st_mode,
+            ..Default::default()
+        })
+    }
+
+    #[cfg(feature = "fd")]
+    fn poll(&self) -> Result<axio::PollState> {
+        use axio::PollState;
+        Ok(PollState {
+            readable: true,
+            writable: true,
+        })
+    }
 }
 
 impl Read for Stdin {
@@ -140,6 +160,26 @@ impl Stdout {
         StdoutLock {
             inner: self.inner.lock(),
         }
+    }
+
+    #[cfg(feature = "fd")]
+    pub fn stat(&self) -> Result<super::ctypes::stat> {
+        let st_mode = 0o20000 | 0o220u32; // S_IFCHR | -w--w----
+        Ok(super::ctypes::stat {
+            st_ino: 1,
+            st_nlink: 1,
+            st_mode,
+            ..Default::default()
+        })
+    }
+
+    #[cfg(feature = "fd")]
+    fn poll(&self) -> Result<axio::PollState> {
+        use axio::PollState;
+        Ok(PollState {
+            readable: true,
+            writable: true,
+        })
     }
 }
 

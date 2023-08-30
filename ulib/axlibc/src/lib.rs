@@ -134,6 +134,6 @@ pub use self::strtod::{strtod, strtof};
 
 pub use self::errno::strerror;
 pub use self::mktime::mktime;
-pub use self::stdio::{ax_println_str, print_str};
+pub use self::stdio::{print_str, println_str};
 pub use self::sys::ax_sysconf;
 pub use self::time::{clock_gettime, nanosleep};
