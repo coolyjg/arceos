@@ -248,8 +248,5 @@ pub fn syscall5(syscall_id: SyscallId, args: [usize; 5]) -> usize {
 }
 
 pub fn syscall6(syscall_id: SyscallId, args: [usize; 6]) -> usize {
-    syscall(
-        syscall_id,
-        [args[0], args[1], args[2], args[3], args[4], args[5]],
-    )
+    syscall(syscall_id, args)
 }

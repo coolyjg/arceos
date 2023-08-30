@@ -111,8 +111,8 @@ pub use self::file::{ax_open, getcwd, lseek, lstat, stat};
 
 #[cfg(feature = "net")]
 pub use self::socket::{
-    accept, ax_getaddrinfo, ax_recvfrom, ax_sendto, bind, connect, getpeername, getsockname,
-    listen, recv, send, shutdown, socket,
+    accept, ax_getaddrinfo, bind, connect, getpeername, getsockname, listen, recv, recvfrom, send,
+    sendto, shutdown, socket,
 };
 
 #[cfg(feature = "multitask")]
@@ -124,7 +124,7 @@ pub use self::pthread::{pthread_create, pthread_exit, pthread_join};
 pub use self::pipe::pipe;
 
 #[cfg(feature = "select")]
-pub use self::io_mpx::ax_select;
+pub use self::io_mpx::select;
 
 #[cfg(feature = "epoll")]
 pub use self::io_mpx::{epoll_create, epoll_ctl, epoll_wait};

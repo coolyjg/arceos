@@ -48,7 +48,7 @@ pub unsafe extern "C" fn connect(
 ///
 /// Return the number of bytes sent if success.
 #[no_mangle]
-pub unsafe extern "C" fn ax_sendto(
+pub unsafe extern "C" fn sendto(
     socket_fd: c_int,
     buf_ptr: *const c_void,
     len: ctypes::size_t,
@@ -56,6 +56,12 @@ pub unsafe extern "C" fn ax_sendto(
     socket_addr: *const ctypes::sockaddr,
     addrlen: ctypes::socklen_t,
 ) -> ctypes::ssize_t {
+    if socket_addr.is_null() && addrlen == 0 {
+        return e(syscall4(
+            SyscallId::SEND,
+            [socket_fd as usize, buf_ptr as usize, len, flag as usize],
+        )) as _;
+    }
     e(syscall6(
         SyscallId::SENDTO,
         [
@@ -89,7 +95,7 @@ pub unsafe extern "C" fn send(
 ///
 /// Return the number of bytes received if success.
 #[no_mangle]
-pub unsafe extern "C" fn ax_recvfrom(
+pub unsafe extern "C" fn recvfrom(
     socket_fd: c_int,
     buf_ptr: *mut c_void,
     len: ctypes::size_t,
@@ -97,6 +103,12 @@ pub unsafe extern "C" fn ax_recvfrom(
     socket_addr: *mut ctypes::sockaddr,
     addrlen: *mut ctypes::socklen_t,
 ) -> ctypes::ssize_t {
+    if socket_addr.is_null() {
+        return e(syscall4(
+            SyscallId::RECV,
+            [socket_fd as usize, buf_ptr as usize, len, flag as usize],
+        )) as _;
+    }
     e(syscall6(
         SyscallId::RECVFROM,
         [

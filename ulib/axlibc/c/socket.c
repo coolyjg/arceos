@@ -66,23 +66,23 @@ int accept4(int fd, struct sockaddr *restrict addr, socklen_t *restrict len, int
 //     return ax_recv(fd, buf, n, flags);
 // }
 
-ssize_t sendto(int fd, const void *buf, size_t n, int flags, const struct sockaddr *addr,
-               socklen_t addr_len)
-{
-    if (addr == NULL && addr_len == 0)
-        return send(fd, buf, n, flags);
-    else
-        return ax_sendto(fd, buf, n, flags, addr, addr_len);
-}
+// ssize_t sendto(int fd, const void *buf, size_t n, int flags, const struct sockaddr *addr,
+//                socklen_t addr_len)
+// {
+//     if (addr == NULL && addr_len == 0)
+//         return send(fd, buf, n, flags);
+//     else
+//         return ax_sendto(fd, buf, n, flags, addr, addr_len);
+// }
 
-ssize_t recvfrom(int fd, void *restrict buf, size_t n, int flags, struct sockaddr *restrict addr,
-                 socklen_t *restrict addr_len)
-{
-    if (addr == NULL)
-        return recv(fd, buf, n, flags);
-    else
-        return ax_recvfrom(fd, buf, n, flags, addr, addr_len);
-}
+// ssize_t recvfrom(int fd, void *restrict buf, size_t n, int flags, struct sockaddr *restrict addr,
+//                  socklen_t *restrict addr_len)
+// {
+//     if (addr == NULL)
+//         return recv(fd, buf, n, flags);
+//     else
+//         return ax_recvfrom(fd, buf, n, flags, addr, addr_len);
+// }
 
 int getsockopt(int fd, int level, int optname, void *restrict optval, socklen_t *restrict optlen)
 {

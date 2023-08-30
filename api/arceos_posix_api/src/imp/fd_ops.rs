@@ -21,7 +21,6 @@ pub trait FileLike: Send + Sync {
     fn set_nonblocking(&self, nonblocking: bool) -> LinuxResult;
 }
 
-#[derive(Default)]
 struct Dummy;
 
 impl FileLike for Dummy {
@@ -53,9 +52,9 @@ impl FileLike for Dummy {
 lazy_static::lazy_static! {
     static ref FD_TABLE: RwLock<FlattenObjects<Arc<dyn FileLike>, AX_FILE_LIMIT>> = {
         let mut fd_table = FlattenObjects::new();
-        fd_table.add_at(0, Arc::new(Dummy::default()) as _).unwrap(); // stdin
-        fd_table.add_at(1, Arc::new(Dummy::default()) as _).unwrap(); // stdout
-        fd_table.add_at(2, Arc::new(Dummy::default()) as _).unwrap(); // stderr
+        fd_table.add_at(0, Arc::new(Dummy) as _).unwrap(); // stdin
+        fd_table.add_at(1, Arc::new(Dummy) as _).unwrap(); // stdout
+        fd_table.add_at(2, Arc::new(Dummy) as _).unwrap(); // stderr
         RwLock::new(fd_table)
     };
 }
