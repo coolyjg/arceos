@@ -14,16 +14,6 @@ uid_t geteuid(void)
     return 0;
 }
 
-// pid_t getpid(void)
-// {
-// #ifdef AX_CONFIG_MULTITASK
-//     return ax_getpid();
-// #else
-//     // return 'main' task Id
-//     return 2;
-// #endif
-// }
-
 // TODO
 uid_t getuid(void)
 {
@@ -69,32 +59,6 @@ long sysconf(int name)
 }
 
 #ifdef AX_CONFIG_FD
-
-// int close(int fd)
-// {
-//     return ax_close(fd);
-// }
-
-// int fstat(int fd, struct stat *buf)
-// {
-//     return ax_fstat(fd, buf);
-// }
-
-// ssize_t read(int fd, void *buf, size_t count)
-// {
-//     return ax_read(fd, buf, count);
-// }
-
-// ssize_t write(int fd, const void *buf, size_t count)
-// {
-//     return ax_write(fd, buf, count);
-// }
-
-// int dup(int fd)
-// {
-//     return ax_dup(fd);
-// }
-
 int dup2(int old, int new)
 {
     int r;
@@ -105,14 +69,8 @@ int dup2(int old, int new)
         else
             return r;
     }
-    // return ax_dup3(old, new, 0);
     return dup3(old, new, 0);
 }
-
-// int dup3(int old, int new, int flags)
-// {
-//     return ax_dup3(old, new, flags);
-// }
 
 #endif // AX_CONFIG_FD
 
@@ -124,21 +82,6 @@ int access(const char *pathname, int mode)
     unimplemented();
     return 0;
 }
-
-// char *getcwd(char *buf, size_t size)
-// {
-//     return ax_getcwd(buf, size);
-// }
-
-// int lstat(const char *path, struct stat *buf)
-// {
-//     return ax_lstat(path, buf);
-// }
-
-// int stat(const char *path, struct stat *buf)
-// {
-//     return ax_stat(path, buf);
-// }
 
 // TODO:
 ssize_t readlink(const char *path, char *buf, size_t bufsiz)
@@ -160,11 +103,6 @@ int rmdir(const char *pathname)
     unimplemented();
     return 0;
 }
-
-// off_t lseek(int fd, off_t offset, int whence)
-// {
-//     return ax_lseek(fd, offset, whence);
-// }
 
 // TODO:
 int fsync(int fd)
@@ -212,11 +150,6 @@ int truncate(const char *path, off_t length)
 
 #ifdef AX_CONFIG_PIPE
 
-// int pipe(int fd[2])
-// {
-//     return ax_pipe(&fd[0], &fd[1]);
-// }
-
 int pipe2(int fd[2], int flag)
 {
     if (!flag)
@@ -245,7 +178,6 @@ int pipe2(int fd[2], int flag)
 // TODO
 _Noreturn void _exit(int status)
 {
-    // ax_exit(status);
     exit(status);
 }
 

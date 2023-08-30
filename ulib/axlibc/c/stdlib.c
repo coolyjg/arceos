@@ -36,14 +36,8 @@ void srandom(unsigned int s)
 
 #ifdef AX_CONFIG_ALLOC
 
-// void *malloc(size_t size)
-// {
-//     return ax_malloc(size);
-// }
-
 void *calloc(size_t m, size_t n)
 {
-    // void *mem = ax_malloc(m * n);
     void *mem = malloc(m * n);
 
     return memset(mem, 0, n * m);
@@ -56,23 +50,14 @@ void *realloc(void *memblock, size_t size)
 
     size_t o_size = *(size_t *)(memblock - 8);
 
-    // void *mem = ax_malloc(size);
     void *mem = malloc(size);
 
     for (int i = 0; i < (o_size < size ? o_size : size); i++)
         ((char *)mem)[i] = ((char *)memblock)[i];
 
-    // ax_free(memblock);
     free(memblock);
     return mem;
 }
-
-// void free(void *addr)
-// {
-//     if (!addr)
-//         return;
-//     return ax_free(addr);
-// }
 
 #endif // AX_CONFIG_ALLOC
 
@@ -81,11 +66,6 @@ _Noreturn void abort(void)
     ax_panic();
     __builtin_unreachable();
 }
-
-// _Noreturn void exit(int status)
-// {
-//     ax_exit(status);
-// }
 
 long long llabs(long long a)
 {
@@ -388,16 +368,6 @@ exit:
 }
 
 #ifdef AX_CONFIG_FP_SIMD
-
-// float strtof(const char *restrict s, char **restrict p)
-// {
-//     return ax_strtof(s, p);
-// }
-
-// double strtod(const char *restrict s, char **restrict p)
-// {
-//     return ax_strtod(s, p);
-// }
 
 // TODO: precision may not be enough
 long double strtold(const char *restrict s, char **restrict p)

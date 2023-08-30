@@ -221,11 +221,6 @@ char *strrchr(const char *s, int c)
     return isCharFind;
 }
 
-// char *strerror(int e)
-// {
-//     return ax_errno_string(e);
-// }
-
 int strerror_r(int err, char *buf, size_t buflen)
 {
     char *msg = strerror(err);

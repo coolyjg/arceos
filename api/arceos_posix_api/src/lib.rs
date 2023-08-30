@@ -1,6 +1,4 @@
 #![cfg_attr(all(not(test), not(doc)), no_std)]
-#![feature(doc_cfg)]
-#![feature(doc_auto_cfg)]
 #![feature(ip_in_core)]
 #![feature(int_roundings)]
 #![feature(naked_functions)]
