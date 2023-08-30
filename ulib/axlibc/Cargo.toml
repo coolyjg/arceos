@@ -23,22 +23,50 @@ crate-type = ["staticlib"]
 default = []
 
 # Multicore
-smp = ["axstd/smp"]
+smp = ["axfeat/smp"]
 
 # Floating point/SIMD
-fp_simd = ["axstd/fp_simd", "arceos_posix_api/fp_simd"]
+fp_simd = ["axfeat/fp_simd", "arceos_posix_api/fp_simd"]
 
 # Memory
-alloc = ["axstd/alloc", "dep:axalloc", "arceos_posix_api/alloc"]
+alloc = ["axfeat/alloc", "dep:axalloc", "arceos_posix_api/alloc", "axio/alloc"]
+alloc-tlsf = ["axfeat/alloc-tlsf"]
+alloc-slab = ["axfeat/alloc-slab"]
+alloc-buddy = ["axfeat/alloc-buddy"]
+paging = ["axfeat/paging"]
+tls = ["axfeat/tls"]
 
 # Multi-task
-multitask = ["axstd/multitask", "axtask/multitask", "arceos_posix_api/multitask"]
+multitask = ["axfeat/multitask", "axtask/multitask", "arceos_posix_api/multitask"]
+sched_fifo = ["axfeat/sched_fifo"]
+sched_rr = ["axfeat/sched_rr"]
+sched_cfs = ["axfeat/sched_cfs"]
 
 # File system
-fs = ["axstd/fs", "fd", "arceos_posix_api/fs"]
+fs = ["axfeat/fs", "fd", "arceos_posix_api/fs"]
+myfs = ["axfeat/myfs"]
 
 # Networking
-net = ["axstd/net", "dep:axnet", "fd", "arceos_posix_api/net"]
+net = ["axfeat/net", "dep:axnet", "fd", "arceos_posix_api/net"]
+dns = []
+
+# Display
+display = ["axfeat/display"]
+
+# Device drivers
+bus-mmio = ["axfeat/bus-mmio"]
+bus-pci = ["axfeat/bus-pci"]
+driver-ramdisk = ["axfeat/driver-ramdisk"]
+driver-ixgbe = ["axfeat/driver-ixgbe"]
+driver-bcm2835-sdhci = ["axfeat/driver-bcm2835-sdhci"]
+
+# Logging
+log-level-off = ["axfeat/log-level-off"]
+log-level-error = ["axfeat/log-level-error"]
+log-level-warn = ["axfeat/log-level-warn"]
+log-level-info = ["axfeat/log-level-info"]
+log-level-debug = ["axfeat/log-level-debug"]
+log-level-trace = ["axfeat/log-level-trace"]
 
 # Libc features
 fd = ["alloc"]
@@ -49,22 +77,21 @@ epoll = ["fd", "arceos_posix_api/epoll"]
 [dependencies]
 # ArceOS modules
 axfeat = { path = "../../api/axfeat" }
-axstd = { path = "../axstd" }
+arceos_posix_api = { path = "../../api/arceos_posix_api" }
+axerrno = { path = "../../crates/axerrno" }
+axio = { path = "../../crates/axio" }
+flatten_objects = { path = "../../crates/flatten_objects" }
+axconfig = { path = "../../modules/axconfig" }
 axhal = { path = "../../modules/axhal" }
 axlog = { path = "../../modules/axlog" }
-arceos_posix_api = { path = "../../api/arceos_posix_api"}
-axconfig = { path = "../../modules/axconfig" }
 axalloc = { path = "../../modules/axalloc", optional = true }
 axnet = { path = "../../modules/axnet", optional = true }
 axtask = { path = "../../modules/axtask", optional = true }
 
 # Other crates
-axio = { path = "../../crates/axio" }
-axerrno = { path = "../../crates/axerrno" }
+lazy_static = { version = "1.4", features = ["spin_no_std"] }
 static_assertions = "1.1.0"
 spin = { version = "0.9" }
-lazy_static = { version = "1.4", features = ["spin_no_std"] }
-flatten_objects = { path = "../../crates/flatten_objects" }
 
 [build-dependencies]
 cbindgen = { version = "0.24" }

@@ -38,22 +38,22 @@ epoll = ["fd"]
 
 [dependencies]
 axfeat = { path = "../axfeat" }
-axruntime = { path = "../../modules/axruntime" }
+axerrno = { path = "../../crates/axerrno" }
 axio = { path = "../../crates/axio" }
 axhal = { path = "../../modules/axhal" }
 axlog = { path = "../../modules/axlog" }
-axerrno = { path = "../../crates/axerrno" }
+axruntime = { path = "../../modules/axruntime" }
+axalloc = { path = "../../modules/axalloc", optional = true }
 axfs = { path = "../../modules/axfs", optional = true }
 axnet = { path = "../../modules/axnet", optional = true }
-axalloc = { path = "../../modules/axalloc", optional = true }
-axtask = { path = "../../modules/axtask", optional = true }
 axsync = { path = "../../modules/axsync", default-features = false, optional = true }
-
-num_enum = { version = "0.5.11", default-features = false }
-lazy_static = { version = "1.4", features = ["spin_no_std"] }
+axtask = { path = "../../modules/axtask", optional = true }
 flatten_objects = { path = "../../crates/flatten_objects" }
-spin = { version = "0.9" }
 spinlock = { path = "../../crates/spinlock" }
+
+lazy_static = { version = "1.4", features = ["spin_no_std"] }
+num_enum = { version = "0.5.11", default-features = false }
+spin = { version = "0.9" }
 
 [build-dependencies]
 cbindgen = { version = "0.24" }
