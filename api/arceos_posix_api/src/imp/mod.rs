@@ -19,10 +19,10 @@ mod socket;
 #[cfg(feature = "fd")]
 mod uio;
 
-// mod stdio;
 pub mod sync;
 mod task;
 mod time;
+// mod io_ops;
 
 #[cfg(feature = "fd")]
 pub use fd_ops::{
@@ -52,6 +52,5 @@ pub use socket::{
 #[cfg(feature = "fd")]
 pub use uio::sys_writev;
 
-// pub use stdio::{stdin, stdout};
 pub use task::{sys_exit, sys_sched_yield};
 pub use time::{sys_clock_gettime, sys_nanosleep};
