@@ -37,7 +37,7 @@ pub fn get_file_like(fd: c_int) -> LinuxResult<Arc<dyn FileLike>> {
 }
 
 pub fn add_file_like(f: Arc<dyn FileLike>) -> LinuxResult<c_int> {
-    Ok(FD_TABLE.write().add(f).ok_or(LinuxError::EMFILE)? as _)
+    Ok(FD_TABLE.write().add(f).ok_or(LinuxError::EMFILE)? as c_int + 3)
 }
 
 pub fn close_file_like(fd: c_int) -> LinuxResult {

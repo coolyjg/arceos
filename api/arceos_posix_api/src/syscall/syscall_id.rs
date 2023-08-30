@@ -25,7 +25,6 @@ pub enum SyscallId {
     PIPE = 22,
     #[cfg(feature = "select")]
     SELECT = 23,
-    #[cfg(feature = "multitask")]
     SCHED_YIELD = 24,
     #[cfg(feature = "fd")]
     DUP = 32,
