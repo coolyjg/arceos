@@ -1,5 +1,7 @@
 use crate::utils::e;
-use arceos_posix_api::{ctypes, syscall1, syscall2, SyscallId};
+use arceos_posix_api::{
+    ctypes, sys_pthread_mutex_init, sys_pthread_mutex_lock, sys_pthread_mutex_unlock,
+};
 use core::ffi::c_int;
 
 /// Initialize a mutex.
@@ -8,20 +10,17 @@ pub unsafe extern "C" fn pthread_mutex_init(
     mutex: *mut ctypes::pthread_mutex_t,
     attr: *const ctypes::pthread_mutexattr_t,
 ) -> c_int {
-    e(syscall2(
-        SyscallId::PTHREAD_MUTEX_INIT,
-        [mutex as usize, attr as usize],
-    ))
+    e(sys_pthread_mutex_init(mutex, attr))
 }
 
 /// Lock the given mutex.
 #[no_mangle]
 pub unsafe extern "C" fn pthread_mutex_lock(mutex: *mut ctypes::pthread_mutex_t) -> c_int {
-    e(syscall1(SyscallId::PTHREAD_MUTEX_LOCK, mutex as usize))
+    e(sys_pthread_mutex_lock(mutex))
 }
 
 /// Unlock the given mutex.
 #[no_mangle]
 pub unsafe extern "C" fn pthread_mutex_unlock(mutex: *mut ctypes::pthread_mutex_t) -> c_int {
-    e(syscall1(SyscallId::PTHREAD_MUTEX_UNLOCK, mutex as usize))
+    e(sys_pthread_mutex_unlock(mutex))
 }

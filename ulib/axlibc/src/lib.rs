@@ -67,8 +67,7 @@ pub unsafe extern "C" fn getpid() -> core::ffi::c_int {
     #[cfg(feature = "multitask")]
     {
         use crate::utils::e;
-        use arceos_posix_api::{syscall0, SyscallId};
-        e(syscall0(SyscallId::GETPID))
+        e(arceos_posix_api::sys_getpid())
     }
 }
 

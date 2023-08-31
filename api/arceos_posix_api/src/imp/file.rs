@@ -5,8 +5,8 @@ use axerrno::{LinuxError, LinuxResult};
 use axfs::fops::OpenOptions;
 use axio::{PollState, SeekFrom};
 
-use super::{ctypes, fd_ops::FileLike, sync::Mutex};
 use crate::utils::char_ptr_to_str;
+use crate::{ctypes, imp::fd_ops::FileLike, imp::sync::Mutex};
 
 pub struct File {
     inner: Mutex<axfs::fops::File>,
