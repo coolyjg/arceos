@@ -29,7 +29,7 @@ pub unsafe extern "C" fn println_str(buf: *const c_char, count: usize) -> c_int 
     let len = e(sys_write(1 as c_int, buf as *const c_void, count) as _);
     if len > 0 {
         let brk = b"\n";
-        e(sys_write(1 as c_int, brk.as_ptr() as *const c_void, count) as _);
+        e(sys_write(1 as c_int, brk.as_ptr() as *const c_void, 1) as _);
         len
     } else {
         -1
