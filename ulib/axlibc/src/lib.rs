@@ -57,11 +57,11 @@ mod strtod;
 mod uio;
 
 mod errno;
+mod io_ops;
 mod mktime;
+mod print;
 mod rand;
 mod setjmp;
-mod stdio;
-mod stdio_imp;
 mod sys;
 mod time;
 
@@ -102,7 +102,7 @@ pub use self::malloc::{free, malloc};
 pub use self::strftime::strftime;
 
 #[cfg(feature = "fd")]
-pub use self::fd_ops::{ax_fcntl, close, dup, dup3, fstat, read, write};
+pub use self::fd_ops::{ax_fcntl, close, dup, dup3};
 #[cfg(feature = "fd")]
 pub use self::uio::writev;
 
@@ -133,7 +133,8 @@ pub use self::io_mpx::{epoll_create, epoll_ctl, epoll_wait};
 pub use self::strtod::{strtod, strtof};
 
 pub use self::errno::strerror;
+pub use self::io_ops::{fstat, read, write};
 pub use self::mktime::mktime;
-pub use self::stdio::{print_str, println_str};
+pub use self::print::{print_str, println_str};
 pub use self::sys::ax_sysconf;
 pub use self::time::{clock_gettime, nanosleep};
