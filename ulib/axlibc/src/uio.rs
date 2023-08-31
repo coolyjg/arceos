@@ -1,5 +1,5 @@
 use crate::utils::e;
-use arceos_posix_api::{ctypes, syscall3, SyscallId};
+use arceos_posix_api::{ctypes, sys_writev};
 use core::ffi::c_int;
 
 /// `writev` implementation
@@ -9,8 +9,5 @@ pub unsafe extern "C" fn writev(
     iov: *const ctypes::iovec,
     iocnt: c_int,
 ) -> ctypes::ssize_t {
-    e(syscall3(
-        SyscallId::WRITEV,
-        [fd as usize, iov as usize, iocnt as usize],
-    )) as _
+    e(sys_writev(fd, iov, iocnt) as _) as _
 }

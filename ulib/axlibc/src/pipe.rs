@@ -1,6 +1,6 @@
 use core::ffi::c_int;
 
-use arceos_posix_api::{syscall1, SyscallId};
+use arceos_posix_api::sys_pipe;
 
 use crate::utils::e;
 
@@ -9,5 +9,5 @@ use crate::utils::e;
 /// Return 0 if succeed
 #[no_mangle]
 pub unsafe extern "C" fn pipe(fd: *mut c_int) -> c_int {
-    e(syscall1(SyscallId::PIPE, fd as usize))
+    e(sys_pipe(fd))
 }

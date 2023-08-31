@@ -8,7 +8,7 @@ use {
 use axerrno::AxResult;
 use axio::{prelude::*, BufReader, Result};
 
-use crate::sync::{Mutex, MutexGuard};
+use super::sync::{Mutex, MutexGuard};
 
 fn console_read_bytes() -> Option<u8> {
     axhal::console::getchar().map(|c| if c == b'\r' { b'\n' } else { c })

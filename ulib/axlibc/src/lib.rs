@@ -81,12 +81,10 @@ pub unsafe extern "C" fn ax_panic() -> ! {
 /// Exits the current thread.
 #[no_mangle]
 pub unsafe extern "C" fn exit(exit_code: core::ffi::c_int) -> ! {
-    crate::utils::e(arceos_posix_api::syscall1(
-        arceos_posix_api::SyscallId::EXIT,
-        exit_code as usize,
-    ));
-    unreachable!()
+    sys_exit(exit_code)
 }
+
+use arceos_posix_api::sys_exit;
 
 pub use self::rand::{ax_rand_u32, ax_srand};
 

@@ -146,7 +146,7 @@ pub unsafe extern "C" fn sys_lseek(
 ///
 /// Return 0 if success.
 #[no_mangle]
-pub unsafe extern "C" fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::ssize_t {
+pub unsafe extern "C" fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
     let path = char_ptr_to_str(path);
     debug!("sys_stat <= {:?} {:#x}", path, buf as usize);
     syscall_body!(sys_stat, {

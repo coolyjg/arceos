@@ -2,7 +2,7 @@
 //!
 //! TODO: do not support `EPOLLET` flag
 use crate::utils::e;
-use arceos_posix_api::{ctypes, syscall1, syscall4, SyscallId};
+use arceos_posix_api::{ctypes, sys_epoll_create, sys_epoll_ctl, sys_epoll_wait};
 use core::ffi::c_int;
 
 /// `epoll_create()` creates a new epoll instance.
@@ -10,7 +10,7 @@ use core::ffi::c_int;
 /// `epoll_create()` returns a file descriptor referring to the new epoll instance.
 #[no_mangle]
 pub unsafe extern "C" fn epoll_create(size: c_int) -> c_int {
-    e(syscall1(SyscallId::EPOLL_CREATE, size as usize))
+    e(sys_epoll_create(size))
 }
 
 /// Control interface for an epoll file descriptor
@@ -21,10 +21,7 @@ pub unsafe extern "C" fn epoll_ctl(
     fd: c_int,
     event: *mut ctypes::epoll_event,
 ) -> c_int {
-    e(syscall4(
-        SyscallId::EPOLL_CTL,
-        [epfd as usize, op as usize, fd as usize, event as usize],
-    ))
+    e(sys_epoll_ctl(epfd, op, fd, event))
 }
 
 /// `epoll_wait()` waits for events on the epoll instance referred to by the file descriptor epfd.
@@ -35,13 +32,5 @@ pub unsafe extern "C" fn epoll_wait(
     maxevents: c_int,
     timeout: c_int,
 ) -> c_int {
-    e(syscall4(
-        SyscallId::EPOLL_WAIT,
-        [
-            epfd as usize,
-            events as usize,
-            maxevents as usize,
-            timeout as usize,
-        ],
-    ))
+    e(sys_epoll_wait(epfd, events, maxevents, timeout))
 }

@@ -1,4 +1,7 @@
-use arceos_posix_api::{ctypes, syscall2, syscall3, syscall4, syscall6, SyscallId};
+use arceos_posix_api::{
+    ctypes, sys_accept, sys_bind, sys_connect, sys_getaddrinfo, sys_getpeername, sys_getsockname,
+    sys_listen, sys_recv, sys_recvfrom, sys_send, sys_sendto, sys_shutdown, sys_socket,
+};
 use core::ffi::{c_char, c_int, c_void};
 
 use crate::utils::e;
@@ -8,10 +11,7 @@ use crate::utils::e;
 /// Return the socket file descriptor.
 #[no_mangle]
 pub unsafe extern "C" fn socket(domain: c_int, socktype: c_int, protocol: c_int) -> c_int {
-    e(syscall3(
-        SyscallId::SOCKET,
-        [domain as usize, socktype as usize, protocol as usize],
-    ))
+    e(sys_socket(domain, socktype, protocol))
 }
 
 /// Bind a address to a socket.
@@ -23,10 +23,7 @@ pub unsafe extern "C" fn bind(
     socket_addr: *const ctypes::sockaddr,
     addrlen: ctypes::socklen_t,
 ) -> c_int {
-    e(syscall3(
-        SyscallId::BIND,
-        [socket_fd as usize, socket_addr as usize, addrlen as usize],
-    ))
+    e(sys_bind(socket_fd, socket_addr, addrlen))
 }
 
 /// Connects the socket to the address specified.
@@ -38,10 +35,7 @@ pub unsafe extern "C" fn connect(
     socket_addr: *const ctypes::sockaddr,
     addrlen: ctypes::socklen_t,
 ) -> c_int {
-    e(syscall3(
-        SyscallId::CONNECT,
-        [socket_fd as usize, socket_addr as usize, addrlen as usize],
-    ))
+    e(sys_connect(socket_fd, socket_addr, addrlen))
 }
 
 /// Send a message on a socket to the address specified.
@@ -57,22 +51,9 @@ pub unsafe extern "C" fn sendto(
     addrlen: ctypes::socklen_t,
 ) -> ctypes::ssize_t {
     if socket_addr.is_null() && addrlen == 0 {
-        return e(syscall4(
-            SyscallId::SEND,
-            [socket_fd as usize, buf_ptr as usize, len, flag as usize],
-        )) as _;
+        return e(sys_send(socket_fd, buf_ptr, len, flag) as _) as _;
     }
-    e(syscall6(
-        SyscallId::SENDTO,
-        [
-            socket_fd as usize,
-            buf_ptr as usize,
-            len,
-            flag as usize,
-            socket_addr as usize,
-            addrlen as usize,
-        ],
-    )) as _
+    e(sys_sendto(socket_fd, buf_ptr, len, flag, socket_addr, addrlen) as _) as _
 }
 
 /// Send a message on a socket to the address connected.
@@ -85,10 +66,7 @@ pub unsafe extern "C" fn send(
     len: ctypes::size_t,
     flag: c_int, // currently not used
 ) -> ctypes::ssize_t {
-    e(syscall4(
-        SyscallId::SEND,
-        [socket_fd as usize, buf_ptr as usize, len, flag as usize],
-    )) as _
+    e(sys_send(socket_fd, buf_ptr, len, flag) as _) as _
 }
 
 /// Receive a message on a socket and get its source address.
@@ -104,22 +82,9 @@ pub unsafe extern "C" fn recvfrom(
     addrlen: *mut ctypes::socklen_t,
 ) -> ctypes::ssize_t {
     if socket_addr.is_null() {
-        return e(syscall4(
-            SyscallId::RECV,
-            [socket_fd as usize, buf_ptr as usize, len, flag as usize],
-        )) as _;
+        return e(sys_recv(socket_fd, buf_ptr, len, flag) as _) as _;
     }
-    e(syscall6(
-        SyscallId::RECVFROM,
-        [
-            socket_fd as usize,
-            buf_ptr as usize,
-            len,
-            flag as usize,
-            socket_addr as usize,
-            addrlen as usize,
-        ],
-    )) as _
+    e(sys_recvfrom(socket_fd, buf_ptr, len, flag, socket_addr, addrlen) as _) as _
 }
 
 /// Receive a message on a socket.
@@ -132,10 +97,7 @@ pub unsafe extern "C" fn recv(
     len: ctypes::size_t,
     flag: c_int, // currently not used
 ) -> ctypes::ssize_t {
-    e(syscall4(
-        SyscallId::RECV,
-        [socket_fd as usize, buf_ptr as usize, len, flag as usize],
-    )) as _
+    e(sys_recv(socket_fd, buf_ptr, len, flag) as _) as _
 }
 
 /// Listen for connections on a socket
@@ -146,10 +108,7 @@ pub unsafe extern "C" fn listen(
     socket_fd: c_int,
     backlog: c_int, // currently not used
 ) -> c_int {
-    e(syscall2(
-        SyscallId::LISTEN,
-        [socket_fd as usize, backlog as usize],
-    )) as _
+    e(sys_listen(socket_fd, backlog))
 }
 
 /// Accept for connections on a socket
@@ -161,14 +120,7 @@ pub unsafe extern "C" fn accept(
     socket_addr: *mut ctypes::sockaddr,
     socket_len: *mut ctypes::socklen_t,
 ) -> c_int {
-    e(syscall3(
-        SyscallId::ACCEPT,
-        [
-            socket_fd as usize,
-            socket_addr as usize,
-            socket_len as usize,
-        ],
-    )) as _
+    e(sys_accept(socket_fd, socket_addr, socket_len))
 }
 
 /// Shut down a full-duplex connection.
@@ -179,10 +131,7 @@ pub unsafe extern "C" fn shutdown(
     socket_fd: c_int,
     flag: c_int, // currently not used
 ) -> c_int {
-    e(syscall2(
-        SyscallId::SHUTDOWN,
-        [socket_fd as usize, flag as usize],
-    )) as _
+    e(sys_shutdown(socket_fd, flag))
 }
 
 /// Query addresses for a domain name.
@@ -195,10 +144,7 @@ pub unsafe extern "C" fn ax_getaddrinfo(
     addrs: *mut ctypes::sockaddr,
     len: ctypes::size_t,
 ) -> c_int {
-    e(syscall4(
-        SyscallId::GETADDRINFO,
-        [node as usize, service as usize, addrs as usize, len],
-    ))
+    e(sys_getaddrinfo(node, service, addrs, len))
 }
 
 /// Get current address to which the socket sockfd is bound.
@@ -208,10 +154,7 @@ pub unsafe extern "C" fn getsockname(
     addr: *mut ctypes::sockaddr,
     addrlen: *mut ctypes::socklen_t,
 ) -> c_int {
-    e(syscall3(
-        SyscallId::GETSOCKNAME,
-        [sock_fd as usize, addr as usize, addrlen as usize],
-    ))
+    e(sys_getsockname(sock_fd, addr, addrlen))
 }
 
 /// Get peer address to which the socket sockfd is connected.
@@ -221,8 +164,5 @@ pub unsafe extern "C" fn getpeername(
     addr: *mut ctypes::sockaddr,
     addrlen: *mut ctypes::socklen_t,
 ) -> c_int {
-    e(syscall3(
-        SyscallId::GETPEERNAME,
-        [sock_fd as usize, addr as usize, addrlen as usize],
-    ))
+    e(sys_getpeername(sock_fd, addr, addrlen))
 }

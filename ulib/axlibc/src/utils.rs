@@ -30,43 +30,11 @@ pub fn check_null_mut_ptr<T>(ptr: *mut T) -> LinuxResult {
     }
 }
 
-pub fn e(ret: isize) -> c_int {
+pub fn e(ret: c_int) -> c_int {
     if ret < 0 {
         crate::errno::set_errno(ret.abs() as i32);
         -1
     } else {
         ret as _
     }
-}
-
-macro_rules! ax_call_body {
-    ($fn: ident, $($stmt: tt)*) => {{
-        #[allow(clippy::redundant_closure_call)]
-        let res = (|| -> axerrno::LinuxResult<_> { $($stmt)* })();
-        match res {
-            Ok(_) | Err(axerrno::LinuxError::EAGAIN) => debug!(concat!(stringify!($fn), " => {:?}"),  res),
-            Err(_) => info!(concat!(stringify!($fn), " => {:?}"), res),
-        }
-        match res {
-            Ok(v) => v as _,
-            Err(e) => {
-                crate::errno::set_errno(e.code());
-                -1 as _
-            }
-        }
-    }};
-}
-
-macro_rules! ax_call_body_no_debug {
-    ($($stmt: tt)*) => {{
-        #[allow(clippy::redundant_closure_call)]
-        let res = (|| -> axerrno::LinuxResult<_> { $($stmt)* })();
-        match res {
-            Ok(v) => v as _,
-            Err(e) => {
-                crate::errno::set_errno(e.code());
-                -1 as _
-            }
-        }
-    }};
 }

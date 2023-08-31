@@ -1,6 +1,6 @@
 use core::ffi::{c_int, c_void};
 
-use arceos_posix_api::{ctypes, syscall2, syscall3, SyscallId};
+use arceos_posix_api::{ctypes, sys_fstat, sys_read, sys_write};
 
 use crate::utils::e;
 
@@ -9,10 +9,7 @@ use crate::utils::e;
 /// Return the read size if success.
 #[no_mangle]
 pub unsafe extern "C" fn read(fd: c_int, buf: *mut c_void, count: usize) -> ctypes::ssize_t {
-    e(syscall3(
-        SyscallId::READ,
-        [fd as usize, buf as usize, count],
-    )) as _
+    e(sys_read(fd, buf, count) as _) as _
 }
 
 /// Write data to the file indicated by `fd`.
@@ -20,10 +17,7 @@ pub unsafe extern "C" fn read(fd: c_int, buf: *mut c_void, count: usize) -> ctyp
 /// Return the written size if success.
 #[no_mangle]
 pub unsafe extern "C" fn write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t {
-    e(syscall3(
-        SyscallId::WRITE,
-        [fd as usize, buf as usize, count],
-    )) as _
+    e(sys_write(fd, buf, count) as _) as _
 }
 
 /// Get file metadata by `fd` and write into `buf`.
@@ -31,5 +25,5 @@ pub unsafe extern "C" fn write(fd: c_int, buf: *const c_void, count: usize) -> c
 /// Return 0 if success.
 #[no_mangle]
 pub unsafe extern "C" fn fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
-    e(syscall2(SyscallId::FSTAT, [fd as usize, buf as usize])) as _
+    e(sys_fstat(fd, buf))
 }

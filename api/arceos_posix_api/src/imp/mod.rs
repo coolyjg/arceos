@@ -1,25 +1,26 @@
 #[cfg(feature = "fd")]
-mod fd_ops;
+pub mod fd_ops;
 #[cfg(feature = "fs")]
-mod file;
+pub mod file;
 #[cfg(any(feature = "select", feature = "epoll"))]
-mod io_mpx;
+pub mod io_mpx;
 #[cfg(feature = "pipe")]
-mod pipe;
+pub mod pipe;
 #[cfg(feature = "multitask")]
-mod pthread;
+pub mod pthread;
 #[cfg(feature = "net")]
-mod socket;
+pub mod socket;
 
-mod io_ops;
-mod stdio_imp;
+pub mod io_ops;
 pub mod sync;
-mod task;
-mod time;
-mod uio;
+pub mod task;
+pub mod time;
+pub mod uio;
+
+mod stdio_imp;
 
 #[cfg(feature = "fd")]
-pub use fd_ops::{sys_close, sys_dup, sys_dup3, sys_fcntl, FileLike};
+pub use fd_ops::{sys_close, sys_dup, sys_dup3, sys_fcntl};
 #[cfg(feature = "fs")]
 pub use file::{sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat};
 #[cfg(feature = "select")]
@@ -43,6 +44,7 @@ pub use socket::{
 };
 
 pub use io_ops::{sys_fstat, sys_read, sys_write};
+pub use sync::*;
 pub use task::{sys_exit, sys_sched_yield};
 pub use time::{sys_clock_gettime, sys_nanosleep};
 pub use uio::sys_writev;

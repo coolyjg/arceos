@@ -1,5 +1,5 @@
 use crate::utils::e;
-use arceos_posix_api::{ctypes, syscall5, SyscallId};
+use arceos_posix_api::{ctypes, sys_select};
 use axerrno::LinuxError;
 use core::ffi::{c_int, c_long};
 
@@ -34,14 +34,5 @@ pub unsafe extern "C" fn select(
         (*timeout).tv_sec = s;
         (*timeout).tv_usec = us;
     }
-    e(syscall5(
-        SyscallId::SELECT,
-        [
-            nfds as usize,
-            readfds as usize,
-            writefds as usize,
-            exceptfds as usize,
-            timeout as usize,
-        ],
-    ))
+    e(sys_select(nfds, readfds, writefds, exceptfds, timeout))
 }

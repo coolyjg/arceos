@@ -1,6 +1,6 @@
-use core::ffi::{c_char, c_int};
+use core::ffi::{c_char, c_int, c_void};
 
-use arceos_posix_api::{syscall3, Mutex, SyscallId};
+use arceos_posix_api::{sys_write, Mutex};
 use axerrno::LinuxError;
 
 use crate::utils::e;
@@ -12,7 +12,7 @@ pub unsafe extern "C" fn print_str(buf: *const c_char, count: usize) -> c_int {
         crate::errno::set_errno(LinuxError::EFAULT as _);
         return -1;
     }
-    e(syscall3(SyscallId::WRITE, [1usize, buf as usize, count])) as _
+    e(sys_write(1 as c_int, buf as *const c_void, count) as _)
 }
 
 static LOCK: Mutex<()> = Mutex::new(());
@@ -26,15 +26,12 @@ pub unsafe extern "C" fn println_str(buf: *const c_char, count: usize) -> c_int 
     }
 
     let _lock = LOCK.lock();
-    let len = e(syscall3(SyscallId::WRITE, [1usize, buf as usize, count])) as _;
+    let len = e(sys_write(1 as c_int, buf as *const c_void, count) as _);
     if len > 0 {
         let brk = b"\n";
-        e(syscall3(
-            SyscallId::WRITE,
-            [1usize, brk.as_ptr() as usize, 1],
-        ));
+        e(sys_write(1 as c_int, brk.as_ptr() as *const c_void, count) as _);
         len
     } else {
-        1
+        -1
     }
 }

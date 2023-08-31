@@ -399,7 +399,7 @@ pub unsafe extern "C" fn sys_recv(
 pub unsafe extern "C" fn sys_listen(
     socket_fd: c_int,
     backlog: c_int, // currently not used
-) -> ctypes::ssize_t {
+) -> c_int {
     debug!("sys_listen <= {} {}", socket_fd, backlog);
     syscall_body!(sys_listen, {
         Socket::from_fd(socket_fd)?.listen()?;
@@ -415,7 +415,7 @@ pub unsafe extern "C" fn sys_accept(
     socket_fd: c_int,
     socket_addr: *mut ctypes::sockaddr,
     socket_len: *mut ctypes::socklen_t,
-) -> ctypes::ssize_t {
+) -> c_int {
     debug!(
         "sys_accept <= {} {:#x} {:#x}",
         socket_fd, socket_addr as usize, socket_len as usize
@@ -442,7 +442,7 @@ pub unsafe extern "C" fn sys_accept(
 pub unsafe extern "C" fn sys_shutdown(
     socket_fd: c_int,
     flag: c_int, // currently not used
-) -> ctypes::ssize_t {
+) -> c_int {
     debug!("sys_shutdown <= {} {}", socket_fd, flag);
     syscall_body!(sys_shutdown, {
         Socket::from_fd(socket_fd)?.shutdown()?;

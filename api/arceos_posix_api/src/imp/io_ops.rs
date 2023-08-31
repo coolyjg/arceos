@@ -6,6 +6,7 @@ use crate::ctypes;
 use crate::imp::fd_ops::get_file_like;
 
 use axerrno::LinuxError;
+#[cfg(not(feature = "fd"))]
 use axio::prelude::*;
 
 /// Read data from the file indicated by `fd`.
@@ -67,7 +68,7 @@ pub unsafe extern "C" fn sys_write(fd: c_int, buf: *const c_void, count: usize) 
 ///
 /// Return 0 if success.
 #[no_mangle]
-pub unsafe extern "C" fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> ctypes::ssize_t {
+pub unsafe extern "C" fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
     debug!("sys_fstat <= {} {:#x}", fd, buf as usize);
     syscall_body!(sys_fstat, {
         if buf.is_null() {

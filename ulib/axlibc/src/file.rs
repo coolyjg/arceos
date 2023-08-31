@@ -1,6 +1,6 @@
 use core::ffi::{c_char, c_int};
 
-use arceos_posix_api::{ctypes, syscall2, syscall3, SyscallId};
+use arceos_posix_api::{ctypes, sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat};
 
 use crate::utils::e;
 
@@ -14,10 +14,7 @@ pub unsafe extern "C" fn ax_open(
     flags: c_int,
     mode: ctypes::mode_t,
 ) -> c_int {
-    e(syscall3(
-        SyscallId::OPEN,
-        [filename as usize, flags as usize, mode as usize],
-    ))
+    e(sys_open(filename, flags, mode))
 }
 
 /// Set the position of the file indicated by `fd`.
@@ -25,10 +22,7 @@ pub unsafe extern "C" fn ax_open(
 /// Return its position after seek.
 #[no_mangle]
 pub unsafe extern "C" fn lseek(fd: c_int, offset: ctypes::off_t, whence: c_int) -> ctypes::off_t {
-    e(syscall3(
-        SyscallId::LSEEK,
-        [fd as usize, offset as usize, whence as usize],
-    )) as _
+    e(sys_lseek(fd, offset, whence) as _) as _
 }
 
 /// Get the file metadata by `path` and write into `buf`.
@@ -36,7 +30,7 @@ pub unsafe extern "C" fn lseek(fd: c_int, offset: ctypes::off_t, whence: c_int) 
 /// Return 0 if success.
 #[no_mangle]
 pub unsafe extern "C" fn stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
-    e(syscall2(SyscallId::STAT, [path as usize, buf as usize])) as _
+    e(sys_stat(path, buf))
 }
 
 /// Get the metadata of the symbolic link and write into `buf`.
@@ -44,13 +38,13 @@ pub unsafe extern "C" fn stat(path: *const c_char, buf: *mut ctypes::stat) -> c_
 /// Return 0 if success.
 #[no_mangle]
 pub unsafe extern "C" fn lstat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
-    e(syscall2(SyscallId::LSTAT, [path as usize, buf as usize])) as _
+    e(sys_lstat(path, buf) as _)
 }
 
 /// Get the path of the current directory.
 #[no_mangle]
 pub unsafe extern "C" fn getcwd(buf: *mut c_char, size: usize) -> *mut c_char {
-    e(syscall2(SyscallId::GETCWD, [buf as usize, size])) as _
+    sys_getcwd(buf, size)
 }
 
 /// Rename `old` to `new`
@@ -59,5 +53,5 @@ pub unsafe extern "C" fn getcwd(buf: *mut c_char, size: usize) -> *mut c_char {
 /// Return 0 if the operation succeeds, otherwise return -1.
 #[no_mangle]
 pub unsafe extern "C" fn rename(old: *const c_char, new: *const c_char) -> c_int {
-    e(syscall2(SyscallId::RENAME, [old as usize, new as usize]))
+    e(sys_rename(old, new))
 }
