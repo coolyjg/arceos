@@ -7,8 +7,8 @@ use axerrno::{LinuxError, LinuxResult};
 use axio::PollState;
 use axnet::{TcpSocket, UdpSocket};
 
-use super::sync::Mutex;
-use super::{ctypes, fd_ops::FileLike};
+use super::{fd_ops::FileLike, sync::Mutex};
+use crate::ctypes;
 use crate::utils::char_ptr_to_str;
 
 pub enum Socket {

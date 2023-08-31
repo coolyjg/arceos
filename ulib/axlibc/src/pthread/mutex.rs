@@ -1,5 +1,5 @@
-use crate::{ctypes, utils::e};
-use arceos_posix_api::{syscall1, syscall2, SyscallId};
+use crate::utils::e;
+use arceos_posix_api::{ctypes, syscall1, syscall2, SyscallId};
 use core::ffi::c_int;
 
 /// Initialize a mutex.

@@ -1,7 +1,6 @@
-use arceos_posix_api::{syscall2, SyscallId};
+use arceos_posix_api::{ctypes, syscall2, SyscallId};
 use core::ffi::c_int;
 
-use super::ctypes;
 use crate::utils::e;
 
 /// Get clock time since booting

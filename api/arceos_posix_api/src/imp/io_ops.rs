@@ -1,6 +1,6 @@
 use core::ffi::{c_int, c_void};
 
-use super::ctypes;
+use crate::ctypes;
 
 #[cfg(feature = "fd")]
 use crate::imp::fd_ops::get_file_like;

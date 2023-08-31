@@ -2,7 +2,7 @@ use axerrno::LinuxError;
 use core::ffi::{c_int, c_long};
 use core::time::Duration;
 
-use super::ctypes;
+use crate::ctypes;
 
 impl From<ctypes::timespec> for Duration {
     fn from(ts: ctypes::timespec) -> Self {

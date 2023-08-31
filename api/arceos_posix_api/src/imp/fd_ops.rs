@@ -7,8 +7,8 @@ use axio::PollState;
 use flatten_objects::FlattenObjects;
 use spin::RwLock;
 
-use super::ctypes;
 use super::stdio_imp::{stdin, stdout};
+use crate::ctypes;
 
 pub const AX_FILE_LIMIT: usize = 1024;
 

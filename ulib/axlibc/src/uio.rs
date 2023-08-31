@@ -1,6 +1,5 @@
-use super::ctypes;
 use crate::utils::e;
-use arceos_posix_api::{syscall3, SyscallId};
+use arceos_posix_api::{ctypes, syscall3, SyscallId};
 use core::ffi::c_int;
 
 /// `writev` implementation

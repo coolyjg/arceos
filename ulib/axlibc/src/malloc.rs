@@ -10,7 +10,7 @@ use alloc::alloc::{alloc, dealloc};
 use core::alloc::Layout;
 use core::ffi::c_void;
 
-use crate::ctypes;
+use arceos_posix_api::ctypes;
 
 struct MemoryControlBlock {
     size: usize,

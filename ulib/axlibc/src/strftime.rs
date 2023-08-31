@@ -3,7 +3,7 @@ use core::{ffi::c_char, fmt};
 
 use axio::Write;
 
-use crate::ctypes;
+use arceos_posix_api::ctypes;
 
 pub trait WriteByte: fmt::Write {
     fn write_u8(&mut self, byte: u8) -> fmt::Result;

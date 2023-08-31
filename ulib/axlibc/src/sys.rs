@@ -1,4 +1,4 @@
-use super::ctypes;
+use arceos_posix_api::ctypes;
 use core::ffi::{c_int, c_long};
 
 const PAGE_SIZE_4K: usize = 4096;

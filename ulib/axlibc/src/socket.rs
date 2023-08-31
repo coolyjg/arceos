@@ -1,7 +1,7 @@
-use arceos_posix_api::{syscall2, syscall3, syscall4, syscall6, SyscallId};
+use arceos_posix_api::{ctypes, syscall2, syscall3, syscall4, syscall6, SyscallId};
 use core::ffi::{c_char, c_int, c_void};
 
-use crate::{ctypes, utils::e};
+use crate::utils::e;
 
 /// Create an socket for communication.
 ///

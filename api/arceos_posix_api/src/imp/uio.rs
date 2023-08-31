@@ -1,6 +1,6 @@
 use core::ffi::c_int;
 
-use super::{ctypes, sys_write};
+use crate::{ctypes, sys_write};
 use axerrno::LinuxError;
 
 /// `writev` implementation
