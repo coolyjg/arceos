@@ -23,7 +23,7 @@ crate-type = ["staticlib"]
 default = []
 
 # Multicore
-smp = ["axfeat/smp"]
+smp = ["axfeat/smp", "arceos_posix_api/smp"]
 
 # Floating point/SIMD
 fp_simd = ["axfeat/fp_simd", "arceos_posix_api/fp_simd"]
@@ -90,7 +90,6 @@ axtask = { path = "../../modules/axtask", optional = true }
 
 # Other crates
 lazy_static = { version = "1.4", features = ["spin_no_std"] }
-static_assertions = "1.1.0"
 spin = { version = "0.9" }
 
 [build-dependencies]

@@ -65,10 +65,7 @@ pub unsafe extern "C" fn getpid() -> core::ffi::c_int {
     #[cfg(not(feature = "multitask"))]
     return 2; // `Main` task ID
     #[cfg(feature = "multitask")]
-    {
-        use crate::utils::e;
-        e(arceos_posix_api::sys_getpid())
-    }
+    crate::utils::e(arceos_posix_api::sys_getpid())
 }
 
 /// Abort the current process.
