@@ -5,15 +5,12 @@ use num_enum::TryFromPrimitive;
 #[derive(Debug, PartialEq, Eq, Clone, Copy, TryFromPrimitive)]
 pub enum SyscallId {
     INVALID = 999,
-    #[cfg(feature = "fd")]
     READ = 0,
-    #[cfg(feature = "fd")]
     WRITE = 1,
     #[cfg(feature = "fd")]
     CLOSE = 3,
     #[cfg(feature = "fs")]
     STAT = 4,
-    #[cfg(feature = "fd")]
     FSTAT = 5,
     #[cfg(feature = "fs")]
     LSTAT = 6,

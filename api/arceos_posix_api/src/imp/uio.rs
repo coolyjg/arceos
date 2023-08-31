@@ -4,8 +4,6 @@ use super::{ctypes, sys_write};
 use axerrno::LinuxError;
 
 /// `writev` implementation
-///
-/// TODO: DO NOT let fd = 0/1/2
 #[no_mangle]
 pub unsafe extern "C" fn sys_writev(
     fd: c_int,

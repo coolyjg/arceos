@@ -16,18 +16,16 @@ mod pipe;
 mod pthread;
 #[cfg(feature = "net")]
 mod socket;
-#[cfg(feature = "fd")]
-mod uio;
 
+mod io_ops;
+mod stdio_imp;
 pub mod sync;
 mod task;
 mod time;
-// mod io_ops;
+mod uio;
 
 #[cfg(feature = "fd")]
-pub use fd_ops::{
-    sys_close, sys_dup, sys_dup3, sys_fcntl, sys_fstat, sys_read, sys_write, FileLike,
-};
+pub use fd_ops::{sys_close, sys_dup, sys_dup3, sys_fcntl, FileLike};
 #[cfg(feature = "fs")]
 pub use file::{sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat};
 #[cfg(feature = "select")]
@@ -49,8 +47,8 @@ pub use socket::{
     sys_accept, sys_bind, sys_connect, sys_getaddrinfo, sys_getpeername, sys_getsockname,
     sys_listen, sys_recv, sys_recvfrom, sys_send, sys_sendto, sys_shutdown, sys_socket,
 };
-#[cfg(feature = "fd")]
-pub use uio::sys_writev;
 
+pub use io_ops::{sys_fstat, sys_read, sys_write};
 pub use task::{sys_exit, sys_sched_yield};
 pub use time::{sys_clock_gettime, sys_nanosleep};
+pub use uio::sys_writev;
