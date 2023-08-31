@@ -30,13 +30,9 @@ pub fn check_null_mut_ptr<T>(ptr: *mut T) -> LinuxResult {
     }
 }
 
-// TODO: parse errno more elegantly
-const ERRNO_MAX: usize = 4095;
-
-pub fn e(ret: usize) -> c_int {
-    // if syscall return -4094 ~ -1
-    if ret > ERRNO_MAX.wrapping_neg() {
-        crate::errno::set_errno((ret as i32).abs());
+pub fn e(ret: isize) -> c_int {
+    if ret < 0 {
+        crate::errno::set_errno(ret.abs() as i32);
         -1
     } else {
         ret as _

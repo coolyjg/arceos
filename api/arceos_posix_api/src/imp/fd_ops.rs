@@ -1,5 +1,5 @@
 use alloc::sync::Arc;
-use core::ffi::{c_int, c_void};
+use core::ffi::c_int;
 
 use axerrno::{LinuxError, LinuxResult};
 use axio::PollState;
@@ -8,7 +8,7 @@ use flatten_objects::FlattenObjects;
 use spin::RwLock;
 
 use super::ctypes;
-// use super::stdio::{stdin, stdout};
+use super::stdio_imp::{stdin, stdout};
 
 pub const AX_FILE_LIMIT: usize = 1024;
 
@@ -21,40 +21,12 @@ pub trait FileLike: Send + Sync {
     fn set_nonblocking(&self, nonblocking: bool) -> LinuxResult;
 }
 
-struct Dummy;
-
-impl FileLike for Dummy {
-    fn read(&self, _buf: &mut [u8]) -> LinuxResult<usize> {
-        Err(LinuxError::EPERM)
-    }
-
-    fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {
-        Err(LinuxError::EPERM)
-    }
-
-    fn stat(&self) -> LinuxResult<ctypes::stat> {
-        Err(LinuxError::EPERM)
-    }
-
-    fn into_any(self: Arc<Self>) -> Arc<dyn core::any::Any + Send + Sync> {
-        self
-    }
-
-    fn poll(&self) -> LinuxResult<PollState> {
-        Err(LinuxError::EPERM)
-    }
-
-    fn set_nonblocking(&self, _nonblocking: bool) -> LinuxResult {
-        Ok(())
-    }
-}
-
 lazy_static::lazy_static! {
     static ref FD_TABLE: RwLock<FlattenObjects<Arc<dyn FileLike>, AX_FILE_LIMIT>> = {
         let mut fd_table = FlattenObjects::new();
-        fd_table.add_at(0, Arc::new(Dummy) as _).unwrap(); // stdin
-        fd_table.add_at(1, Arc::new(Dummy) as _).unwrap(); // stdout
-        fd_table.add_at(2, Arc::new(Dummy) as _).unwrap(); // stderr
+        fd_table.add_at(0, Arc::new(stdin()) as _).unwrap(); // stdin
+        fd_table.add_at(1, Arc::new(stdout()) as _).unwrap(); // stdout
+        fd_table.add_at(2, Arc::new(stdout()) as _).unwrap(); // stderr
         RwLock::new(fd_table)
     };
 }
@@ -88,51 +60,6 @@ pub unsafe extern "C" fn sys_close(fd: c_int) -> c_int {
         return 0; // stdin, stdout, stderr
     }
     syscall_body!(sys_close, close_file_like(fd).map(|_| 0))
-}
-
-/// Read data from the file indicated by `fd`.
-///
-/// Return the read size if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_read(fd: c_int, buf: *mut c_void, count: usize) -> ctypes::ssize_t {
-    debug!("sys_read <= {} {:#x} {}", fd, buf as usize, count);
-    syscall_body!(sys_read, {
-        if buf.is_null() {
-            return Err(LinuxError::EFAULT);
-        }
-        let dst = unsafe { core::slice::from_raw_parts_mut(buf as *mut u8, count) };
-        get_file_like(fd)?.read(dst)
-    })
-}
-
-/// Write data to the file indicated by `fd`.
-///
-/// Return the written size if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t {
-    debug!("sys_write <= {} {:#x} {}", fd, buf as usize, count);
-    syscall_body!(sys_write, {
-        if buf.is_null() {
-            return Err(LinuxError::EFAULT);
-        }
-        let src = unsafe { core::slice::from_raw_parts(buf as *const u8, count) };
-        get_file_like(fd)?.write(src)
-    })
-}
-
-/// Get file metadata by `fd` and write into `buf`.
-///
-/// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> ctypes::ssize_t {
-    debug!("sys_fstat <= {} {:#x}", fd, buf as usize);
-    syscall_body!(sys_fstat, {
-        if buf.is_null() {
-            return Err(LinuxError::EFAULT);
-        }
-        unsafe { *buf = get_file_like(fd)?.stat()? };
-        Ok(0)
-    })
 }
 
 fn dup_fd(old_fd: c_int) -> LinuxResult<c_int> {

@@ -7,18 +7,16 @@ use syscall_id::SyscallId;
 use crate::ctypes;
 
 #[allow(improper_ctypes_definitions)]
-pub fn syscall(syscall_id: SyscallId, args: [usize; 6]) -> usize {
+pub fn syscall(syscall_id: SyscallId, args: [usize; 6]) -> isize {
     if syscall_id != SyscallId::SCHED_YIELD {
         debug!("syscall <= syscall_name: {:?}", syscall_id);
     }
     unsafe {
         match syscall_id {
             SyscallId::INVALID => !0,
-            #[cfg(feature = "fd")]
             SyscallId::READ => {
                 crate::sys_read(args[0] as c_int, args[1] as *mut core::ffi::c_void, args[2]) as _
             }
-            #[cfg(feature = "fd")]
             SyscallId::WRITE => {
                 crate::sys_write(args[0] as c_int, args[1] as *mut core::ffi::c_void, args[2]) as _
             }
@@ -29,7 +27,6 @@ pub fn syscall(syscall_id: SyscallId, args: [usize; 6]) -> usize {
                 args[0] as *const core::ffi::c_char,
                 args[1] as *mut ctypes::stat,
             ) as _,
-            #[cfg(feature = "fd")]
             SyscallId::FSTAT => {
                 crate::sys_fstat(args[0] as c_int, args[1] as *mut ctypes::stat) as _
             }
@@ -223,30 +220,30 @@ pub fn syscall(syscall_id: SyscallId, args: [usize; 6]) -> usize {
     }
 }
 
-pub fn syscall0(syscall_id: SyscallId) -> usize {
+pub fn syscall0(syscall_id: SyscallId) -> isize {
     syscall(syscall_id, [0usize; 6])
 }
 
-pub fn syscall1(syscall_id: SyscallId, args: usize) -> usize {
+pub fn syscall1(syscall_id: SyscallId, args: usize) -> isize {
     syscall(syscall_id, [args, 0, 0, 0, 0, 0])
 }
 
-pub fn syscall2(syscall_id: SyscallId, args: [usize; 2]) -> usize {
+pub fn syscall2(syscall_id: SyscallId, args: [usize; 2]) -> isize {
     syscall(syscall_id, [args[0], args[1], 0, 0, 0, 0])
 }
 
-pub fn syscall3(syscall_id: SyscallId, args: [usize; 3]) -> usize {
+pub fn syscall3(syscall_id: SyscallId, args: [usize; 3]) -> isize {
     syscall(syscall_id, [args[0], args[1], args[2], 0, 0, 0])
 }
 
-pub fn syscall4(syscall_id: SyscallId, args: [usize; 4]) -> usize {
+pub fn syscall4(syscall_id: SyscallId, args: [usize; 4]) -> isize {
     syscall(syscall_id, [args[0], args[1], args[2], args[3], 0, 0])
 }
 
-pub fn syscall5(syscall_id: SyscallId, args: [usize; 5]) -> usize {
+pub fn syscall5(syscall_id: SyscallId, args: [usize; 5]) -> isize {
     syscall(syscall_id, [args[0], args[1], args[2], args[3], args[4], 0])
 }
 
-pub fn syscall6(syscall_id: SyscallId, args: [usize; 6]) -> usize {
+pub fn syscall6(syscall_id: SyscallId, args: [usize; 6]) -> isize {
     syscall(syscall_id, args)
 }
