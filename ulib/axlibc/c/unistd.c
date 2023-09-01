@@ -58,6 +58,11 @@ long sysconf(int name)
     return ax_sysconf(name);
 }
 
+ssize_t write(int fd, const void *buf, size_t count)
+{
+    return ax_write(fd, buf, count);
+}
+
 #ifdef AX_CONFIG_FD
 int dup2(int old, int new)
 {

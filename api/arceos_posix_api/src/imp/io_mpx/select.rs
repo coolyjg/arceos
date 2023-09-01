@@ -1,6 +1,7 @@
+use core::ffi::c_int;
+
 use axerrno::{LinuxError, LinuxResult};
 use axhal::time::current_time;
-use core::ffi::c_int;
 
 use crate::{ctypes, imp::fd_ops::get_file_like};
 

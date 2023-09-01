@@ -90,7 +90,6 @@ axtask = { path = "../../modules/axtask", optional = true }
 
 # Other crates
 lazy_static = { version = "1.4", features = ["spin_no_std"] }
-spin = { version = "0.9" }
 
 [build-dependencies]
 cbindgen = { version = "0.24" }

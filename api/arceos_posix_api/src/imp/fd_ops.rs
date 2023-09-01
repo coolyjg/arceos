@@ -1,11 +1,10 @@
 use alloc::sync::Arc;
 use core::ffi::c_int;
+use flatten_objects::FlattenObjects;
+use spin::RwLock;
 
 use axerrno::{LinuxError, LinuxResult};
 use axio::PollState;
-
-use flatten_objects::FlattenObjects;
-use spin::RwLock;
 
 use super::stdio_imp::{stdin, stdout};
 use crate::ctypes;

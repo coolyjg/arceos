@@ -32,7 +32,7 @@ pub fn check_null_mut_ptr<T>(ptr: *mut T) -> LinuxResult {
 
 pub fn e(ret: c_int) -> c_int {
     if ret < 0 {
-        crate::errno::set_errno(ret.abs() as i32);
+        crate::errno::set_errno(ret.abs());
         -1
     } else {
         ret as _

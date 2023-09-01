@@ -32,13 +32,7 @@ static int __write_buffer(FILE *f)
     int r = 0;
     if (f->buffer_len == 0)
         return 0;
-    if (f->fd == stdout->fd || f->fd == stderr->fd) {
-        r = print_str(f->buf, f->buffer_len);
-#ifdef AX_CONFIG_FD
-    } else {
-        r = write(f->fd, f->buf, f->buffer_len);
-#endif
-    }
+    r = write(f->fd, f->buf, f->buffer_len);
     return r;
 }
 
