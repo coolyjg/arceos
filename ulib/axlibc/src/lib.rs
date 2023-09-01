@@ -20,9 +20,6 @@
 #![feature(result_option_inspect)]
 #![allow(clippy::missing_safety_doc)]
 
-#[macro_use]
-extern crate axlog;
-
 #[cfg(feature = "alloc")]
 extern crate alloc;
 

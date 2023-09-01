@@ -14,6 +14,7 @@ pub mod socket;
 pub mod io;
 mod stdio;
 pub mod sync;
+pub mod sys;
 pub mod thread;
 pub mod time;
 pub mod uio;

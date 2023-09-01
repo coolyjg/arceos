@@ -153,7 +153,12 @@ pub fn sys_epoll_create(size: c_int) -> c_int {
 }
 
 /// Control interface for an epoll file descriptor
-pub fn sys_epoll_ctl(epfd: c_int, op: c_int, fd: c_int, event: *mut ctypes::epoll_event) -> c_int {
+pub unsafe fn sys_epoll_ctl(
+    epfd: c_int,
+    op: c_int,
+    fd: c_int,
+    event: *mut ctypes::epoll_event,
+) -> c_int {
     debug!("sys_epoll_ctl <= epfd: {} op: {} fd: {}", epfd, op, fd);
     syscall_body!(sys_epoll_ctl, {
         let ret = unsafe {
@@ -164,7 +169,7 @@ pub fn sys_epoll_ctl(epfd: c_int, op: c_int, fd: c_int, event: *mut ctypes::epol
 }
 
 /// `sys_epoll_wait()` waits for events on the epoll instance referred to by the file descriptor epfd.
-pub fn sys_epoll_wait(
+pub unsafe fn sys_epoll_wait(
     epfd: c_int,
     events: *mut ctypes::epoll_event,
     maxevents: c_int,
@@ -195,9 +200,7 @@ pub fn sys_epoll_wait(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            unsafe {
-                crate::imp::thread::sys_sched_yield();
-            }
+            crate::imp::thread::sys_sched_yield();
         }
     })
 }

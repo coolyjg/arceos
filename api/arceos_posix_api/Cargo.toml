@@ -40,6 +40,7 @@ epoll = ["fd"]
 
 [dependencies]
 axfeat = { path = "../axfeat" }
+axconfig = { path = "../../modules/axconfig" }
 axerrno = { path = "../../crates/axerrno" }
 axio = { path = "../../crates/axio" }
 axhal = { path = "../../modules/axhal" }

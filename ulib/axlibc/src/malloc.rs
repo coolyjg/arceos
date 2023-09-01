@@ -43,7 +43,6 @@ pub unsafe extern "C" fn malloc(size: ctypes::size_t) -> *mut c_void {
 #[no_mangle]
 pub unsafe extern "C" fn free(ptr: *mut c_void) {
     if ptr.is_null() {
-        debug!("Free a null pointer");
         return;
     }
     let ptr = ptr.cast::<MemoryControlBlock>();

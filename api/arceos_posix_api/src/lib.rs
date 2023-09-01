@@ -2,6 +2,8 @@
 #![feature(ip_in_core)]
 #![feature(int_roundings)]
 #![feature(result_option_inspect)]
+#![feature(doc_cfg)]
+#![feature(doc_auto_cfg)]
 #![allow(clippy::missing_safety_doc)]
 #![allow(missing_docs)]
 #![allow(non_camel_case_types, non_upper_case_globals)]
@@ -17,6 +19,7 @@ extern crate alloc;
 #[macro_use]
 mod utils;
 
+mod config;
 mod imp;
 
 /// cbindgen:ignore
@@ -51,7 +54,9 @@ pub use imp::socket::{
     sys_listen, sys_recv, sys_recvfrom, sys_send, sys_sendto, sys_shutdown, sys_socket,
 };
 
+pub use config::TASK_STACK_SIZE;
 pub use imp::io::{sys_fstat, sys_read, sys_write};
+pub use imp::sys::sys_sysconf;
 pub use imp::thread::{sys_exit, sys_sched_yield};
 pub use imp::time::{sys_clock_gettime, sys_nanosleep};
 pub use imp::uio::sys_writev;

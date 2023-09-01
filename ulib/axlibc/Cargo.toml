@@ -29,7 +29,7 @@ smp = ["axfeat/smp", "arceos_posix_api/smp"]
 fp_simd = ["axfeat/fp_simd", "arceos_posix_api/fp_simd"]
 
 # Memory
-alloc = ["axfeat/alloc", "dep:axalloc", "arceos_posix_api/alloc", "axio/alloc"]
+alloc = ["axfeat/alloc", "arceos_posix_api/alloc", "axio/alloc"]
 alloc-tlsf = ["axfeat/alloc-tlsf"]
 alloc-slab = ["axfeat/alloc-slab"]
 alloc-buddy = ["axfeat/alloc-buddy"]
@@ -37,7 +37,7 @@ paging = ["axfeat/paging"]
 tls = ["axfeat/tls"]
 
 # Multi-task
-multitask = ["axfeat/multitask", "axtask/multitask", "arceos_posix_api/multitask"]
+multitask = ["axfeat/multitask", "arceos_posix_api/multitask"]
 sched_fifo = ["axfeat/sched_fifo"]
 sched_rr = ["axfeat/sched_rr"]
 sched_cfs = ["axfeat/sched_cfs"]
@@ -47,7 +47,7 @@ fs = ["axfeat/fs", "fd", "arceos_posix_api/fs"]
 myfs = ["axfeat/myfs"]
 
 # Networking
-net = ["axfeat/net", "dep:axnet", "fd", "arceos_posix_api/net"]
+net = ["axfeat/net", "fd", "arceos_posix_api/net"]
 dns = []
 
 # Display
@@ -81,12 +81,6 @@ arceos_posix_api = { path = "../../api/arceos_posix_api" }
 axerrno = { path = "../../crates/axerrno" }
 axio = { path = "../../crates/axio" }
 flatten_objects = { path = "../../crates/flatten_objects" }
-axconfig = { path = "../../modules/axconfig" }
-axhal = { path = "../../modules/axhal" }
-axlog = { path = "../../modules/axlog" }
-axalloc = { path = "../../modules/axalloc", optional = true }
-axnet = { path = "../../modules/axnet", optional = true }
-axtask = { path = "../../modules/axtask", optional = true }
 
 # Other crates
 lazy_static = { version = "1.4", features = ["spin_no_std"] }
@@ -94,4 +88,3 @@ lazy_static = { version = "1.4", features = ["spin_no_std"] }
 [build-dependencies]
 cbindgen = { version = "0.24" }
 bindgen ={ version = "0.66" }
-axconfig = { path = "../../modules/axconfig" }

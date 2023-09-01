@@ -65,7 +65,7 @@ pub fn sys_write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t
 /// Get file metadata by `fd` and write into `buf`.
 ///
 /// Return 0 if success.
-pub fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
+pub unsafe fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
     debug!("sys_fstat <= {} {:#x}", fd, buf as usize);
     syscall_body!(sys_fstat, {
         if buf.is_null() {

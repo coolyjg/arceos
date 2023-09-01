@@ -1,27 +1,16 @@
-use arceos_posix_api::ctypes;
+use arceos_posix_api::sys_sysconf;
 use core::ffi::{c_int, c_long};
 
-const PAGE_SIZE_4K: usize = 4096;
+/// This constant is used to fit "resource.c/getrlimit()"
+///
+/// TODO: This should be a syscall, `prlimit64`, rather than a constant.
+#[allow(unused)]
+pub const AX_CONFIG_TASK_STACK_SIZE: usize = arceos_posix_api::TASK_STACK_SIZE;
 
 /// Return system configuration infomation
 ///
 /// Notice: currently only support what unikraft covers
 #[no_mangle]
 pub unsafe extern "C" fn ax_sysconf(name: c_int) -> c_long {
-    debug!("ax_sysconf <= {}", name);
-    match name as u32 {
-        // Page size
-        ctypes::_SC_PAGE_SIZE => PAGE_SIZE_4K as c_long,
-        // Total physical pages
-        ctypes::_SC_PHYS_PAGES => (axconfig::PHYS_MEMORY_SIZE / PAGE_SIZE_4K) as c_long,
-        // Number of processors in use
-        ctypes::_SC_NPROCESSORS_ONLN => axconfig::SMP as c_long,
-        // Avaliable physical pages
-        #[cfg(feature = "alloc")]
-        ctypes::_SC_AVPHYS_PAGES => axalloc::global_allocator().available_pages() as c_long,
-        // Maximum number of files per process
-        #[cfg(feature = "fd")]
-        ctypes::_SC_OPEN_MAX => super::fd_ops::AX_FILE_LIMIT as c_long,
-        _ => 0,
-    }
+    sys_sysconf(name)
 }

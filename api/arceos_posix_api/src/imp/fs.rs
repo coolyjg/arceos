@@ -135,7 +135,7 @@ pub fn sys_lseek(fd: c_int, offset: ctypes::off_t, whence: c_int) -> ctypes::off
 /// Get the file metadata by `path` and write into `buf`.
 ///
 /// Return 0 if success.
-pub fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
+pub unsafe fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
     let path = char_ptr_to_str(path);
     debug!("sys_stat <= {:?} {:#x}", path, buf as usize);
     syscall_body!(sys_stat, {
@@ -146,7 +146,7 @@ pub fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
         options.read(true);
         let file = axfs::fops::File::open(path?, &options)?;
         let st = File::new(file).stat()?;
-        unsafe { *buf = st };
+        *buf = st;
         Ok(0)
     })
 }
@@ -154,14 +154,14 @@ pub fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
 /// Get the metadata of the symbolic link and write into `buf`.
 ///
 /// Return 0 if success.
-pub fn sys_lstat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::ssize_t {
+pub unsafe fn sys_lstat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::ssize_t {
     let path = char_ptr_to_str(path);
     debug!("sys_lstat <= {:?} {:#x}", path, buf as usize);
     syscall_body!(sys_lstat, {
         if buf.is_null() {
             return Err(LinuxError::EFAULT);
         }
-        unsafe { *buf = Default::default() }; // TODO
+        *buf = Default::default(); // TODO
         Ok(0)
     })
 }

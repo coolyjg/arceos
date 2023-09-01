@@ -59,6 +59,7 @@ impl Stdin {
     /// The lock is released when the returned lock goes out of scope. The
     /// returned guard also implements the [`Read`] and [`BufRead`] traits for
     /// accessing the underlying data.
+    #[cfg(feature = "fd")]
     pub fn lock(&self) -> StdinLock<'static> {
         // Locks this handle with 'static lifetime. This depends on the
         // implementation detail that the underlying `Mutex` is static.
@@ -81,9 +82,7 @@ impl Read for Stdin {
             if read_len > 0 {
                 return Ok(read_len);
             }
-            unsafe {
-                crate::sys_sched_yield();
-            }
+            crate::sys_sched_yield();
         }
     }
 }
@@ -129,6 +128,7 @@ impl Stdout {
     ///
     /// The lock is released when the returned lock goes out of scope. The
     /// returned guard also implements the `Write` trait for writing data.
+    #[cfg(feature = "fd")]
     pub fn lock(&self) -> StdoutLock<'static> {
         StdoutLock {
             inner: self.inner.lock(),

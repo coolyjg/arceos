@@ -108,7 +108,7 @@ impl FdSets {
 }
 
 /// Monitor multiple file descriptors, waiting until one or more of the file descriptors become "ready" for some class of I/O operation
-pub fn sys_select(
+pub unsafe fn sys_select(
     nfds: c_int,
     readfds: *mut ctypes::fd_set,
     writefds: *mut ctypes::fd_set,
@@ -145,9 +145,7 @@ pub fn sys_select(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            unsafe {
-                crate::imp::thread::sys_sched_yield();
-            }
+            crate::imp::thread::sys_sched_yield();
         }
     })
 }

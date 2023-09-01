@@ -35,7 +35,7 @@ impl From<Duration> for ctypes::timeval {
 }
 
 /// Get clock time since booting
-pub fn sys_clock_gettime(_clk: ctypes::clockid_t, ts: *mut ctypes::timespec) -> c_int {
+pub unsafe fn sys_clock_gettime(_clk: ctypes::clockid_t, ts: *mut ctypes::timespec) -> c_int {
     syscall_body!(sys_clock_gettime, {
         if ts.is_null() {
             return Err(LinuxError::EFAULT);
@@ -50,7 +50,7 @@ pub fn sys_clock_gettime(_clk: ctypes::clockid_t, ts: *mut ctypes::timespec) -> 
 /// Sleep some nanoseconds
 ///
 /// TODO: should be woken by signals, and set errno
-pub fn sys_nanosleep(req: *const ctypes::timespec, rem: *mut ctypes::timespec) -> c_int {
+pub unsafe fn sys_nanosleep(req: *const ctypes::timespec, rem: *mut ctypes::timespec) -> c_int {
     syscall_body!(sys_nanosleep, {
         unsafe {
             if req.is_null() || (*req).tv_nsec < 0 || (*req).tv_nsec > 999999999 {

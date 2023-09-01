@@ -334,7 +334,7 @@ pub fn sys_send(
 /// Receive a message on a socket and get its source address.
 ///
 /// Return the number of bytes received if success.
-pub fn sys_recvfrom(
+pub unsafe fn sys_recvfrom(
     socket_fd: c_int,
     buf_ptr: *mut c_void,
     len: ctypes::size_t,
@@ -402,7 +402,7 @@ pub fn sys_listen(
 /// Accept for connections on a socket
 ///
 /// Return file descriptor for the accepted socket if success.
-pub fn sys_accept(
+pub unsafe fn sys_accept(
     socket_fd: c_int,
     socket_addr: *mut ctypes::sockaddr,
     socket_len: *mut ctypes::socklen_t,
@@ -443,7 +443,7 @@ pub fn sys_shutdown(
 /// Query addresses for a domain name.
 ///
 /// Return address number if success.
-pub fn sys_getaddrinfo(
+pub unsafe fn sys_getaddrinfo(
     node: *const c_char,
     service: *const c_char,
     addrs: *mut ctypes::sockaddr,
@@ -482,7 +482,7 @@ pub fn sys_getaddrinfo(
 }
 
 /// Get current address to which the socket sockfd is bound.
-pub fn sys_getsockname(
+pub unsafe fn sys_getsockname(
     sock_fd: c_int,
     addr: *mut ctypes::sockaddr,
     addrlen: *mut ctypes::socklen_t,
@@ -506,7 +506,7 @@ pub fn sys_getsockname(
 }
 
 /// Get peer address to which the socket sockfd is connected.
-pub fn sys_getpeername(
+pub unsafe fn sys_getpeername(
     sock_fd: c_int,
     addr: *mut ctypes::sockaddr,
     addrlen: *mut ctypes::socklen_t,

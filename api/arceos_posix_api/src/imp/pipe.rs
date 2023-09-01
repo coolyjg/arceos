@@ -123,9 +123,7 @@ impl FileLike for Pipe {
                 }
                 drop(ring_buffer);
                 // Data not ready, wait for write end
-                unsafe {
-                    sys_sched_yield(); // TODO: use synconize primitive
-                }
+                sys_sched_yield(); // TODO: use synconize primitive
                 continue;
             }
             for _ in 0..loop_read {
@@ -150,9 +148,7 @@ impl FileLike for Pipe {
             if loop_write == 0 {
                 drop(ring_buffer);
                 // Buffer is full, wait for read end to consume
-                unsafe {
-                    sys_sched_yield(); // TODO: use synconize primitive
-                }
+                sys_sched_yield(); // TODO: use synconize primitive
                 continue;
             }
             for _ in 0..loop_write {
@@ -198,7 +194,7 @@ impl FileLike for Pipe {
 /// Create a pipe
 ///
 /// Return 0 if succeed
-pub fn sys_pipe(fd: *mut c_int) -> c_int {
+pub unsafe fn sys_pipe(fd: *mut c_int) -> c_int {
     syscall_body!(sys_pipe, {
         let (read_end, write_end) = Pipe::new();
         let read_fd = super::fd_ops::add_file_like(Arc::new(read_end))?;
