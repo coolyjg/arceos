@@ -6,7 +6,7 @@ use axio::PollState;
 
 use super::fd_ops::FileLike;
 use super::sync::Mutex;
-use super::task::sys_sched_yield;
+use super::thread::sys_sched_yield;
 use crate::ctypes;
 
 #[derive(Copy, Clone, PartialEq)]

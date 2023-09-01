@@ -1,7 +1,6 @@
 #![cfg_attr(all(not(test), not(doc)), no_std)]
 #![feature(ip_in_core)]
 #![feature(int_roundings)]
-#![feature(naked_functions)]
 #![feature(result_option_inspect)]
 #![allow(clippy::missing_safety_doc)]
 #![allow(missing_docs)]
@@ -31,7 +30,7 @@ pub use imp::sync::*;
 #[cfg(feature = "fd")]
 pub use imp::fd_ops::{sys_close, sys_dup, sys_dup3, sys_fcntl};
 #[cfg(feature = "fs")]
-pub use imp::file::{sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat};
+pub use imp::fs::{sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat};
 #[cfg(feature = "select")]
 pub use imp::io_mpx::sys_select;
 #[cfg(feature = "epoll")]
@@ -52,7 +51,7 @@ pub use imp::socket::{
     sys_listen, sys_recv, sys_recvfrom, sys_send, sys_sendto, sys_shutdown, sys_socket,
 };
 
-pub use imp::io_ops::{sys_fstat, sys_read, sys_write};
-pub use imp::task::{sys_exit, sys_sched_yield};
+pub use imp::io::{sys_fstat, sys_read, sys_write};
+pub use imp::thread::{sys_exit, sys_sched_yield};
 pub use imp::time::{sys_clock_gettime, sys_nanosleep};
 pub use imp::uio::sys_writev;

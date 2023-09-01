@@ -28,7 +28,7 @@ pub unsafe extern "C" fn sys_read(fd: c_int, buf: *mut c_void, count: usize) -> 
         #[cfg(not(feature = "fd"))]
         match fd {
             0 => {
-                let mut ss = crate::imp::stdio_imp::stdin();
+                let mut ss = crate::imp::stdio::stdin();
                 Ok(ss.read(dst)? as ctypes::ssize_t)
             }
             _ => Err(LinuxError::EPERM),
@@ -55,7 +55,7 @@ pub unsafe extern "C" fn sys_write(fd: c_int, buf: *const c_void, count: usize) 
         #[cfg(not(feature = "fd"))]
         {
             if (1..=2).contains(&fd) {
-                let mut ss = crate::imp::stdio_imp::stdout();
+                let mut ss = crate::imp::stdio::stdout();
                 Ok(ss.write(src)? as ctypes::ssize_t)
             } else {
                 Err(LinuxError::EPERM)

@@ -68,7 +68,7 @@ pub unsafe extern "C" fn sys_nanosleep(
         let dur = Duration::from(*req);
 
         let now = axhal::time::current_time();
-        super::task::sys_sleep_until(axhal::time::current_time() + dur);
+        super::thread::sys_sleep_until(axhal::time::current_time() + dur);
         let after = axhal::time::current_time();
         let actual = after - now;
 

@@ -1,9 +1,5 @@
 #[cfg(feature = "alloc")]
-use {
-    alloc::{string::String, sync::Arc, vec::Vec},
-    axerrno::{LinuxError, LinuxResult},
-    axio::PollState,
-};
+use alloc::{string::String, vec::Vec};
 
 use axerrno::AxResult;
 use axio::{prelude::*, BufReader, Result};
@@ -69,12 +65,6 @@ impl Stdin {
         StdinLock {
             inner: self.inner.lock(),
         }
-    }
-
-    /// Locks this handle and reads a line of input, appending it to the specified buffer.
-    #[cfg(feature = "alloc")]
-    pub fn read_line(&self, buf: &mut String) -> Result<usize> {
-        self.inner.lock().read_line(buf)
     }
 }
 
@@ -180,15 +170,15 @@ pub fn stdout() -> Stdout {
 
 #[cfg(feature = "fd")]
 impl super::fd_ops::FileLike for Stdin {
-    fn read(&self, buf: &mut [u8]) -> LinuxResult<usize> {
+    fn read(&self, buf: &mut [u8]) -> axerrno::LinuxResult<usize> {
         Ok(self.lock().read(buf)?)
     }
 
-    fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {
-        Err(LinuxError::EPERM)
+    fn write(&self, _buf: &[u8]) -> axerrno::LinuxResult<usize> {
+        Err(axerrno::LinuxError::EPERM)
     }
 
-    fn stat(&self) -> LinuxResult<crate::ctypes::stat> {
+    fn stat(&self) -> axerrno::LinuxResult<crate::ctypes::stat> {
         let st_mode = 0o20000 | 0o440u32; // S_IFCHR | r--r-----
         Ok(crate::ctypes::stat {
             st_ino: 1,
@@ -198,33 +188,35 @@ impl super::fd_ops::FileLike for Stdin {
         })
     }
 
-    fn into_any(self: Arc<Self>) -> Arc<dyn core::any::Any + Send + Sync> {
+    fn into_any(
+        self: alloc::sync::Arc<Self>,
+    ) -> alloc::sync::Arc<dyn core::any::Any + Send + Sync> {
         self
     }
 
-    fn poll(&self) -> LinuxResult<PollState> {
-        Ok(PollState {
+    fn poll(&self) -> axerrno::LinuxResult<axio::PollState> {
+        Ok(axio::PollState {
             readable: true,
             writable: true,
         })
     }
 
-    fn set_nonblocking(&self, _nonblocking: bool) -> LinuxResult {
+    fn set_nonblocking(&self, _nonblocking: bool) -> axerrno::LinuxResult {
         Ok(())
     }
 }
 
 #[cfg(feature = "fd")]
 impl super::fd_ops::FileLike for Stdout {
-    fn read(&self, _buf: &mut [u8]) -> LinuxResult<usize> {
-        Err(LinuxError::EPERM)
+    fn read(&self, _buf: &mut [u8]) -> axerrno::LinuxResult<usize> {
+        Err(axerrno::LinuxError::EPERM)
     }
 
-    fn write(&self, buf: &[u8]) -> LinuxResult<usize> {
+    fn write(&self, buf: &[u8]) -> axerrno::LinuxResult<usize> {
         Ok(self.lock().write(buf)?)
     }
 
-    fn stat(&self) -> LinuxResult<crate::ctypes::stat> {
+    fn stat(&self) -> axerrno::LinuxResult<crate::ctypes::stat> {
         let st_mode = 0o20000 | 0o220u32; // S_IFCHR | -w--w----
         Ok(crate::ctypes::stat {
             st_ino: 1,
@@ -234,18 +226,20 @@ impl super::fd_ops::FileLike for Stdout {
         })
     }
 
-    fn into_any(self: Arc<Self>) -> Arc<dyn core::any::Any + Send + Sync> {
+    fn into_any(
+        self: alloc::sync::Arc<Self>,
+    ) -> alloc::sync::Arc<dyn core::any::Any + Send + Sync> {
         self
     }
 
-    fn poll(&self) -> LinuxResult<PollState> {
-        Ok(PollState {
+    fn poll(&self) -> axerrno::LinuxResult<axio::PollState> {
+        Ok(axio::PollState {
             readable: true,
             writable: true,
         })
     }
 
-    fn set_nonblocking(&self, _nonblocking: bool) -> LinuxResult {
+    fn set_nonblocking(&self, _nonblocking: bool) -> axerrno::LinuxResult {
         Ok(())
     }
 }

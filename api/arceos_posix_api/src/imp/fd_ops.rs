@@ -6,7 +6,7 @@ use spin::RwLock;
 use axerrno::{LinuxError, LinuxResult};
 use axio::PollState;
 
-use super::stdio_imp::{stdin, stdout};
+use super::stdio::{stdin, stdout};
 use crate::ctypes;
 
 pub const AX_FILE_LIMIT: usize = 1024;

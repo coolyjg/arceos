@@ -144,7 +144,7 @@ pub unsafe extern "C" fn sys_select(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            crate::imp::task::sys_sched_yield();
+            crate::imp::thread::sys_sched_yield();
         }
     })
 }

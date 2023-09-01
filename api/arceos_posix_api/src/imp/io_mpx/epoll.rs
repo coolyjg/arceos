@@ -202,7 +202,7 @@ pub unsafe extern "C" fn sys_epoll_wait(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            crate::imp::task::sys_sched_yield();
+            crate::imp::thread::sys_sched_yield();
         }
     })
 }
