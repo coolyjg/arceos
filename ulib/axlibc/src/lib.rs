@@ -122,5 +122,5 @@ pub use self::errno::strerror;
 pub use self::io_ops::{ax_write, fstat, read};
 pub use self::mktime::mktime;
 pub use self::print::println_str;
-pub use self::sys::ax_sysconf;
+pub use self::sys::sysconf;
 pub use self::time::{clock_gettime, nanosleep};

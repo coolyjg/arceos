@@ -11,6 +11,6 @@ pub const AX_CONFIG_TASK_STACK_SIZE: usize = 0x40000;
 ///
 /// Notice: currently only support what unikraft covers
 #[no_mangle]
-pub unsafe extern "C" fn ax_sysconf(name: c_int) -> c_long {
+pub unsafe extern "C" fn sysconf(name: c_int) -> c_long {
     sys_sysconf(name)
 }

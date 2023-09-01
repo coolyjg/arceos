@@ -53,11 +53,6 @@ int usleep(unsigned useconds)
     return nanosleep(&tv, &tv);
 }
 
-long sysconf(int name)
-{
-    return ax_sysconf(name);
-}
-
 ssize_t write(int fd, const void *buf, size_t count)
 {
     return ax_write(fd, buf, count);
