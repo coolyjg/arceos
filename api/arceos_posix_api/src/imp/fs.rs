@@ -105,12 +105,7 @@ fn flags_to_options(flags: c_int, _mode: ctypes::mode_t) -> OpenOptions {
 ///
 /// Return its index in the file table (`fd`). Return `EMFILE` if it already
 /// has the maximum number of files open.
-#[no_mangle]
-pub unsafe extern "C" fn sys_open(
-    filename: *const c_char,
-    flags: c_int,
-    mode: ctypes::mode_t,
-) -> c_int {
+pub fn sys_open(filename: *const c_char, flags: c_int, mode: ctypes::mode_t) -> c_int {
     let filename = char_ptr_to_str(filename);
     debug!("sys_open <= {:?} {:#o} {:#o}", filename, flags, mode);
     syscall_body!(sys_open, {
@@ -123,12 +118,7 @@ pub unsafe extern "C" fn sys_open(
 /// Set the position of the file indicated by `fd`.
 ///
 /// Return its position after seek.
-#[no_mangle]
-pub unsafe extern "C" fn sys_lseek(
-    fd: c_int,
-    offset: ctypes::off_t,
-    whence: c_int,
-) -> ctypes::off_t {
+pub fn sys_lseek(fd: c_int, offset: ctypes::off_t, whence: c_int) -> ctypes::off_t {
     debug!("sys_lseek <= {} {} {}", fd, offset, whence);
     syscall_body!(sys_lseek, {
         let pos = match whence {
@@ -145,8 +135,7 @@ pub unsafe extern "C" fn sys_lseek(
 /// Get the file metadata by `path` and write into `buf`.
 ///
 /// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
+pub fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
     let path = char_ptr_to_str(path);
     debug!("sys_stat <= {:?} {:#x}", path, buf as usize);
     syscall_body!(sys_stat, {
@@ -165,8 +154,7 @@ pub unsafe extern "C" fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -
 /// Get the metadata of the symbolic link and write into `buf`.
 ///
 /// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_lstat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::ssize_t {
+pub fn sys_lstat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::ssize_t {
     let path = char_ptr_to_str(path);
     debug!("sys_lstat <= {:?} {:#x}", path, buf as usize);
     syscall_body!(sys_lstat, {
@@ -179,8 +167,7 @@ pub unsafe extern "C" fn sys_lstat(path: *const c_char, buf: *mut ctypes::stat) 
 }
 
 /// Get the path of the current directory.
-#[no_mangle]
-pub unsafe extern "C" fn sys_getcwd(buf: *mut c_char, size: usize) -> *mut c_char {
+pub fn sys_getcwd(buf: *mut c_char, size: usize) -> *mut c_char {
     debug!("sys_getcwd <= {:#x} {}", buf as usize, size);
     syscall_body!(sys_getcwd, {
         if buf.is_null() {
@@ -203,8 +190,7 @@ pub unsafe extern "C" fn sys_getcwd(buf: *mut c_char, size: usize) -> *mut c_cha
 /// If new exists, it is first removed.
 ///
 /// Return 0 if the operation succeeds, otherwise return -1.
-#[no_mangle]
-pub unsafe extern "C" fn sys_rename(old: *const c_char, new: *const c_char) -> c_int {
+pub fn sys_rename(old: *const c_char, new: *const c_char) -> c_int {
     syscall_body!(sys_rename, {
         let old_path = char_ptr_to_str(old)?;
         let new_path = char_ptr_to_str(new)?;

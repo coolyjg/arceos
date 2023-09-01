@@ -228,8 +228,7 @@ fn from_sockaddr(
 /// Create an socket for communication.
 ///
 /// Return the socket file descriptor.
-#[no_mangle]
-pub unsafe extern "C" fn sys_socket(domain: c_int, socktype: c_int, protocol: c_int) -> c_int {
+pub fn sys_socket(domain: c_int, socktype: c_int, protocol: c_int) -> c_int {
     debug!("sys_socket <= {} {} {}", domain, socktype, protocol);
     let (domain, socktype, protocol) = (domain as u32, socktype as u32, protocol as u32);
     syscall_body!(sys_socket, {
@@ -250,8 +249,7 @@ pub unsafe extern "C" fn sys_socket(domain: c_int, socktype: c_int, protocol: c_
 /// Bind a address to a socket.
 ///
 /// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_bind(
+pub fn sys_bind(
     socket_fd: c_int,
     socket_addr: *const ctypes::sockaddr,
     addrlen: ctypes::socklen_t,
@@ -270,8 +268,7 @@ pub unsafe extern "C" fn sys_bind(
 /// Connects the socket to the address specified.
 ///
 /// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_connect(
+pub fn sys_connect(
     socket_fd: c_int,
     socket_addr: *const ctypes::sockaddr,
     addrlen: ctypes::socklen_t,
@@ -290,8 +287,7 @@ pub unsafe extern "C" fn sys_connect(
 /// Send a message on a socket to the address specified.
 ///
 /// Return the number of bytes sent if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_sendto(
+pub fn sys_sendto(
     socket_fd: c_int,
     buf_ptr: *const c_void,
     len: ctypes::size_t,
@@ -316,8 +312,7 @@ pub unsafe extern "C" fn sys_sendto(
 /// Send a message on a socket to the address connected.
 ///
 /// Return the number of bytes sent if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_send(
+pub fn sys_send(
     socket_fd: c_int,
     buf_ptr: *const c_void,
     len: ctypes::size_t,
@@ -339,8 +334,7 @@ pub unsafe extern "C" fn sys_send(
 /// Receive a message on a socket and get its source address.
 ///
 /// Return the number of bytes received if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_recvfrom(
+pub fn sys_recvfrom(
     socket_fd: c_int,
     buf_ptr: *mut c_void,
     len: ctypes::size_t,
@@ -372,8 +366,7 @@ pub unsafe extern "C" fn sys_recvfrom(
 /// Receive a message on a socket.
 ///
 /// Return the number of bytes received if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_recv(
+pub fn sys_recv(
     socket_fd: c_int,
     buf_ptr: *mut c_void,
     len: ctypes::size_t,
@@ -395,8 +388,7 @@ pub unsafe extern "C" fn sys_recv(
 /// Listen for connections on a socket
 ///
 /// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_listen(
+pub fn sys_listen(
     socket_fd: c_int,
     backlog: c_int, // currently not used
 ) -> c_int {
@@ -410,8 +402,7 @@ pub unsafe extern "C" fn sys_listen(
 /// Accept for connections on a socket
 ///
 /// Return file descriptor for the accepted socket if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_accept(
+pub fn sys_accept(
     socket_fd: c_int,
     socket_addr: *mut ctypes::sockaddr,
     socket_len: *mut ctypes::socklen_t,
@@ -438,8 +429,7 @@ pub unsafe extern "C" fn sys_accept(
 /// Shut down a full-duplex connection.
 ///
 /// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_shutdown(
+pub fn sys_shutdown(
     socket_fd: c_int,
     flag: c_int, // currently not used
 ) -> c_int {
@@ -453,8 +443,7 @@ pub unsafe extern "C" fn sys_shutdown(
 /// Query addresses for a domain name.
 ///
 /// Return address number if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_getaddrinfo(
+pub fn sys_getaddrinfo(
     node: *const c_char,
     service: *const c_char,
     addrs: *mut ctypes::sockaddr,
@@ -493,8 +482,7 @@ pub unsafe extern "C" fn sys_getaddrinfo(
 }
 
 /// Get current address to which the socket sockfd is bound.
-#[no_mangle]
-pub unsafe extern "C" fn sys_getsockname(
+pub fn sys_getsockname(
     sock_fd: c_int,
     addr: *mut ctypes::sockaddr,
     addrlen: *mut ctypes::socklen_t,
@@ -518,8 +506,7 @@ pub unsafe extern "C" fn sys_getsockname(
 }
 
 /// Get peer address to which the socket sockfd is connected.
-#[no_mangle]
-pub unsafe extern "C" fn sys_getpeername(
+pub fn sys_getpeername(
     sock_fd: c_int,
     addr: *mut ctypes::sockaddr,
     addrlen: *mut ctypes::socklen_t,

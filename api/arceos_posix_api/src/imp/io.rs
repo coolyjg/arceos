@@ -12,8 +12,7 @@ use axio::prelude::*;
 /// Read data from the file indicated by `fd`.
 ///
 /// Return the read size if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_read(fd: c_int, buf: *mut c_void, count: usize) -> ctypes::ssize_t {
+pub fn sys_read(fd: c_int, buf: *mut c_void, count: usize) -> ctypes::ssize_t {
     debug!("sys_read <= {} {:#x} {}", fd, buf as usize, count);
     syscall_body!(sys_read, {
         if buf.is_null() {
@@ -39,8 +38,7 @@ pub unsafe extern "C" fn sys_read(fd: c_int, buf: *mut c_void, count: usize) -> 
 /// Write data to the file indicated by `fd`.
 ///
 /// Return the written size if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t {
+pub fn sys_write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t {
     debug!("sys_write <= {} {:#x} {}", fd, buf as usize, count);
     syscall_body!(sys_write, {
         if buf.is_null() {
@@ -67,8 +65,7 @@ pub unsafe extern "C" fn sys_write(fd: c_int, buf: *const c_void, count: usize) 
 /// Get file metadata by `fd` and write into `buf`.
 ///
 /// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
+pub fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
     debug!("sys_fstat <= {} {:#x}", fd, buf as usize);
     syscall_body!(sys_fstat, {
         if buf.is_null() {

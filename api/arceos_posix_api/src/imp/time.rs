@@ -35,11 +35,7 @@ impl From<Duration> for ctypes::timeval {
 }
 
 /// Get clock time since booting
-#[no_mangle]
-pub unsafe extern "C" fn sys_clock_gettime(
-    _clk: ctypes::clockid_t,
-    ts: *mut ctypes::timespec,
-) -> c_int {
+pub fn sys_clock_gettime(_clk: ctypes::clockid_t, ts: *mut ctypes::timespec) -> c_int {
     syscall_body!(sys_clock_gettime, {
         if ts.is_null() {
             return Err(LinuxError::EFAULT);
@@ -54,18 +50,18 @@ pub unsafe extern "C" fn sys_clock_gettime(
 /// Sleep some nanoseconds
 ///
 /// TODO: should be woken by signals, and set errno
-#[no_mangle]
-pub unsafe extern "C" fn sys_nanosleep(
-    req: *const ctypes::timespec,
-    rem: *mut ctypes::timespec,
-) -> c_int {
+pub fn sys_nanosleep(req: *const ctypes::timespec, rem: *mut ctypes::timespec) -> c_int {
     syscall_body!(sys_nanosleep, {
-        if req.is_null() || (*req).tv_nsec < 0 || (*req).tv_nsec > 999999999 {
-            return Err(LinuxError::EINVAL);
+        unsafe {
+            if req.is_null() || (*req).tv_nsec < 0 || (*req).tv_nsec > 999999999 {
+                return Err(LinuxError::EINVAL);
+            }
         }
 
-        debug!("sys_nanosleep <= {}.{:09}s", (*req).tv_sec, (*req).tv_nsec);
-        let dur = Duration::from(*req);
+        let dur = unsafe {
+            debug!("sys_nanosleep <= {}.{:09}s", (*req).tv_sec, (*req).tv_nsec);
+            Duration::from(*req)
+        };
 
         let now = axhal::time::current_time();
         super::thread::sys_sleep_until(axhal::time::current_time() + dur);

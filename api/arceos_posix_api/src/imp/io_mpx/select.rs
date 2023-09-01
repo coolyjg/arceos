@@ -108,8 +108,7 @@ impl FdSets {
 }
 
 /// Monitor multiple file descriptors, waiting until one or more of the file descriptors become "ready" for some class of I/O operation
-#[no_mangle]
-pub unsafe extern "C" fn sys_select(
+pub fn sys_select(
     nfds: c_int,
     readfds: *mut ctypes::fd_set,
     writefds: *mut ctypes::fd_set,
@@ -125,12 +124,14 @@ pub unsafe extern "C" fn sys_select(
             return Err(LinuxError::EINVAL);
         }
         let nfds = (nfds as usize).min(FD_SETSIZE);
-        let deadline = timeout.as_ref().map(|t| current_time() + (*t).into());
+        let deadline = unsafe { timeout.as_ref().map(|t| current_time() + (*t).into()) };
         let fd_sets = FdSets::from(nfds, readfds, writefds, exceptfds);
 
-        zero_fd_set(readfds, nfds);
-        zero_fd_set(writefds, nfds);
-        zero_fd_set(exceptfds, nfds);
+        unsafe {
+            zero_fd_set(readfds, nfds);
+            zero_fd_set(writefds, nfds);
+            zero_fd_set(exceptfds, nfds);
+        }
 
         loop {
             #[cfg(feature = "net")]
@@ -144,7 +145,9 @@ pub unsafe extern "C" fn sys_select(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            crate::imp::thread::sys_sched_yield();
+            unsafe {
+                crate::imp::thread::sys_sched_yield();
+            }
         }
     })
 }

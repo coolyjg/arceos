@@ -52,8 +52,7 @@ pub fn close_file_like(fd: c_int) -> LinuxResult {
 }
 
 /// Close a file by `fd`.
-#[no_mangle]
-pub unsafe extern "C" fn sys_close(fd: c_int) -> c_int {
+pub fn sys_close(fd: c_int) -> c_int {
     debug!("sys_close <= {}", fd);
     if (0..=2).contains(&fd) {
         return 0; // stdin, stdout, stderr
@@ -68,8 +67,7 @@ fn dup_fd(old_fd: c_int) -> LinuxResult<c_int> {
 }
 
 /// Duplicate a file descriptor
-#[no_mangle]
-pub unsafe extern "C" fn sys_dup(old_fd: c_int) -> c_int {
+pub fn sys_dup(old_fd: c_int) -> c_int {
     debug!("sys_dup <= {}", old_fd);
     syscall_body!(sys_dup, dup_fd(old_fd))
 }
@@ -79,8 +77,7 @@ pub unsafe extern "C" fn sys_dup(old_fd: c_int) -> c_int {
 /// The caller can force the close-on-exec flag to be set for the new file descriptor by specifying `O_CLOEXEC` in flags.
 ///
 /// If oldfd equals newfd, then `dup3()` fails with the error `EINVAL`.
-#[no_mangle]
-pub unsafe extern "C" fn sys_dup3(old_fd: c_int, new_fd: c_int, flags: c_int) -> c_int {
+pub fn sys_dup3(old_fd: c_int, new_fd: c_int, flags: c_int) -> c_int {
     debug!(
         "sys_dup3 <= old_fd: {}, new_fd: {}, flags: {}",
         old_fd, new_fd, flags
@@ -114,8 +111,7 @@ pub unsafe extern "C" fn sys_dup3(old_fd: c_int, new_fd: c_int, flags: c_int) ->
 /// Fcntl implementation
 ///
 /// TODO: `SET/GET` command is ignored, hard-code stdin/stdout
-#[no_mangle]
-pub unsafe extern "C" fn sys_fcntl(fd: c_int, cmd: c_int, arg: usize) -> c_int {
+pub fn sys_fcntl(fd: c_int, cmd: c_int, arg: usize) -> c_int {
     debug!("sys_fcntl <= fd: {} cmd: {} arg: {}", fd, cmd, arg);
     syscall_body!(sys_fcntl, {
         match cmd as u32 {

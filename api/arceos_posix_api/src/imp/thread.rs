@@ -4,8 +4,7 @@ use core::{ffi::c_int, time::Duration};
 ///
 /// For single-threaded configuration (`multitask` feature is disabled), we just
 /// relax the CPU and wait for incoming interrupts.
-#[no_mangle]
-pub unsafe extern "C" fn sys_sched_yield() -> c_int {
+pub fn sys_sched_yield() -> c_int {
     #[cfg(feature = "multitask")]
     axtask::yield_now();
     #[cfg(not(feature = "multitask"))]
@@ -17,8 +16,7 @@ pub unsafe extern "C" fn sys_sched_yield() -> c_int {
     0
 }
 
-#[no_mangle]
-pub unsafe extern "C" fn sys_exit(_exit_code: core::ffi::c_int) -> ! {
+pub fn sys_exit(_exit_code: core::ffi::c_int) -> ! {
     #[cfg(feature = "multitask")]
     axtask::exit(_exit_code);
     #[cfg(not(feature = "multitask"))]

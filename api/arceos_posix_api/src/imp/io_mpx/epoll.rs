@@ -141,8 +141,7 @@ impl FileLike for EpollInstance {
 /// `sys_epoll_create()` creates a new epoll instance.
 ///
 /// `sys_epoll_create()` returns a file descriptor referring to the new epoll instance.
-#[no_mangle]
-pub unsafe extern "C" fn sys_epoll_create(size: c_int) -> c_int {
+pub fn sys_epoll_create(size: c_int) -> c_int {
     debug!("sys_epoll_create <= {}", size);
     syscall_body!(sys_epoll_create, {
         if size < 0 {
@@ -154,24 +153,18 @@ pub unsafe extern "C" fn sys_epoll_create(size: c_int) -> c_int {
 }
 
 /// Control interface for an epoll file descriptor
-#[no_mangle]
-pub unsafe extern "C" fn sys_epoll_ctl(
-    epfd: c_int,
-    op: c_int,
-    fd: c_int,
-    event: *mut ctypes::epoll_event,
-) -> c_int {
+pub fn sys_epoll_ctl(epfd: c_int, op: c_int, fd: c_int, event: *mut ctypes::epoll_event) -> c_int {
     debug!("sys_epoll_ctl <= epfd: {} op: {} fd: {}", epfd, op, fd);
     syscall_body!(sys_epoll_ctl, {
-        let ret =
-            EpollInstance::from_fd(epfd)?.control(op as usize, fd as usize, &(*event))? as c_int;
+        let ret = unsafe {
+            EpollInstance::from_fd(epfd)?.control(op as usize, fd as usize, &(*event))? as c_int
+        };
         Ok(ret)
     })
 }
 
 /// `sys_epoll_wait()` waits for events on the epoll instance referred to by the file descriptor epfd.
-#[no_mangle]
-pub unsafe extern "C" fn sys_epoll_wait(
+pub fn sys_epoll_wait(
     epfd: c_int,
     events: *mut ctypes::epoll_event,
     maxevents: c_int,
@@ -186,7 +179,7 @@ pub unsafe extern "C" fn sys_epoll_wait(
         if maxevents <= 0 {
             return Err(LinuxError::EINVAL);
         }
-        let events = core::slice::from_raw_parts_mut(events, maxevents as usize);
+        let events = unsafe { core::slice::from_raw_parts_mut(events, maxevents as usize) };
         let deadline = (!timeout.is_negative())
             .then(|| current_time() + Duration::from_millis(timeout as u64));
         let epoll_instance = EpollInstance::from_fd(epfd)?;
@@ -202,7 +195,9 @@ pub unsafe extern "C" fn sys_epoll_wait(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            crate::imp::thread::sys_sched_yield();
+            unsafe {
+                crate::imp::thread::sys_sched_yield();
+            }
         }
     })
 }
