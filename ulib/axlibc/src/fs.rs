@@ -1,8 +1,10 @@
 use core::ffi::{c_char, c_int};
 
-use arceos_posix_api::{ctypes, sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat};
+use arceos_posix_api::{
+    sys_fstat, sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat,
+};
 
-use crate::utils::e;
+use crate::{ctypes, utils::e};
 
 /// Open a file by `filename` and insert it into the file descriptor table.
 ///
@@ -31,6 +33,14 @@ pub unsafe extern "C" fn lseek(fd: c_int, offset: ctypes::off_t, whence: c_int) 
 #[no_mangle]
 pub unsafe extern "C" fn stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
     e(sys_stat(path, buf))
+}
+
+/// Get file metadata by `fd` and write into `buf`.
+///
+/// Return 0 if success.
+#[no_mangle]
+pub unsafe extern "C" fn fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
+    e(sys_fstat(fd, buf))
 }
 
 /// Get the metadata of the symbolic link and write into `buf`.

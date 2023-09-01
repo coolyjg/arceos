@@ -1,4 +1,4 @@
-use core::{ffi::c_int, time::Duration};
+use core::ffi::c_int;
 
 /// Relinquish the CPU, and switches to another task.
 ///
@@ -16,16 +16,10 @@ pub fn sys_sched_yield() -> c_int {
     0
 }
 
+/// Exit current task
 pub fn sys_exit(_exit_code: core::ffi::c_int) -> ! {
     #[cfg(feature = "multitask")]
     axtask::exit(_exit_code);
     #[cfg(not(feature = "multitask"))]
     axhal::misc::terminate();
-}
-
-pub fn sys_sleep_until(deadline: Duration) {
-    #[cfg(feature = "multitask")]
-    axtask::sleep_until(deadline);
-    #[cfg(not(feature = "multitask"))]
-    axhal::time::busy_wait_until(deadline);
 }

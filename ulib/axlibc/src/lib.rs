@@ -18,10 +18,23 @@
 #![feature(int_roundings)]
 #![feature(naked_functions)]
 #![feature(result_option_inspect)]
+#![feature(thread_local)]
 #![allow(clippy::missing_safety_doc)]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
+
+#[path = "."]
+mod ctypes {
+    /// cbindgen:ignore
+    #[rustfmt::skip]
+    #[path = "libctypes_gen.rs"]
+    #[allow(dead_code, non_snake_case, non_camel_case_types, non_upper_case_globals, clippy::upper_case_acronyms)]
+    mod libctypes;
+
+    pub use arceos_posix_api::ctypes::*;
+    pub use libctypes::*;
+}
 
 #[macro_use]
 mod utils;
@@ -29,7 +42,7 @@ mod utils;
 #[cfg(feature = "fd")]
 mod fd_ops;
 #[cfg(feature = "fs")]
-mod file;
+mod fs;
 #[cfg(any(feature = "select", feature = "epoll"))]
 mod io_mpx;
 #[cfg(feature = "alloc")]
@@ -44,43 +57,18 @@ mod socket;
 mod strftime;
 #[cfg(feature = "fp_simd")]
 mod strtod;
-#[cfg(feature = "fd")]
-mod uio;
 
 mod errno;
-mod io_ops;
+mod io;
 mod mktime;
-mod print;
 mod rand;
 mod resource;
 mod setjmp;
 mod sys;
 mod time;
+mod unistd;
 
-/// Get current thread ID.
-#[no_mangle]
-pub unsafe extern "C" fn getpid() -> core::ffi::c_int {
-    #[cfg(not(feature = "multitask"))]
-    return 2; // `Main` task ID
-    #[cfg(feature = "multitask")]
-    crate::utils::e(arceos_posix_api::sys_getpid())
-}
-
-/// Abort the current process.
-#[no_mangle]
-pub unsafe extern "C" fn ax_panic() -> ! {
-    panic!()
-}
-
-/// Exits the current thread.
-#[no_mangle]
-pub unsafe extern "C" fn exit(exit_code: core::ffi::c_int) -> ! {
-    sys_exit(exit_code)
-}
-
-use arceos_posix_api::sys_exit;
-
-pub use self::rand::{ax_rand_u32, ax_srand};
+pub use self::rand::{rand, random, srand};
 
 #[cfg(feature = "alloc")]
 pub use self::malloc::{free, malloc};
@@ -89,15 +77,13 @@ pub use self::strftime::strftime;
 
 #[cfg(feature = "fd")]
 pub use self::fd_ops::{ax_fcntl, close, dup, dup3};
-#[cfg(feature = "fd")]
-pub use self::uio::writev;
 
 #[cfg(feature = "fs")]
-pub use self::file::{ax_open, getcwd, lseek, lstat, stat};
+pub use self::fs::{ax_open, fstat, getcwd, lseek, lstat, stat};
 
 #[cfg(feature = "net")]
 pub use self::socket::{
-    accept, ax_getaddrinfo, bind, connect, getpeername, getsockname, listen, recv, recvfrom, send,
+    accept, bind, connect, getaddrinfo, getpeername, getsockname, listen, recv, recvfrom, send,
     sendto, shutdown, socket,
 };
 
@@ -118,9 +104,12 @@ pub use self::io_mpx::{epoll_create, epoll_ctl, epoll_wait};
 #[cfg(feature = "fp_simd")]
 pub use self::strtod::{strtod, strtof};
 
+#[cfg(not(test))]
+pub use self::io::write;
+
 pub use self::errno::strerror;
-pub use self::io_ops::{ax_write, fstat, read};
+pub use self::io::{read, writev};
 pub use self::mktime::mktime;
-pub use self::print::println_str;
 pub use self::sys::sysconf;
 pub use self::time::{clock_gettime, nanosleep};
+pub use self::unistd::{abort, exit, getpid};

@@ -1,6 +1,5 @@
 #ifdef AX_CONFIG_SELECT
 
-#include <axlibc.h>
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>

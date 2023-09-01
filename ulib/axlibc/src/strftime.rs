@@ -3,7 +3,7 @@ use core::{ffi::c_char, fmt};
 
 use axio::Write;
 
-use arceos_posix_api::ctypes;
+use crate::ctypes;
 
 pub trait WriteByte: fmt::Write {
     fn write_u8(&mut self, byte: u8) -> fmt::Result;
@@ -208,7 +208,6 @@ unsafe fn strftime_inner<W: WriteByte>(
                 b'r' => w!(recurse "%I:%M:%S %p"),
                 b'R' => w!(recurse "%H:%M"),
                 // Nothing is modified in mktime, but the C standard of course requires a mutable pointer ._.
-                // b's' => w!("{}", super::ax_mktime(t as *mut ctypes::tm)),
                 b's' => w!("{}", super::mktime(t as *mut ctypes::tm)),
                 b'S' => w!("{:02}", (*t).tm_sec),
                 b'T' => w!(recurse "%H:%M:%S"),

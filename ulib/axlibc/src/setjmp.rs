@@ -1,11 +1,9 @@
 use core::ffi::c_int;
 
-use arceos_posix_api::ctypes;
-
 /// `setjmp` implementation
 #[naked]
 #[no_mangle]
-unsafe extern "C" fn setjmp(_buf: *mut ctypes::__jmp_buf_tag) {
+unsafe extern "C" fn setjmp(_buf: *mut crate::ctypes::__jmp_buf_tag) {
     #[cfg(all(target_arch = "aarch64", feature = "fp_simd"))]
     core::arch::asm!(
         "
@@ -122,7 +120,7 @@ unsafe extern "C" fn setjmp(_buf: *mut ctypes::__jmp_buf_tag) {
 /// `longjmp` implementation
 #[naked]
 #[no_mangle]
-unsafe extern "C" fn longjmp(_buf: *mut ctypes::__jmp_buf_tag, _val: c_int) -> ! {
+unsafe extern "C" fn longjmp(_buf: *mut crate::ctypes::__jmp_buf_tag, _val: c_int) -> ! {
     #[cfg(all(target_arch = "aarch64", feature = "fp_simd"))]
     core::arch::asm!(
         "ldp x19, x20, [x0,#0]

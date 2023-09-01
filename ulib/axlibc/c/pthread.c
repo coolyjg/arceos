@@ -1,6 +1,5 @@
 #ifdef AX_CONFIG_MULTITASK
 
-#include <axlibc.h>
 #include <errno.h>
 #include <limits.h>
 #include <pthread.h>

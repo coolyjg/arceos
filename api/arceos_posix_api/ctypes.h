@@ -2,9 +2,7 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include <pthread.h>
-#include <setjmp.h>
 #include <stddef.h>
-#include <stdio.h>
 #include <sys/epoll.h>
 #include <sys/resource.h>
 #include <sys/select.h>
@@ -13,5 +11,4 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/uio.h>
-#include <time.h>
 #include <unistd.h>

@@ -1,7 +1,5 @@
-use crate::utils::e;
-use arceos_posix_api::{
-    ctypes, sys_pthread_mutex_init, sys_pthread_mutex_lock, sys_pthread_mutex_unlock,
-};
+use crate::{ctypes, utils::e};
+use arceos_posix_api::{sys_pthread_mutex_init, sys_pthread_mutex_lock, sys_pthread_mutex_unlock};
 use core::ffi::c_int;
 
 /// Initialize a mutex.

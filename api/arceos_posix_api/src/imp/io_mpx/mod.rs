@@ -1,9 +1,9 @@
 //! I/O multiplexing:
 //!
-//! * [`select`](select::ax_select)
-//! * [`epoll_create`](epoll::ax_epoll_create)
-//! * [`epoll_ctl`](epoll::ax_epoll_ctl)
-//! * [`epoll_wait`](epoll::ax_epoll_wait)
+//! * [`select`](select::sys_select)
+//! * [`epoll_create`](epoll::sys_epoll_create)
+//! * [`epoll_ctl`](epoll::sys_epoll_ctl)
+//! * [`epoll_wait`](epoll::sys_epoll_wait)
 
 #[cfg(feature = "epoll")]
 mod epoll;

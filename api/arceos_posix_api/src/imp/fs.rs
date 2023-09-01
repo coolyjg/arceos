@@ -4,9 +4,11 @@ use core::ffi::{c_char, c_int};
 use axerrno::{LinuxError, LinuxResult};
 use axfs::fops::OpenOptions;
 use axio::{PollState, SeekFrom};
+use axsync::Mutex;
 
+use crate::imp::fd_ops::get_file_like;
 use crate::utils::char_ptr_to_str;
-use crate::{ctypes, imp::fd_ops::FileLike, imp::sync::Mutex};
+use crate::{ctypes, imp::fd_ops::FileLike};
 
 pub struct File {
     inner: Mutex<axfs::fops::File>,
@@ -146,7 +148,24 @@ pub unsafe fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
         options.read(true);
         let file = axfs::fops::File::open(path?, &options)?;
         let st = File::new(file).stat()?;
-        *buf = st;
+        unsafe {
+            *buf = st;
+        }
+        Ok(0)
+    })
+}
+
+/// Get file metadata by `fd` and write into `buf`.
+///
+/// Return 0 if success.
+pub unsafe fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
+    debug!("sys_fstat <= {} {:#x}", fd, buf as usize);
+    syscall_body!(sys_fstat, {
+        if buf.is_null() {
+            return Err(LinuxError::EFAULT);
+        }
+
+        unsafe { *buf = get_file_like(fd)?.stat()? };
         Ok(0)
     })
 }
@@ -161,7 +180,9 @@ pub unsafe fn sys_lstat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::
         if buf.is_null() {
             return Err(LinuxError::EFAULT);
         }
-        *buf = Default::default(); // TODO
+        unsafe {
+            *buf = Default::default(); // TODO
+        }
         Ok(0)
     })
 }

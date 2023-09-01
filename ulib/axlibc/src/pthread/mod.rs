@@ -1,7 +1,5 @@
-use crate::utils::e;
-use arceos_posix_api::{
-    ctypes, sys_pthread_create, sys_pthread_exit, sys_pthread_join, sys_pthread_self,
-};
+use crate::{ctypes, utils::e};
+use arceos_posix_api::{sys_pthread_create, sys_pthread_exit, sys_pthread_join, sys_pthread_self};
 use core::ffi::{c_int, c_void};
 
 pub mod mutex;

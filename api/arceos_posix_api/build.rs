@@ -38,18 +38,18 @@ typedef struct {{
             "ssize_t",
             "off_t",
             "mode_t",
-            "O_*",
             "sock.*",
-            "FILE",
-            "jmp_buf",
-            "fd.*",
+            "fd_set",
             "timeval",
-            "pthread_.*",
+            "pthread_t",
+            "pthread_attr_t",
+            "pthread_mutex_t",
+            "pthread_mutexattr_t",
             "epoll_event",
             "iovec",
-            "tm",
             "clockid_t",
             "rlimit",
+            "addrinfo",
         ];
         let allow_vars = [
             "O_.*",
@@ -59,11 +59,11 @@ typedef struct {{
             "FD_.*",
             "F_.*",
             "_SC_.*",
-            "SO_.*",
-            "SOL_.*",
             "EPOLL_CTL_.*",
             "EPOLL.*",
             "RLIMIT_.*",
+            "EAI_.*",
+            "MAXADDRS",
         ];
 
         #[derive(Debug)]

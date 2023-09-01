@@ -1,5 +1,6 @@
-use crate::utils::e;
-use arceos_posix_api::{sys_close, sys_dup, sys_dup3, sys_fcntl};
+use crate::{ctypes, utils::e};
+use arceos_posix_api::{sys_close, sys_dup, sys_dup2, sys_fcntl};
+use axerrno::LinuxError;
 use core::ffi::c_int;
 
 /// Close a file by `fd`.
@@ -14,6 +15,12 @@ pub unsafe extern "C" fn dup(old_fd: c_int) -> c_int {
     e(sys_dup(old_fd))
 }
 
+/// Duplicate a file descriptor, use file descriptor specified in `new_fd`
+#[no_mangle]
+pub unsafe extern "C" fn dup2(old_fd: c_int, new_fd: c_int) -> c_int {
+    e(sys_dup2(old_fd, new_fd))
+}
+
 /// `dup3()` is the same as `dup2()`, except that:
 ///
 /// The caller can force the close-on-exec flag to be set for the new file descriptor by specifying `O_CLOEXEC` in flags.
@@ -21,7 +28,22 @@ pub unsafe extern "C" fn dup(old_fd: c_int) -> c_int {
 /// If oldfd equals newfd, then `dup3()` fails with the error `EINVAL`.
 #[no_mangle]
 pub unsafe extern "C" fn dup3(old_fd: c_int, new_fd: c_int, flags: c_int) -> c_int {
-    e(sys_dup3(old_fd, new_fd, flags))
+    if old_fd == new_fd {
+        return e((LinuxError::EINVAL as c_int).wrapping_neg());
+    }
+    let r = e(sys_dup2(old_fd, new_fd));
+    if r < 0 {
+        r
+    } else {
+        if flags as u32 & ctypes::O_CLOEXEC != 0 {
+            e(sys_fcntl(
+                new_fd,
+                ctypes::F_SETFD as c_int,
+                ctypes::FD_CLOEXEC as usize,
+            ));
+        }
+        new_fd
+    }
 }
 
 /// Fcntl implementation

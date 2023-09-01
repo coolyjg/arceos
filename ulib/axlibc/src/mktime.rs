@@ -1,6 +1,6 @@
 use core::ffi::c_int;
 
-use arceos_posix_api::ctypes;
+use crate::ctypes;
 
 const MONTH_DAYS: [[c_int; 12]; 2] = [
     // Non-leap years:
