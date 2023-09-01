@@ -2,8 +2,6 @@ use crate::utils::e;
 use arceos_posix_api::{sys_close, sys_dup, sys_dup3, sys_fcntl};
 use core::ffi::c_int;
 
-pub const AX_FILE_LIMIT: usize = 1024;
-
 /// Close a file by `fd`.
 #[no_mangle]
 pub unsafe extern "C" fn close(fd: c_int) -> c_int {

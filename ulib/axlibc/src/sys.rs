@@ -5,7 +5,7 @@ use core::ffi::{c_int, c_long};
 ///
 /// TODO: This should be a syscall, `prlimit64`, rather than a constant.
 #[allow(unused)]
-pub const AX_CONFIG_TASK_STACK_SIZE: usize = arceos_posix_api::TASK_STACK_SIZE;
+pub const AX_CONFIG_TASK_STACK_SIZE: usize = 0x40000;
 
 /// Return system configuration infomation
 ///

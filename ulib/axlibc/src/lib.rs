@@ -52,6 +52,7 @@ mod io_ops;
 mod mktime;
 mod print;
 mod rand;
+mod resource;
 mod setjmp;
 mod sys;
 mod time;
