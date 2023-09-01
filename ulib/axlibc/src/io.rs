@@ -1,6 +1,6 @@
 use core::ffi::{c_int, c_void};
 
-use arceos_posix_api::{ctypes, sys_fstat, sys_read, sys_write};
+use arceos_posix_api::{ctypes, sys_fstat, sys_read, sys_write, sys_writev};
 
 use crate::utils::e;
 
@@ -26,4 +26,14 @@ pub unsafe extern "C" fn ax_write(fd: c_int, buf: *const c_void, count: usize) -
 #[no_mangle]
 pub unsafe extern "C" fn fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
     e(sys_fstat(fd, buf))
+}
+
+/// `writev` implementation
+#[no_mangle]
+pub unsafe extern "C" fn writev(
+    fd: c_int,
+    iov: *const ctypes::iovec,
+    iocnt: c_int,
+) -> ctypes::ssize_t {
+    e(sys_writev(fd, iov, iocnt) as _) as _
 }

@@ -23,13 +23,19 @@
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
+/// cbindgen:ignore
+#[rustfmt::skip]
+#[path = "./libctypes_gen.rs"]
+#[allow(dead_code, non_snake_case, non_camel_case_types, non_upper_case_globals, clippy::upper_case_acronyms)]
+pub mod libctypes;
+
 #[macro_use]
 mod utils;
 
 #[cfg(feature = "fd")]
 mod fd_ops;
 #[cfg(feature = "fs")]
-mod file;
+mod fs;
 #[cfg(any(feature = "select", feature = "epoll"))]
 mod io_mpx;
 #[cfg(feature = "alloc")]
@@ -44,11 +50,9 @@ mod socket;
 mod strftime;
 #[cfg(feature = "fp_simd")]
 mod strtod;
-#[cfg(feature = "fd")]
-mod uio;
 
 mod errno;
-mod io_ops;
+mod io;
 mod mktime;
 mod print;
 mod rand;
@@ -89,11 +93,9 @@ pub use self::strftime::strftime;
 
 #[cfg(feature = "fd")]
 pub use self::fd_ops::{ax_fcntl, close, dup, dup3};
-#[cfg(feature = "fd")]
-pub use self::uio::writev;
 
 #[cfg(feature = "fs")]
-pub use self::file::{ax_open, getcwd, lseek, lstat, stat};
+pub use self::fs::{ax_open, getcwd, lseek, lstat, stat};
 
 #[cfg(feature = "net")]
 pub use self::socket::{
@@ -119,7 +121,7 @@ pub use self::io_mpx::{epoll_create, epoll_ctl, epoll_wait};
 pub use self::strtod::{strtod, strtof};
 
 pub use self::errno::strerror;
-pub use self::io_ops::{ax_write, fstat, read};
+pub use self::io::{ax_write, fstat, read};
 pub use self::mktime::mktime;
 pub use self::print::println_str;
 pub use self::sys::sysconf;
