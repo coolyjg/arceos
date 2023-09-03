@@ -1,8 +1,8 @@
 use core::ffi::{c_char, c_int};
 
-use arceos_posix_api::{ctypes, sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat};
+use arceos_posix_api::{sys_getcwd, sys_lseek, sys_lstat, sys_open, sys_rename, sys_stat};
 
-use crate::utils::e;
+use crate::{ctypes, utils::e};
 
 /// Open a file by `filename` and insert it into the file descriptor table.
 ///

@@ -1,10 +1,10 @@
 use arceos_posix_api::{
-    ctypes, sys_accept, sys_bind, sys_connect, sys_getaddrinfo, sys_getpeername, sys_getsockname,
+    sys_accept, sys_bind, sys_connect, sys_getaddrinfo, sys_getpeername, sys_getsockname,
     sys_listen, sys_recv, sys_recvfrom, sys_send, sys_sendto, sys_shutdown, sys_socket,
 };
 use core::ffi::{c_char, c_int, c_void};
 
-use crate::utils::e;
+use crate::{ctypes, utils::e};
 
 /// Create an socket for communication.
 ///

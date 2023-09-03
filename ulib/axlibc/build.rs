@@ -4,8 +4,7 @@ fn main() {
     fn ax_gen_c_to_rust_bindings(in_file: &str, out_file: &str) {
         println!("cargo:rerun-if-changed={in_file}");
 
-        let allow_types = ["tm", "jmp_buf", "rlimit"];
-        let allow_vars = ["RLIMIT_.*"];
+        let allow_types = ["tm", "jmp_buf"];
 
         #[derive(Debug)]
         struct MyCallbacks;
@@ -23,9 +22,6 @@ fn main() {
             .use_core();
         for ty in allow_types {
             builder = builder.allowlist_type(ty);
-        }
-        for var in allow_vars {
-            builder = builder.allowlist_var(var);
         }
 
         builder

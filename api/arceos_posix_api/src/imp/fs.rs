@@ -4,9 +4,10 @@ use core::ffi::{c_char, c_int};
 use axerrno::{LinuxError, LinuxResult};
 use axfs::fops::OpenOptions;
 use axio::{PollState, SeekFrom};
+use axsync::Mutex;
 
 use crate::utils::char_ptr_to_str;
-use crate::{ctypes, imp::fd_ops::FileLike, imp::sync::Mutex};
+use crate::{ctypes, imp::fd_ops::FileLike};
 
 pub struct File {
     inner: Mutex<axfs::fops::File>,

@@ -3,8 +3,8 @@
 //! TODO: do not support `EPOLLET` flag
 use axerrno::{LinuxError, LinuxResult};
 use axhal::time::current_time;
+use axsync::Mutex;
 
-use crate::imp::sync::Mutex;
 use crate::{
     ctypes,
     imp::fd_ops::{add_file_like, get_file_like, FileLike},

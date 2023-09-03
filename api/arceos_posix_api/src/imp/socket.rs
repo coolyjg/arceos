@@ -6,8 +6,9 @@ use core::net::{IpAddr, Ipv4Addr, SocketAddr, SocketAddrV4};
 use axerrno::{LinuxError, LinuxResult};
 use axio::PollState;
 use axnet::{TcpSocket, UdpSocket};
+use axsync::Mutex;
 
-use super::{fd_ops::FileLike, sync::Mutex};
+use super::fd_ops::FileLike;
 use crate::ctypes;
 use crate::utils::char_ptr_to_str;
 

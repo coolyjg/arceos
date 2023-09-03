@@ -1,8 +1,8 @@
 //! `epoll` implementation.
 //!
 //! TODO: do not support `EPOLLET` flag
-use crate::utils::e;
-use arceos_posix_api::{ctypes, sys_epoll_create, sys_epoll_ctl, sys_epoll_wait};
+use crate::{ctypes, utils::e};
+use arceos_posix_api::{sys_epoll_create, sys_epoll_ctl, sys_epoll_wait};
 use core::ffi::c_int;
 
 /// `epoll_create()` creates a new epoll instance.

@@ -18,16 +18,23 @@
 #![feature(int_roundings)]
 #![feature(naked_functions)]
 #![feature(result_option_inspect)]
+#![feature(thread_local)]
 #![allow(clippy::missing_safety_doc)]
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
 
-/// cbindgen:ignore
-#[rustfmt::skip]
-#[path = "./libctypes_gen.rs"]
-#[allow(dead_code, non_snake_case, non_camel_case_types, non_upper_case_globals, clippy::upper_case_acronyms)]
-pub mod libctypes;
+#[path = "."]
+mod ctypes {
+    /// cbindgen:ignore
+    #[rustfmt::skip]
+    #[path = "libctypes_gen.rs"]
+    #[allow(dead_code, non_snake_case, non_camel_case_types, non_upper_case_globals, clippy::upper_case_acronyms)]
+    mod libctypes;
+
+    pub use arceos_posix_api::ctypes::*;
+    pub use libctypes::*;
+}
 
 #[macro_use]
 mod utils;
@@ -54,7 +61,6 @@ mod strtod;
 mod errno;
 mod io;
 mod mktime;
-mod print;
 mod rand;
 mod resource;
 mod setjmp;
@@ -123,6 +129,5 @@ pub use self::strtod::{strtod, strtof};
 pub use self::errno::strerror;
 pub use self::io::{ax_write, fstat, read};
 pub use self::mktime::mktime;
-pub use self::print::println_str;
 pub use self::sys::sysconf;
 pub use self::time::{clock_gettime, nanosleep};

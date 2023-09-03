@@ -58,22 +58,6 @@ ssize_t write(int fd, const void *buf, size_t count)
     return ax_write(fd, buf, count);
 }
 
-#ifdef AX_CONFIG_FD
-int dup2(int old, int new)
-{
-    int r;
-    if (old == new) {
-        r = fcntl(old, F_GETFD);
-        if (r >= 0)
-            return old;
-        else
-            return r;
-    }
-    return dup3(old, new, 0);
-}
-
-#endif // AX_CONFIG_FD
-
 #ifdef AX_CONFIG_FS
 
 // TODO:

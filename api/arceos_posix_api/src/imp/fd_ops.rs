@@ -72,20 +72,19 @@ pub fn sys_dup(old_fd: c_int) -> c_int {
     syscall_body!(sys_dup, dup_fd(old_fd))
 }
 
-/// `dup3()` is the same as `dup2()`, except that:
+/// `dup2()` performs the same task as dup(), but it uses the file descriptor number specified in `new_fd`.
 ///
-/// The caller can force the close-on-exec flag to be set for the new file descriptor by specifying `O_CLOEXEC` in flags.
-///
-/// If oldfd equals newfd, then `dup3()` fails with the error `EINVAL`.
-pub fn sys_dup3(old_fd: c_int, new_fd: c_int, flags: c_int) -> c_int {
-    debug!(
-        "sys_dup3 <= old_fd: {}, new_fd: {}, flags: {}",
-        old_fd, new_fd, flags
-    );
-
-    syscall_body!(sys_dup3, {
+/// TODO: `dup2` should forcibly close new_fd if it is already opened.
+pub fn sys_dup2(old_fd: c_int, new_fd: c_int) -> c_int {
+    debug!("sys_dup2 <= old_fd: {}, new_fd: {}", old_fd, new_fd);
+    syscall_body!(sys_dup2, {
         if old_fd == new_fd {
-            return Err(LinuxError::EINVAL);
+            let r = sys_fcntl(old_fd, ctypes::F_GETFD as _, 0);
+            if r >= 0 {
+                return Ok(old_fd);
+            } else {
+                return Ok(r);
+            }
         }
         if new_fd as usize >= AX_FILE_LIMIT {
             return Err(LinuxError::EBADF);
@@ -97,13 +96,6 @@ pub fn sys_dup3(old_fd: c_int, new_fd: c_int, flags: c_int) -> c_int {
             .add_at(new_fd as usize, f)
             .ok_or(LinuxError::EMFILE)?;
 
-        if flags as u32 & ctypes::O_CLOEXEC != 0 {
-            sys_fcntl(
-                new_fd,
-                ctypes::F_SETFD as c_int,
-                ctypes::FD_CLOEXEC as usize,
-            );
-        }
         Ok(new_fd)
     })
 }

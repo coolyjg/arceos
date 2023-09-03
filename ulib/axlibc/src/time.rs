@@ -1,7 +1,7 @@
-use arceos_posix_api::{ctypes, sys_clock_gettime, sys_nanosleep};
+use arceos_posix_api::{sys_clock_gettime, sys_nanosleep};
 use core::ffi::c_int;
 
-use crate::utils::e;
+use crate::{ctypes, utils::e};
 
 /// Get clock time since booting
 #[no_mangle]

@@ -1,9 +1,15 @@
 use axerrno::LinuxError;
 use core::ffi::{c_char, c_int};
 
-/// The global errno variable.
-///
-/// TODO: this should be thread-local.
+#[cfg(feature = "tls")]
+/// The global errno variable with tls
+#[no_mangle]
+#[allow(non_upper_case_globals)]
+#[thread_local]
+pub static mut errno: c_int = 0;
+
+#[cfg(not(feature = "tls"))]
+/// The global errno variable without tls
 #[no_mangle]
 #[allow(non_upper_case_globals)]
 pub static mut errno: c_int = 0;

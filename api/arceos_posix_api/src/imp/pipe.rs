@@ -3,9 +3,9 @@ use core::ffi::c_int;
 
 use axerrno::{LinuxError, LinuxResult};
 use axio::PollState;
+use axsync::Mutex;
 
 use super::fd_ops::FileLike;
-use super::sync::Mutex;
 use super::thread::sys_sched_yield;
 use crate::ctypes;
 

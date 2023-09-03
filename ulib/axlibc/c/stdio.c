@@ -12,6 +12,12 @@
 
 #include <axlibc.h>
 
+// LOCK used by `puts()`
+#ifdef AX_CONFIG_MULTITASK
+#include <pthread.h>
+static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+#endif
+
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
@@ -102,7 +108,19 @@ int putchar(int c)
 
 int puts(const char *s)
 {
-    return println_str(s, strlen(s));
+#ifdef AX_CONFIG_MULTITASK
+    pthread_mutex_lock(&lock);
+#endif
+
+    int r = write(1, (const void *)s, strlen(s));
+    char brk[1] = {'\n'};
+    write(1, (const void *)brk, 1);
+
+#ifdef AX_CONFIG_MULTITASK
+    pthread_mutex_unlock(&lock);
+#endif
+
+    return r;
 }
 
 void perror(const char *msg)

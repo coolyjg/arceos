@@ -1,8 +1,8 @@
 use core::ffi::{c_int, c_void};
 
-use arceos_posix_api::{ctypes, sys_fstat, sys_read, sys_write, sys_writev};
+use arceos_posix_api::{sys_fstat, sys_read, sys_write, sys_writev};
 
-use crate::utils::e;
+use crate::{ctypes, utils::e};
 
 /// Read data from the file indicated by `fd`.
 ///

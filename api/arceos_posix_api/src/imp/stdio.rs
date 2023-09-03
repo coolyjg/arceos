@@ -3,8 +3,7 @@ use alloc::{string::String, vec::Vec};
 
 use axerrno::AxResult;
 use axio::{prelude::*, BufReader, Result};
-
-use super::sync::{Mutex, MutexGuard};
+use axsync::{Mutex, MutexGuard};
 
 fn console_read_bytes() -> Option<u8> {
     axhal::console::getchar().map(|c| if c == b'\r' { b'\n' } else { c })

@@ -48,6 +48,7 @@ typedef struct {{
             "epoll_event",
             "iovec",
             "clockid_t",
+            "rlimit",
         ];
         let allow_vars = [
             "O_.*",
@@ -59,6 +60,7 @@ typedef struct {{
             "_SC_.*",
             "EPOLL_CTL_.*",
             "EPOLL.*",
+            "RLIMIT_.*",
         ];
 
         #[derive(Debug)]
