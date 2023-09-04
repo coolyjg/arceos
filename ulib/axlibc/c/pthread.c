@@ -3,6 +3,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <pthread.h>
+#include <stdio.h>
 #include <unistd.h>
 
 int pthread_setcancelstate(int new, int *old)

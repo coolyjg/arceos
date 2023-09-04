@@ -4,6 +4,10 @@
 
 #ifdef AX_CONFIG_FD
 
+// TODO: remove these two functions in future work
+int ax_open(const char *filename, int flags, mode_t mode);
+int ax_fcntl(int fd, int cmd, size_t arg);
+
 int fcntl(int fd, int cmd, ... /* arg */)
 {
     unsigned long arg;

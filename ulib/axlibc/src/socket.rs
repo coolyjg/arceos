@@ -1,12 +1,8 @@
-use alloc::vec::Vec;
 use arceos_posix_api::{
     sys_accept, sys_bind, sys_connect, sys_getaddrinfo, sys_getpeername, sys_getsockname,
     sys_listen, sys_recv, sys_recvfrom, sys_send, sys_sendto, sys_shutdown, sys_socket,
 };
-use core::{
-    ffi::{c_char, c_int, c_void},
-    mem::size_of,
-};
+use core::ffi::{c_char, c_int, c_void};
 
 use crate::{ctypes, utils::e};
 
@@ -140,42 +136,15 @@ pub unsafe extern "C" fn shutdown(
 
 /// Query addresses for a domain name.
 ///
-/// Only IPv4. Ports are always 0. Ignore service and hint.
-/// Results' ai_flags and ai_canonname are 0 or NULL.
-///
 /// Return address number if success.
 #[no_mangle]
 pub unsafe extern "C" fn getaddrinfo(
-    node: *const c_char,
-    service: *const c_char,
-    _hints: *const ctypes::addrinfo,
+    nodename: *const c_char,
+    servname: *const c_char,
+    hints: *const ctypes::addrinfo,
     res: *mut *mut ctypes::addrinfo,
 ) -> c_int {
-    let addrs = [ctypes::sockaddr::default(); ctypes::MAXADDRS as usize].as_mut_ptr();
-    let ret = e(sys_getaddrinfo(node, service, addrs, ctypes::MAXADDRS as _));
-    if ret < 0 {
-        return ctypes::EAI_FAIL;
-    }
-    if ret == 0 {
-        return ctypes::EAI_NONAME;
-    }
-    let mut _parsed_res = Vec::with_capacity(ret as usize);
-    _parsed_res.fill(ctypes::addrinfo::default());
-    let parsed_res = _parsed_res.as_mut_ptr();
-    unsafe {
-        (0..ret).for_each(|i| {
-            (*(parsed_res.add(i as usize))).ai_family = ctypes::AF_INET as _;
-            (*(parsed_res.add(i as usize))).ai_addrlen = size_of::<ctypes::sockaddr>() as _;
-            (*(parsed_res.add(i as usize))).ai_addr = addrs.add(i as usize);
-            (*(parsed_res.add(i as usize))).ai_next = parsed_res.add(i as usize + 1);
-            // TODO: This is a hard-code part, only return TCP parameters
-            (*(parsed_res.add(i as usize))).ai_socktype = ctypes::SOCK_STREAM as _;
-            (*(parsed_res.add(i as usize))).ai_protocol = ctypes::IPPROTO_TCP as _;
-        });
-        (*(parsed_res.add(ret as usize - 1))).ai_next = core::ptr::null_mut();
-        *res = parsed_res;
-    }
-    0
+    e(sys_getaddrinfo(nodename, servname, hints, res))
 }
 
 /// Get current address to which the socket sockfd is bound.
