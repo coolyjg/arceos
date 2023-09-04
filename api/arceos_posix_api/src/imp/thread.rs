@@ -22,10 +22,3 @@ pub fn sys_exit(_exit_code: core::ffi::c_int) -> ! {
     #[cfg(not(feature = "multitask"))]
     axhal::misc::terminate();
 }
-
-pub fn sys_sleep_until(deadline: Duration) {
-    #[cfg(feature = "multitask")]
-    axtask::sleep_until(deadline);
-    #[cfg(not(feature = "multitask"))]
-    axhal::time::busy_wait_until(deadline);
-}

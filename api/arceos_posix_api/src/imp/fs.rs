@@ -147,7 +147,9 @@ pub unsafe fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
         options.read(true);
         let file = axfs::fops::File::open(path?, &options)?;
         let st = File::new(file).stat()?;
-        *buf = st;
+        unsafe {
+            *buf = st;
+        }
         Ok(0)
     })
 }
@@ -162,7 +164,9 @@ pub unsafe fn sys_lstat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::
         if buf.is_null() {
             return Err(LinuxError::EFAULT);
         }
-        *buf = Default::default(); // TODO
+        unsafe {
+            *buf = Default::default(); // TODO
+        }
         Ok(0)
     })
 }
