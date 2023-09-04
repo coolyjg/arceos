@@ -1,7 +1,9 @@
-use core::cell::UnsafeCell;
-
 use axerrno::AxResult;
 use axio::{prelude::*, BufReader, Result};
+use axsync::{Mutex, MutexGuard};
+
+#[cfg(feature = "alloc")]
+use alloc::{string::String, vec::Vec};
 
 #[cfg(feature = "fd")]
 use {alloc::sync::Arc, axerrno::LinuxResult, axio::PollState};
@@ -16,6 +18,7 @@ fn console_write_bytes(buf: &[u8]) -> AxResult<usize> {
 }
 
 struct StdinRaw;
+struct StdoutRaw;
 
 impl Read for StdinRaw {
     fn read(&mut self, buf: &mut [u8]) -> AxResult<usize> {
@@ -32,34 +35,7 @@ impl Read for StdinRaw {
     }
 }
 
-pub struct Stdin {
-    inner: UnsafeCell<BufReader<StdinRaw>>,
-}
-
-unsafe impl Send for Stdin {}
-unsafe impl Sync for Stdin {}
-
-impl Read for Stdin {
-    // Block until at least one byte is read.
-    fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
-        let read_len = self.inner.get_mut().read(buf)?;
-        if buf.is_empty() || read_len > 0 {
-            return Ok(read_len);
-        }
-        // try again until we get something
-        loop {
-            let read_len = self.inner.get_mut().read(buf)?;
-            if read_len > 0 {
-                return Ok(read_len);
-            }
-            crate::sys_sched_yield();
-        }
-    }
-}
-
-pub struct Stdout;
-
-impl Write for Stdout {
+impl Write for StdoutRaw {
     fn write(&mut self, buf: &[u8]) -> AxResult<usize> {
         console_write_bytes(buf)
     }
@@ -69,23 +45,58 @@ impl Write for Stdout {
     }
 }
 
+pub struct Stdin {
+    inner: &'static Mutex<BufReader<StdinRaw>>,
+}
+
+impl Read for Stdin {
+    // Block until at least one byte is read.
+    fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
+        let read_len = self.inner.lock().read(buf)?;
+        if buf.is_empty() || read_len > 0 {
+            return Ok(read_len);
+        }
+        // try again until we get something
+        loop {
+            let read_len = self.inner.lock().read(buf)?;
+            if read_len > 0 {
+                return Ok(read_len);
+            }
+            crate::sys_sched_yield();
+        }
+    }
+}
+
+pub struct Stdout {
+    inner: &'static Mutex<StdoutRaw>,
+}
+
+impl Write for Stdout {
+    fn write(&mut self, buf: &[u8]) -> AxResult<usize> {
+        self.inner.lock().write(buf)
+    }
+
+    fn flush(&mut self) -> AxResult {
+        self.inner.lock().flush()
+    }
+}
+
 /// Constructs a new handle to the standard input of the current process.
 pub fn stdin() -> Stdin {
-    Stdin {
-        inner: UnsafeCell::new(BufReader::new(StdinRaw)),
-    }
+    static INSTANCE: Mutex<BufReader<StdinRaw>> = Mutex::new(BufReader::new(StdinRaw));
+    Stdin { inner: &INSTANCE }
 }
 
 /// Constructs a new handle to the standard output of the current process.
 pub fn stdout() -> Stdout {
-    Stdout
+    static INSTANCE: Mutex<StdoutRaw> = Mutex::new(StdoutRaw);
+    Stdout { inner: &INSTANCE }
 }
 
 #[cfg(feature = "fd")]
 impl super::fd_ops::FileLike for Stdin {
     fn read(&self, buf: &mut [u8]) -> LinuxResult<usize> {
-        let inner = unsafe { &mut *self.inner.get() };
-        Ok(inner.read(buf)?)
+        Ok(self.lock().read(buf)?)
     }
 
     fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {
@@ -125,7 +136,7 @@ impl super::fd_ops::FileLike for Stdout {
     }
 
     fn write(&self, buf: &[u8]) -> LinuxResult<usize> {
-        Ok(console_write_bytes(buf)?)
+        Ok(self.lock().write(buf)?)
     }
 
     fn stat(&self) -> LinuxResult<crate::ctypes::stat> {
