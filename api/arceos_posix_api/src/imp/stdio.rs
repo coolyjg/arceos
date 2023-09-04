@@ -1,9 +1,6 @@
 use axerrno::AxResult;
 use axio::{prelude::*, BufReader, Result};
-use axsync::{Mutex, MutexGuard};
-
-#[cfg(feature = "alloc")]
-use alloc::{string::String, vec::Vec};
+use axsync::Mutex;
 
 #[cfg(feature = "fd")]
 use {alloc::sync::Arc, axerrno::LinuxResult, axio::PollState};

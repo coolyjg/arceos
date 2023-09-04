@@ -1,4 +1,7 @@
-use alloc::{sync::Arc, vec};
+use alloc::{
+    sync::Arc,
+    vec::{self, Vec},
+};
 use core::ffi::{c_char, c_int, c_void};
 use core::mem::size_of;
 use core::net::{IpAddr, Ipv4Addr, SocketAddr, SocketAddrV4};
@@ -443,7 +446,7 @@ pub fn sys_shutdown(
 
 /// Query addresses for a domain name.
 ///
-/// Only IPv4. Ports are always 0. Ignore service and hint.
+/// Only IPv4. Ports are always 0. Ignore servname and hint.
 /// Results' ai_flags and ai_canonname are 0 or NULL.
 ///
 /// Return address number if success.
@@ -454,8 +457,8 @@ pub unsafe fn sys_getaddrinfo(
     res: *mut *mut ctypes::addrinfo,
 ) -> c_int {
     let addrs = [ctypes::sockaddr::default(); ctypes::MAXADDRS as usize].as_mut_ptr();
-    let name = char_ptr_to_str(node);
-    let port = char_ptr_to_str(service);
+    let name = char_ptr_to_str(nodename);
+    let port = char_ptr_to_str(servname);
     debug!("sys_getaddrinfo <= {:?} {:?}", name, port);
     let ret = syscall_body!(sys_getaddrinfo, {
         if nodename.is_null() && servname.is_null() {
@@ -472,7 +475,7 @@ pub unsafe fn sys_getaddrinfo(
         } else {
             vec![Ipv4Addr::LOCALHOST.into()]
         };
-        for (i, item) in res.iter().enumerate().take(ctypes::MAXADDRS) {
+        for (i, item) in res.iter().enumerate().take(ctypes::MAXADDRS as usize) {
             addr_slice[i] = into_sockaddr(SocketAddr::new(
                 *item,
                 port.map_or(0, |p| p.parse::<u16>().unwrap_or(0)),
@@ -480,7 +483,7 @@ pub unsafe fn sys_getaddrinfo(
             .0;
         }
 
-        Ok(res.len().min(ctypes::MAXADDRS))
+        Ok(res.len().min(ctypes::MAXADDRS as usize))
     }) as c_int;
     if ret < 0 {
         return ctypes::EAI_FAIL;
