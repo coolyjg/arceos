@@ -481,7 +481,7 @@ pub unsafe fn sys_getaddrinfo(
         }
 
         Ok(res.len().min(ctypes::MAXADDRS as usize))
-    }) as c_int;
+    });
     if ret < 0 {
         return ctypes::EAI_FAIL;
     }
