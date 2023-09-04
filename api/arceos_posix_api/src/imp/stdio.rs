@@ -18,7 +18,6 @@ fn console_write_bytes(buf: &[u8]) -> AxResult<usize> {
 }
 
 struct StdinRaw;
-struct StdoutRaw;
 
 impl Read for StdinRaw {
     fn read(&mut self, buf: &mut [u8]) -> AxResult<usize> {
@@ -32,16 +31,6 @@ impl Read for StdinRaw {
             }
         }
         Ok(read_len)
-    }
-}
-
-impl Write for StdoutRaw {
-    fn write(&mut self, buf: &[u8]) -> AxResult<usize> {
-        console_write_bytes(buf)
-    }
-
-    fn flush(&mut self) -> AxResult {
-        Ok(())
     }
 }
 
@@ -115,46 +104,15 @@ impl BufRead for StdinLock<'_> {
     }
 }
 
-pub struct Stdout {
-    inner: &'static Mutex<StdoutRaw>,
-}
-
-/// A locked reference to the [`Stdout`] handle.
-pub struct StdoutLock<'a> {
-    inner: MutexGuard<'a, StdoutRaw>,
-}
-
-impl Stdout {
-    /// Locks this handle to the standard output stream, returning a writable
-    /// guard.
-    ///
-    /// The lock is released when the returned lock goes out of scope. The
-    /// returned guard also implements the `Write` trait for writing data.
-    #[cfg(feature = "fd")]
-    pub fn lock(&self) -> StdoutLock<'static> {
-        StdoutLock {
-            inner: self.inner.lock(),
-        }
-    }
-}
+pub struct Stdout;
 
 impl Write for Stdout {
     fn write(&mut self, buf: &[u8]) -> AxResult<usize> {
-        self.inner.lock().write(buf)
+        Ok(console_write_bytes(buf)?)
     }
 
     fn flush(&mut self) -> AxResult {
-        self.inner.lock().flush()
-    }
-}
-
-impl Write for StdoutLock<'_> {
-    fn write(&mut self, buf: &[u8]) -> AxResult<usize> {
-        self.inner.write(buf)
-    }
-
-    fn flush(&mut self) -> AxResult {
-        self.inner.flush()
+        Ok(())
     }
 }
 
@@ -166,8 +124,7 @@ pub fn stdin() -> Stdin {
 
 /// Constructs a new handle to the standard output of the current process.
 pub fn stdout() -> Stdout {
-    static INSTANCE: Mutex<StdoutRaw> = Mutex::new(StdoutRaw);
-    Stdout { inner: &INSTANCE }
+    Stdout
 }
 
 #[cfg(feature = "fd")]
@@ -213,7 +170,7 @@ impl super::fd_ops::FileLike for Stdout {
     }
 
     fn write(&self, buf: &[u8]) -> LinuxResult<usize> {
-        Ok(self.lock().write(buf)?)
+        Ok(console_write_bytes(buf)?)
     }
 
     fn stat(&self) -> LinuxResult<crate::ctypes::stat> {
