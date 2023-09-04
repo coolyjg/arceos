@@ -16,6 +16,7 @@ pub fn sys_sched_yield() -> c_int {
     0
 }
 
+/// Exit current task
 pub fn sys_exit(_exit_code: core::ffi::c_int) -> ! {
     #[cfg(feature = "multitask")]
     axtask::exit(_exit_code);

@@ -1,3 +1,7 @@
+//! Arceos system call layer API
+//!
+//! [ArceOS]: https://github.com/rcore-os/arceos
+
 #![cfg_attr(all(not(test), not(doc)), no_std)]
 #![feature(ip_in_core)]
 #![feature(int_roundings)]
@@ -5,7 +9,6 @@
 #![feature(doc_cfg)]
 #![feature(doc_auto_cfg)]
 #![allow(clippy::missing_safety_doc)]
-#![allow(missing_docs)]
 #![allow(non_camel_case_types, non_upper_case_globals)]
 
 extern crate axruntime;
@@ -25,7 +28,7 @@ mod imp;
 /// cbindgen:ignore
 #[rustfmt::skip]
 #[path = "./ctypes_gen.rs"]
-#[allow(dead_code, non_snake_case, non_camel_case_types, non_upper_case_globals, clippy::upper_case_acronyms)]
+#[allow(dead_code, non_snake_case, non_camel_case_types, non_upper_case_globals, clippy::upper_case_acronyms, missing_docs)]
 pub mod ctypes;
 
 #[cfg(feature = "fd")]

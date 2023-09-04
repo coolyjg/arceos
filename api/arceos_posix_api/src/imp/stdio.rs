@@ -1,9 +1,7 @@
+use core::cell::UnsafeCell;
+
 use axerrno::AxResult;
 use axio::{prelude::*, BufReader, Result};
-use axsync::{Mutex, MutexGuard};
-
-#[cfg(feature = "alloc")]
-use alloc::{string::String, vec::Vec};
 
 #[cfg(feature = "fd")]
 use {alloc::sync::Arc, axerrno::LinuxResult, axio::PollState};
@@ -35,72 +33,27 @@ impl Read for StdinRaw {
 }
 
 pub struct Stdin {
-    inner: &'static Mutex<BufReader<StdinRaw>>,
+    inner: UnsafeCell<BufReader<StdinRaw>>,
 }
 
-/// A locked reference to the [`Stdin`] handle.
-pub struct StdinLock<'a> {
-    inner: MutexGuard<'a, BufReader<StdinRaw>>,
-}
-
-impl Stdin {
-    /// Locks this handle to the standard input stream, returning a readable
-    /// guard.
-    ///
-    /// The lock is released when the returned lock goes out of scope. The
-    /// returned guard also implements the [`Read`] and [`BufRead`] traits for
-    /// accessing the underlying data.
-    #[cfg(feature = "fd")]
-    pub fn lock(&self) -> StdinLock<'static> {
-        // Locks this handle with 'static lifetime. This depends on the
-        // implementation detail that the underlying `Mutex` is static.
-        StdinLock {
-            inner: self.inner.lock(),
-        }
-    }
-}
+unsafe impl Send for Stdin {}
+unsafe impl Sync for Stdin {}
 
 impl Read for Stdin {
     // Block until at least one byte is read.
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
-        let read_len = self.inner.lock().read(buf)?;
+        let read_len = self.inner.get_mut().read(buf)?;
         if buf.is_empty() || read_len > 0 {
             return Ok(read_len);
         }
         // try again until we get something
         loop {
-            let read_len = self.inner.lock().read(buf)?;
+            let read_len = self.inner.get_mut().read(buf)?;
             if read_len > 0 {
                 return Ok(read_len);
             }
             crate::sys_sched_yield();
         }
-    }
-}
-
-impl Read for StdinLock<'_> {
-    fn read(&mut self, buf: &mut [u8]) -> Result<usize> {
-        self.inner.read(buf)
-    }
-}
-
-impl BufRead for StdinLock<'_> {
-    fn fill_buf(&mut self) -> Result<&[u8]> {
-        self.inner.fill_buf()
-    }
-
-    fn consume(&mut self, amt: usize) {
-        self.inner.consume(amt)
-    }
-
-    #[cfg(feature = "alloc")]
-    fn read_until(&mut self, byte: u8, buf: &mut Vec<u8>) -> Result<usize> {
-        self.inner.read_until(byte, buf)
-    }
-
-    #[cfg(feature = "alloc")]
-    fn read_line(&mut self, buf: &mut String) -> Result<usize> {
-        self.inner.read_line(buf)
     }
 }
 
@@ -118,8 +71,9 @@ impl Write for Stdout {
 
 /// Constructs a new handle to the standard input of the current process.
 pub fn stdin() -> Stdin {
-    static INSTANCE: Mutex<BufReader<StdinRaw>> = Mutex::new(BufReader::new(StdinRaw));
-    Stdin { inner: &INSTANCE }
+    Stdin {
+        inner: UnsafeCell::new(BufReader::new(StdinRaw)),
+    }
 }
 
 /// Constructs a new handle to the standard output of the current process.
@@ -130,7 +84,8 @@ pub fn stdout() -> Stdout {
 #[cfg(feature = "fd")]
 impl super::fd_ops::FileLike for Stdin {
     fn read(&self, buf: &mut [u8]) -> LinuxResult<usize> {
-        Ok(self.lock().read(buf)?)
+        let inner = unsafe { &mut *self.inner.get() };
+        Ok(inner.read(buf)?)
     }
 
     fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {

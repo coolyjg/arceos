@@ -6,8 +6,6 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-#include <axlibc.h>
-
 int accept4(int fd, struct sockaddr *restrict addr, socklen_t *restrict len, int flg)
 {
     if (!flg)

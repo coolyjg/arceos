@@ -1,6 +1,5 @@
 #ifdef AX_CONFIG_NET
 
-#include <axlibc.h>
 #include <ctype.h>
 #include <errno.h>
 #include <stdio.h>

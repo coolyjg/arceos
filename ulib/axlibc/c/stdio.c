@@ -10,8 +10,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <axlibc.h>
-
 // LOCK used by `puts()`
 #ifdef AX_CONFIG_MULTITASK
 #include <pthread.h>

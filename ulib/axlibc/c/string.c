@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <axlibc.h>
-
 size_t strlen(const char *s)
 {
     const char *a = s;

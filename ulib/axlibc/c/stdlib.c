@@ -7,8 +7,6 @@
 #include <string.h>
 #include <unistd.h>
 
-#include <axlibc.h>
-
 char *program_invocation_short_name = "dummy";
 char *program_invocation_name = "dummy";
 

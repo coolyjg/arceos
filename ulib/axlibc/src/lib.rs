@@ -66,29 +66,7 @@ mod resource;
 mod setjmp;
 mod sys;
 mod time;
-
-/// Get current thread ID.
-#[no_mangle]
-pub unsafe extern "C" fn getpid() -> core::ffi::c_int {
-    #[cfg(not(feature = "multitask"))]
-    return 2; // `Main` task ID
-    #[cfg(feature = "multitask")]
-    crate::utils::e(arceos_posix_api::sys_getpid())
-}
-
-/// Abort the current process.
-#[no_mangle]
-pub unsafe extern "C" fn abort() -> ! {
-    panic!()
-}
-
-/// Exits the current thread.
-#[no_mangle]
-pub unsafe extern "C" fn exit(exit_code: core::ffi::c_int) -> ! {
-    sys_exit(exit_code)
-}
-
-use arceos_posix_api::sys_exit;
+mod unistd;
 
 pub use self::rand::{rand, random, srand};
 
@@ -105,7 +83,7 @@ pub use self::fs::{ax_open, fstat, getcwd, lseek, lstat, stat};
 
 #[cfg(feature = "net")]
 pub use self::socket::{
-    accept, getaddrinfo, bind, connect, getpeername, getsockname, listen, recv, recvfrom, send,
+    accept, bind, connect, getaddrinfo, getpeername, getsockname, listen, recv, recvfrom, send,
     sendto, shutdown, socket,
 };
 
@@ -134,3 +112,4 @@ pub use self::io::{read, writev};
 pub use self::mktime::mktime;
 pub use self::sys::sysconf;
 pub use self::time::{clock_gettime, nanosleep};
+pub use self::unistd::{abort, exit, getpid};
