@@ -96,7 +96,7 @@ pub fn stdout() -> Stdout {
 #[cfg(feature = "fd")]
 impl super::fd_ops::FileLike for Stdin {
     fn read(&self, buf: &mut [u8]) -> LinuxResult<usize> {
-        Ok(self.lock().read(buf)?)
+        Ok(self.inner.lock().read(buf)?)
     }
 
     fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {
@@ -136,7 +136,7 @@ impl super::fd_ops::FileLike for Stdout {
     }
 
     fn write(&self, buf: &[u8]) -> LinuxResult<usize> {
-        Ok(self.lock().write(buf)?)
+        Ok(self.inner.lock().write(buf)?)
     }
 
     fn stat(&self) -> LinuxResult<crate::ctypes::stat> {
