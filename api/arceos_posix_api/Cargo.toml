@@ -47,10 +47,10 @@ axhal = { path = "../../modules/axhal" }
 axlog = { path = "../../modules/axlog" }
 axruntime = { path = "../../modules/axruntime" }
 axsync = { path = "../../modules/axsync", default-features = false }
+axtask = { path = "../../modules/axtask" }
 axalloc = { path = "../../modules/axalloc", optional = true }
 axfs = { path = "../../modules/axfs", optional = true }
 axnet = { path = "../../modules/axnet", optional = true }
-axtask = { path = "../../modules/axtask", optional = true }
 flatten_objects = { path = "../../crates/flatten_objects" }
 spinlock = { path = "../../crates/spinlock" }
 

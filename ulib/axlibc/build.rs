@@ -1,7 +1,7 @@
 fn main() {
     use std::path::{Path, PathBuf};
 
-    fn ax_gen_c_to_rust_bindings(in_file: &str, out_file: &str) {
+    fn gen_c_to_rust_bindings(in_file: &str, out_file: &str) {
         println!("cargo:rerun-if-changed={in_file}");
 
         let allow_types = ["tm", "jmp_buf"];
@@ -40,5 +40,5 @@ fn main() {
 
     let crate_dir = PathBuf::from(&std::env::var("CARGO_MANIFEST_DIR").unwrap());
     gen_rust_to_c_bindings(&crate_dir, "include_gen/axlibc.h");
-    ax_gen_c_to_rust_bindings("ctypes.h", "src/libctypes_gen.rs");
+    gen_c_to_rust_bindings("ctypes.h", "src/libctypes_gen.rs");
 }

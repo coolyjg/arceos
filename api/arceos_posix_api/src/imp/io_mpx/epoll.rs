@@ -138,7 +138,7 @@ impl FileLike for EpollInstance {
     }
 }
 
-/// `sys_epoll_create()` creates a new epoll instance.
+/// Creates a new epoll instance.
 ///
 /// `sys_epoll_create()` returns a file descriptor referring to the new epoll instance.
 pub fn sys_epoll_create(size: c_int) -> c_int {
@@ -168,7 +168,7 @@ pub unsafe fn sys_epoll_ctl(
     })
 }
 
-/// `sys_epoll_wait()` waits for events on the epoll instance referred to by the file descriptor epfd.
+/// Waits for events on the epoll instance referred to by the file descriptor epfd.
 pub unsafe fn sys_epoll_wait(
     epfd: c_int,
     events: *mut ctypes::epoll_event,
@@ -200,7 +200,7 @@ pub unsafe fn sys_epoll_wait(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            crate::imp::thread::sys_sched_yield();
+            crate::sys_sched_yield();
         }
     })
 }
