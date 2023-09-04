@@ -13,13 +13,6 @@
 
 int h_errno;
 
-void freeaddrinfo(struct addrinfo *__restrict res)
-{
-    free(res->ai_addr);
-    free(res);
-    return;
-}
-
 static const char gai_msgs[] = "Invalid flags\0"
                                "Name does not resolve\0"
                                "Try again\0"

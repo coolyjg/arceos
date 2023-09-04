@@ -115,13 +115,9 @@ struct flock {
 };
 
 int fcntl(int fd, int cmd, ... /* arg */);
-// TODO: remove this in future work
-int ax_fcntl(int fd, int cmd, size_t arg);
 int posix_fadvise(int __fd, unsigned long __offset, unsigned long __len, int __advise);
 int sync_file_range(int, off_t, off_t, unsigned);
 
 int open(const char *filename, int flags, ...);
-// TODO: remove this in future work
-int ax_open(const char *filename, int flags, mode_t mode);
 
 #endif

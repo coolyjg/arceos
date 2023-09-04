@@ -1,4 +1,4 @@
-use alloc::{sync::Arc, vec};
+use alloc::{boxed::Box, sync::Arc, vec};
 use core::ffi::{c_char, c_int, c_void};
 use core::mem::size_of;
 use core::net::{IpAddr, Ipv4Addr, SocketAddr, SocketAddrV4};
@@ -443,25 +443,29 @@ pub fn sys_shutdown(
 
 /// Query addresses for a domain name.
 ///
+/// Only IPv4. Ports are always 0. Ignore servname and hint.
+/// Results' ai_flags and ai_canonname are 0 or NULL.
+///
 /// Return address number if success.
 pub unsafe fn sys_getaddrinfo(
-    node: *const c_char,
-    service: *const c_char,
-    addrs: *mut ctypes::sockaddr,
-    len: ctypes::size_t,
+    nodename: *const c_char,
+    servname: *const c_char,
+    _hints: *const ctypes::addrinfo,
+    res: *mut *mut ctypes::addrinfo,
 ) -> c_int {
-    let name = char_ptr_to_str(node);
-    let port = char_ptr_to_str(service);
-    debug!(
-        "sys_getaddrinfo <= {:?} {:?} {:#x} {}",
-        name, port, addrs as usize, len
-    );
+    let addrs = Box::into_raw(Box::new(
+        [ctypes::sockaddr::default(); ctypes::MAXADDRS as usize],
+    )) as *mut ctypes::sockaddr;
+    let name = char_ptr_to_str(nodename);
+    let port = char_ptr_to_str(servname);
+    debug!("sys_getaddrinfo <= {:?} {:?}", name, port);
     syscall_body!(sys_getaddrinfo, {
-        if addrs.is_null() || (node.is_null() && service.is_null()) {
+        if nodename.is_null() && servname.is_null() {
             return Err(LinuxError::EFAULT);
         }
-        let addr_slice = unsafe { core::slice::from_raw_parts_mut(addrs, len) };
-        let res = if let Ok(domain) = name {
+        let addr_slice =
+            unsafe { core::slice::from_raw_parts_mut(addrs, ctypes::MAXADDRS as usize) };
+        let ip_res = if let Ok(domain) = name {
             if let Ok(a) = domain.parse::<IpAddr>() {
                 vec![a]
             } else {
@@ -470,16 +474,55 @@ pub unsafe fn sys_getaddrinfo(
         } else {
             vec![Ipv4Addr::LOCALHOST.into()]
         };
-
-        for (i, item) in res.iter().enumerate().take(len) {
+        for (i, item) in ip_res.iter().enumerate().take(ctypes::MAXADDRS as usize) {
             addr_slice[i] = into_sockaddr(SocketAddr::new(
                 *item,
                 port.map_or(0, |p| p.parse::<u16>().unwrap_or(0)),
             ))
             .0;
         }
-        Ok(res.len().min(len))
+        let ret = ip_res.len().min(ctypes::MAXADDRS as usize);
+
+        *res = core::ptr::null_mut();
+        unsafe {
+            (0..ret).for_each(|i| {
+                let mut addrinfo = Box::<ctypes::addrinfo>::default();
+                addrinfo.ai_family = ctypes::AF_INET as _;
+                addrinfo.ai_addrlen = size_of::<ctypes::sockaddr>() as _;
+                addrinfo.ai_addr = addrs.add(i);
+                addrinfo.ai_next = core::ptr::null_mut();
+                // TODO: This is a hard-code part, only return TCP parameters
+                addrinfo.ai_socktype = ctypes::SOCK_STREAM as _;
+                addrinfo.ai_protocol = ctypes::IPPROTO_TCP as _;
+
+                let mut indirect = res;
+                let mut prev = core::ptr::null_mut();
+                while !(*indirect).is_null() {
+                    prev = *indirect;
+                    indirect = &mut (**indirect).ai_next;
+                }
+                *indirect = Box::into_raw(addrinfo);
+                if !prev.is_null() {
+                    (*prev).ai_next = *indirect;
+                }
+            })
+        }
+        Ok(ret)
     })
+}
+
+/// `struct addrinfo` deallocation api
+pub unsafe fn sys_freeaddrinfo(res: *mut ctypes::addrinfo) {
+    let mut ai = res;
+    while !ai.is_null() {
+        let bai = unsafe { Box::from_raw(ai) };
+        if !bai.ai_addr.is_null() {
+            unsafe {
+                let _ = Box::from_raw(bai.ai_addr);
+            }
+        }
+        ai = bai.ai_next;
+    }
 }
 
 /// Get current address to which the socket sockfd is bound.
