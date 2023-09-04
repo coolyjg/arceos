@@ -6,7 +6,7 @@ use axsync::{Mutex, MutexGuard};
 use alloc::{string::String, vec::Vec};
 
 #[cfg(feature = "fd")]
-use {axerrno::LinuxResult, axio::PollState, alloc::sync::Arc};
+use {alloc::sync::Arc, axerrno::LinuxResult, axio::PollState};
 
 fn console_read_bytes() -> Option<u8> {
     axhal::console::getchar().map(|c| if c == b'\r' { b'\n' } else { c })
@@ -190,9 +190,7 @@ impl super::fd_ops::FileLike for Stdin {
         })
     }
 
-    fn into_any(
-        self: Arc<Self>,
-    ) -> Arc<dyn core::any::Any + Send + Sync> {
+    fn into_any(self: Arc<Self>) -> Arc<dyn core::any::Any + Send + Sync> {
         self
     }
 
@@ -228,9 +226,7 @@ impl super::fd_ops::FileLike for Stdout {
         })
     }
 
-    fn into_any(
-        self: Arc<Self>,
-    ) -> Arc<dyn core::any::Any + Send + Sync> {
+    fn into_any(self: Arc<Self>) -> Arc<dyn core::any::Any + Send + Sync> {
         self
     }
 

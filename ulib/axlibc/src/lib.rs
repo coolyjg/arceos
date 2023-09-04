@@ -101,7 +101,7 @@ pub use self::strftime::strftime;
 pub use self::fd_ops::{ax_fcntl, close, dup, dup3};
 
 #[cfg(feature = "fs")]
-pub use self::fs::{ax_open, getcwd, lseek, lstat, stat};
+pub use self::fs::{ax_open, fstat, getcwd, lseek, lstat, stat};
 
 #[cfg(feature = "net")]
 pub use self::socket::{
@@ -127,7 +127,7 @@ pub use self::io_mpx::{epoll_create, epoll_ctl, epoll_wait};
 pub use self::strtod::{strtod, strtof};
 
 pub use self::errno::strerror;
-pub use self::io::{ax_write, fstat, read};
+pub use self::io::{ax_write, read};
 pub use self::mktime::mktime;
 pub use self::sys::sysconf;
 pub use self::time::{clock_gettime, nanosleep};

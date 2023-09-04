@@ -194,7 +194,7 @@ impl FileLike for Pipe {
 /// Create a pipe
 ///
 /// Return 0 if succeed
-pub unsafe fn sys_pipe(fds: &mut [c_int]) -> c_int {
+pub fn sys_pipe(fds: &mut [c_int]) -> c_int {
     syscall_body!(sys_pipe, {
         let (read_end, write_end) = Pipe::new();
         let read_fd = super::fd_ops::add_file_like(Arc::new(read_end))?;

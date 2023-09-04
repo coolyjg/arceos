@@ -426,7 +426,6 @@ dependencies = [
  "axio",
  "bindgen",
  "cbindgen",
- "flatten_objects",
  "lazy_static",
 ]
 

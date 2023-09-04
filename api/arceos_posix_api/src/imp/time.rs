@@ -64,7 +64,7 @@ pub unsafe fn sys_nanosleep(req: *const ctypes::timespec, rem: *mut ctypes::time
         };
 
         let now = axhal::time::current_time();
-        axtask::sleep(axhal::time::current_time() + dur);
+        axtask::sleep(dur);
         let after = axhal::time::current_time();
         let actual = after - now;
 
