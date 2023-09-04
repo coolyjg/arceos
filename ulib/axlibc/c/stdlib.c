@@ -14,24 +14,9 @@ char *program_invocation_name = "dummy";
 
 #define __DECONST(type, var) ((type)(uintptr_t)(const void *)(var))
 
-void srand(unsigned s)
-{
-    ax_srand(s);
-}
-
-int rand(void)
-{
-    return ax_rand_u32();
-}
-
-long random(void)
-{
-    return (long)ax_rand_u32();
-}
-
 void srandom(unsigned int s)
 {
-    ax_srand(s);
+    srand(s);
 }
 
 #ifdef AX_CONFIG_ALLOC
@@ -60,12 +45,6 @@ void *realloc(void *memblock, size_t size)
 }
 
 #endif // AX_CONFIG_ALLOC
-
-_Noreturn void abort(void)
-{
-    ax_panic();
-    __builtin_unreachable();
-}
 
 long long llabs(long long a)
 {

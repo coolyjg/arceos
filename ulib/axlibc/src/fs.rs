@@ -35,6 +35,14 @@ pub unsafe extern "C" fn stat(path: *const c_char, buf: *mut ctypes::stat) -> c_
     e(sys_stat(path, buf))
 }
 
+/// Get file metadata by `fd` and write into `buf`.
+///
+/// Return 0 if success.
+#[no_mangle]
+pub unsafe extern "C" fn fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
+    e(sys_fstat(fd, buf))
+}
+
 /// Get the metadata of the symbolic link and write into `buf`.
 ///
 /// Return 0 if success.
@@ -56,12 +64,4 @@ pub unsafe extern "C" fn getcwd(buf: *mut c_char, size: usize) -> *mut c_char {
 #[no_mangle]
 pub unsafe extern "C" fn rename(old: *const c_char, new: *const c_char) -> c_int {
     e(sys_rename(old, new))
-}
-
-/// Get file metadata by `fd` and write into `buf`.
-///
-/// Return 0 if success.
-#[no_mangle]
-pub unsafe extern "C" fn fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
-    e(sys_fstat(fd, buf))
 }

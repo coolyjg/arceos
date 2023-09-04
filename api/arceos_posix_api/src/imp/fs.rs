@@ -155,6 +155,21 @@ pub unsafe fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
     })
 }
 
+/// Get file metadata by `fd` and write into `buf`.
+///
+/// Return 0 if success.
+pub unsafe fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
+    debug!("sys_fstat <= {} {:#x}", fd, buf as usize);
+    syscall_body!(sys_fstat, {
+        if buf.is_null() {
+            return Err(LinuxError::EFAULT);
+        }
+
+        unsafe { *buf = get_file_like(fd)?.stat()? };
+        Ok(0)
+    })
+}
+
 /// Get the metadata of the symbolic link and write into `buf`.
 ///
 /// Return 0 if success.
@@ -203,44 +218,5 @@ pub fn sys_rename(old: *const c_char, new: *const c_char) -> c_int {
         debug!("sys_rename <= old: {:?}, new: {:?}", old_path, new_path);
         axfs::api::rename(old_path, new_path)?;
         Ok(0)
-    })
-}
-
-/// Get file metadata by `fd` and write into `buf`.
-///
-/// Return 0 if success.
-pub unsafe fn sys_fstat(fd: c_int, buf: *mut ctypes::stat) -> c_int {
-    debug!("sys_fstat <= {} {:#x}", fd, buf as usize);
-    syscall_body!(sys_fstat, {
-        if buf.is_null() {
-            return Err(LinuxError::EFAULT);
-        }
-        #[cfg(feature = "fd")]
-        {
-            unsafe { *buf = get_file_like(fd)?.stat()? };
-            return Ok(0);
-        }
-        #[cfg(not(feature = "fd"))]
-        {
-            if !(0..=2).contains(&fd) {
-                return Err(LinuxError::EPERM);
-            }
-            let st_mode = if fd == 0 {
-                0o20000 | 0o440u32
-            } else if (1..=2).contains(&fd) {
-                0o20000 | 0o220u32
-            } else {
-                0
-            };
-            unsafe {
-                *buf = ctypes::stat {
-                    st_ino: 1,
-                    st_nlink: 1,
-                    st_mode,
-                    ..Default::default()
-                };
-            }
-            return Ok(0);
-        }
     })
 }

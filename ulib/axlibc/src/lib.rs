@@ -78,7 +78,7 @@ pub unsafe extern "C" fn getpid() -> core::ffi::c_int {
 
 /// Abort the current process.
 #[no_mangle]
-pub unsafe extern "C" fn ax_panic() -> ! {
+pub unsafe extern "C" fn abort() -> ! {
     panic!()
 }
 
@@ -90,7 +90,7 @@ pub unsafe extern "C" fn exit(exit_code: core::ffi::c_int) -> ! {
 
 use arceos_posix_api::sys_exit;
 
-pub use self::rand::{ax_rand_u32, ax_srand};
+pub use self::rand::{rand, random, srand};
 
 #[cfg(feature = "alloc")]
 pub use self::malloc::{free, malloc};
@@ -126,8 +126,11 @@ pub use self::io_mpx::{epoll_create, epoll_ctl, epoll_wait};
 #[cfg(feature = "fp_simd")]
 pub use self::strtod::{strtod, strtof};
 
+#[cfg(not(test))]
+pub use self::io::write;
+
 pub use self::errno::strerror;
-pub use self::io::{ax_write, read};
+pub use self::io::{read, writev};
 pub use self::mktime::mktime;
 pub use self::sys::sysconf;
 pub use self::time::{clock_gettime, nanosleep};

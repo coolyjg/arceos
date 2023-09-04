@@ -16,7 +16,8 @@ pub unsafe extern "C" fn read(fd: c_int, buf: *mut c_void, count: usize) -> ctyp
 ///
 /// Return the written size if success.
 #[no_mangle]
-pub unsafe extern "C" fn ax_write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t {
+#[cfg(not(test))]
+pub unsafe extern "C" fn write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t {
     e(sys_write(fd, buf, count) as _) as _
 }
 
