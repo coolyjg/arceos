@@ -457,7 +457,7 @@ pub unsafe fn sys_getaddrinfo(
     let name = char_ptr_to_str(nodename);
     let port = char_ptr_to_str(servname);
     debug!("sys_getaddrinfo <= {:?} {:?}", name, port);
-    let ret = syscall_body!(sys_getaddrinfo, {
+    let ret: c_int = syscall_body!(sys_getaddrinfo, {
         if nodename.is_null() && servname.is_null() {
             return Err(LinuxError::EFAULT);
         }
