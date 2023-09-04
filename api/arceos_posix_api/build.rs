@@ -49,6 +49,7 @@ typedef struct {{
             "iovec",
             "clockid_t",
             "rlimit",
+            "addrinfo",
         ];
         let allow_vars = [
             "O_.*",
@@ -61,6 +62,8 @@ typedef struct {{
             "EPOLL_CTL_.*",
             "EPOLL.*",
             "RLIMIT_.*",
+            "EAI_.*",
+            "MAXADDRS",
         ];
 
         #[derive(Debug)]

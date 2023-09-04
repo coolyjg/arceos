@@ -13,6 +13,7 @@ sys_includes = [
     "sys/select.h",
     "sys/time.h",
     "pthread.h",
+    "netdb.h",
 ]
 
 [export.rename]
@@ -24,6 +25,7 @@ sys_includes = [
 "iovec" = "struct iovec"
 "tm" = "struct tm"
 "rlimit" = "struct rlimit"
+"addrinfo" = "struct addrinfo"
 
 [fn]
 no_return = "__attribute__((noreturn))"

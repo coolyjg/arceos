@@ -105,7 +105,7 @@ pub use self::fs::{ax_open, fstat, getcwd, lseek, lstat, stat};
 
 #[cfg(feature = "net")]
 pub use self::socket::{
-    accept, ax_getaddrinfo, bind, connect, getpeername, getsockname, listen, recv, recvfrom, send,
+    accept, getaddrinfo, bind, connect, getpeername, getsockname, listen, recv, recvfrom, send,
     sendto, shutdown, socket,
 };
 

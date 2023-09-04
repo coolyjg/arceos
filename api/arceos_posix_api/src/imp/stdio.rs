@@ -108,7 +108,7 @@ pub struct Stdout;
 
 impl Write for Stdout {
     fn write(&mut self, buf: &[u8]) -> AxResult<usize> {
-        Ok(console_write_bytes(buf)?)
+        console_write_bytes(buf)
     }
 
     fn flush(&mut self) -> AxResult {

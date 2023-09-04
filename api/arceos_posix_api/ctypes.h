@@ -1,4 +1,5 @@
 #include <fcntl.h>
+#include <netdb.h>
 #include <netinet/in.h>
 #include <pthread.h>
 #include <stddef.h>
