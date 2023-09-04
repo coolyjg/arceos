@@ -144,7 +144,14 @@ pub unsafe extern "C" fn getaddrinfo(
     hints: *const ctypes::addrinfo,
     res: *mut *mut ctypes::addrinfo,
 ) -> c_int {
-    e(sys_getaddrinfo(nodename, servname, hints, res))
+    let ret = e(sys_getaddrinfo(nodename, servname, hints, res));
+    if ret < 0 {
+        return ctypes::EAI_FAIL;
+    }
+    if ret == 0 {
+        return ctypes::EAI_NONAME;
+    }
+    0
 }
 
 /// Get current address to which the socket sockfd is bound.

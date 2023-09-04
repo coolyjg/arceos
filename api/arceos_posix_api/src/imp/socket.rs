@@ -1,4 +1,4 @@
-use alloc::{sync::Arc, vec, vec::Vec};
+use alloc::{sync::Arc, vec};
 use core::ffi::{c_char, c_int, c_void};
 use core::mem::size_of;
 use core::net::{IpAddr, Ipv4Addr, SocketAddr, SocketAddrV4};
@@ -453,17 +453,17 @@ pub unsafe fn sys_getaddrinfo(
     _hints: *const ctypes::addrinfo,
     res: *mut *mut ctypes::addrinfo,
 ) -> c_int {
-    let addrs = [ctypes::sockaddr::default(); ctypes::MAXADDRS as usize].as_mut_ptr();
+    let addrs = vec![ctypes::sockaddr::default(); ctypes::MAXADDRS as usize].as_mut_ptr();
     let name = char_ptr_to_str(nodename);
     let port = char_ptr_to_str(servname);
     debug!("sys_getaddrinfo <= {:?} {:?}", name, port);
-    let ret: c_int = syscall_body!(sys_getaddrinfo, {
+    syscall_body!(sys_getaddrinfo, {
         if nodename.is_null() && servname.is_null() {
             return Err(LinuxError::EFAULT);
         }
         let addr_slice =
             unsafe { core::slice::from_raw_parts_mut(addrs, ctypes::MAXADDRS as usize) };
-        let res = if let Ok(domain) = name {
+        let ip_res = if let Ok(domain) = name {
             if let Ok(a) = domain.parse::<IpAddr>() {
                 vec![a]
             } else {
@@ -472,39 +472,32 @@ pub unsafe fn sys_getaddrinfo(
         } else {
             vec![Ipv4Addr::LOCALHOST.into()]
         };
-        for (i, item) in res.iter().enumerate().take(ctypes::MAXADDRS as usize) {
+        for (i, item) in ip_res.iter().enumerate().take(ctypes::MAXADDRS as usize) {
             addr_slice[i] = into_sockaddr(SocketAddr::new(
                 *item,
                 port.map_or(0, |p| p.parse::<u16>().unwrap_or(0)),
             ))
             .0;
         }
+        let ret = ip_res.len().min(ctypes::MAXADDRS as usize);
 
-        Ok(res.len().min(ctypes::MAXADDRS as usize))
-    });
-    if ret < 0 {
-        return ctypes::EAI_FAIL;
-    }
-    if ret == 0 {
-        return ctypes::EAI_NONAME;
-    }
-    let mut _parsed_res = Vec::with_capacity(ret as usize);
-    _parsed_res.fill(ctypes::addrinfo::default());
-    let parsed_res = _parsed_res.as_mut_ptr();
-    unsafe {
-        (0..ret).for_each(|i| {
-            (*(parsed_res.add(i as usize))).ai_family = ctypes::AF_INET as _;
-            (*(parsed_res.add(i as usize))).ai_addrlen = size_of::<ctypes::sockaddr>() as _;
-            (*(parsed_res.add(i as usize))).ai_addr = addrs.add(i as usize);
-            (*(parsed_res.add(i as usize))).ai_next = parsed_res.add(i as usize + 1);
-            // TODO: This is a hard-code part, only return TCP parameters
-            (*(parsed_res.add(i as usize))).ai_socktype = ctypes::SOCK_STREAM as _;
-            (*(parsed_res.add(i as usize))).ai_protocol = ctypes::IPPROTO_TCP as _;
-        });
-        (*(parsed_res.add(ret as usize - 1))).ai_next = core::ptr::null_mut();
-        *res = parsed_res;
-    }
-    0
+        let mut _parsed_res = vec![ctypes::addrinfo::default(); ret as usize];
+        let parsed_res = _parsed_res.as_mut_ptr();
+        unsafe {
+            (0..ret).for_each(|i| {
+                (*(parsed_res.add(i as usize))).ai_family = ctypes::AF_INET as _;
+                (*(parsed_res.add(i as usize))).ai_addrlen = size_of::<ctypes::sockaddr>() as _;
+                (*(parsed_res.add(i as usize))).ai_addr = addrs.add(i as usize);
+                (*(parsed_res.add(i as usize))).ai_next = parsed_res.add(i as usize + 1);
+                // TODO: This is a hard-code part, only return TCP parameters
+                (*(parsed_res.add(i as usize))).ai_socktype = ctypes::SOCK_STREAM as _;
+                (*(parsed_res.add(i as usize))).ai_protocol = ctypes::IPPROTO_TCP as _;
+            });
+            (*(parsed_res.add(ret as usize - 1))).ai_next = core::ptr::null_mut();
+            *res = parsed_res;
+        }
+        Ok(ret)
+    })
 }
 
 /// Get current address to which the socket sockfd is bound.
