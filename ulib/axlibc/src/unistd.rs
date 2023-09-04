@@ -1,13 +1,10 @@
-use arceos_posix_api::sys_exit;
+use arceos_posix_api::{sys_exit, sys_getpid};
 use core::ffi::c_int;
 
 /// Get current thread ID.
 #[no_mangle]
 pub unsafe extern "C" fn getpid() -> c_int {
-    #[cfg(not(feature = "multitask"))]
-    return 2; // `Main` task ID
-    #[cfg(feature = "multitask")]
-    crate::utils::e(arceos_posix_api::sys_getpid())
+    sys_getpid()
 }
 
 /// Abort the current process.

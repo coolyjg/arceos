@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <stdio.h>
 
 int pthread_setcancelstate(int new, int *old)
 {

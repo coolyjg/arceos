@@ -1,19 +1,18 @@
 //! `epoll` implementation.
 //!
 //! TODO: do not support `EPOLLET` flag
-use axerrno::{LinuxError, LinuxResult};
-use axhal::time::current_time;
-use axsync::Mutex;
-
-use crate::{
-    ctypes,
-    imp::fd_ops::{add_file_like, get_file_like, FileLike},
-};
 
 use alloc::collections::btree_map::Entry;
 use alloc::collections::BTreeMap;
 use alloc::sync::Arc;
 use core::{ffi::c_int, time::Duration};
+
+use axerrno::{LinuxError, LinuxResult};
+use axhal::time::current_time;
+use axsync::Mutex;
+
+use crate::ctypes;
+use crate::imp::fd_ops::{add_file_like, get_file_like, FileLike};
 
 pub struct EpollInstance {
     events: Mutex<BTreeMap<usize, ctypes::epoll_event>>,
@@ -140,7 +139,7 @@ impl FileLike for EpollInstance {
 
 /// Creates a new epoll instance.
 ///
-/// `sys_epoll_create()` returns a file descriptor referring to the new epoll instance.
+/// It returns a file descriptor referring to the new epoll instance.
 pub fn sys_epoll_create(size: c_int) -> c_int {
     debug!("sys_epoll_create <= {}", size);
     syscall_body!(sys_epoll_create, {

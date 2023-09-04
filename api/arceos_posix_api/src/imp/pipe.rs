@@ -5,8 +5,7 @@ use axerrno::{LinuxError, LinuxResult};
 use axio::PollState;
 use axsync::Mutex;
 
-use super::fd_ops::FileLike;
-use super::thread::sys_sched_yield;
+use super::fd_ops::{add_file_like, close_file_like, FileLike};
 use crate::ctypes;
 
 #[derive(Copy, Clone, PartialEq)]
@@ -123,7 +122,7 @@ impl FileLike for Pipe {
                 }
                 drop(ring_buffer);
                 // Data not ready, wait for write end
-                sys_sched_yield(); // TODO: use synconize primitive
+                crate::sys_sched_yield(); // TODO: use synconize primitive
                 continue;
             }
             for _ in 0..loop_read {
@@ -148,7 +147,7 @@ impl FileLike for Pipe {
             if loop_write == 0 {
                 drop(ring_buffer);
                 // Buffer is full, wait for read end to consume
-                sys_sched_yield(); // TODO: use synconize primitive
+                crate::sys_sched_yield(); // TODO: use synconize primitive
                 continue;
             }
             for _ in 0..loop_write {
@@ -195,11 +194,16 @@ impl FileLike for Pipe {
 ///
 /// Return 0 if succeed
 pub fn sys_pipe(fds: &mut [c_int]) -> c_int {
+    debug!("sys_pipe <= {:#x}", fds.as_ptr() as usize);
     syscall_body!(sys_pipe, {
+        if fds.len() != 2 {
+            return Err(LinuxError::EFAULT);
+        }
+
         let (read_end, write_end) = Pipe::new();
-        let read_fd = super::fd_ops::add_file_like(Arc::new(read_end))?;
-        let write_fd = super::fd_ops::add_file_like(Arc::new(write_end)).inspect_err(|_| {
-            super::fd_ops::close_file_like(read_fd).ok();
+        let read_fd = add_file_like(Arc::new(read_end))?;
+        let write_fd = add_file_like(Arc::new(write_end)).inspect_err(|_| {
+            close_file_like(read_fd).ok();
         })?;
 
         fds[0] = read_fd as c_int;

@@ -16,10 +16,25 @@ pub fn sys_sched_yield() -> c_int {
     0
 }
 
+/// Get current thread ID.
+pub fn sys_getpid() -> c_int {
+    syscall_body!(sys_getpid,
+        #[cfg(feature = "multitask")]
+        {
+            Ok(axtask::current().id().as_u64() as c_int)
+        }
+        #[cfg(not(feature = "multitask"))]
+        {
+            Ok(2) // `main` task ID
+        }
+    )
+}
+
 /// Exit current task
-pub fn sys_exit(_exit_code: core::ffi::c_int) -> ! {
+pub fn sys_exit(exit_code: c_int) -> ! {
+    debug!("sys_exit <= {}", exit_code);
     #[cfg(feature = "multitask")]
-    axtask::exit(_exit_code);
+    axtask::exit(exit_code);
     #[cfg(not(feature = "multitask"))]
     axhal::misc::terminate();
 }

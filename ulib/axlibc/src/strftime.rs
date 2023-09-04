@@ -10,6 +10,7 @@ pub trait WriteByte: fmt::Write {
 }
 
 struct StringWriter(pub *mut u8, pub usize);
+
 impl Write for StringWriter {
     fn write(&mut self, buf: &[u8]) -> axerrno::AxResult<usize> {
         if self.1 > 1 {
@@ -236,7 +237,7 @@ unsafe fn strftime_inner<W: WriteByte>(
     w.written
 }
 
-/// `strftime` implementation
+/// Convert date and time to a string.
 #[no_mangle]
 pub unsafe extern "C" fn strftime(
     buf: *mut c_char,

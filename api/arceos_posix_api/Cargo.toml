@@ -10,55 +10,43 @@ authors = [
     "scPointer <bhy18@mails.tsinghua.edu.cn>",
     "Shiping Yuan <robert_yuan@pku.edu.com>",
 ]
-description = "ArceOS system call layer"
+description = "POSIX-compatible APIs for ArceOS modules"
 license = "GPL-3.0-or-later OR Apache-2.0"
 repository = "https://github.com/rcore-os/arceos/tree/main/api/arceos_posix_api"
-
-# [lib]
-# crate-type = ["staticlib"]
 
 [features]
 default = []
 
-alloc = ["axalloc", "axfeat/alloc", "axio/alloc"]
-
-fp_simd = ["axfeat/fp_simd"]
-
 smp = ["axfeat/smp"]
-
+alloc = ["dep:axalloc", "axfeat/alloc"]
 multitask = ["axtask/multitask", "axfeat/multitask", "axsync/multitask"]
-
-fs =["fd", "axfeat/fs", "axfs"]
-
-net = ["axfeat/net", "axnet", "fd"]
-
-# Libc features
 fd = ["alloc"]
-pipe = ["fd"]
+fs = ["dep:axfs", "dep:axsync", "axfeat/fs", "fd"]
+net = ["dep:axnet", "dep:axsync", "axfeat/net", "fd"]
+pipe = ["dep:axsync", "fd"]
 select = ["fd"]
-epoll = ["fd"]
+epoll = ["dep:axsync", "fd"]
 
 [dependencies]
+# ArceOS modules
 axfeat = { path = "../axfeat" }
-axconfig = { path = "../../modules/axconfig" }
-axerrno = { path = "../../crates/axerrno" }
-axio = { path = "../../crates/axio" }
-axhal = { path = "../../modules/axhal" }
-axlog = { path = "../../modules/axlog" }
 axruntime = { path = "../../modules/axruntime" }
-axsync = { path = "../../modules/axsync", default-features = false }
-axtask = { path = "../../modules/axtask" }
+axconfig = { path = "../../modules/axconfig" }
+axlog = { path = "../../modules/axlog" }
+axhal = { path = "../../modules/axhal" }
 axalloc = { path = "../../modules/axalloc", optional = true }
+axtask = { path = "../../modules/axtask", optional = true }
+axsync = { path = "../../modules/axsync", optional = true }
 axfs = { path = "../../modules/axfs", optional = true }
 axnet = { path = "../../modules/axnet", optional = true }
-flatten_objects = { path = "../../crates/flatten_objects" }
-spinlock = { path = "../../crates/spinlock" }
 
-lazy_static = { version = "1.4", features = ["spin_no_std"] }
+# Other crates
+axio = { path = "../../crates/axio" }
+axerrno = { path = "../../crates/axerrno" }
 static_assertions = "1.1.0"
 spin = { version = "0.9" }
+lazy_static = { version = "1.4", features = ["spin_no_std"] }
+flatten_objects = { path = "../../crates/flatten_objects" }
 
 [build-dependencies]
-cbindgen = { version = "0.24" }
 bindgen ={ version = "0.66" }
-axconfig = { path = "../../modules/axconfig" }

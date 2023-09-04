@@ -103,14 +103,6 @@ impl Pthread {
     }
 }
 
-/// Get current thread ID.
-pub fn sys_getpid() -> c_int {
-    syscall_body!(sys_getpid, {
-        let pid = axtask::current().id().as_u64() as c_int;
-        Ok(pid)
-    })
-}
-
 /// Returns the `pthread` struct of current thread.
 pub fn sys_pthread_self() -> ctypes::pthread_t {
     Pthread::current().expect("fail to get current thread") as *const Pthread as _

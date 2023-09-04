@@ -7,9 +7,9 @@ use arceos_posix_api::sys_select;
 #[cfg(feature = "epoll")]
 use arceos_posix_api::{sys_epoll_create, sys_epoll_ctl, sys_epoll_wait};
 
-/// `epoll_create()` creates a new epoll instance.
+/// Creates a new epoll instance.
 ///
-/// `epoll_create()` returns a file descriptor referring to the new epoll instance.
+/// It returns a file descriptor referring to the new epoll instance.
 #[cfg(feature = "epoll")]
 #[no_mangle]
 pub unsafe extern "C" fn epoll_create(size: c_int) -> c_int {
@@ -28,7 +28,7 @@ pub unsafe extern "C" fn epoll_ctl(
     e(sys_epoll_ctl(epfd, op, fd, event))
 }
 
-/// `epoll_wait()` waits for events on the epoll instance referred to by the file descriptor epfd.
+/// Waits for events on the epoll instance referred to by the file descriptor epfd.
 #[cfg(feature = "epoll")]
 #[no_mangle]
 pub unsafe extern "C" fn epoll_wait(

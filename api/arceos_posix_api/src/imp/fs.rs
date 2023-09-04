@@ -6,9 +6,8 @@ use axfs::fops::OpenOptions;
 use axio::{PollState, SeekFrom};
 use axsync::Mutex;
 
-use crate::imp::fd_ops::get_file_like;
-use crate::utils::char_ptr_to_str;
-use crate::{ctypes, imp::fd_ops::FileLike};
+use super::fd_ops::{get_file_like, FileLike};
+use crate::{ctypes, utils::char_ptr_to_str};
 
 pub struct File {
     inner: Mutex<axfs::fops::File>,
@@ -148,9 +147,7 @@ pub unsafe fn sys_stat(path: *const c_char, buf: *mut ctypes::stat) -> c_int {
         options.read(true);
         let file = axfs::fops::File::open(path?, &options)?;
         let st = File::new(file).stat()?;
-        unsafe {
-            *buf = st;
-        }
+        unsafe { *buf = st };
         Ok(0)
     })
 }
@@ -180,9 +177,7 @@ pub unsafe fn sys_lstat(path: *const c_char, buf: *mut ctypes::stat) -> ctypes::
         if buf.is_null() {
             return Err(LinuxError::EFAULT);
         }
-        unsafe {
-            *buf = Default::default(); // TODO
-        }
+        unsafe { *buf = Default::default() }; // TODO
         Ok(0)
     })
 }

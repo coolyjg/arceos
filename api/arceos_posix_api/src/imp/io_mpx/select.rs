@@ -145,7 +145,7 @@ pub unsafe fn sys_select(
                 debug!("    timeout!");
                 return Ok(0);
             }
-            crate::imp::thread::sys_sched_yield();
+            crate::sys_sched_yield();
         }
     })
 }

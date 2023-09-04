@@ -1,10 +1,10 @@
 use alloc::sync::Arc;
 use core::ffi::c_int;
-use flatten_objects::FlattenObjects;
-use spin::RwLock;
 
 use axerrno::{LinuxError, LinuxResult};
 use axio::PollState;
+use flatten_objects::FlattenObjects;
+use spin::RwLock;
 
 use super::stdio::{stdin, stdout};
 use crate::ctypes;
@@ -66,13 +66,13 @@ fn dup_fd(old_fd: c_int) -> LinuxResult<c_int> {
     Ok(new_fd)
 }
 
-/// Duplicate a file descriptor
+/// Duplicate a file descriptor.
 pub fn sys_dup(old_fd: c_int) -> c_int {
     debug!("sys_dup <= {}", old_fd);
     syscall_body!(sys_dup, dup_fd(old_fd))
 }
 
-/// `dup2()` performs the same task as dup(), but it uses the file descriptor number specified in `new_fd`.
+/// Duplicate a file descriptor, but it uses the file descriptor number specified in `new_fd`.
 ///
 /// TODO: `dup2` should forcibly close new_fd if it is already opened.
 pub fn sys_dup2(old_fd: c_int, new_fd: c_int) -> c_int {
@@ -100,7 +100,7 @@ pub fn sys_dup2(old_fd: c_int, new_fd: c_int) -> c_int {
     })
 }
 
-/// Fcntl implementation
+/// Manipulate file descriptor.
 ///
 /// TODO: `SET/GET` command is ignored, hard-code stdin/stdout
 pub fn sys_fcntl(fd: c_int, cmd: c_int, arg: usize) -> c_int {

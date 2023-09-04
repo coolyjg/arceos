@@ -1,11 +1,9 @@
-use core::ffi::{c_int, c_void};
-
 use crate::ctypes;
+use axerrno::LinuxError;
+use core::ffi::{c_int, c_void};
 
 #[cfg(feature = "fd")]
 use crate::imp::fd_ops::get_file_like;
-
-use axerrno::LinuxError;
 #[cfg(not(feature = "fd"))]
 use axio::prelude::*;
 
@@ -55,7 +53,7 @@ pub fn sys_write(fd: c_int, buf: *const c_void, count: usize) -> ctypes::ssize_t
     })
 }
 
-/// `writev` implementation
+/// Write a vector.
 pub unsafe fn sys_writev(fd: c_int, iov: *const ctypes::iovec, iocnt: c_int) -> ctypes::ssize_t {
     debug!("sys_writev <= fd: {}", fd);
     syscall_body!(sys_writev, {

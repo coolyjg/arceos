@@ -4,7 +4,7 @@ use axerrno::AxResult;
 use axio::{prelude::*, BufReader, Result};
 
 #[cfg(feature = "fd")]
-use {alloc::sync::Arc, axerrno::LinuxResult, axio::PollState};
+use {alloc::sync::Arc, axerrno::LinuxError, axerrno::LinuxResult, axio::PollState};
 
 fn console_read_bytes() -> Option<u8> {
     axhal::console::getchar().map(|c| if c == b'\r' { b'\n' } else { c })
@@ -89,7 +89,7 @@ impl super::fd_ops::FileLike for Stdin {
     }
 
     fn write(&self, _buf: &[u8]) -> LinuxResult<usize> {
-        Err(axerrno::LinuxError::EPERM)
+        Err(LinuxError::EPERM)
     }
 
     fn stat(&self) -> LinuxResult<crate::ctypes::stat> {
@@ -121,7 +121,7 @@ impl super::fd_ops::FileLike for Stdin {
 #[cfg(feature = "fd")]
 impl super::fd_ops::FileLike for Stdout {
     fn read(&self, _buf: &mut [u8]) -> LinuxResult<usize> {
-        Err(axerrno::LinuxError::EPERM)
+        Err(LinuxError::EPERM)
     }
 
     fn write(&self, buf: &[u8]) -> LinuxResult<usize> {

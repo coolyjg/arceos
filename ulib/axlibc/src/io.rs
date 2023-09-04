@@ -21,7 +21,7 @@ pub unsafe extern "C" fn write(fd: c_int, buf: *const c_void, count: usize) -> c
     e(sys_write(fd, buf, count) as _) as _
 }
 
-/// `writev` implementation
+/// Write a vector.
 #[no_mangle]
 pub unsafe extern "C" fn writev(
     fd: c_int,
