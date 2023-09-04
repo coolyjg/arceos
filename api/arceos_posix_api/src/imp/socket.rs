@@ -1,7 +1,4 @@
-use alloc::{
-    sync::Arc,
-    vec::{self, Vec},
-};
+use alloc::{sync::Arc, vec, vec::Vec};
 use core::ffi::{c_char, c_int, c_void};
 use core::mem::size_of;
 use core::net::{IpAddr, Ipv4Addr, SocketAddr, SocketAddrV4};
